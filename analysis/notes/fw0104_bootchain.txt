@@ -1,0 +1,75 @@
+== appsboot.mbn (96852 B)
+  image_id=0x5 header_vsn=0x3 image_src=0x0 image_dest=0x7e00000 image_size=0x17a2c code_size=0x17a2c sig_ptr=0x7e17a2c sig_size=0x0 cert_ptr=0x7e17a2c cert_size=0x0
+  certificati DER trovati: 0
+== sbl1.mbn (262144 B)
+  image_id=0x844bdcd1 header_vsn=0x73d71034 image_src=0x7d0b435a image_dest=0xffffffff image_size=0xffffffff code_size=0xffffffff sig_ptr=0xffffffff sig_size=0xffffffff cert_ptr=0xffffffff cert_size=0xffffffff
+  certificati DER trovati: 0
+== tz.mbn (275360 B)
+  seg0 type=0x0 flags=0x07000000 off=0x0 size=372
+  seg1 type=0x0 flags=0x02200000 off=0x1000 size=360
+   hash segment header: 00000019 00000003 00000000 0014c028 00000140 00000140 0014c168 00000000 0014c168 00000000
+  seg2 type=0x1 flags=0x80000005 off=0x10000 size=155040
+  seg3 type=0x1 flags=0x00000004 off=0x36000 size=17728
+  seg4 type=0x1 flags=0x00000006 off=0x3b000 size=15996
+  seg5 type=0x1 flags=0x00000006 off=0x42e7c size=0
+  seg6 type=0x1 flags=0x00000006 off=0x42e7c size=1316
+  seg7 type=0x1 flags=0x00000006 off=0x3ee7c size=12288
+  seg8 type=0x1 flags=0x00000006 off=0x41e7c size=4096
+  seg9 type=0x1 flags=0x00000006 off=0x433a0 size=0
+  certificati DER trovati: 0
+== rpm.mbn (146180 B)
+  seg0 type=0x0 flags=0x07000000 off=0x0 size=180
+  seg1 type=0x0 flags=0x02200000 off=0x1000 size=168
+   hash segment header: 00000017 00000003 00000000 fc197028 00000080 00000080 fc1970a8 00000000 fc1970a8 00000000
+  seg2 type=0x1 flags=0x80000007 off=0x2000 size=110296
+  seg3 type=0x1 flags=0x00000006 off=0x1ced8 size=27692
+  certificati DER trovati: 0
+== mba.mbn (299920 B)
+  seg0 type=0x1 flags=0x00000007 off=0x1000 size=295824
+  certificati DER trovati: 0
+== mdm-perf-image-boot-mdm9625-perf.img (4001792 B)
+  kernel_size=3586200 kernel_addr=0x308000 ramdisk_size=0 second_size=0 tags=0x6800000 page=2048 dt_size=411648
+  name=b''
+  cmdline='noinitrd root=/dev/mtdblock20 rw rootfstype=yaffs2 console=ttyHSL0,115200,n8 androidboot.hardware=qcom ehci-hcd.park=3 g-android.rx_trigger_enabled=1'
+  fine immagine calcolata=4001792 file=4001792 extra=0
+  nessun dato oltre la fine (nessuna firma appesa)
+  certificati DER trovati: 0
+== mdm-recovery-image-boot-mdm9625-perf.img (4001792 B)
+  kernel_size=3586200 kernel_addr=0x308000 ramdisk_size=0 second_size=0 tags=0x6800000 page=2048 dt_size=411648
+  name=b''
+  cmdline='noinitrd root=/dev/mtdblock16 rw rootfstype=yaffs2 console=ttyHSL0,115200,n8 androidboot.hardware=qcom ehci-hcd.park=3'
+  fine immagine calcolata=4001792 file=4001792 extra=0
+  nessun dato oltre la fine (nessuna firma appesa)
+  certificati DER trovati: 0
+== sbl1_elf.bin (1 B)
+codeword @ 0x0
+codeword @ 0x800
+codeword @ 0x1000
+codeword @ 0x1800
+codeword @ 0x2800
+codeword @ 0x20000
+primi dati dopo preambolo @ 0x800
+  codeword=0x844bdcd1
+  magic=0x73d71034
+  image_id=0x7d0b435a
+  res1=0xffffffff
+  res2=0xffffffff
+  image_src=0xffffffff
+  image_dest=0xffffffff
+  image_size=0xffffffff
+  code_size=0xffffffff
+  sig_ptr=0xffffffff
+  sig_size=0xffffffff
+  cert_ptr=0xffffffff
+  cert_size=0xffffffff
+  oem_root_cert_sel=0xffffffff
+  oem_num_root_certs=0xffffffff
+  res3=0xffffffff
+  res4=0xffffffff
+  res5=0xffffffff
+  res6=0xffffffff
+  res7=0xffffffff
+== header @ 0x2800
+  codeword=0x844bdcd1 magic=0x73d71034 image_id=0x15 res1=0xffffffff res2=0xffffffff image_src=0x2850 image_dest=0xf8004000 image_size=0x30a04 code_size=0x30a04 sig_ptr=0xf8034a04 sig_size=0x0 cert_ptr=0xf8034a04 cert_size=0x0 oem_root_cert_sel=0x1 oem_num_root_certs=0x1 res3=0xffffffff res4=0xffffffff res5=0xffffffff res6=0xffffffff res7=0xffffffff
+== header @ 0x20000
+  codeword=0x844bdcd1 magic=0x73d71034 image_id=0xd48b54c6 res1=0x481562c8 res2=0x48156308 image_src=0x48156348 image_dest=0x48156388 image_size=0x481563c8 code_size=0x48156408 sig_ptr=0x48156448 sig_size=0x48156488 cert_ptr=0x481564c8 cert_size=0x48156508 oem_root_cert_sel=0x46206548 oem_num_root_certs=0xfc86f7ff res3=0xf7f0e001 res4=0x9800f841 res5=0xbd38 res6=0xf8021497 res7=0xf8021513

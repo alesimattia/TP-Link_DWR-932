@@ -1,0 +1,33 @@
+#! /bin/sh
+#
+# ---------------------------------------------------------------------------
+#  Copyright (C) 2017 BroadMobi Communication Technology Co., Ltd.
+#  All Rights Reserved.
+# ---------------------------------------------------------------------------
+
+# sms_service init.d script
+
+set -e
+
+case "$1" in
+  start)
+    echo -n "Starting sms-services: "
+    start-stop-daemon -S -b -a /bmdefsys/usr/bin/sms_service
+    echo "done"
+    ;;
+  stop)
+    echo -n "Stopping sms-services: "
+    start-stop-daemon -K -n /bmdefsys/usr/bin/sms_service
+    echo "done"
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    ;;
+  *)
+    echo "Usage sms_service { start | stop | restart }" >&2
+    exit 1
+    ;;
+esac
+
+exit 0

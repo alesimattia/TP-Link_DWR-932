@@ -1,0 +1,36 @@
+153 KB/s (1428 bytes in 0.009s)
+##### uptime e modalita
+ 13:43:23 up 1 min,  0 users,  load average: 3.23, 1.10, 0.39
+	<WlanMode>AP-STA</WlanMode>
+reti in wpa_supplicant.conf: 0
+##### processi
+  487 root       0:00 QCMAP_ConnectionManager /bmdefsys/etc/mobileap_cfg.xml d
+ 1263 root       0:00 wpa_supplicant -i wlan0-vxd -Dwext -B -c /bmdefsys/etc/wpa_supplicant.conf
+ 1266 root       0:00 wpa_cli -i wlan0-vxd -p /var/run/wpa_supplicant -B -a /bmdefsys/usr/bin/QCMAP_StaInterface
+##### interfacce
+wlan0-vxd Link encap:Ethernet  HWaddr DC:EA:E7:2F:59:B1  
+          inet6 addr: fe80::deea:e7ff:fe2f:59b1/64 Scope:Link
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+wlan0-vxd    ESSID:"dlink_DWR-932_59B0"  
+          Mode:Managed  Frequency:2.412 GHz  Access Point: Not-Associated   
+          Bit Rate:108 Mb/s   Sensitivity:0/0  
+wlan0       ESSID:"dlink_DWR-932_59B0"  
+          Mode:Master  Frequency:2.412 GHz  Access Point: DC:EA:E7:2F:59:B0   
+bridge name	bridge id		STP enabled	interfaces
+bridge0		8000.fe0bcea3a6a6	no		wlan0
+wlan0-vx  get_mib:8  0  0  0  
+wlan0     get_mib:16  0  0  0  
+##### wpa_cli status
+wpa_state=DISCONNECTED
+address=dc:ea:e7:2f:59:b1
+##### scansione
+reti trovate: 7
+40:b6:e7:45:e1:0a	2442	-42	[WPA2-PSK-CCMP][ESS]	H3140
+##### route e firewall
+192.168.0.0/24 dev bridge0  proto kernel  scope link  src 192.168.0.1 
+-P INPUT ACCEPT
+-A INPUT -p tcp -m tcp --dport 5555 -j DROP
+-A INPUT -i bridge0 -p tcp -m multiport --dports 53,80,443 -j ACCEPT
+-A INPUT -p tcp -j REJECT --reject-with icmp-port-unreachable
+-P POSTROUTING ACCEPT
+##### log recenti (wpa/dhcpcd/vxd)

@@ -1,0 +1,15 @@
+target header[4] = 2a988638
+solo partizioni: 46e7ca7e
+solo partizioni ^ffffffff: b9183581
+header+partizioni: d8662ff8
+header+partizioni ^ffffffff: 2799d007
+header(campo3=0)+partizioni: 9b90ba9c
+header(campo3=0)+partizioni ^ffffffff: 646f4563
+header(campo4=0)+partizioni: 53c85c37
+header(campo4=0)+partizioni ^ffffffff: ac37a3c8
+header(campi3,4=0)+partizioni: 103ec953
+header(campi3,4=0)+partizioni ^ffffffff: efc136ac
+tabella+partizioni: 11c1a42c
+tabella+partizioni ^ffffffff: ee3e5bd3
+header XOR+partizioni: 22927e1e
+header XOR+partizioni ^ffffffff: dd6d81e1

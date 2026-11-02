@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+ <head>
+		<meta http-equiv="Content-Language" content="en-us">
+		<title>D-Link - DWR-932C</title>
+		<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" /> 
+		<script type="text/javascript" language="javascript" src="js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="js/doT.js"></script>
+		<script type="text/javascript" language="javascript" src="js/mis.js"></script>
+		<script type="text/javascript" language="javascript" src="js/textValidations.js"></script>
+        <script type="text/javascript" language="javascript" src="js/api/loginApi.js"></script>
+        <script type="text/javascript" language="javascript" src="js/jquery.localize.min.js" ></script>
+        <script type="text/javascript" language="javascript" src="js/json2.js"></script>
+		<script type="text/javascript" charset="utf-8">
+
+
+			$(document).ready(function() {
+  				var request = $.ajax(
+					{
+						type: "GET",
+						url: "/data.ria?DynUpdate=about_sys",
+					dataType: "json"
+				});
+				request.done(function( responseData,textStatus, jqXHR ) {
+				    if(jqXHR.status == 401) {
+				        window.location = "index.html";
+				        return;
+				    }					
+					document.title = "D-Link - "+responseData.model_name;
+					$("#sku_number").html(responseData.fw_ver);
+					$("#revision_number").html(responseData.revision_number);
+				});
+				request.fail(function( jqXHR, textStatus, errorThrown) {           
+				       window.location = "index.html";
+				       return;
+				  
+				});				
+			});
+
+		/* End:Language support */
+		
+		</script>        
+        <style>
+		  
+			.configRow1 > label {
+				width: 190px;	
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div align="center">
+			<div class="logo">
+				&nbsp;
+			</div>
+			<div class="mid midLogin" align="center">
+				 
+					<h1>Release Details</h1>
+					<div class="inputBg1">
+						<div>
+							<div class="configRow1">
+								<label>SKU Number</label>
+                                 <p style="line-height:52px;" id="sku_number"> 02.01EU </p> 
+								 
+							</div>
+                            
+                           
+						</div>
+					</div>
+					 <div class="inputBg1">
+						<div>
+					  <div class="configRow1">
+								<label>Revision Number</label>
+                                 <p style="line-height:52px;" id="revision_number">01.01.0028.EU</p>
+								 
+							</div>
+                      </div>
+					</div>
+				<div class="break">
+					&nbsp;
+				</div>
+				<div class="break">
+					&nbsp;
+				</div>
+				 
+			</div>
+			<div class="footer" align="center" data-localize="login1.footer">
+				Copyright &#169; 2016 D-Link. All Rights Reserved.
+			</div>
+		</div>
+		<div id="tf1_overlay2" class="configDialogMask"></div>
+		<div class="errorPopup" id="tf1_error" style="display:none;"></div>
+		<div id="tf1_errorDialogTemplate" style="display:none">
+			<div>
+				<div class="errorHeading">
+					@@title@@
+				</div>
+				<div class="errorMessage">
+					@@msg@@
+				</div>
+				<div class="buttonsDiv2">
+					<input type="button" data-localize="common.ok" value="Ok" onClick="closeDialogAlert(event,'tf1_error')" class="btnSubmit">
+				</div>
+			</div>
+		</div>
+
+		<!-- Informtion Block -->
+		<div class="errorPopup" id="tf1_information" style="display:none;"></div>
+		<div id="tf1_infoDialogTemplate" style="display:none">
+			<div>
+				<div class="informationHeading">
+					@@title@@
+				</div>
+				<div class="errorMessage">
+					@@msg@@
+				</div>
+				<div class="buttonsDiv2">
+
+					<input type="button" data-localize="common.ok" value="Ok" onClick="closeDialogAlert(event,'tf1_information')" class="btnSubmit" >
+				</div>
+			</div>
+		</div>
+
+		 <script type="text/javascript" charset="utf-8">
+		 
+		  
+			var global_lang = new Object();
+
+			function parseINIString(idata){
+			    var regex = {  
+				    section: /^\s*\[\s*(.*)\s*\]\s*$/,  
+				    keyval: /^\s*([\w\.\-]+)\s*=\s*\x22(.*?)\x22\s*$/,  
+				    comment: /^\s*#.*$/   
+				};  
+				var rtval = {};  
+				var lines = idata.split(/\r\n|\r|\n/);  
+				var sec = null;  
+				var line,matchstr,str2;
+				//var replacestr=/[\\\"\\\\]/;
+				for(var i=0;i<lines.length;i++)
+				{
+					line = lines[i];	
+					//parse comment "#"				
+					if(regex.comment.test(line))
+					{  
+						continue;  
+					}
+					//parse keyval
+					else if(regex.keyval.test(line))
+					{  
+						matchstr = line.match(regex.keyval);  
+						str2=matchstr[2].replace(/\\\"/,"\"");
+						str2=str2.replace(/\\\\/,"\\");
+						if(sec)
+						{  
+							rtval[sec][matchstr[1]] = str2;  
+						}
+						else
+						{  
+							rtval[matchstr[1]] = str2;  
+						}  
+					}
+					//parse section
+					else if(regex.section.test(line))
+					{  
+						matchstr = line.match(regex.section);  
+						rtval[matchstr[1]] = {};  
+						sec = matchstr[1];  
+					}
+					else if(line.length == 0 && sec)
+					{  
+						sec = null;  
+					}
+				}
+				return rtval;  
+   			}
+ 
+ 	 
+			 
+			
+			/* Start:Language support */
+		
+			var systemData
+
+			$(document).ready(function() {
+				
+				 
+
+
+				HideDialog('tf1_overlay');		 
+
+			    var request = $.ajax({
+			    	url: "/data.ria?FileID=1&sect_name=DEVICE",       
+		       		 dataType: "text"
+		   		 });
+		    	request.done(function( responseData,textStatus, jqXHR ) {  
+		    		systemData = responseData.language;
+		    	});
+		    	request.fail(function( jqXHR, textStatus, errorThrown) {	
+		  	  	});
+		   	  request.always(function(responseData,textStatus, jqXHR ) {       
+		  	  });
+				  	  
+		  	  var localeLng = langString(systemData);
+		  	  //console.log(localeLng);
+		  	  var opts = { language: localeLng, pathPrefix: "/lang"};
+					opts.callback = function(data, defaultCallback) {
+			          global_lang = data;
+			          defaultCallback(data);
+			        }
+			        $("[data-localize]").localize("lang", opts)
+					 
+					/*use in scripts as {{=glb_lang["login1"]["welcome"]}} */
+
+					
+			});
+
+		/* End:Language support */
+		
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,26 @@
+#! /bin/sh
+if [ -f /bmdefsys/etc/firmware/bm_etc.config ]; then
+	cp /bmdefsys/etc/firmware/bm_etc.config /etc/bm_etc.config
+fi
+
+#remove rsdlclient info
+if [ -d /data/rsdl ]; then
+	rm -rf /data/rsdl
+fi
+
+#remove history traffic and time statistics
+if [ -f /bmdefsys/etc/data_usage.db ]; then
+    rm -rf /bmdefsys/etc/data_usage.db
+fi
+
+echo 1 > /etc/checkReset
+rm -rf /etc/backup/checkData
+rm -rf /etc/backup/smsack
+#delete wan Traffic Statistics
+rm -rf /etc/netstat.db
+rm -rf /etc/netstat_rate.db
+killall -SIGSYS qcmap_fcgi
+#wait modem do factory action
+logread > /var/syslog_messages
+sleep 3  
+reboot

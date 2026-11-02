@@ -1,0 +1,60 @@
+#! /bin/sh
+
+if [ ! -f /etc/checkReset ]; then
+  exit 1
+fi
+
+reset_flag=`cat /etc/checkReset`
+
+if [ $reset_flag == "1" ]; then
+  rm /bmdefsys/etc/hostapd.conf
+  rm /bmdefsys/etc/bm_wifi.conf
+  rm /bmdefsys/etc/bm_wps.conf
+  rm /bmdefsys/etc/mobileap_cfg.xml
+  rm /bmdefsys/etc/mobileap_firewall.xml
+  rm /bmdefsys/etc/wpa_supplicant.conf
+  rm /bmdefsys/www/lighttpd.user
+  rm /bmdefsys/etc/bm_login_pw.conf
+  rm /bmdefsys/etc/bm_config.conf
+  rm /bmdefsys/etc/fota_info.xml
+#  rm /var/rtl8192c/wlan0/ssid
+#  rm /var/rtl8192c/wlan0/wsc_psk
+  rm -rf /var/rtl8192c
+  /bmdefsys/usr/bin/rtltools/script/default_setting.sh wlan0
+  /bmdefsys/usr/bin/rtltools/script/default_setting.sh wlan0-vxd
+
+  cp /bmdefsys/etc/firmware/hostapd.conf /bmdefsys/etc/hostapd.conf
+  cp /bmdefsys/etc/firmware/bm_wifi.conf /bmdefsys/etc/bm_wifi.conf
+  cp /bmdefsys/etc/firmware/bm_wps.conf /bmdefsys/etc/bm_wps.conf
+  cp /bmdefsys/etc/firmware/bm_wifi-wlan1.conf /bmdefsys/etc/bm_wifi-wlan1.conf 
+  cp /bmdefsys/etc/firmware/bm_wps-wlan1.conf /bmdefsys/etc/bm_wps-wlan1.conf
+  cp /bmdefsys/etc/firmware/hostapd-wlan1.conf /bmdefsys/etc/hostapd-wlan1.conf
+  cp /bmdefsys/etc/firmware/wpa_supplicant.conf /bmdefsys/etc/wpa_supplicant.conf	  
+  cp /bmdefsys/etc/firmware/mobileap_cfg.xml /bmdefsys/etc/mobileap_cfg.xml
+  cp /bmdefsys/etc/firmware/mobileap_firewall.xml /bmdefsys/etc/mobileap_firewall.xml
+  cp /bmdefsys/etc/firmware/lighttpd.user /bmdefsys/www/lighttpd.user
+  cp /bmdefsys/etc/firmware/bm_login_pw.conf /bmdefsys/etc/bm_login_pw.conf
+  cp /bmdefsys/etc/firmware/bm_config.conf /bmdefsys/etc/bm_config.conf
+  cp /bmdefsys/etc/firmware/fota_info.xml /bmdefsys/etc/fota_info.xml
+  cp /bmdefsys/etc/firmware/ssid /var/rtl8192c/wlan0/ssid
+  cp /bmdefsys/etc/firmware/wpa_psk /var/rtl8192c/wlan0/wsc_psk
+  if [ -f /bmdefsys/etc/firmware/cwmp.conf ]; then
+    cp /bmdefsys/etc/firmware/cwmp.conf /bmdefsys/etc/cwmp/conf/cwmp.conf
+  fi
+
+  echo 0 > /etc/checkReset
+fi
+total 67
+drwxr-xr-x    1 root     root          2048 Jun  7  2025 .
+drwxr-xr-x    1 root     root          2048 Jun  7  2025 ..
+-rwxr-xr-x    1 root     root         55296 Jun 28  2024 apnList.db
+-rwxr-xr-x    1 root     root           743 Jun 28  2024 bm_config.conf
+-rwxr-xr-x    1 root     root             6 Jun 28  2024 bm_login_pw.conf
+-rwxr-xr-x    1 root     root           684 Jun 28  2024 bmtver.conf
+-rwxr-xr-x    1 root     root           387 Jun 28  2024 fota_info.xml
+-rwxr-xr-x    1 root     root            38 Jun 28  2024 lighttpd.user
+-rwxr-xr-x    1 root     root          2579 Jun 28  2024 mobileap_cfg.xml
+-rwxr-xr-x    1 root     root           442 Jun 28  2024 mobileap_firewall.xml
+-rw-r--r--    1 root     root            18 Jun  7  2025 ssid
+-rw-r--r--    1 root     root            10 Jun  7  2025 wpa_psk
+-rw-r--r--    1 root     root            77 Jun 28  2024 wpa_supplicant.conf

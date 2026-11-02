@@ -1,0 +1,119 @@
+header: 12344321 89abcdef 00000001 05e01083 2a988638 00000005 00000001
+fine dati 0x2c16fc4, file 0x2c16fc4, coda 0 B
+byte header 0x00-0x258 non nulli dopo tabella: nessuno
+
+[boot] file_off=0x258 f1=0x258 usz=3999744 len=3645888
+  local_ver: 20
+  flags: 9
+  method: 8
+  mtime: 2024-06-28 17:18:14
+  local_crc: 2471308292
+  local_csz: 3645666
+  local_usz: 3999744
+  name: mdm-perf-image-boot-mdm9625-perf.img
+  extra: 
+  data_off: 66
+  enc_hdr_last: None
+  made_by: host=0 ver=31
+  cd_crc: 934d2c04
+  cd_csz: 3645666
+  cd_usz: 3999744
+  cd_extra: 0a002000000000000100180080650e1b3cc9da014b77de0c3fc9da012b3ad80c3fc9da01
+  eattr: 00000020
+  eocd_off: 3645866
+  total: 3645888
+  data_descriptor: 504b0708042c4d93e2a0370000083d00
+  enc_header_len: 12
+
+[system] file_off=0x37a418 f1=0x3d0a58 usz=15400704 len=6945642
+  local_ver: 20
+  flags: 9
+  method: 8
+  mtime: 2024-06-28 17:18:12
+  local_crc: 3753393218
+  local_csz: 6945378
+  local_usz: 15400704
+  name: msm-mdm-perf-image-eglibc-ipk--mdm9625-perf.rootfs.yaffs2
+  extra: 
+  data_off: 87
+  enc_hdr_last: None
+  made_by: host=0 ver=31
+  cd_crc: dfb83c42
+  cd_csz: 6945378
+  cd_usz: 15400704
+  cd_extra: 0a00200000000000010018008038dd193cc9da0185031d0d3fc9da01ed080d0d3fc9da01
+  eattr: 00000020
+  eocd_off: 6945620
+  total: 6945642
+  data_descriptor: 504b0708423cb8df62fa690000ffea00
+  enc_header_len: 12
+
+[userdata] file_off=0xa19f82 f1=0x1280958 usz=27077952 len=10877165
+  local_ver: 20
+  flags: 9
+  method: 8
+  mtime: 2024-06-28 17:18:12
+  local_crc: 2064210460
+  local_csz: 10876945
+  local_usz: 27077952
+  name: mdm9625-perf-usr-image.usrfs.yaffs2
+  extra: 
+  data_off: 65
+  enc_hdr_last: None
+  made_by: host=0 ver=31
+  cd_crc: 7b095a1c
+  cd_csz: 10876945
+  cd_usz: 27077952
+  cd_extra: 0a002000000000000100180000a244193cc9da0127e30c0d3fc9da01fe23ee0c3fc9da01
+  eattr: 00000020
+  eocd_off: 10877143
+  total: 10877165
+  data_descriptor: 504b07081c5a097b11f8a500402d9d01
+  enc_header_len: 12
+
+[qdsp] file_off=0x147986f f1=0x2c53698 usz=41658091 len=21216617
+  local_ver: 20
+  flags: 9
+  method: 8
+  mtime: 2019-02-19 13:34:54
+  local_crc: 1340788019
+  local_csz: 21216445
+  local_usz: 41658091
+  name: qdsp6sw.mbn
+  extra: 
+  data_off: 41
+  enc_hdr_last: None
+  made_by: host=0 ver=31
+  cd_crc: 4feacd33
+  cd_csz: 21216445
+  cd_usz: 41658091
+  cd_extra: 0a002000000000000100180080a909d814c8d40159fc6c0d3fc9da01aa5c270d3fc9da01
+  eattr: 00000020
+  eocd_off: 21216595
+  total: 21216617
+  data_descriptor: 504b070833cdea4fbdbc4301eba67b02
+  enc_header_len: 12
+
+[bmdefsys] file_off=0x28b55d8 f1=0x540dd83 usz=10433280 len=3545580
+  local_ver: 20
+  flags: 9
+  method: 8
+  mtime: 2024-06-28 17:18:12
+  local_crc: 932078790
+  local_csz: 3545362
+  local_usz: 10433280
+  name: mdm9625-perf-bmdefsys.usrfs.yaffs2
+  extra: 
+  data_off: 64
+  enc_hdr_last: None
+  made_by: host=0 ver=31
+  cd_crc: 378e64c6
+  cd_csz: 3545362
+  cd_usz: 10433280
+  cd_extra: 0a002000000000000100180000a244193cc9da01fe23ee0c3fc9da01b08ce40c3fc9da01
+  eattr: 00000020
+  eocd_off: 3545558
+  total: 3545580
+  data_descriptor: 504b0708c6648e371219360000339f00
+  enc_header_len: 12
+dump in fw-extract/partitions-zip

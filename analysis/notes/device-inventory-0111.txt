@@ -1,0 +1,648 @@
+
+##### uname / uptime
+Linux mdm9625-perf 3.4.0+ #1 PREEMPT Fri Jun 28 17:14:54 CST 2024 armv7l GNU/Linux
+ 17:03:39 up  3:21,  0 users,  load average: 4.85, 4.92, 4.62
+
+##### binari funzioni
+smbd: -
+nmbd: -
+samba: -
+nodogsplash: -
+ndsctl: -
+minidlna: -
+minidlnad: -
+miniupnpd: /usr/sbin/miniupnpd
+upnpd: -
+avahi-daemon: /usr/sbin/avahi-daemon
+hostapd: -
+hostapd_cli: -
+wpa_supplicant: /usr/sbin/wpa_supplicant
+wpa_cli: /usr/sbin/wpa_cli
+iw: /usr/sbin/iw
+iwconfig: /sbin/iwconfig
+iwpriv: /sbin/iwpriv
+iwlist: /sbin/iwlist
+wmiconfig: -
+athtool: -
+iptables: /usr/sbin/iptables
+ip6tables: /usr/sbin/ip6tables
+tc: /sbin/tc
+led_ctl: /usr/bin/led_ctl
+setleds: /usr/bin/setleds
+miniui: /bmdefsys/usr/bin/miniui
+deep_sleep_server: /bmdefsys/usr/bin/deep_sleep_server
+bm_netstat: /bmdefsys/usr/bin/bm_netstat
+bm_dataLimit: /bmdefsys/usr/bin/bm_dataLimit
+ntfs-3g: -
+mount.cifs: -
+crond: /sbin/crond
+crontab: /bin/crontab
+httpd: /sbin/httpd
+ethtool: -
+cpufreq-set: -
+
+##### busybox applets
+Currently defined functions: [, [[, acpid, add-shell, addgroup, adduser, adjtimex, arp, arping, ash, awk, base64, basename, beep, blkid, blockdev, bootchartd, brctl, bunzip2, bzcat, bzip2, cal, cat, catv, chat, chattr, chgrp, chmod, chown, chpasswd, chpst, chroot, chrt, chvt, cksum, clear, cmp, comm, cp, cpio, crond, crontab, cryptpw, cttyhack, cut, date, dc, dd, deallocvt, delgroup, deluser, depmod, devmem, df, dhcprelay, diff, dirname, dmesg, dnsd, dnsdomainname, dos2unix, du, dumpkmap, dumpleases, echo, ed, egrep, eject, env, envdir, envuidgid, ether-wake, expand, expr, fakeidentd, false, fatattr, fbset, fbsplash, fdflush, fdformat, fdisk, fgconsole, fgrep, find, findfs, flock, fold, free, freeramdisk, fsck, fsck.minix, fstrim, fsync, ftpd, ftpget, ftpput, fuser, getopt, getty, grep, groups, gunzip, gzip, halt, hd, hdparm, head, hexdump, hostid, hostname, httpd, hush, hwclock, id, ifconfig, ifdown, ifenslave, ifplugd, ifup, inetd, init, insmod, install, ionice, iostat, ip, ipaddr, ipcalc, ipcrm, ipcs, iplink, iproute, iprule, iptunnel, kbd_mode, kill, killall, killall5, klogd, last, less, linux32, linux64, linuxrc, ln, loadfont, loadkmap, logger, login, logname, logread, losetup, lpd, lpq, lpr, ls, lsattr, lsmod, lsof, lspci, lsusb, lzcat, lzma, lzop, lzopcat, makedevs, makemime, man, md5sum, mdev, mesg, microcom, mkdir, mkdosfs, mke2fs, mkfifo, mkfs.ext2, mkfs.minix, mkfs.vfat, mknod, mkpasswd, mkswap, mktemp, modinfo, modprobe, more, mount, mountpoint, mpstat, mt, mv, nameif, nbd-client, nc, netstat, nice, nmeter, nohup, nslookup, ntpd, od, openvt, passwd, patch, pgrep, pidof, ping, ping6, pipe_progress, pivot_root, pkill, pmap, popmaildir, poweroff, powertop, printenv, printf, ps, pscan, pstree, pwd, pwdx, raidautorun, rdate, rdev, readahead, readlink, readprofile, realpath, reboot, reformime, remove-shell, renice, reset, resize, rev, rm, rmdir, rmmod, route, rpm, rpm2cpio, rtcwake, run-parts, runlevel, runsv, runsvdir, rx, script, scriptreplay, sed, sendmail, seq, setarch, setconsole, setfont, setkeycodes, setlogcons, setserial, setsid, setuidgid, sh, sha1sum, sha256sum, sha3sum, sha512sum, showkey, shuf, slattach, sleep, smemcap, softlimit, sort, split, start-stop-daemon, stat, strings, stty, su, sulogin, sum, sv, svlogd, swapoff, swapon, switch_root, sync, sysctl, syslogd, tac, tail, tar, tcpsvd, tee, telnet, telnetd, test, tftp, tftpd, time, timeout, top, touch, tr, traceroute, traceroute6, true, tty, ttysize, tunctl, ubimkvol, ubirmvol, ubirsvol, ubiupdatevol, udhcpc, udhcpd, udpsvd, umount, uname, unexpand, uniq, unix2dos, unlink, unlzma, unlzop, unxz, unzip, uptime, users, usleep, uudecode, uuencode, vconfig, vi, vlock, volname, wall, watch, watchdog, wc, wget, which, who, whoami, whois, xargs, xz, xzcat, yes, zcat, zcip 
+
+##### init scripts
+adbd
+alignment.sh
+atfwd_daemon
+avahi-daemon
+avahi-dnsconfd
+banner.sh
+bootlogd
+bootmisc.sh
+busybox-cron
+checkroot.sh
+chgrp-diag
+data-init
+dbus-1
+devpts.sh
+diagrebootapp
+dnsmasq
+functions
+halt
+hostname.sh
+hwclock.sh
+ipthdme
+keymap.sh
+lighttpd
+mdev
+miniupnpd
+modem-shutdown
+modutils.sh
+mountall.sh
+mountnfs.sh
+netmgrd
+networking
+populate-volatile.sh
+power_config
+qmi_shutdown_modemd
+qmuxd
+qrngd
+rc
+rcS
+reboot
+reset_reboot_cookie
+rmnologin.sh
+run-postinsts
+save-rtc.sh
+sendsigs
+shutdown
+single
+start_QCMAP_ConnectionManager_le
+start_diag_socket_log
+start_ipacm_le
+start_qti_le
+stop-bootlogd
+sysfs.sh
+syslog
+syslog.busybox
+thermal-engine
+time_serviced
+umountfs
+umountnfs.sh
+urandom
+usb
+-- rc5.d:
+S01time_serviced
+S02dbus-1
+S15chgrp-diag
+S20syslog
+S22avahi-dnsconfd
+S26diagrebootapp
+S27atfwd_daemon
+S27qrngd
+S40qmuxd
+S40thermal-engine
+S42adbd
+S42ipthdme
+S45netmgrd
+S45qmi_shutdown_modemd
+S50power_config
+S55reset_reboot_cookie
+S60start_QCMAP_ConnectionManager_le
+S70lighttpd
+S90start_ipacm_le
+S90start_qti_le
+S97data-init
+S98start_diag_socket_log
+S99rmnologin.sh
+S99stop-bootlogd
+-- bmdefsys init.d:
+rsdlclient.sh
+start_bm_fota_le
+start_bm_netstat_le
+start_deep_sleep_server_le
+start_miniui_le
+start_nvoperator_le
+start_pe_service_le
+start_sms_service_le
+
+##### consumatori dei flag di bm_config.conf (solo script di testo; binari analizzati offline)
+samba: 
+nodogsplash_enable: 
+netstat_enable: 
+urlFilterEnable: 
+quota_limit: 
+AUTOREBOOT_enable: 
+deepsleeptime: 
+batteryidletime: 
+lcd_off_time: 
+Country_code: 
+wwan_upnp_disable: 
+
+##### processi
+PID   USER     TIME   COMMAND
+    1 root       0:03 init [5]
+    2 root       0:00 [kthreadd]
+    3 root       0:06 [ksoftirqd/0]
+    5 root       0:00 [kworker/0:0H]
+    7 root       0:07 [kworker/u:0H]
+    8 root       0:00 [khelper]
+    9 root       0:00 [netns]
+   10 root       2:25 [kworker/0:1H]
+   11 root       0:00 [modem_notifier]
+   12 root       0:00 [smd_channel_clo]
+   14 root       0:00 [smsm_cb_wq]
+   16 root       0:00 [rpm-smd]
+   17 root       0:00 [kworker/u:1H]
+   28 root       0:00 [sync_supers]
+   29 root       0:00 [bdi-default]
+   30 root       0:00 [kblockd]
+   31 root       0:00 [vmalloc]
+   32 root       0:00 [khubd]
+   33 root       0:00 [ipa rx wq]
+   34 root       0:00 [ipa tx wq]
+   35 root       0:00 [ipa_rm_wq]
+   36 root       0:00 [a2_mux_tx]
+   37 root       0:00 [a2_mux_rx]
+   38 root       1:06 [kworker/u:2]
+   39 root       0:00 [tethering_bridg]
+   40 root       0:00 [cfg80211]
+   41 root       0:00 [qmi]
+   42 root       0:00 [nmea]
+   43 root       0:00 [IPCRTR]
+   44 root       0:00 [msm_ipc_router]
+   45 root       0:00 [ipc_rtr_smd_ipc]
+   47 root       0:00 [msm-cpufreq]
+   48 root       0:00 [kswapd0]
+   49 root       0:00 [fsnotify_mark]
+   50 root       0:00 [crypto]
+   64 root       0:00 [diag_wq]
+   65 root       0:00 [diag_cntl_wq]
+   66 root       0:00 [diag_dci_wq]
+   67 root       0:00 [mtdblock0]
+   68 root       0:00 [mtdblock1]
+   69 root       0:00 [mtdblock2]
+   70 root       0:00 [mtdblock3]
+   71 root       0:00 [mtdblock4]
+   72 root       0:00 [mtdblock5]
+   73 root       0:00 [mtdblock6]
+   74 root       0:00 [mtdblock7]
+   75 root       0:00 [mtdblock8]
+   76 root       0:00 [mtdblock9]
+   77 root       0:00 [mtdblock10]
+   78 root       0:00 [mtdblock11]
+   79 root       0:00 [mtdblock12]
+   80 root       0:00 [mtdblock13]
+   81 root       0:00 [mtdblock14]
+   82 root       0:00 [mtdblock15]
+   83 root       0:00 [mtdblock16]
+   84 root       0:00 [mtdblock17]
+   85 root       0:00 [mtdblock18]
+   86 root       0:00 [mtdblock19]
+   87 root       0:00 [mtdblock20]
+   88 root       0:00 [mtdblock21]
+   89 root       0:00 [f9923000.spi]
+   92 root       0:26 [oled]
+   94 root       0:00 [k_func]
+   96 root       0:00 [k_rmnet_mux_wor]
+   97 root       0:00 [f_mtp]
+   98 root       0:00 [file-storage]
+   99 root       0:00 [uether]
+  100 root       0:00 [get_vlotage_val]
+  101 root       0:00 [usb_bam_wq]
+  102 root       0:00 [deferwq]
+  103 root       0:01 [yaffs-bg-1]
+  171 root       0:00 [yaffs-bg-1]
+  172 root       0:00 [yaffs-bg-1]
+  173 root       0:01 [yaffs-bg-1]
+  174 root       0:01 [yaffs-bg-1]
+  175 root       0:00 [yaffs-bg-1]
+  294 root       0:00 /sbin/adbd
+  305 root       0:00 [k_gserial]
+  308 root       0:00 [k_gsmd]
+  311 root       0:00 [k_gbam]
+  337 root       0:00 /usr/bin/time_daemon
+  343 messageb   0:00 /usr/bin/dbus-daemon --system
+  357 root       0:00 /sbin/syslogd -n -C1024 -m 20
+  374 diag       0:01 /usr/bin/diagrebootapp
+  382 root       0:00 /usr/bin/atfwd_daemon
+  397 root       0:06 /usr/bin/qmuxd
+  407 root       0:01 /usr/bin/thermal-engine
+  442 root       0:00 /usr/bin/netmgrd
+  475 root       0:09 QCMAP_ConnectionManager /bmdefsys/etc/mobileap_cfg.xml d
+  601 nobody     0:00 dnsmasq -i bridge0 -I lo -z --dhcp-range=bridge0,192.168.0.20,192.168.0.60,255.255.255.0,43200 --dhcp-hostsfile=/etc/dhcp_hosts --dhcp-option-force=6,192.168.0.1
+  795 root       0:01 /usr/sbin/lighttpd -f /bmdefsys/etc/lighttpd.conf
+  796 root       0:00 /bmdefsys/usr/bin/qcmap_fcgi
+  803 root       0:00 /bmdefsys/usr/bin/debug_fcgi
+  824 root       0:02 ipacm
+  831 root       0:00 /usr/bin/qti /dev/rmnet_ctrl /dev/smdcntl8
+  832 root       0:00 /usr/bin/qti /dev/rmnet_ctrl1 /dev/smdcntl9
+  835 root       0:00 /usr/bin/qti /dev/rmnet_ctrl2 /dev/smdcntl10
+  838 root       0:00 /usr/bin/qti /dev/rmnet_ctrl3 /dev/smdcntl11
+  868 root       0:02 /usr/bin/diag_socket_log
+  883 root       0:00 /bmdefsys/usr/bin/pe_service
+  891 root       0:02 /bmdefsys/usr/bin/bm_netstat
+  893 root       0:02 /bmdefsys/usr/bin/bm_netrate
+  913 root       0:01 /bmdefsys/usr/bin/deep_sleep_server
+  923 root       0:02 /bmdefsys/usr/bin/sms_service
+  955 root       0:00 /bmdefsys/usr/bin/bm_fota
+  960 root       0:00 /bmdefsys/usr/bin/rsdlclient
+  965 root       0:00 /sbin/reboot-daemon
+  972 root       0:00 /usr/bin/mbimd
+  973 root       0:00 /sbin/getty -L ttyHSL0 115200 console
+  995 root       0:00 /bmdefsys/usr/bin/rtltools/webs -x
+ 1145 root       0:05 /bmdefsys/usr/bin/rtltools/wscd -start -c /var/wsc-wlan0.conf -w wlan0 -fi /var/wscd-wlan0.fifo -daemon
+ 1154 root       0:00 /bmdefsys/usr/bin/rtltools/iwcontrol wlan0
+ 1165 root       0:00 cxmapp
+ 1172 root       0:00 [rtw_xmit/wlan0]
+ 1173 root       2:26 [rtw_cmd/wlan0]
+ 1175 root       2:34 [ksdioirqd/mmc0]
+ 1218 root       0:05 {ntpclient.sh} /bin/sh /bmdefsys/usr/bin/ntpclient.sh daemon
+ 1245 root       0:00 /bmdefsys/usr/bin/pe_service
+ 1246 root       0:32 /bmdefsys/usr/bin/pe_service
+ 1247 root       0:36 /bmdefsys/usr/bin/pe_service
+ 1248 root       0:14 /bmdefsys/usr/bin/pe_service
+18168 root       0:00 [kworker/0:0]
+20659 root       0:00 [kworker/0:2]
+21349 root       0:00 [flush-31:12]
+21384 root       0:01 [kworker/u:1]
+25934 root       0:00 [kworker/0:1]
+27725 root       0:00 [kworker/u:0]
+28237 root       0:00 sleep 5
+28242 root       0:00 /bin/sh -c sh /cache/dwr_inventory.sh > /cache/inv.txt 2>&1; echo RC=$?
+28243 root       0:00 sh /cache/dwr_inventory.sh
+28346 root       0:00 ps
+
+##### rete
+bridge0   Link encap:Ethernet  HWaddr E2:2B:68:4C:8B:9F  
+          inet addr:192.168.0.1  Bcast:192.168.0.255  Mask:255.255.255.0
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+rmnet0    Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  
+rmnet1    Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  
+rmnet2    Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  
+rmnet3    Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  
+rmnet4    Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  
+rmnet5    Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  
+rmnet6    Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  
+rmnet7    Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  
+sit0      Link encap:IPv6-in-IPv4  
+wlan0     Link encap:Ethernet  HWaddr DC:EA:E7:2F:59:B0  
+          inet addr:169.254.1.1  Bcast:169.254.1.255  Mask:255.255.255.0
+wlan0-va0 Link encap:Ethernet  HWaddr 00:00:00:00:00:00  
+wlan0-vxd Link encap:Ethernet  HWaddr 00:00:00:00:00:00  
+-- iwconfig:
+rmnet6    no wireless extensions.
+rmnet1    no wireless extensions.
+lo        no wireless extensions.
+rmnet5    no wireless extensions.
+bridge0   no wireless extensions.
+rmnet0    no wireless extensions.
+rmnet4    no wireless extensions.
+sit0      no wireless extensions.
+rmnet3    no wireless extensions.
+rmnet7    no wireless extensions.
+rmnet2    no wireless extensions.
+wlan0-vxd  IEEE 802.11-DS  Access Point: Not-Associated   Bit Rate:2 Mb/s   
+          RTS thr:off   Fragment thr=2347 B   
+          Power Management:off
+          
+wlan0-va0  IEEE 802.11-DS  Access Point: Not-Associated   Bit Rate:2 Mb/s   
+          RTS thr:off   Fragment thr=2347 B   
+          Power Management:off
+          
+wlan0     άτ  ESSID:"dlink_DWR-932_59B0"  
+          Mode:Master  Frequency:2.442 GHz  Access Point: DC:EA:E7:2F:59:B0   
+          Bit Rate=143 Mb/s   Sensitivity:0/0  
+          Retry limit:0   RTS thr:off   Fragment thr:off
+          Power Management:off
+          
+-- iw dev:
+-- /proc/net/wireless:
+Inter-| sta-|   Quality        |   Discarded packets               | Missed | WE
+ face | tus | link level noise |  nwid  crypt   frag  retry   misc | beacon | 22
+ wlan0: 0000    0     0     0        0      0      0      0      0        0
+
+##### mobileap_cfg.xml (solo tag, valori sensibili mascherati)
+<?xml version="1.0" encoding="UTF-8"?>
+<system xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcmap_cfg.xsd">
+<MobileAPCfg>
+	<MobileAPNatCfg>
+	<NATType>SYM</NATType>
+	<Firewall>/bmdefsys/etc/mobileap_firewall.xml</Firewall>
+	<NatEntryGenericTimeout>200</NatEntryGenericTimeout>
+	<NatEntryICMPTimeout>30</NatEntryICMPTimeout>
+	<NatEntryTCPEstablishedTimeout>3600</NatEntryTCPEstablishedTimeout>
+	<NatEntryUDPTimeout>60</NatEntryUDPTimeout>
+	<DmzIP>0.0.0.0</DmzIP>
+	<EnableIPSECVpnPassthrough>***</EnableIPSECVpnPassthrough>
+	<EnablePPTPVpnPassthrough>***</EnablePPTPVpnPassthrough>
+	<EnableL2TPVpnPassthrough>1</EnableL2TPVpnPassthrough>
+	<EnableWebserverWWANAccess>0</EnableWebserverWWANAccess>
+	<ALGCfg>
+		<EnableRTSPAlg>0</EnableRTSPAlg>
+	</ALGCfg>
+</MobileAPNatCfg>
+<MobileAPLanCfg>
+	<Module>ar6003</Module>
+	<WlanMode>AP</WlanMode>
+	<EnableIPV4>1</EnableIPV4>
+	<EnableIPV6>1</EnableIPV6>
+	<HostAPDCfg>/etc/hostapd.conf</HostAPDCfg>
+	<STAModeHostAPDCfg>/etc/sta_mode_hostapd.conf</STAModeHostAPDCfg>
+	<APIPAddr>192.168.0.1</APIPAddr>
+	<SubNetMask>255.255.255.0</SubNetMask>
+	<EnableDHCPServer>1</EnableDHCPServer>
+	<DHCPCfg>
+		<StartIP>192.168.0.20</StartIP>
+		<EndIP>192.168.0.60</EndIP>
+		<LeaseTime>43200</LeaseTime>
+	</DHCPCfg>
+	<GuestAPCfg>
+		<HostAPDCfg>/etc/hostapd-wlan1.conf</HostAPDCfg>
+		<AccessProfile>INTERNETONLY</AccessProfile>
+	</GuestAPCfg>
+	<StationModeCfg>
+		<SupplicantCfg>/bmdefsys/etc/wpa_supplicant.conf</SupplicantCfg>
+		<STAModeConnType>1</STAModeConnType>
+		<StaticIPAddr>0.0.0.0</StaticIPAddr>
+		<StaticConfigDNSAddr>0.0.0.0</StaticConfigDNSAddr>
+		<StaticConfigGWAddr>0.0.0.0</StaticConfigGWAddr>
+		<StaticConfigNetMask>0.0.0.0</StaticConfigNetMask>
+	</StationModeCfg>
+</MobileAPLanCfg>
+<MobileAPWanCfg>
+	<AutoConnect>1</AutoConnect>
+	<Roaming>0</Roaming>
+	<EriConfig>/etc/mobileap_eri_config.bin</EriConfig>
+	<TECH>ANY</TECH>
+	<V4_UMTS_PROFILE_INDEX>1</V4_UMTS_PROFILE_INDEX>
+	<V4_CDMA_PROFILE_INDEX>0</V4_CDMA_PROFILE_INDEX>
+	<V6_UMTS_PROFILE_INDEX>1</V6_UMTS_PROFILE_INDEX>
+	<V6_CDMA_PROFILE_INDEX>0</V6_CDMA_PROFILE_INDEX>
+</MobileAPWanCfg>
+	<UPnP>0</UPnP>
+	<DLNA>0</DLNA>
+	<MDNS>0</MDNS>
+<MobileAPBootUpCfg>
+	<MobileAPEnableAtBootup>1</MobileAPEnableAtBootup>
+	<WLANEnableAtBootup>1</WLANEnableAtBootup>
+</MobileAPBootUpCfg>
+</MobileAPCfg>
+</system>
+
+##### hostapd config runtime (solo nomi chiave)
+-- valori non sensibili hostapd.conf:
+
+##### cpufreq
+-- /sys/devices/system/cpu/cpu0/cpufreq
+scaling_governor: performance
+scaling_available_governors: conservative ondemand userspace powersave performance 
+scaling_available_frequencies: 300000 600000 748800 998400 
+scaling_cur_freq: 998400
+scaling_min_freq: 300000
+scaling_max_freq: 998400
+cpuinfo_min_freq: 300000
+cpuinfo_max_freq: 998400
+cpu0
+cpufreq
+cpuidle
+kernel_max
+offline
+online
+possible
+power
+present
+uevent
+
+##### LED / display / backlight
+power_led_blue
+power_led_green
+power_led_red
+signal_led_blue
+signal_led_green
+signal_led_red
+sled_led1
+sled_led2
+sled_led3
+sled_led4
+sms_led
+wifi_led
+/sys/class/leds/power_led_blue: brightness=1 max=255 trigger=[none] usb-online ac-online battery-charging-or-full battery-charging battery-full battery-charging-blink-full-solid mmc0 timer heartbeat backlight gpio default-on mmc1 
+/sys/class/leds/power_led_green: brightness=0 max=255 trigger=[none] usb-online ac-online battery-charging-or-full battery-charging battery-full battery-charging-blink-full-solid mmc0 timer heartbeat backlight gpio default-on mmc1 
+/sys/class/leds/power_led_red: brightness=0 max=255 trigger=[none] usb-online ac-online battery-charging-or-full battery-charging battery-full battery-charging-blink-full-solid mmc0 timer heartbeat backlight gpio default-on mmc1 
+/sys/class/leds/signal_led_blue: brightness=0 max=255 trigger=[none] usb-online ac-online battery-charging-or-full battery-charging battery-full battery-charging-blink-full-solid mmc0 timer heartbeat backlight gpio default-on mmc1 
+/sys/class/leds/signal_led_green: brightness=0 max=255 trigger=[none] usb-online ac-online battery-charging-or-full battery-charging battery-full battery-charging-blink-full-solid mmc0 timer heartbeat backlight gpio default-on mmc1 
+/sys/class/leds/signal_led_red: brightness=0 max=255 trigger=none usb-online ac-online battery-charging-or-full battery-charging battery-full battery-charging-blink-full-solid mmc0 [timer] heartbeat backlight gpio default-on mmc1 
+/sys/class/leds/sled_led1: brightness=0 max=255 trigger=[none] usb-online ac-online battery-charging-or-full battery-charging battery-full battery-charging-blink-full-solid mmc0 timer heartbeat backlight gpio default-on mmc1 
+/sys/class/leds/sled_led2: brightness=0 max=255 trigger=[none] usb-online ac-online battery-charging-or-full battery-charging battery-full battery-charging-blink-full-solid mmc0 timer heartbeat backlight gpio default-on mmc1 
+/sys/class/leds/sled_led3: brightness=0 max=255 trigger=[none] usb-online ac-online battery-charging-or-full battery-charging battery-full battery-charging-blink-full-solid mmc0 timer heartbeat backlight gpio default-on mmc1 
+/sys/class/leds/sled_led4: brightness=0 max=255 trigger=[none] usb-online ac-online battery-charging-or-full battery-charging battery-full battery-charging-blink-full-solid mmc0 timer heartbeat backlight gpio default-on mmc1 
+/sys/class/leds/sms_led: brightness=0 max=255 trigger=[none] usb-online ac-online battery-charging-or-full battery-charging battery-full battery-charging-blink-full-solid mmc0 timer heartbeat backlight gpio default-on mmc1 
+/sys/class/leds/wifi_led: brightness=1 max=255 trigger=[none] usb-online ac-online battery-charging-or-full battery-charging battery-full battery-charging-blink-full-solid mmc0 timer heartbeat backlight gpio default-on mmc1 
+ls: /sys/class/backlight: No such file or directory
+/dev/fb0
+
+/sys/class/graphics:
+fb0
+/sys/bus/spi/drivers/qcom,spi-oled
+
+##### alimentazione
+-- /sys/class/power_supply/ac
+type: Mains
+online: 1
+-- /sys/class/power_supply/battery
+type: Battery
+status: Full
+capacity: 100
+voltage_now: 4177
+present: 1
+health: Good
+-- /sys/class/power_supply/usb
+type: USB
+online: 1
+present: 1
+mem
+off
+autosleep
+pm_async
+state
+touch_event
+touch_event_timer
+wakeup_count
+
+##### moduli e parametri wifi
+rtl8192es 946552 0 - Live 0xbf000000 (O)
+-- /sys/module/cfg80211
+cfg80211_disable_40mhz_24ghz=N
+ieee80211_regdom=00
+
+##### Wi-Fi driver / rtltools
+total 372
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 .
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 ..
+-rwxr-xr-x    1 root     root         11508 Jun 28  2024 UDPserver
+-rwxr-xr-x    1 root     root         99628 Jun 28  2024 auth
+-rwxr-xr-x    1 root     root         20344 Jun 28  2024 flash
+-rwxr-xr-x    1 root     root         26600 Jun 28  2024 iwcontrol
+-rwxr-xr-x    1 root     root         18672 Jun 28  2024 iwpriv
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 script
+-rwxr-xr-x    1 root     root          4648 Jun 28  2024 webs
+-rwxr-xr-x    1 root     root        191560 Jun 28  2024 wscd
+build
+extra
+kernel
+modules.alias
+modules.alias.bin
+modules.builtin
+modules.builtin.bin
+modules.ccwmap
+modules.dep
+modules.dep.bb
+modules.dep.bin
+modules.devname
+modules.ieee1394map
+modules.inputmap
+modules.isapnpmap
+modules.ofmap
+modules.order
+modules.pcimap
+modules.seriomap
+modules.softdep
+modules.symbols
+modules.symbols.bin
+modules.usbmap
+source
+[    2.460891] mmc0: new ultra high speed SDR50 SDIO card at address 0001
+[   11.589571] Realtek WLAN driver - version 1.7 (2018-04-27)
+[   11.618054]  wlan_index:0  1, 10,0x8179024c,0x0,0
+[   11.628042] rtw_drv_init: sdio_func_id is "mmc0:0001:1"
+[   11.632230] =====>>INSIDE rtl8192cd_init_one <<=====
+[   11.760980] =====>>EXIT rtl8192cd_init_one <<=====
+[   11.764736] =====>>INSIDE rtl8192cd_init_one <<=====
+[   11.778491] =====>>EXIT rtl8192cd_init_one <<=====
+[   11.782244] =====>>INSIDE rtl8192cd_init_one <<=====
+[   11.787262] =====>>EXIT rtl8192cd_init_one <<=====
+[   19.351201] device wlan0 entered promiscuous mode
+[   19.355425] bridge0: port 1(wlan0) entered forwarding state
+[   19.360522] bridge0: port 1(wlan0) entered forwarding state
+[   29.358071] wlan0: no IPv6 routers present
+[   34.409725] bridge0: port 1(wlan0) entered forwarding state
+[ 9222.994154] Modules linked in: rtl8192es(O)
+
+##### web UI
+ls: /bmdefsys/WEBSERVER/webpages/cgi-bin: No such file or directory
+/bmdefsys/WEBSERVER/webpages:
+total 325
+drwxrwx---    1 www-data www-data      2048 Jun 28  2024 .
+drwxrwx---    1 www-data www-data      2048 Jun 28  2024 ..
+-rwxrwx---    1 www-data www-data     63516 Jun 28  2024 applicationPopup.html
+-rwxrwx---    1 www-data www-data     16401 Jun 28  2024 bm_band.html
+-rwxrwx---    1 www-data www-data     43574 Jun 28  2024 controlPanel.html
+drwxrwx---    1 www-data www-data      2048 Jun 28  2024 css
+-rwxrwx---    1 www-data www-data      1930 Jun 28  2024 debug_battery.html
+-rwxrwx---    1 www-data www-data     10766 Jun 28  2024 diaglogs_page.html
+-rwxrwx---    1 www-data www-data      7125 Jun 28  2024 helpPopup.html
+drwxrwx---    1 www-data www-data      2048 Jun 28  2024 images
+-rwxrwx---    1 www-data www-data      9489 Jun 28  2024 index.html
+-rwxrwx---    1 www-data www-data     39610 Jun 28  2024 internetPopup.html
+drwxrwx---    1 www-data www-data      2048 Jun 28  2024 js
+drwxrwx---    1 www-data www-data      2048 Jun 28  2024 lang
+-rwxrwx---    1 www-data www-data     31361 Jun 28  2024 setupWizard.html
+-rwxrwx---    1 www-data www-data     47443 Jun 28  2024 systemManagementPopup.html
+-rwxrwx---    1 www-data www-data      6342 Jun 28  2024 version.html
+-rwxrwx---    1 www-data www-data     39093 Jun 28  2024 wifiPopup.html
+15:                               "mod_rewrite",
+16:                               "mod_redirect",
+17:                                "mod_alias",
+18:                                "mod_access",
+21:                                "mod_auth",
+23:                               "mod_setenv",
+24:                               "mod_fastcgi",
+29:                                "mod_cgi",
+30:                                "mod_compress",
+37:                                "mod_accesslog" )
+42:server.document-root         = "/bmdefsys/WEBSERVER/webpages/"
+128:                server.document-root        = "/bmdefsys/WEBSERVER/webpages/"
+150:$HTTP["url"] =~ "/cgi-bin/|/ecne/" {
+151:   cgi.assign = ( "" => "" )
+161:static-file.exclude-extensions = ( ".php", ".pl", ".fcgi" )
+264:$SERVER["socket"] == ":443" {
+399:fastcgi.server = ( 
+401:  (( "socket" => "/tmp/fcgi.sock",
+403:   "bin-path"=>"/bmdefsys/usr/bin/qcmap_fcgi",
+407:  (( "socket" => "/tmp/fcgi.sock",
+409:   "bin-path"=>"/bmdefsys/usr/bin/qcmap_fcgi",
+413:  (( "socket" => "/tmp/fcgi.sock",
+415:   "bin-path"=>"/bmdefsys/usr/bin/qcmap_fcgi",
+419:  (( "socket" => "/tmp/fcgi.sock",
+421:   "bin-path"=>"/bmdefsys/usr/bin/qcmap_fcgi",
+425:  (( "socket" => "/tmp/fcgi.sock",
+427:   "bin-path"=>"/bmdefsys/usr/bin/qcmap_fcgi",
+431:  (( "socket" => "/tmp/fcgi.sock",
+433:   "bin-path"=>"/bmdefsys/usr/bin/qcmap_fcgi",
+437:  (( "socket" => "/tmp/fcgi.sock",
+439:   "bin-path"=>"/bmdefsys/usr/bin/qcmap_fcgi",
+443:  (( "socket" => "/tmp/fcgi.sock",
+445:   "bin-path"=>"/bmdefsys/usr/bin/qcmap_fcgi",
+448:  "/webpost.cgi" =>
+449:  (( "socket" => "/tmp/fcgi.sock",
+451:	 "bin-path"=>"/bmdefsys/usr/bin/qcmap_fcgi",
+454:  "/login.cgi" =>
+455:  (( "socket" => "/tmp/fcgi.sock",
+457:	 "bin-path"=>"/bmdefsys/usr/bin/qcmap_fcgi",
+461:  (( "socket" => "/tmp/fcgi.sock",
+463:	 "bin-path"=>"/bmdefsys/usr/bin/qcmap_fcgi",
+467:    (( "socket" => "/tmp/fcgi.sock",                         
+469:       "bin-path"=>"/bmdefsys/usr/bin/qcmap_fcgi",                          
+472:  "/webupload.cgi" =>
+473:  (( "socket" => "/tmp/fcgi.sock",
+475:	 "bin-path"=>"/bmdefsys/usr/bin/qcmap_fcgi",
+478:  "/debug_basic_info.cgi" =>
+479:  (( "socket" => "/tmp/debug_fcgi.sock",
+481:	 "bin-path"=>"/bmdefsys/usr/bin/debug_fcgi",
+484:  "/debug_device_info.cgi" =>
+485:  (( "socket" => "/tmp/debug_fcgi.sock",
+487:	 "bin-path"=>"/bmdefsys/usr/bin/debug_fcgi",
+490:  "/debug_post_set.cgi" =>
+491:  (( "socket" => "/tmp/debug_fcgi.sock",
+493:	 "bin-path"=>"/bmdefsys/usr/bin/debug_fcgi",
+496:  "/debug_wireless_info.cgi" =>
+497:  (( "socket" => "/tmp/debug_fcgi.sock",
+499:	 "bin-path"=>"/bmdefsys/usr/bin/debug_fcgi",
+502:  "/debug_login.cgi" =>
+503:  (( "socket" => "/tmp/debug_fcgi.sock",
+505:	 "bin-path"=>"/bmdefsys/usr/bin/debug_fcgi",
+508:  "/debug_at_info.cgi" =>
+509:  (( "socket" => "/tmp/debug_fcgi.sock",
+511:	 "bin-path"=>"/bmdefsys/usr/bin/debug_fcgi",
+total 4
+drwxr-xr-x    1 root     root          2048 Jun  7 06:19 .
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 ..
+-- struttura /www/qcmap_session (caratteri alfanumerici mascherati):
+
+##### spazio
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/root                25984     17064      8920  66% /
+tmpfs                       64         4        60   6% /dev
+tmpfs                    84412         0     84412   0% /dev/shm
+tmpfs                    67584        72     67512   0% /var/volatile
+/dev/mtdblock21          94848     26800     68048  28% /usr
+/dev/mtdblock19          51584     11052     40532  21% /bmdefsys
+/dev/mtdblock18           4224       828      3396  20% /etc/backup
+/dev/mtdblock17           4224      4112       112  97% /mnt/cdrom
+/dev/mtdblock12         128384      1212    127172   1% /cache

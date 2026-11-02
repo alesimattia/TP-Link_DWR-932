@@ -1,0 +1,31 @@
+#! /bin/sh
+#
+#Copyright (c) 2012-2013 Qualcomm Technologies, Inc.  All Rights Reserved.
+#Qualcomm Technologies Proprietary and Confidential.
+
+# deep_sleep_server   init.d script to start the Data Software's deep_sleep_server. daemon
+
+set -e
+
+case "$1" in
+  start)
+        echo -n "Starting deep_sleep_server: "
+        start-stop-daemon -S -b -a /bmdefsys/usr/bin/deep_sleep_server
+        echo "done"
+        ;;
+  stop)
+        echo -n "Stopping deep_sleep_server: "
+        start-stop-daemon -K -n /bmdefsys/usr/bin/deep_sleep_server
+        echo "done"
+        ;;
+  restart)
+        $0 stop
+        $0 start
+        ;;
+  *)
+        echo "Usage deep_sleep_server { start | stop | restart}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

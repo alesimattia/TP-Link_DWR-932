@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Language" content="en-us">
+		<title></title>
+		<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<script type="text/javascript" language="javascript" src="js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="js/doT.js"></script>
+		<script type="text/javascript" language="javascript" src="js/mis.js"></script>
+		<script type="text/javascript" language="javascript" src="js/textValidations.js"></script>
+        <script type="text/javascript" language="javascript" src="js/api/loginApi.js"></script>
+        <script type="text/javascript" language="javascript" src="js/jquery.localize.min.js" ></script>
+        <script type="text/javascript" language="javascript" src="js/crypto-js.js" ></script> 
+	</head>
+
+	<body>
+		<!--Maximum number of login password errors prompt-->
+		<div id="count" style="display: none; width: 100%; height:100%;background-color: #211f1f8c;position: fixed;top: 0px;left: 0px;z-index: 9;">
+			<div id="countTime" style="border-radius: 6px;margin: 365px auto;  line-height: 30px;width:440px;height: 30px;background-color: white;text-align: center;">
+				<font data-localize="login1.Number_of_errors" class="language">Input error times</font>
+				<font style="color: red;" id="errorTime"></font>
+				<font data-localize="login1.Countdown" class="language">Input error more</font>
+				<font style="color: red;" id="detailTime">60</font>s</div>
+		</div>
+		<div align="center">
+			<div class="logo">
+				&nbsp;
+			</div>
+			<div class="mid midLogin" align="center">
+				<form action="controlPanel.html" >
+					<h1 data-localize="login1.welcome"><!--Welcome to D-Link-->&nbsp;</h1>
+					<div class="inputBg1">
+						<div>
+							<div class="configRow1">
+								<label data-localize="login1.name"><!--User Name-->&nbsp;</label>
+								<input type="text" id="tf1_usrName" class="loginInputs" value="" placeholder="Enter Username" onKeyPress="if (event.keyCode == 13) { loginValidate(); }" data-localize="login1.enter_uname"onblur = "usrname_val(this.value);" maxlength="32">
+							</div>
+						</div>
+						<label class="user_specification" style="display:none; color:red;font-weight:bold;" data-localize="login1.user_specification"></label>
+					</div>
+					<div class="inputBg1">
+						<div>
+							<div class="configRow1">
+								<label data-localize="login1.pwd"><!--Password-->&nbsp;</label>
+								<input type="password" id="tf1_password" class="loginInputs" value="" placeholder="Enter Password"onkeypress="if (event.keyCode == 13) { loginValidate(); }"  data-localize="login1.enter_pwd" maxlength="32">
+							</div>
+						</div>
+					</div>
+					<div class="submitRow1">
+						<input type="button" id="btSave" value=" " class="btnSubmit1" onClick="loginValidate(); " data-localize="login1.sign-in">
+					</div>
+				</form>
+				<div class="break">
+					&nbsp;
+				</div>
+				<div class="break">
+					&nbsp;
+				</div>
+				<!--<div>
+					<a href="#" class="forgetPassword" onClick='dialogAlert("You did not provide Email Information for this action");'>Click me if you forget your password</a>
+				</div>
+				<div class="break">
+					&nbsp;
+				</div>-->
+			</div>
+			<div class="footer" align="center" data-localize="login1.footer">
+				<!--Copyright &#169; 2014 D-Link. All Rights Reserved.-->&nbsp;
+			</div>
+		</div>
+		<div id="tf1_overlay2" class="configDialogMask"></div>
+		<div class="errorPopup" id="tf1_error" style="display:none;"></div>
+		<div id="tf1_errorDialogTemplate" style="display:none">
+			<div>
+				<div class="errorHeading">
+					@@title@@
+				</div>
+				<div class="errorMessage">
+					@@msg@@
+				</div>
+				<div class="buttonsDiv2">
+					<input type="button" data-localize="common.ok" value="Ok" onClick="closeDialogAlert(event,'tf1_error')" class="btnSubmit">
+				</div>
+			</div>
+		</div>
+
+		<!-- Informtion Block -->
+		<div class="errorPopup" id="tf1_information" style="display:none;"></div>
+		<div id="tf1_infoDialogTemplate" style="display:none">
+			<div>
+				<div class="informationHeading">
+					@@title@@
+				</div>
+				<div class="errorMessage">
+					@@msg@@
+				</div>
+				<div class="buttonsDiv2">
+
+					<input type="button" data-localize="common.ok" value="Ok" onClick="closeDialogAlert(event,'tf1_information')" class="btnSubmit" >
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" charset="utf-8">
+			var global_lang = new Object();
+
+			function parseINIString(idata){
+			    var regex = {  
+				    section: /^\s*\[\s*(.*)\s*\]\s*$/,  
+				    keyval: /^\s*([\w\.\-]+)\s*=\s*\x22(.*?)\x22\s*$/,  
+				    comment: /^\s*#.*$/   
+				};  
+				var rtval = {};  
+				var lines = idata.split(/\r\n|\r|\n/);  
+				var sec = null;  
+				var line,matchstr,str2;
+				//var replacestr=/[\\\"\\\\]/;
+				for(var i=0;i<lines.length;i++)
+				{
+					line = lines[i];	
+					//parse comment "#"				
+					if(regex.comment.test(line))
+					{  
+						continue;  
+					}
+					//parse keyval
+					else if(regex.keyval.test(line))
+					{  
+						matchstr = line.match(regex.keyval);  
+						str2=matchstr[2].replace(/\\\"/,"\"");
+						str2=str2.replace(/\\\\/,"\\");
+						if(sec)
+						{  
+							rtval[sec][matchstr[1]] = str2;  
+						}
+						else
+						{  
+							rtval[matchstr[1]] = str2;  
+						}  
+					}
+					//parse section
+					else if(regex.section.test(line))
+					{  
+						matchstr = line.match(regex.section);  
+						rtval[matchstr[1]] = {};  
+						sec = matchstr[1];  
+					}
+					else if(line.length == 0 && sec)
+					{  
+						sec = null;  
+					}
+				}
+				return rtval;  
+   			}
+			
+			function uname_str(obj){   
+				 var str=obj; 
+				 var code;
+				 for(var i=0 ; i<str.length; i++){
+					code=str.charCodeAt(i);
+					if (code == 32 || str.length < 5) {
+					  return false;
+					}
+				}
+				return true;
+			}
+			function usrname_val(usrname){
+				if(!uname_str(usrname)){
+					$(".user_specification").show();
+				}else{
+					$(".user_specification").hide();
+				}
+			}
+			
+ 			function loginValidate() {
+				var uname = document.getElementById('tf1_usrName').value;
+				var pass = document.getElementById('tf1_password').value;
+				/*
+				var txtFieldIdArr = new Array();
+				txtFieldIdArr[0] = "tf1_userName,Please enter a valid Username";
+				txtFieldIdArr[1] = "tf1_password,Please enter a valid Password";
+
+				if (txtFieldArrayCheck(txtFieldIdArr) == false)
+					return false;
+				*/
+				var hashPass = CryptoJS.MD5(pass);
+				loginApi_login(uname,hashPass);
+			}
+			
+			function loginInit() {
+				var usrObj = document.getElementById('tf1_usrName');
+				if (!usrObj)
+					return;
+				usrObj.focus();
+			}
+			
+			function doSystemNameGet() {		
+				var request = $.ajax(
+					{
+						type: "GET",
+						url: "/data.ria?DynUpdate=about_sys",
+					dataType: "json"
+				});
+				request.done(function( responseData,textStatus, jqXHR ) {
+					document.title = "D-Link - "+responseData.model_name;
+				});
+			}	
+			/* Start:Language support */	
+			var systemData;
+			
+			$(document).ready(function() {
+
+				HideDialog('tf1_overlay');		 
+				doSystemNameGet();
+				doget();
+			    var request = $.ajax({
+			    	url: "/data.ria?FileID=1&sect_name=DEVICE",       
+		       		 dataType: "json"
+		   		 });
+		    	request.done(function( responseData,textStatus, jqXHR ) {  
+		    		systemData = responseData["DEVICE"]["language"];
+		    	});
+		    	request.fail(function( jqXHR, textStatus, errorThrown) {	
+		  	  	});
+		   	  request.always(function(responseData,textStatus, jqXHR ) {       
+		  	  });
+		  	  var localeLng = langString(systemData);
+		  	  var opts = { language: localeLng, pathPrefix: "/lang"};
+					opts.callback = function(data, defaultCallback) {
+			          global_lang = data;
+			          defaultCallback(data);
+			        }
+			        $("[data-localize]").localize("lang", opts)
+					 
+					/*use in scripts as {{=glb_lang["login1"]["welcome"]}} */
+			var lang_url = "/lang/lang-"+localeLng+".json";
+		    var request = $.ajax({
+			    url: lang_url,       
+			    dataType: "json"
+	   		 });
+	    	request.done(function( responseData,textStatus, jqXHR ) {  
+	    		global_lang = responseData;
+	    	});
+	    	request.fail(function( jqXHR, textStatus, errorThrown) {	
+	  	  	});
+			request.always(function(responseData,textStatus, jqXHR ) {       
+			});						
+			});
+			
+	<!--Get login error count-->
+	function doget(){
+		$.ajax(
+		{
+			type: "GET",
+			url: "/data.ria?CfgType=get_login_time",
+			dataType: "text",
+			success: function(msgs)
+			{
+				if(msgs.length > 0)
+				{				
+					var obj = jQuery.parseJSON(msgs);
+					if(obj.login_attempt_count >= 5 && obj.last_error_time <= 60){
+						$("#count").show();
+						$('#detailTime').text(60 - obj.last_error_time);
+						$('#errorTime').text(obj.login_attempt_count);
+						setTimeout(function() { 
+						  doget();
+					   },1000);
+					}else{
+					   $("#count").hide();
+					}
+				}
+			},
+			error: function(xhr, textStatus, errorThrown)
+			{
+				dialogErrorBox(changeLanguageString("ERROR"));
+			}
+		});
+	}
+	
+		/* End:Language support */
+		
+		</script>
+	</body>
+
+</html>

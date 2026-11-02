@@ -1,0 +1,10 @@
+0x6b0c8 /var/rtl8192c
+0x6b124 countrycode
+0x6b228 countrycode_enable
+0x6b390 /bmdefsys/usr/bin/rtltools/script/init.sh &
+0x6bb60 Country_code=
+0x6fec4 bm_wlan_countrycode
+0x700f4 countrycode
+0x703d8 /bmdefsys/usr/bin/rtltools/script/init.sh
+0x747ec /bmdefsys/usr/bin/rtltools/script/init.sh &
+0x75518 /bmdefsys/usr/bin/rtltools/script/init.sh &

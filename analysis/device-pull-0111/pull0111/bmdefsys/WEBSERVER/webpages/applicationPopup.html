@@ -1,0 +1,1310 @@
+<!--Short Message Setting starts here -->
+<div id="tf1_shortMessageService">
+	<h4 style="color:#ff0000;font-weight:bold;"></h4>
+	<h3 data-localize="application_popup.short_mesg_Settings">Short Message Setting</h3>
+
+	<!-- Inbox Add page data Starts here -->
+
+	<div class="configTableForm" style="display:none" id="tf1_replyInbox" >
+		<form  action="cgi-action.html" method="post">
+			<div class="configContent">
+				<h4 data-localize="application_popup.reply_msg">Reply Message</h4>
+				<div class="roundedBox">
+					<div class="innerClose">
+						<a class="close2" href="#" onclick="application_formClose(event)" title="Close"></a>
+					</div>
+					<div class="configRow">
+						<label data-localize="application_popup.reply_to">Reply To</label>
+						<input type="text" name="" id="tf1_replyTo" onKeypress="if (event.keyCode == 13) { return false; }"/>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+         			<div class="configRow">
+						<label data-localize="application_popup.content">Message</label>
+						<textarea cols="10" rows="5" style="height:100px; width:250px;" id="tf1_messageReply"  onkeyup="tf1_messageReply_Inbox();" maxlength="1000">				
+        </textarea>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+							<p class="textBlock"><span data-localize="common.input">Input </span><span class="maxLength">0</span> <span data-localize="common.char">characters</span>.</p>
+							<p class="textBlock" data-localize="application_popup.message_eng">For pure english message, the max number of characters is 1000.</p>
+							<p class="textBlock" data-localize="application_popup.message_non_eng">For not pure english message, the max number of characters is 500.</p>
+					</div>
+					<input type="hidden" id="tf1_tag_inbox" value=""/>					
+				</div>
+			</div>
+			<div id="tf1_sms_reply_status" style="display:none;" class="configRow" >
+            	<label data-localize="application_popup.recent_sms_status">Recent SMS Staus</label> <p data-localize="application_popup.sending">Sending...</p>
+            </div>
+			<div class="submitRowPopup1" id="tf1_sms_reply_buttons">
+				<input type="button" value="Reply"  class="btnSubmit" onclick='applicationSettings_sendReplySms(event)' id="tf1_btn_reply" />
+				<input type="button" value="Save as Draft"  class="btnSubmit" onclick='applicationSettings_saveasDraft2(event)' id="tf1_btn_savedraft2"/>
+			</div>
+			
+		</form>
+	</div>
+
+	<div class="configTableForm" style="display:none" id="tf1_addInbox">
+		<form  action="cgi-action.html" method="post">
+			<div class="configContent">
+				<h4 id="tf1_heading_inbox" data-localize="application_popup.send_sms">Send SMS</h4>
+				<div class="roundedBox">
+					<div class="innerClose">
+						<a class="close2" href="#" onclick="application_formClose(event)" title="Close"></a>
+					</div>
+					<div class="configRow">
+						<label id="tf1_lbl_inbox" data-localize="application_popup.send_to">Send to</label>
+						<input type="text" name="" id="tf1_sendToNew" onKeypress="if (event.keyCode == 13) { return false; }"/>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+						<label data-localize="application_popup.content">Content</label>
+						<textarea name="" cols="5" rows="5" style="height:100px" id="tf1_messageNew"  onkeyup="tf1_messageReply_Inbox();" maxlength="1000"></textarea>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+							<p class="textBlock"><span data-localize="common.input">Input </span><span class="maxLength">0</span> <span data-localize="common.char">characters</span>.</p>
+							<p class="textBlock" data-localize="application_popup.message_eng">For pure english message, the max number of characters is 1000.</p>
+							<p class="textBlock" data-localize="application_popup.message_non_eng">For not pure english message, the max number of characters is 500.</p>
+					</div>
+					<input type="hidden" id="tf1_tag_draft" value=""/>					
+				</div>
+			</div>
+			<div id="tf1_sms_status" style="display:none;" class="configRow">
+
+            			<label data-localize="application_popup.recent_sms_status">Recent SMS Status</label> <p data-localize="application_popup.sending">Sending...</p>
+            </div>
+			<div class="submitRowPopup1" id="tf1_sms_buttons">
+				<input type="button" value="Send"  class="btnSubmit" onclick='applicationSettings_sendNewSms(event);' id="tf1_btn_send" />
+                <input type="button" value="Save as Draft"  class="btnSubmit" onclick='applicationSettings_saveasDraft(event);' id="tf1_btn_savedraft"/>
+				<input type="button" value="Cancel" onclick="application_formClose(event)" class="btnSubmit" data-localize="common.cancel" />
+			</div>
+			
+		</form>
+	</div>
+	<!--  Inbox Add page data Ends here -->
+
+	<div class="configTableForm" style="display:none" id="tf1_editDraft">
+		<form  action="cgi-action.html" method="post">
+			<div class="configContent">
+				<h4 data-localize="application_popup.send_sms">Send SMS</h4>
+				<div class="roundedBox">
+					<div class="innerClose">
+						<a class="close2" href="#" onclick="application_formClose(event)" title="Close"></a>
+					</div>
+					<div class="configRow">
+						<label data-localize="application_popup.send_to">Send to</label>
+						<input type="text" name="" id="tf1_sendToEdit" />
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+						<label data-localize="application_popup.content">Content</label>
+						<textarea name="" cols="5" rows="5" style="height:100px" id="tf1_messageEdit">Acer Family Day 10/13 - Reminding you.
+                             Don't forget to bring your staff.</textarea>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+						   
+				</div>
+			</div>
+			<div class="submitRowPopup1">
+				<input type="button" value="Apply"  class="btnSubmit" onclick='applicationSettings_sendEditSms()' />
+				<input type="reset" value="Cancel"  class="btnSubmit" />
+
+			</div>
+		</form>
+	</div>
+	<form name="frm_shortMessageService" id="tf1_frm_shortMessageService" action="cgi-action.html" method="post">
+		<input type="hidden" name="thispage" id="thispage" value="controlPannel.html" />
+
+		<div class="configForm">
+			<div class="configContent">
+            	<div id="tf1_tmpl_msginfo"></div>
+             	<script id="app_msgTemplate" type="text/x-dot-template">
+				<div  class="smsMenu">
+					<ul>
+						<li class="first">
+							{{=global_lang["application_popup"]["inbox"] || 'Inbox' }} ({{=it.inbox_tot}}/100)
+						</li>
+						<li class="last">
+							{{=global_lang["application_popup"]["drafts"] || 'Drafts' }} ({{=it.drafts_tot}}/100)
+						</li>
+					</ul>
+				</div>
+				</script>
+				<div class="break">
+					&nbsp;
+				</div>
+				<div style="width:100%;overflow: overlay;">
+                
+				<ul style="width:350px;float: left;" id="nav">
+					
+					<li class="first">
+						<a href="applicationPopup.html" id="tf1_appInbox" page_id="tf1_inbox" onload-function="applicationSettings_onloadInbox" class="current" data-localize="application_popup.inbox">Inbox</a>
+					</li>
+					<li>
+						<a href="applicationPopup.html" id="tf1_appDraft" page_id="tf1_draft" onload-function="applicationSettings_onloadDrafts" data-localize="application_popup.drafts">Drafts</a>
+					</li>
+					<li>
+					<a href="applicationPopup.html" id="tf1_appSetUp" page_id="tf1_setUp" onload-function="applicationSettings_onloadSmsSetup"  data-localize="application_popup.setup">Setup</a>
+					</li>
+				</ul>
+				<div style="float:right;margin-top: 5px;">
+				<a class="btnSubmit" href="#"  onclick="application_addInboxForm(event)"  data-localize="common.add_new_sms">+ Add New</a>
+			    </div>
+				</div>
+			<div id="ajax-content" style="width:95%">
+					<!-- Inbox tab content Starts here -->
+					<div id="tf1_inbox">
+
+						<div class="configForm" >
+							<div id="tf1_siminboxTblbody" data-localize="application_popup.loading">Loading, please wait...</div>
+							<script id="app_inboxTemplate" type="text/x-dot-template"> 
+							<h4>{{=global_lang["application_popup"]["inbox"] || 'Inbox' }}</h4>
+
+							<div id="tablewrapper">
+								<div id="tableheader">
+									<div class="search">
+										<select id="columns" onchange="sorter.search('query')" style="display:none;"></select>
+										<select id="pagedropdown" style="display:none;"></select>
+										<input type="text" placeholder='{{=global_lang["common"]["search"] ||"search" }}' id="query" onkeyup="sorter.search('query')" onKeypress="if (event.keyCode == 13) { return false; }" />
+										<span class="details">
+											<div>
+												{{=global_lang["common"]["records"] ||'Records' }}:
+																&nbsp;<span id="totalrecords"></span>&nbsp;&nbsp;
+											{{=global_lang["common"]["showing"] ||'Displayed:' }}&nbsp;
+																<span id="startrecord"></span>-<span id="endrecord"></span>
+											</div> </span>
+										<div id="tablelocation">
+											<div>
+												<select onchange="sorter.size(this.value)" class="one">
+													<option value="5">5</option>
+													<option value="10" selected="selected">10</option>
+													<option value="20">20</option>
+								<option value="All">{{=global_lang["application_popup"]["all"] || 'All' }}</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+									 
+								
+			<table cellpadding="0" cellspacing="0" border="0" id="tf1_inboxTbl" class="tinytable" width="250" style="word-break:break-all;">
+									<thead>
+										<tr>
+						<th style="white-space:nowrap;width: 30px;"><h6>ID</h6></th>
+						<th style="white-space:nowrap;width: 30px;"><h6>{{=global_lang["wifi_popup"]["mac_delete"] || 'Delete' }}</h6></th>
+						<th style="white-space:nowrap;width: 30px;"><h6>{{=global_lang["application_popup"]["from"] || 'From' }}</h6></th>
+						<th style="white-space:nowrap;"><h6>{{=global_lang["application_popup"]["time"] || 'Time' }}</h6></th>
+						<th style="white-space:nowrap;"><h6>{{=global_lang["application_popup"]["content_inbox"] || 'Content and reply' }}</h6></th>
+										</tr>
+									</thead>
+									<tbody>
+										{{ var contindex = 0;}}
+										 {{ for (var item in it) { }} 
+											{{ if (item != "total") { }}
+											 {{ contindex = contindex + 1;}}
+									{{ if (it[item].read == 0) { }}		 
+									<tr style="font-weight: bold;">	
+									{{ }else{ }}   
+									<tr>	  
+									{{ } }}  		
+										  <input type="hidden" id="tf1_inbox_tag_{{=contindex}}" value="{{=it[item].tag}}">
+										  <input type="hidden" id="tf1_inbox_msg_{{=contindex}}" value="{{=it[item].msg}}">
+										  <input type="hidden" id="tf1_inbox_phone_{{=contindex}}" value="{{=it[item].phone}}">
+									
+									   <td>{{=contindex}}</td>
+									   <td><input type="checkbox" value="{{=it[item].tag}}" id="tf1_inboxdel" class="chk_id"/></td>
+									   <td style="white-space:nowrap;">{{=it[item].phone}}</td> 
+									   <td style="white-space:nowrap;">{{=it[item].date}}</td> 
+									   <td><a href="#" onclick="application_replyForm(event,{{=contindex}})" id="tf1_replymsg" value="{{=it[item].tag}}" title="Reply">{{=it[item].msg}}</a></td> 
+								   </tr>
+										   {{ } }}
+										 {{ } }}        
+									
+									
+									</tbody>
+								</table>
+								<div id="tablefooter">
+									<div id="tablenav">
+										<div>
+											<img src="images/first.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1,true)" /><img src="images/previous.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1)" /><img src="images/next.gif" width="16" height="16" alt="First Page" onclick="sorter.move(1)" /><img src="images/last.gif" width="16" height="16" alt="Last Page" onclick="sorter.move(1,true)" />
+										</div>
+										<div class="pageCount">
+											
+														<span data-localize="common.pages">
+																{{=global_lang["common"]["pages"] ||'Pages' }}
+															</span>&nbsp;
+															<span id="totalpages"></span>&nbsp;
+															<span data-localize="common.of">
+																{{=global_lang["common"]["current_page"] ||'Current Page' }}
+															</span>&nbsp;
+															<span id="currentpage"></span>
+					 
+					 
+										</div>
+									</div>
+								</div>
+								<div class="break">
+									&nbsp;
+								</div>
+			
+								<div class="break">
+									&nbsp;
+								</div>
+							</div>
+
+							<div id="tf1_hdButtonBlock" style="display:none">
+								<input type="button" value='{{=global_lang["common"]["apply"] || "Apply" }}'  class="btnSubmit"  onclick="applicationSettings_shortMsg_Inboxvalidate(event,'tf1_frm_shortMessageService')" id="tf1_btn_delinbox" />
+								<input type="button" value='{{=global_lang["common"]["cancel"] || "Cancel" }}'  class="btnSubmit" id="btnClose" />
+							</div>
+						</script>	
+						</div>
+
+					</div>
+					<!-- Inbox tab content ends here -->
+				</div>
+			</div>
+			<div id="tf1_btnBlock" class="submitRowPopup">
+			</div>	 
+			</div>
+	</form>
+
+</div>
+<!-- Drafts tab content Starts here -->
+<div id="tf1_draft">
+	<div id="tf1_simdraftTblbody"></div>
+	<script id="app_draftTemplate" type="text/x-dot-template"> 
+	<h4>{{=global_lang["application_popup"]["drafts"] || 'Drafts' }}</h4>
+	<div id="tablewrapper">
+		<div id="tableheader">
+			<div class="search">
+				<select id="columns" onchange="sorter.search('query')" style="display:none;"></select>
+				<select id="pagedropdown" style="display:none;"></select>
+				<input type="text" placeholder='{{=global_lang["common"]["search"] ||"search" }}' id="query" onkeyup="sorter.search('query')" onKeypress="if (event.keyCode == 13) { return false; }" />
+				<span class="details">
+					<div>
+						{{=global_lang["common"]["records"] ||'Records' }}:
+											&nbsp;<span id="totalrecords"></span>&nbsp;&nbsp;
+											{{=global_lang["common"]["showing"] ||'Showing' }}&nbsp;
+											<span id="startrecord"></span>-<span id="endrecord"></span>
+					</div> </span>
+				<div id="tablelocation">
+					<div>
+						<select onchange="sorter.size(this.value)" class="one">
+							<option value="5">5</option>
+							<option value="10" selected="selected">10</option>
+							<option value="20">20</option>
+								<option value="All">{{=global_lang["application_popup"]["all"] || 'All' }}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+				
+    	
+			<table cellpadding="0" cellspacing="0" border="0" id="tf1_draftsTbl" class="tinytable" width="250" style="word-break:break-all;">
+			<thead>
+				<tr>
+						<th style="white-space:nowrap;width: 30px;"><h6>ID</h6></th>
+						<th style="white-space:nowrap;width: 30px;"><h6>{{=global_lang["wifi_popup"]["mac_delete"] || 'Delete' }}</h6></th>
+						<th style="white-space:nowrap;width: 30px;"><h6>{{=global_lang["application_popup"]["to"] || 'To' }}</h6></th>
+						<th style="white-space:nowrap;"><h6>{{=global_lang["application_popup"]["time"] || 'Time' }}</h6></th>
+						<th style="white-space:nowrap;"><h6>{{=global_lang["application_popup"]["content"] || 'Content' }}</h6></th>
+				</tr>
+			</thead>
+			<tbody>	
+            	{{ var contindex = 0;}}
+	 			{{ for (var item in it) { }} 
+					{{ if (item != "total") { }}
+					   {{ contindex = contindex + 1;}}
+				<tr>
+					 <input type="hidden" id="tf1_draft_tag_{{=contindex}}" value="{{=it[item].tag}}">
+					 <input type="hidden" id="tf1_draft_msg_{{=contindex}}" value="{{=it[item].msg}}">
+  					 <input type="hidden" id="tf1_draft_phone_{{=contindex}}" value="{{=it[item].phone}}">	
+	           	   <td>{{=contindex}}</td>
+            	   <td><input type="checkbox" value="{{=it[item].tag}}" id="tf1_draftdel" class="chk_id"/></td>      	   
+				   <td style="white-space:nowrap;">{{=it[item].phone}}</td> 
+				   <td style="white-space:nowrap;">{{=it[item].tag.split('.')[1]}}</td> 
+				   <td><a href="#" onclick="application_draftForm(event,{{=contindex}})" title="edit">{{=it[item].msg}}</a></td> 
+		         </tr>
+               		 {{ } }}
+          		{{ } }}         
+            				
+			</tbody>
+		</table>
+		<div id="tablefooter">
+			<div id="tablenav">
+				<div>
+					<img src="images/first.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1,true)" /><img src="images/previous.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1)" /><img src="images/next.gif" width="16" height="16" alt="First Page" onclick="sorter.move(1)" /><img src="images/last.gif" width="16" height="16" alt="Last Page" onclick="sorter.move(1,true)" />
+				</div>
+				<div class="pageCount">
+					<span data-localize="common.pages">
+											{{=global_lang["common"]["pages"] ||'Pages' }}
+										</span>&nbsp;
+										<span id="totalpages"></span>&nbsp;
+										<span data-localize="common.of">
+											{{=global_lang["common"]["current_page"] ||'Current Page' }}
+										</span>&nbsp;
+										<span id="currentpage"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="tf1_hdButtonBlock" style="display:none">
+		<input type="button" value='{{=global_lang["common"]["apply"] || "Apply" }}'  class="btnSubmit" onclick="applicationSettings_shortMsg_Draftsvalidate(event,'tf1_frm_shortMessageService')" id="tf1_btn_draftdel"/>
+		<input type="button" value='{{=global_lang["common"]["cancel"] || "Cancel" }}'  class="btnSubmit" id="btnClose" />
+	</div>
+</script>              
+</div>
+<!-- Drafts tab content Ends here -->
+<!-- setup Tab content Starts-->
+					<div id="tf1_setUp">
+                    	<div id="tf1_tmpl_setupinfo"></div>
+             			<script id="app_smssetupTemplate" type="text/x-dot-template">
+						<h4>{{=global_lang["application_popup"]["short_mesg_Settings"] || 'Short Message Setting' }}</h4>
+						<div class="break">
+							&nbsp;
+						</div>
+						<div class="configRow">
+							<label>{{=global_lang["application_popup"]["store_to"] || 'Store To' }}</label>
+							<p>
+								<input type="radio"  id="tf1_storein_sim" name="sort" value="1" {{ if(it.sms_storage_location == "1") { }} checked {{}}}/>
+								{{=global_lang["application_popup"]["sim"] || 'SIM' }}
+							</p>
+							<p>
+								<input type="radio"  id="tf1_storein_device" name="sort" value="0" {{ if(it.sms_storage_location == "0") { }} checked {{}}} />
+								{{=global_lang["application_popup"]["device"] || 'Device' }}
+							</p>
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+                        <div class="configRow">
+							<label>{{=global_lang["application_popup"]["cur_short_msgs"] || 'Current Short Messages' }}</label>
+							<p>
+								{{=it.short_msgs}}
+							</p>
+							
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+						<div class="configRow">
+							<label>{{=global_lang["application_popup"]["sms_center_num"] || 'SMS Center Number' }}</label>
+							<p>
+								{{=it.sms_center_num}}
+							</p>
+							
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+                        
+						<div id="tf1_hdButtonBlock" style="display:none">
+							<input type="button" value='{{=global_lang["common"]["apply"] || "Apply" }}'  class="btnSubmit" onclick="applicationSettings_shortMsg_Setupvalidate('tf1_frm_shortMessageService')" />
+							<input type="button" value='{{=global_lang["common"]["cancel"] || "Cancel" }}'  class="btnSubmit" id="btnClose"/>
+						</div>
+						</script>
+					</div>
+					<!-- Setup tab content ends here -->
+
+
+<!-- Short Message Setting Ends here -->
+<!-- DHCP Settings starts here -->
+<div id="tf1_dhcpSettings">
+	<div id="tf1_tmpl_dhcp"></div>
+	<script id="app_dhcpTemplate" type="text/x-dot-template">
+	<form name="frm_dhcpSettings" id="tf1_frm_dhcpSettings" action="cgi-action.html" method="post">
+		<input type="hidden" name="thispage" id="thispage" value="controlPannel.html" />
+		<h3>{{=global_lang["application_popup"]["dhcp_settings"] || 'DHCP Settings' }}</h3>
+		<div class="configForm">
+			<div class="configContent">
+				<h4>{{=global_lang["application_popup"]["dhcp_service"] || 'DHCP Service' }}</h4>
+				<div class="roundedBox">
+					<div class="configRow">
+					{{var statuStr,statuVal;}}
+					<label>{{=global_lang["application_popup"]["dhcp_service"] || 'DHCP Service' }}</label>
+					
+					{{ var ipEndNum = it["ip_addr"].split(".")[3]; }}
+					{{ var ipEndNum_1 = it["ip_addr"].split(".")[2]; }}
+					{{ var startIpArr = it["start_ip"].split("."); }}
+					{{ var endIpArr = it["end_ip"].split("."); }}
+					 
+					
+            		{{  if(it.dhcp_service == 1) { }}
+		          		 {{statuStr="enable-disable-on";}}
+                  		 {{statusVal="1";}}
+				 	{{ } else { }}
+			       		{{statuStr="enable-disable-off";}}
+                   		{{statusVal="0";}}
+                   	{{ } }}
+						<a alt="" class="{{=statuStr}}" id="tf1_enableDhcp"></a>
+						<input type="hidden" value="{{=statusVal}}" id="tf1_hid_enableDhcp"/>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+						<label>{{=global_lang["application_popup"]["ip_addr"] || 'IP Address' }}</label>
+						<p>
+							192.168.
+							<input type="text" class="two" id="tf1_ipAddr_1" value="{{=ipEndNum_1}}" onkeyup="number_lanIp();" onchange="app_dhcp_lanIpChange_1()" onkeypress="return numericValueCheck (event)" maxlength="3" />
+							.	
+							<input type="text" class="two" id="tf1_ipAddr" value="{{=ipEndNum}}" onkeyup="number_lanIp();" onchange="app_dhcp_lanIpChange()" onkeypress="return numericValueCheck (event)" maxlength="3" />
+						</p>
+						
+					</div>
+					<p class="ip_address" style="display:none;">{{=global_lang["wifi_popup"]["number_lanIp"] || 'IP address is blank or invalid. Please re-enter!' }}</p>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+						<label>{{=global_lang["application_popup"]["subnet"] || 'Subnet' }}</label>
+						<p>
+							255.255.255.0
+						</p>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+						<label>{{=global_lang["application_popup"]["ip_range"] || 'IP Range' }}</label>
+						<p>{{=startIpArr[0]}}.{{=startIpArr[1]}}.<!--<span id="tf1_hid_iprange1">{{=startIpArr[2]}}</span>-->
+							<input type="text" class="two" value="{{=startIpArr[2]}}" id="tf1_iprange1_1" onkeypress="return numericValueCheck (event)" />
+							.
+							<!--<span id="tf1_hid_iprange1">{{=startIpArr[3]}}</span>-->
+							<input type="text" class="two" value="{{=startIpArr[3]}}" id="tf1_iprange1" onkeypress="return numericValueCheck (event)" />~
+							{{=endIpArr[0]}}.{{=endIpArr[1]}}.
+							<input type="text" class="two" value="{{=endIpArr[2]}}" id="tf1_iprange2_1" onkeypress="return numericValueCheck (event)" maxlength="3" />
+							.
+							<input type="text" class="two" value="{{=endIpArr[3]}}" id="tf1_iprange2" onkeypress="return numericValueCheck (event)" maxlength="3" />
+						</p>
+					</div>
+					<br></br>
+					<div id="tf1_Progressbar"  style="display:none;">
+						
+							<div class="configRow" style="width:98.8%" id="tf1_frm_statusBar">
+								<span style="width: 0%" ></span>
+								<div class="usageDisplay">	
+								
+								</div>
+							</div>
+					
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+				</div>
+			</div>
+			<div class="configRow">
+				<input type="hidden" id="tf1_startIpNum" value="{{=startIpArr[3]}}">
+				<input type="button" value='{{=global_lang["common"]["apply"] || "Apply" }}'
+  class="btnSubmit" onclick="applicationSettings_dhcpSettingsvalidate('tf1_frm_dhcpSettings')" />
+				<input type="button" value='{{=global_lang["common"]["cancel"] || "Cancel" }}' class="btnSubmit" id="btnClose" />
+			</div>
+		</div>
+	</form>
+	</script>
+</div>
+<!-- DHCP Settings Ends here -->
+<!-- File Sharing Starts here -->
+<div id="tf1_ussd">
+	
+    <form name="tf1_frmUssd" id="tf1_frmUssd" action="cgi-action.html" method="post">
+		<input type="hidden" name="thispage" id="thispage" value="controlPannel.html" />
+		<h3 data-localize="application_popup.ussd_top">USSD</h3>
+		<div class="configForm">
+			<div class="configContent">
+				<h4 data-localize="application_popup.ussd">USSD</h4>
+                <div class="roundedBox">
+				 <div class="configRow">
+       			 <label data-localize="application_popup.ussd_code"> USSD Code </label>
+        			 <input type="text"  id="tf1_ussedCode" maxlength="20" onKeypress="if (event.keyCode == 13) { return false; }" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>					 
+     					 </div>
+     			 <div class="break"> &nbsp; </div>
+			</div>		
+					
+			 <div id="response_result" class="configRow">
+			 </div>	
+			 <div id="response_state" class="configRow">
+			 </div>
+			</div>
+			<div class="submitRowPopup1">
+				<input type="button" value="Send"  class="btnSubmit" onclick="ussd_click('tf1_frmUssd');" data-localize="application_popup.send"/>
+				<input type="button" value="Cancel"  class="btnSubmit" id="btnClose" data-localize="common.cancel"/>
+			</div>
+		</div>
+	</form>
+	
+</div>
+<!-- File Sharing Ends here -->
+
+<!-- Firewall Setting Starts here -->
+
+<div id="tf1_firewallSettingsWrapper">
+<div id="tf1_firewallSettings">
+	
+	<form name="frm_firewallSettings" id="tf1_frm_firewallSettings" action="cgi-action.html" method="post">
+		<input type="hidden" name="thispage" id="thispage" value="controlPannel.html" />
+		<h3 data-localize="application_popup.firewall_setting_tab">Firewall Setting</h3>
+
+		<!-- IP Filter Add page data Starts here -->
+		<div id="tf1_tmpl_firewall_ipfilterAdd"></div>
+		<script id="app_ipfilterAddTemplate" type="text/x-dot-template">
+		<div class="configTableForm" style="display:none;" id="tf1_firewallIpFilter">
+			<div class="configContent">
+				<h4>{{=it["heading"]}}</h4>
+				<div class="roundedBox">
+					<div class="innerClose">
+						<a class="close2" href="#" onclick="application_formClose(event)" title="Close"></a>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+						<label>{{=global_lang["application_popup"]["protocol"] || 'Protocol' }}</label>
+						<select class="u104" id="tf1_ipfilter_protocol">
+							<option  value="0" {{ if(it["proto"] == "0") { }} selected {{}}}>{{=global_lang["application_popup"]["all"] || 'All' }}</option>
+							<option  value="1" {{ if(it["proto"] == "1") { }} selected {{}}}>{{=global_lang["application_popup"]["icmp"] || 'ICMP' }}</option>
+							<option  value="2" {{ if(it["proto"] == "2") { }} selected {{}}}>{{=global_lang["application_popup"]["tcp"] || 'TCP' }}</option>
+							<option  value="3" {{ if(it["proto"] == "3") { }} selected {{}}}>{{=global_lang["application_popup"]["udp"] || 'UDP' }}</option>
+						</select>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+
+					<div class="configRow">
+						<label>{{=global_lang["application_popup"]["src_ip"] || 'Source IP' }}</label>
+						 <input type="text" id="tf1_sourceIp" onkeydown="if (event.keyCode == 9) { return ipv4AddrValidate (this, 'IP', false, true, global_lang['alerts_set']['invalid_ip_addr'], 'for octet ', true); }" onkeypress="return numericValueCheck (event, '.')" value= '{{!it["src_ip"] || ""}}' /> 
+                        
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div  class="configRow">
+						<label>{{=global_lang["application_popup"]["subnet"] || 'Subnet Mask' }}</label>
+						 <input type="text" id="tf1_subnetmask" class="one" maxlength="2" onkeypress="return numericValueCheck (event, '.')" value= '{{!it["src_ip_subnet"] || ""}}' /> 
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+
+					<div class="configRow">
+							{{var statuStr,statuVal;}}
+						<label>{{=global_lang["application_popup"]["src_port_num"] || 'Source Port Number' }}</label>
+							{{  if((it["src_port1"] != ""  && it["src_port2"] != "") && (it["src_port1"] != 0  && it["src_port2"] != 0) ) { }}
+								 {{statuStr="enable-disable-on";}}
+								 {{statuVal="1";}}
+							{{ } else { }}
+								 {{statuStr="enable-disable-off";}}
+								 {{statuVal="0";}}
+							{{ } }}
+						<a  class="{{=statuStr}}" id="tf1_enabledisable_srcports"></a>
+						<input type="hidden" value="{{=statuVal}}" name="" />
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div id="tf1_ipfilter_srcport_div">
+					<div class="configRow">
+						<label>{{=global_lang["application_popup"]["src_port_range"] || 'Source Port Range' }}</label>
+						 <input type="text" class="one" id="tf1_sourcePort1"  onkeydown="if (event.keyCode == 9) {return numericValueRangeCheck (this, '', '', 1, 65535, true, '', '');}" onkeypress="return numericValueCheck (event)" maxlength="5"  value= '{{!it["src_port1"] || ""}}'>  <input type="text" class="one" id="tf1_sourcePort2"  onkeydown="if (event.keyCode == 9) {return numericValueRangeCheck (this, '', '', 1, 65535, true, '', '');}" onkeypress="return numericValueCheck (event)" maxlength="5" style="margin-left:5px" value= '{{!it["src_port2"] || ""}}'>   
+					</div>
+					<div class="break" id="break_srcport_div">
+						&nbsp;
+					</div>
+					</div>
+					<div class="configRow">
+						<label>{{=global_lang["application_popup"]["dest_ip"] || 'Dest IP' }}</label>
+						<input type="text" id="tf1_destIp" onkeydown="if (event.keyCode == 9) { return ipv4AddrValidate (this, 'IP', false, true, global_lang['alerts_set']['invalid_ip_addr'], 'for octet ', true); }" onkeypress="return numericValueCheck (event, '.')" value= '{{!it["dst_ip"] || ""}}'/>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div  class="configRow">
+						<label>{{=global_lang["application_popup"]["subnet"] || 'Subnet Mask' }}</label>
+						 <input type="text" id="tf1_destSubnetmask" class="one" onkeypress="return numericValueCheck (event, '.')" value= '{{!it["dst_ip_subnet"] || ""}}' maxlength ="2"/> 
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+						{{var statuStr,statuVal;}}
+						<label>{{=global_lang["application_popup"]["dest_port_num"] || 'Destination Port Number' }}</label>
+							{{  if((it["dst_port1"] != ""  && it["dst_port2"] != "") && (it["dst_port1"] != "0"  && it["dst_port2"] != "0")) { }}
+								 {{statuStr="enable-disable-on";}}
+								 {{statuVal="1";}}
+							{{ } else { }}
+								 {{statuStr="enable-disable-off";}}
+								 {{statuVal="0";}}
+							{{ } }}
+						 <a alt="" class="{{=statuStr}}" id="tf1_enabledisable_dstports"></a>
+						<input type="hidden" value="{{=statuVal}}" name="" />
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div id="tf1_ipfilter_dstport_div">
+					<div class="configRow">
+						<label>{{=global_lang["application_popup"]["dest_port_range"] || 'Destination Port Range' }}</label>
+						<input type="text" class="one" id="tf1_destPort1" onkeydown="if (event.keyCode == 9) {return numericValueRangeCheck (this, '', '', 1, 65535, true, '', '');}" onkeypress="return numericValueCheck (event)" maxlength="5"  value= '{{!it["dst_port1"] || ""}}'/> <input type="text" class="one" id="tf1_destPort2" onkeydown="if (event.keyCode == 9) {return numericValueRangeCheck (this, '', '', 1, 65535, true, '', '');}" onkeypress="return numericValueCheck (event)" maxlength="5" style="margin-left:5px"  value= '{{!it["dst_port2"] || ""}}'/>
+					</div>
+					<div class="break" id="break_dstport_div">
+						&nbsp;
+					</div>
+					</div>
+				</div>
+			</div>
+			<div class="submitRowPopup">
+				<input type="hidden" id="tf1_hid_ipfilter_tag" value='{{!it["hidenVal"] || ""}}'>
+				<input type="hidden" id="tf1_hid_ipfilter_action" value=''>
+				<input type="button" value='{{=global_lang["common"]["apply"] || "Apply" }}'  id="tf1_btn_ipfilterAddEdit" class="btnSubmit" onclick="application_addNewIpPortFilter()" />
+				<!--<input type="button" value='{{=global_lang["common"]["apply"] || "Apply" }}'  id="tf1_btn_ipfilterEditAdd" class="btnSubmit" onclick="applicationSettings_ipFilterEdit()" />-->
+				<input type="button" value='{{=global_lang["common"]["cancel"] || "Cancel" }}'  class="btnSubmit" onclick="application_formClose(event)" />
+			</div>
+		</div>
+		</script>
+		<!-- IP/Port Filter Add page data Ends here -->
+		
+		<!-- Port Forwarding Add page data Starts here -->
+		<div class="configTableForm" style="display:none;" id="tf1_firewallPortForwarding">
+			<div class="configContent">
+				<h4 id="tf1_heading_portfwd" data-localize="application_popup.add_new_port_fwd">Add New PortForwarding Filter</h4>
+				<div class="roundedBox">
+					<div class="innerClose">
+						<a class="close2" href="#" onclick="application_formClose(event)" title="Close"></a>
+					</div>
+					<div class="configRow">
+						<label data-localize="application_popup.dest_ip_addr">Destination IP Address</label>
+						<input type="text" id="tf1_pfsourceIp" onkeydown="if (event.keyCode == 9) { return ipv4AddrValidate (this, 'IP', false, true,global_lang['alerts_set']['invalid_ip_addr'], 'for octet ', true); }" onkeypress="return numericValueCheck (event, '.')" />
+					</div>
+					<div class="break">&nbsp;</div>
+					<div class="configRow">
+						<label data-localize="application_popup.protocol">Protocol</label>
+						<select class="u104" id="tf1_pfprotocol" onchange="application_portfwdprotocolselect()">
+							<option value="6" data-localize="application_popup.tcp">TCP</option>
+							<option value="17" data-localize="application_popup.udp">UDP</option>
+							<option value="3" data-localize="application_popup.other">OTHER</option>
+						</select>
+					</div>
+					<div class="break">&nbsp;</div>
+					<div class="configRow" id="tf1_pfprotocolnum_div">
+						<label data-localize="application_popup.protocol"> Protocol Number</label>
+						 <input type="text" class="one" id="tf1_pfprotocolnum"  onkeypress="return numericValueCheck (event)" maxlength="3" > 
+					 </div>
+					<div class="break" id="break_pfprotocolnum_div">&nbsp;</div>
+					<div class="configRow" style="display:none;">
+						<label data-localize="application_popup.port_num">Port Number</label>
+						 <a alt="" class="enable-disable-off" id="tf1_enabledisablePorts"></a>
+						<input type="hidden" value="0" name="" />
+						 </div>
+					<div class="break">&nbsp;</div>
+					<div id="tf1_dstports_div">
+					<div class="configRow" >
+						<label data-localize="application_popup.private_port">Private Port</label>
+						<input type="text" class="one" id="tf1_pfstartPort" onkeydown="if (event.keyCode == 9) {return numericValueRangeCheck (this, '', '', 1, 65535, true, '', '');}" onkeypress="return numericValueCheck (event)" maxlength="5" /> 
+					</div>
+                    <div class="break">&nbsp;</div>
+                    <div class="configRow" >
+						<label data-localize="application_popup.global_port">Global Port</label>
+						<input id="tf1_pfendPort" class="one" type="text"  maxlength="5" onkeypress="return numericValueCheck (event)" onkeydown="if (event.keyCode == 9) {return numericValueRangeCheck (this, '', '', 1, 65535, true, '', '');}">
+					</div>
+					<div class="break" id="break_dstpots_div">
+						&nbsp;
+					</div>
+					</div>
+						 
+				</div>
+			</div>
+			<div class="submitRowPopup1">
+				<input type="hidden" id="tf1_hid_portfwd_tag" >
+				<input type="hidden" id="tf1_hid_portfwd_action">
+				<input type="button" value="Apply" id="tf1_btn_pfwAddEdit" class="btnSubmit" onclick='application_addNewportforwardingFilter()' data-localize="common.apply"/>
+				<input type="button" value="Cancel"  class="btnSubmit" onclick="application_formClose(event)" data-localize="common.cancel"/>
+			</div>
+		</div>
+		<!-- Port Forwarding Add page data Ends here -->
+		
+		
+
+		<!-- URL Filter Add page data Starts here -->
+		<div class="configTableForm" style="display:none;" id="tf1_firewallUrlFilter">
+			<div class="configContent">
+				<h4 data-localize="application_popup.add_new_url">Add New</h4>
+				<div class="roundedBox">
+					<div class="innerClose">
+						<a class="close2" href="#" onclick="application_formClose(event)" title="Close"></a>
+					</div>
+					
+					<div class="configRow">
+						<label data-localize="application_popup.url_domain">URL / Domain</label>
+						<input type="text" id="tf1_urlDomain" maxlength="50"/>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					
+					<div class="break">
+						&nbsp;
+					</div>
+				</div>
+			</div>
+			<div class="submitRowPopup">
+				<input type="button" value="Apply"  data-localize="common.apply" class="btnSubmit" onclick="setHiddenChks('tf1_frm_firewallSettings');application_addNewURLFilter(event)" />
+				<input type="button" value="Cancel" data-localize="common.cancel"  class="btnSubmit" onclick="application_formClose(event)" />
+			</div>
+		</div>
+		<!-- URL Filter Add page data Ends here -->
+
+		<div class="configForm">
+			<div class="configContent">
+			 
+			 
+				<div class="break">
+					&nbsp;
+				</div>
+                
+				<ul id="nav">
+					<li class="first">
+                    <a style="height: 40px;line-height: 40px;" id="tf1_appFirewall" href="applicationPopup.html"  page_id="tf1_firewallSettingsBlock" onload-function="applicationSettings_onloadFirewallSettingsBlock" class="current" data-localize="application_popup.firewall_setting">Firewall Setting</a>
+					</li>
+						 <li><a href="applicationPopup.html" page_id="tf1_portFilter" onload-function="applicationSettings_onloadIPFilter" data-localize="application_popup.ip_filter">IP Filter</a>
+					</li>
+					 <li><a style="height: 40px;line-height: 40px;" href="applicationPopup.html" page_id="tf1_ipFilter" onload-function="applicationSettings_onloadportfwding" data-localize="application_popup.port_fwding">Port Forwarding</a>
+					</li>
+                    
+					<!--<li>
+						<a href="applicationPopup.html" page_id="tf1_urlFilter" onload-function="applicationSettings_onloadUrlFilter" data-localize="application_popup.url_filter">URL Filter</a>
+					</li>-->
+                                    
+				</ul>
+				<div id="ajax-content">
+                
+					<!-- tab one content Starts here-->
+                    <div id="tf1_firewallSettingsBlock">
+	<h4 data-localize="application_popup.firewall">Firewall</h4>
+    <div id="tf1_tmpl_firewall"></div>
+	<script id="app_firewallTemplate" type="text/x-dot-template">
+    <div class="configRow">
+             {{var statuStr,statuVal;}}
+			 <label data-localize="application_popup.firewall_enable">{{=global_lang["application_popup"]["firewall_enable"] || 'Firewall Enable' }} </label>
+            	 {{  if(it.enablefirewall == 1) { }}
+		           {{statuStr="enable-disable-on";}}
+                   {{statusVal="1";}}
+				 {{ } else { }}
+			       {{statuStr="enable-disable-off";}}
+                   {{statusVal="0";}}
+                  
+		     	{{ } }}
+			  <a id="tf1_enabledisablefirewall" class={{=statuStr}} alt=""></a>
+			  <input type="hidden" name="" value="{{=statusVal}}" id="tf1_hid_enabledisablefirewall" />
+              </div>
+              <div class="break"> &nbsp; </div>
+             <div class="configRow" id="tf1_ipfilter_policy_div">
+                <label data-localize="application_popup.IP_Filter_Rules">{{=global_lang["application_popup"]["IP_Filter_Rules"] || 'IP Filter Rules' }} </label>
+		      <select class="u105" id="tf1_ipfilter_policy">
+				<option value="0" {{ if(it.policy == "0") { }} selected {{}}}>{{=global_lang["application_popup"]["drop"] || 'DROP' }}</option>
+				<option value="1" {{ if(it.policy == "1") { }} selected {{}}}>{{=global_lang["application_popup"]["accept"] || 'ACCEPT' }}</option>
+		      </select>
+	        </div>
+	<div class="break">&nbsp;</div>
+	  <div class="configRow">
+             {{var statuStr,statuVal;}}
+			 <label>{{=global_lang["application_popup"]["dmz_settings"] || 'DMZ Settings' }} </label>
+            	 {{  if(it.enabledmz == 1) { }}
+		           {{statuStr="enable-disable-on";}}
+                   {{statusVal="1";}}
+				 {{ } else { }}
+			       {{statuStr="enable-disable-off";}}
+                   {{statusVal="0";}}
+                  
+		     	{{ } }}
+			  <a id="tf1_enabledisabledmz" class={{=statuStr}} alt=""></a>
+			  <input type="hidden" name="" value="{{=statusVal}}" id="tf1_hid_enabledisabledmz" />
+              </div>
+              <div class="break"> &nbsp; </div>
+                <div class="configRow" id="tf1_dmzIpAddress_div">
+                <label>{{=global_lang["application_popup"]["dmz_ipaddress"] || 'DMZ IP Address' }} </label>
+                <input type="text" value="{{=it.ipAddr}}" name="" id="tf1_dmzIpAddress"  onkeypress="return numericValueCheck (event, '.')" onkeydown="if (event.keyCode == 9) { return ipv4AddrValidate (this, 'IP', false, true, global_lang['alerts_set']['invalid_ip_addr'], 'for octet ', true); }" />
+              </div>
+              <div class="break" id="break_dmzIpAddress_div"> &nbsp; </div>
+              <div class="configRow">
+                <label>{{=global_lang["application_popup"]["pptp"] || 'PPTP Pass Through' }} </label>
+                  <!--<a id="" class="enable-disable-on-noclick" alt=""></a>
+					  <input type="hidden" name="" value="0" />-->
+					<p>
+					{{ if(it.pptp_flag == 1){ }}
+						{{=global_lang["common"]["on"] || 'ON' }}
+					{{ }else{ }}
+						{{=global_lang["common"]["off"] || 'OFF' }}
+					{{ } }}
+					</p>  
+              </div>
+              <div class="break"> &nbsp; </div>
+              <div class="configRow">
+                <label>{{=global_lang["application_popup"]["ipsec"] || 'IPsec Pass Through' }} </label>
+                <!--<a id="" class="enable-disable-on-noclick" alt=""></a>
+				<input type="hidden" name="" value="0" />-->
+					<p>
+					{{ if(it.ipsec_flag ==1){ }}
+						{{=global_lang["common"]["on"] || 'ON' }}
+					{{ }else{ }}
+						{{=global_lang["common"]["off"] || 'OFF' }}
+					{{ } }}
+					</p>  	
+              </div>
+              <div class="break"> &nbsp; </div>
+              <div class="configRow">
+                <label>{{=global_lang["application_popup"]["l2tp"] || 'L2TP Pass Through' }}</label>
+                <!--<a id="" class="enable-disable-on-noclick" alt=""></a>
+					<input type="hidden" name="" value="0" />-->
+					<p>
+					{{ if(it.l2tp_flag == 1){ }}
+						{{=global_lang["common"]["on"] || 'ON' }}
+					{{ }else{ }}
+						{{=global_lang["common"]["off"] || 'OFF' }}
+					{{ } }}
+
+					</p>  
+              </div>
+              <div class="break"> &nbsp; </div>
+              <div class="configRow">
+                <label>{{=global_lang["application_popup"]["wan_ping"] || 'WAN Ping Blocking' }} </label>
+                <!--<a id="" class="enable-disable-on-noclick" alt=""></a>
+				<input type="hidden" name="" value="0" />-->
+					<p>
+					{{ if(it.wan_ping_flag == 1){ }}
+						{{=global_lang["common"]["on"] || 'ON' }}
+					{{ }else{ }}
+						{{=global_lang["common"]["off"] || 'OFF' }}
+					{{ } }}
+					</p>  
+              </div>
+              <div class="break"> &nbsp; </div>
+               <div class="configRow">
+               {{var statuStr,statuVal;}}
+				<label>{{=global_lang["application_popup"]["access_frm_wan"] || 'Access from WAN' }}</label>
+            	 {{  if(it.enablewan == 1) { }}
+		           {{statuStr="enable-disable-on";}}
+                   {{statusVal="1";}}
+				 {{ } else { }}
+			       {{statuStr="enable-disable-off";}}
+                   {{statusVal="0";}}
+                 {{ } }}
+                <a  class="{{=statuStr}}" alt="" id="tf1_accessWan"></a>
+				<input type="hidden" name="" value="{{=statusVal}}" id="tf1_hid_accessWan" />
+              </div>
+              <div class="break"> &nbsp; </div>
+	 			</script>	
+
+	<div id="tf1_hdButtonBlock" style="display:none">
+		<input type="button" data-localize="common.apply" value="Apply"  class="btnSubmit" onclick="applicationSettings_firewallSettingsvalidateBlock('tf1_frm_firewallSettings')" />
+		<input type="button" data-localize="common.cancel" value="Cancel"  class="btnSubmit" id="btnClose" />
+          
+	</div>
+</div>
+
+					
+					<!-- tab one content Ends here-->
+				</div>
+			</div>
+			<div id="tf1_btnBlock" class="submitRowPopup">
+				 
+               
+			</div>
+            
+		</div>
+
+	</form>
+	
+</div>
+<!-- tab Two content Starts here-->
+<div id="tf1_urlFilter" style="display:none;">
+	<div id="tf1_tmpl_firewall_urlfilter"></div>
+	<script id="app_urlfilterTemplate" type="text/x-dot-template">
+	<h4>{{=global_lang["application_popup"]["url_filter_enable"] || 'URL Filter Enable' }}</h4>
+   				
+						<div class="configRow">
+ 						{{var statuStr,statuVal;}}
+						<label>{{=global_lang["application_popup"]["url_filter"] || 'URL Filter' }}</label>
+            			{{ if(it.enableurlfilter == "1") { }}
+				           {{statuStr="enable-disable-on";}}
+		                   {{statusVal="1";}}
+		                {{ } else { }}
+					       {{statuStr="enable-disable-off";}}
+		                   {{statusVal="0";}}
+		                {{ } }}
+							<a id alt="" class="{{=statuStr}}"></a>
+							<input type="hidden" value="{{=statusVal}}" name="" id="tf1_enableurlValue"/>
+						</div> 
+                        <div class="break" >&nbsp;</div>
+    
+	<div id="tablewrapper">
+		<div id="tableheader">
+			<div class="search">
+				<select id="columns" onchange="sorter.search('query')" style="display:none;"></select>
+				<select id="pagedropdown" style="display:none;"></select>
+				<input type="text" placeholder='{{=global_lang["common"]["search"] ||"search" }}' id="query" onkeyup="sorter.search('query')" onKeypress="if (event.keyCode == 13) { return false; }" />
+				<span class="details">
+					<div>
+						{{=global_lang["common"]["records"] ||'Records' }}:
+											&nbsp;<span id="totalrecords"></span>&nbsp;&nbsp;
+											{{=global_lang["common"]["showing"] ||'Displayed:' }}&nbsp;
+											<span id="startrecord"></span>-<span id="endrecord"></span>
+					</div> </span>
+				<div id="tablelocation">
+					<div>
+						<select onchange="sorter.size(this.value)" class="one">
+							<option value="5">5</option>
+							<option value="10" selected="selected">10</option>
+							<option value="20">20</option>
+							<option value="All">{{=global_lang["application_popup"]["all"] || 'All' }}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<table cellpadding="0" cellspacing="0" border="0" id="tf1_urlFilterTbl" class="tinytable">
+			<thead>
+				<tr>
+					<th><h6>ID</h6></th>
+					<th><h6>{{=global_lang["wifi_popup"]["mac_delete"] || 'Delete' }}</h6></th>
+					<th><h6>{{=global_lang["application_popup"]["keyword_url"] || 'Keyword of URL / Domain' }}</h6></th>
+				</tr>
+			</thead>
+			<tbody>
+				 
+					{{~it.keyword :value:index}}		
+					  {{if(it.keyword != '') { }}	
+					 	<tr>
+							<td>{{=index+1}}</td>
+							<td>
+								<input type="checkbox" class="chk_id" value="{{=value}}"  />
+							</td>
+							<td>{{=value}}</td>
+						</tr>	
+					   {{ } }}	
+
+				{{~}}
+			</tbody>
+		</table>
+		<div id="tablefooter">
+			<div id="tablenav">
+				<div>
+					<img src="images/first.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1,true)" /><img src="images/previous.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1)" /><img src="images/next.gif" width="16" height="16" alt="First Page" onclick="sorter.move(1)" /><img src="images/last.gif" width="16" height="16" alt="Last Page" onclick="sorter.move(1,true)" />
+				</div>
+				<div class="pageCount">
+					<span data-localize="common.pages">
+											{{=global_lang["common"]["pages"] ||'Pages' }}
+										</span>&nbsp;
+										<span id="totalpages"></span>&nbsp;
+										<span data-localize="common.of">
+											{{=global_lang["common"]["current_page"] ||'Current Page' }}
+										</span>&nbsp;
+										<span id="currentpage"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div>
+		<a href="#" class="btnSubmit" onclick="application_addFirewallUrlImportForm(event)">+ {{=global_lang["wifi_popup"]["new_filter"] || 'Add New' }}</a>
+	</div>
+	
+
+	<div id="tf1_hdButtonBlock" style="display:none">
+		<input type="button" value='{{=global_lang["common"]["apply"] || "Apply" }}'  class="btnSubmit" onclick="setHiddenChks('tf1_frm_firewallSettings');applicationSettings_firewallurlSettingsvalidate(event)" />
+		<input type="button" value='{{=global_lang["common"]["cancel"] || "Cancel" }}'  class="btnSubmit" id="btnClose" />
+         <div id="tf1_currentFilterCounter" class="tableDetails">{{=global_lang["application_popup"]["cur_url_filters"] || 'Current URL Filters' }} ( {{=it.keyword.length}} / {{=ui_config["firewall_info"]["META"]["url_keywd_num"]}} )</div> 
+
+	</div>
+	</script>
+</div>
+<!-- tab Two content Ends here-->
+<!-- tab Three content Starts here-->
+<div id="tf1_portFilter">
+						<div id="tf1_tmpl_firewall_ipfilter"></div>
+    					<script id="app_ipfilterTemplate" type="text/x-dot-template"> 
+						<h4>{{=global_lang["application_popup"]["ip_filter"] || 'IP Filter' }}</h4>
+                          
+						<div id="tablewrapper">
+							<div id="tableheader">
+								<div class="search">
+									<select id="columns" onchange="sorter.search('query')" style="display:none;"></select>
+									<select id="pagedropdown" style="display:none;"></select>
+									<input type="text" placeholder='{{=global_lang["common"]["search"] ||"search" }}' id="query" onkeyup="sorter.search('query')" onKeypress="if (event.keyCode == 13) { return false; }" />
+									<span class="details">
+										<div>
+											{{=global_lang["common"]["records"] ||'Records' }}:
+											&nbsp;<span id="totalrecords"></span>&nbsp;&nbsp;
+											{{=global_lang["common"]["showing"] ||'Displayed:' }}&nbsp;
+											<span id="startrecord"></span>-<span id="endrecord"></span>
+										</div> </span>
+									<div id="tablelocation">
+										<div>
+											<select onchange="sorter.size(this.value)" class="one">
+												<option value="5">5</option>
+												<option value="10" selected="selected">10</option>
+												<option value="20">20</option>
+												<option value="All">{{=global_lang["application_popup"]["all"] ||'All' }}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<table cellpadding="0" cellspacing="0" border="0" id="tf1_ipFilterTbl" class="tinytable">
+								<thead>
+									<tr>
+										<th><h6>ID</h6></th>
+										<th><h6>{{=global_lang["wifi_popup"]["mac_delete"] || 'Delete' }}</h6></th>
+										<th><h6>{{=global_lang["application_popup"]["protocol"] || 'Protocol' }} </h6></th>
+										<th><h6>{{=global_lang["application_popup"]["src_ip"] || 'Source IP' }}</h6></th>
+										<th><h6>{{=global_lang["application_popup"]["dest_ip"] || 'Dest IP' }}</h6></th>
+										<th><h6>{{=global_lang["application_popup"]["rule"] || 'Rule' }}</h6></th>
+									</tr>
+								</thead>
+								<tbody>
+								 {{ var contindex = 0;}}
+								  {{ for (var item in it) { }} 
+									{{ if (item != "META") { }}
+									
+									  {{ var tmpIndex = item.split("_")[1]; }}
+								<tr>
+							     {{var rule,protocol,src_port,dst_port;}} 
+								 {{if(it[item].policy == "0") { }}
+								 	{{rule  = global_lang["application_popup"]["drop"] || 'DROP';}}
+								 {{ } else { }}	
+								 	{{rule  = global_lang["application_popup"]["accept"] || 'ACCEPT';}}	
+								 {{ } }}
+								 
+								 {{if(it[item].proto == "0") { }}
+								 	{{proctocol  = global_lang["application_popup"]["all"] || 'All';}}
+								 {{ } else if(it[item].proto == "1") { }}
+								 	{{proctocol  = global_lang["application_popup"]["icmp"] || 'ICMP';}}
+								  {{ } else if(it[item].proto == "2") { }}
+								 	{{proctocol  = global_lang["application_popup"]["tcp"] || 'TCP';}}		
+								 {{ } else { }}	
+								 	{{proctocol  = global_lang["application_popup"]["udp"] || 'UDP';}}	
+								 {{ } }}
+								 
+								 {{if(it[item].src_port1 == "" && it[item].src_port2 == "" ) { }}
+								 	{{src_port  = global_lang["application_popup"]["any"] || 'Any' ;}}								 
+								 {{ } else { }}	
+								 	{{src_port = it[item].src_port1 +"~"+ it[item].src_port2;}}	
+								 {{ } }}
+								 
+								 {{if(it[item].dst_port1 == "" && it[item].dst_port2 == "" ) { }}
+								 	{{dst_port  = global_lang["application_popup"]["any"] || 'Any' ;}}								 
+								 {{ } else { }}	
+								 	{{dst_port = it[item].dst_port1 +"~"+ it[item].dst_port2;}}	
+								 {{ } }}
+								 
+								 
+							   <input type="hidden" id="tf1_ipfilter_tag_{{=tmpIndex}}" value="{{=tmpIndex}}">
+							  <!-- <input type="hidden" id="tf1_ipfilter_policy_{{=tmpIndex}}" value="{{=it[item].policy}}"> -->
+							   <input type="hidden" id="tf1_ipfilter_proto_{{=tmpIndex}}" value="{{=it[item].proto}}">
+							   <input type="hidden" id="tf1_ipfilter_srcip_{{=tmpIndex}}" value="{{=it[item].src_ip}}">
+							   <input type="hidden" id="tf1_ipfilter_srcsubnet_{{=tmpIndex}}" value="{{=it[item].src_ip_subnet}}">
+							   <input type="hidden" id="tf1_ipfilter_dstip_{{=tmpIndex}}" value="{{=it[item].dst_ip}}">
+							   <input type="hidden" id="tf1_ipfilter_dstsubnet_{{=tmpIndex}}" value="{{=it[item].dst_ip_subnet}}">	
+							   <input type="hidden" id="tf1_ipfilter_srcport1_{{=tmpIndex}}" value="{{=it[item].src_port1}}">
+							   <input type="hidden" id="tf1_ipfilter_srcport2_{{=tmpIndex}}" value="{{=it[item].src_port2}}">								                               <input type="hidden" id="tf1_ipfilter_dstport1_{{=tmpIndex}}" value="{{=it[item].dst_port1}}">
+							   <input type="hidden" id="tf1_ipfilter_dstport2_{{=tmpIndex}}" value="{{=it[item].dst_port2}}">
+							   					  				
+							   <td>{{=contindex+1}}</td>
+							   <td><input type="checkbox" value="IPF_{{=tmpIndex}}" id="" class="chk_id"/></td>
+							   <td><a href="#" onclick="application_editIpfilter(event,{{=tmpIndex}})">{{=proctocol}}</a></td> 
+							   <td>{{=it[item].src_ip}}/{{=it[item].src_ip_subnet}} <br/> {{=global_lang["application_popup"]["port"] || 'Port'}} : {{=src_port}}</td> 
+							   <td>{{=it[item].dst_ip}}/{{=it[item].dst_ip_subnet}} <br/> {{=global_lang["application_popup"]["port"] || 'Port'}} : {{=dst_port}}</td>
+							   <td>{{=rule}}</td>	
+				
+						   </tr>
+						   			{{ contindex = contindex + 1;}}
+									{{ } }}        
+								 {{ } }}        
+											
+							</tbody>
+							</table>
+							<div id="tablefooter">
+								<div id="tablenav">
+									<div>
+										<img src="images/first.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1,true)" /><img src="images/previous.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1)" /><img src="images/next.gif" width="16" height="16" alt="First Page" onclick="sorter.move(1)" /><img src="images/last.gif" width="16" height="16" alt="Last Page" onclick="sorter.move(1,true)" />
+									</div>
+									<div class="pageCount">
+										<span data-localize="common.pages">
+											{{=global_lang["common"]["pages"] ||'Pages' }}
+										</span>&nbsp;
+										<span id="totalpages"></span>&nbsp;
+										<span data-localize="common.of">
+											{{=global_lang["common"]["current_page"] ||'Current Page' }}
+										</span>&nbsp;
+										<span id="currentpage"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+
+						<div>
+							<a href="#" class="btnSubmit" onclick="application_addFirewallIPfilterAddForm(event,{{=contindex}})">+ 
+{{=global_lang["wifi_popup"]["new_filter"] || 'Add New' }}</a>
+						</div>
+
+						<div id="tf1_hdButtonBlock" style="display:none">
+							<input type="button" value='{{=global_lang["common"]["apply"] || "Apply" }}' id="tf1_btn_ipfilter" class="btnSubmit" onclick="applicationSettings_ipFilterApply(event)"  />
+							<input type="button" value='{{=global_lang["common"]["cancel"] || "Cancel" }}'  class="btnSubmit" id="btnClose" />
+                             <div id="tf1_currentFilterCounter" class="tableDetails">{{=global_lang["application_popup"]["current_ip_filters"] || 'Current IP Filters' }} ( {{=contindex}} / {{=ui_config["firewall_ipfilterinfo"]["META"]["max"]}} )</div>
+						</div>
+						
+						</script>
+					</div>
+<!-- tab Three content Ends here-->
+
+<!-- tab Four content Starts here-->
+<div id="tf1_ipFilter">
+						<div id="tf1_tmpl_firewall_portfwd"></div>
+    					<script id="app_portfwdTemplate" type="text/x-dot-template"> 
+						<h4>{{=global_lang["application_popup"]["port_fwding"] || 'Port Forwarding' }}</h4>
+                        
+						<div id="tablewrapper">
+							<div id="tableheader">
+								<div class="search">
+									<select id="columns" onchange="sorter.search('query')" style="display:none;"></select>
+									<select id="pagedropdown" style="display:none;"></select>
+									<input type="text" placeholder='{{=global_lang["common"]["search"] ||"search" }}' id="query" onkeyup="sorter.search('query')" onKeypress="if (event.keyCode == 13) { return false; }" />
+									<span class="details">
+										<div>
+											{{=global_lang["common"]["records"] ||'Records' }}:
+											&nbsp;<span id="totalrecords"></span>&nbsp;&nbsp;
+											{{=global_lang["common"]["showing"] ||'Displayed:' }}&nbsp;
+											<span id="startrecord"></span>-<span id="endrecord"></span>
+										</div> </span>
+									<div id="tablelocation">
+										<div>
+											<select onchange="sorter.size(this.value)" class="one">
+												<option value="5">5</option>
+												<option value="10" selected="selected">10</option>
+												<option value="20">20</option>
+												<option value="All">{{=global_lang["application_popup"]["all"] ||'All' }}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<table cellpadding="0" cellspacing="0" border="0" id="tf1_portforwardTbl" class="tinytable">
+								<thead>
+									<tr>
+										<th><h6>ID</h6></th>
+										<th><h6>{{=global_lang["wifi_popup"]["mac_delete"] || 'Delete' }}</h6></th>
+										<th><h6>{{=global_lang["application_popup"]["protocol"] || 'Protocol' }} </h6></th>
+										<th><h6>{{=global_lang["application_popup"]["destination_ip"] || 'Destination IP' }}</h6></th>
+										<th><h6>{{=global_lang["application_popup"]["private_port"] || 'Private Port' }} </h6></th>
+										<th><h6>{{=global_lang["application_popup"]["global_port"] || 'Global Port' }} </h6></th>
+									</tr>
+								</thead>
+								<tbody>
+								{{ var contindex = 0;}}
+								 {{ for (var item in it) { }} 
+									{{ if (item != "META") { }}
+									
+									{{ var tmpIndex = item.split("_")[1]; }}
+									
+							<tr>
+							     {{var proctocol,port;}} 
+								 {{if(it[item].proto == "6") { }}
+								 	{{proctocol  = global_lang["application_popup"]["tcp"] || 'TCP';}}
+								 {{ } else if(it[item].proto == "17") { }}
+								 	{{proctocol  = global_lang["application_popup"]["udp"] || 'UDP';}}
+								 {{ } else { }}	
+								 	{{proctocol  = global_lang["application_popup"]["other"] || 'OTHER';}}	
+								 {{ } }}
+								 
+								 {{if(it[item].dst_port1 == "" && it[item].dst_port2 == "" ) { }}
+								 	{{port  = global_lang["application_popup"]["any"] || 'Any' ;}}								 
+								 {{ } else { }}	
+								 	{{port = it[item].dst_port1 +"~"+ it[item].dst_port2;}}	
+								 {{ } }}
+						
+							   
+							   
+							   <input type="hidden" id="tf1_portfwd_tag_{{=tmpIndex}}" value="{{=tmpIndex}}">
+							   <input type="hidden" id="tf1_portfwd_proto_{{=tmpIndex}}" value="{{=it[item].proto}}">
+							   <input type="hidden" id="tf1_portfwd_ip_{{=tmpIndex}}" value="{{=it[item].inn_ip1}}">
+							   <input type="hidden" id="tf1_portfwd_dstp1_{{=tmpIndex}}" value="{{=it[item].dst_port1}}">
+							   <input type="hidden" id="tf1_portfwd_dstp2_{{=tmpIndex}}" value="{{=it[item].dst_port2}}">
+					  				
+							   <td>{{=contindex+1}}</td>
+							   <td><input type="checkbox" value="PF_{{=tmpIndex}}" id="tf1_pfwddel" class="chk_id"/></td>
+							   <td><a href="#" onclick="application_editPortForwarding(event,{{=tmpIndex}})">{{=proctocol}}</a></td> 
+							   <td>{{=it[item].inn_ip1}}</td> 
+							   <td> {{=it[item].dst_port1}} </td> 
+							   <td> {{=it[item].dst_port2}} </td> 
+							   
+							   
+							 
+						   </tr>
+						   		   {{ contindex = contindex + 1;}}
+								   {{ } }}
+								 {{ } }}        
+							
+							<input type="hidden" id="tf1_portfwd_tag" value="{{=contindex}}">
+							</tbody>
+
+
+
+							</table>
+							<div id="tablefooter">
+								<div id="tablenav">
+									<div>
+										<img src="images/first.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1,true)" /><img src="images/previous.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1)" /><img src="images/next.gif" width="16" height="16" alt="First Page" onclick="sorter.move(1)" /><img src="images/last.gif" width="16" height="16" alt="Last Page" onclick="sorter.move(1,true)" />
+									</div>
+									<div class="pageCount">
+								<span data-localize="common.pages">
+											{{=global_lang["common"]["pages"] ||'Pages' }}
+										</span>&nbsp;
+										<span id="totalpages"></span>&nbsp;
+										<span data-localize="common.of">
+											{{=global_lang["common"]["current_page"] ||'Current Page' }}
+										</span>&nbsp;
+										<span id="currentpage"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+
+						<div>
+							<a href="#" class="btnSubmit" onclick="application_addPortForwarding(event,{{=contindex}})">+ {{=global_lang["wifi_popup"]["new_filter"] || 'Add New' }}</a>
+						</div>
+
+						<div id="tf1_hdButtonBlock" style="display:none">
+							<input type="button" value='{{=global_lang["common"]["apply"] || "Apply" }}'
+  class="btnSubmit" id="tf1_btn_pfwd" onclick="applicationSettings_firewallSettingsportfwdApply(event)" />
+							<input type="button" value='{{=global_lang["common"]["cancel"] || "Cancel" }}'  class="btnSubmit" id="btnClose" />
+                             <div id="tf1_currentFilterCounter" class="tableDetails">{{=global_lang["application_popup"]["cur_port_fwd_filters"] || 'Current PortForwarding Filters' }} ( {{=contindex}} / {{=ui_config["firewall_portfwdinfo"]["META"]["max"]}})</div>
+						</div>
+						</script>
+					</div>
+<!-- tab four content Ends here-->
+
+
+</div>
+<!-- Firewall Setting Ends here -->

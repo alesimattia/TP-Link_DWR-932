@@ -1,0 +1,1015 @@
+@charset "utf-8";
+.cpTop {
+	height: 190px;
+	width: 964px;
+}
+
+.cpTop .logoTop {
+	background: none transparent;
+	border-radius: 12px;
+	box-shadow: 4px 4px 6px #666666;
+	float: left;
+	height: 158px;
+	margin: 12px 0 0 0;
+	padding: 0;
+	width: 180px;
+}
+
+.cpLogo {
+	background: url("../images/logo.png") 0 20px no-repeat transparent;
+	border: 1px solid #999999;
+	border-radius: 12px;
+	color: #333333;
+	font-size: 28px;
+	font-weight: bold;
+	height: 54px;
+	letter-spacing: 1px;
+	padding: 102px 0 0px 0;
+	text-shadow: 1px 1px 2px #999999;
+	-moz-box-shadow: inset 4px 4px 6px #666666;
+	-webkit-box-shadow: inset 4px 4px 6px #666666;
+	box-shadow: inset 4px 4px 6px #666666;
+}
+.cpInfoBar{
+	width: 200px;
+    height: 80px;
+    float: right;
+}
+.cpInfoBar_div1 {
+	float: right;
+	font-size: 14px;
+	margin: 10px 24px 0 0;
+}
+.cpInfoBar_div2 > p {
+	color: #666666;
+	font-size: 13px;
+	line-height: 30px;
+	float: left;
+}
+.cpInfoBar_div2 > p > a {
+	color: #0075B5;
+	font-size: 15px;
+	letter-spacing: 0.6px;
+	padding: 0 0 0 10px;
+}
+.cpInfoBar_div2 p a:hover {
+	text-decoration: none;
+}
+.cpInfoBar_div1 select {
+	width: 110px;
+    height: 20px;
+	padding: 2px;
+}
+.cpInfoBar_div2{
+	width: 350px;
+    height: 30px;
+    float: right;
+	margin-right: 24px;
+}
+.userLogout {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#373c4f', EndColorStr='#8b8d9a');
+	background: #373c4f;
+	background: -ms-linear-gradient(top, #373c4f, #8b8d9a);
+	background: -webkit-gradient(linear, left top, left bottom, from(#373c4f), to(#8b8d9a));
+	background: -moz-linear-gradient(top, #373c4f, #8b8d9a);
+	background: -o-linear-gradient(top, #373c4f, #8b8d9a);
+	border-radius: 12px;
+	box-shadow: inset 0 0 4px #011c33;
+	color: #FFFFFF;
+	cursor: pointer;
+	float: right;
+	font-size: 12px;
+	height: 22px;
+	line-height: 22px;
+	margin-top: 5px;
+	text-align: center;
+	text-decoration: none;
+	width: 140px;
+}
+.userLogout:hover {
+	text-decoration: underline;
+}
+.cpMid {
+	width: 934px;
+	margin: 0 auto;
+}
+.cpMid > div.divline {
+	background: url("../images/divLine1.png") repeat-x scroll 0 4px transparent;
+	color: #345C7A;
+	font-size: 30px;
+	font-weight: bold;
+	height: 46px;
+	text-shadow: 0 1px 2px #81BBE8;
+}
+/* menu */
+
+nav {
+	float: left;
+	margin-left: 4px;
+	margin: 20px 0 0 20px;
+}
+nav ul {
+	padding: 0;
+	margin: 0;
+	white-space: nowrap;
+}
+nav li {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#e5e5e5', EndColorStr='#f6f6f6');
+	background: #e5e5e5;
+	background: -ms-linear-gradient(top, #e5e5e5, #f6f6f6);
+	background: -webkit-gradient(linear, left top, left bottom, from(#e5e5e5), to(#f6f6f6));
+	background: -moz-linear-gradient(top, #e5e5e5, #f6f6f6);
+	background: -o-linear-gradient(top, #e5e5e5, #f6f6f6);
+	border: 1px solid #ededed;
+	border-radius: 12px;
+	position: relative;
+	float: left;
+	list-style-type: none;
+	margin: 0 5px;
+}
+nav li:hover {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#8bdcff', EndColorStr='#daf4ff');
+	background: #8bdcff;
+	background: -ms-linear-gradient(top, #8bdcff, #daf4ff);
+	background: -webkit-gradient(linear, left top, left bottom, from(#8bdcff), to(#daf4ff));
+	background: -moz-linear-gradient(top, #8bdcff, #daf4ff);
+	background: -o-linear-gradient(top, #8bdcff, #daf4ff);
+	border: 1px solid #daf4ff;
+}
+nav li a {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#d3d3d3', EndColorStr='#eae9e9');
+	background: #a3a3a3;
+	background: -ms-linear-gradient(top, #d3d3d3, #eae9e9);
+	background: -webkit-gradient(linear, left top, left bottom, from(#d3d3d3), to(#eae9e9));
+	background: -moz-linear-gradient(top, #d3d3d3, #eae9e9);
+	background: -o-linear-gradient(top, #d3d3d3, #eae9e9);
+	border: 1px solid #bcbcbc;
+	border-radius: 8px;
+	color: #666666;
+	display: block;
+	font-size: 14px;
+	line-height: 28px;
+	margin: 3px;
+	text-decoration: none;
+	width: 132px;
+}
+nav li a:hover {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#019fe3', EndColorStr='#68dcfe');
+	background: #019fe3;
+	background: -ms-linear-gradient(top, #019fe3, #68dcfe);
+	background: -webkit-gradient(linear, left top, left bottom, from(#019fe3), to(#68dcfe));
+	background: -moz-linear-gradient(top, #019fe3, #68dcfe);
+	background: -o-linear-gradient(top, #019fe3, #68dcfe);
+	border: 1px solid #31aef5;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+/* menu end */
+
+/* mid */
+
+.cpMainLeft, .cpMainRight {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#DDDDDD', EndColorStr='#DEDEDE');
+	background: #DEDEDE;
+	background: -ms-linear-gradient(top, #DDDDDD, #DEDEDE);
+	background: -webkit-gradient(linear, left top, left bottom, from(#DDDDDD), to(#DEDEDE));
+	background: -moz-linear-gradient(top, #DDDDDD, #DEDEDE);
+	background: -o-linear-gradient(top, #DDDDDD, #DEDEDE);
+	border: 5px solid #EFEFEF;
+	border-radius: 12px;
+	box-shadow: 0 0 4px 0 #999999 inset;
+	margin: 0 8px;
+	float: left;
+	height: 430px;
+	width: 254px;
+}
+.cpMainLeft > div, .cpMainRight > div {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#EFEFEF');
+	background: #FFFFFF;
+	background: -ms-linear-gradient(top, #FFFFFF, #EFEFEF);
+	background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#EFEFEF));
+	background: -moz-linear-gradient(top, #FFFFFF, #EFEFEF);
+	background: -o-linear-gradient(top, #FFFFFF, #EFEFEF);
+	border: 1px solid #8C8C8C;
+	border-radius: 6px;
+	box-shadow: 0 0 8px 0 #999999;
+	height: 415px;
+	margin: 7px;
+}
+.cpMainLeft > div > h1, .cpMainRight > div > h1 {
+	background: url("../images/icons1.png") no-repeat scroll -24px -107px transparent;
+	border: medium none;
+	color: #345C7A;
+	font-size: 16px;
+	font-weight: bold;
+	letter-spacing: normal;
+	padding: 8px 12px 0 24px;
+	text-align: left;
+}
+.cpMainLeft > div > h1 a, .cpMainRight > div > h1 a {
+	color: #345C7A;
+	text-decoration: none;
+}
+.cpMainLeft > div > h1 a:hover, .cpMainRight > div > h1 a:hover {
+	text-decoration: underline;
+}
+.cpMainLeft > div > div, .cpMainRight > div > div {
+	background: none repeat scroll 0 0 #E6E6E6;
+	border: 2px solid #FFFFFF;
+	border-radius: 8px;
+	box-shadow: 0 2px 0 0 #BFBFBF inset;
+	margin: 7px;
+	overflow: hidden;
+	padding: 6px 12px;
+	text-align: left;
+}
+.cpBreak1 {
+	border-bottom: 1px solid #D8D8D8;
+	border-top: 1px solid #C9C9C9;
+	height: 1px;
+	margin: 0 10px;
+}
+.cpInternet {
+	overflow: hidden;
+}
+.cpOperator {
+	float: left;
+	padding-top: 5px;
+	width: 120px;
+}
+.cpOperator p {
+	color: #40464B;
+	font-size: 13px;
+	line-height: 21px;
+	padding: 2px 0 0 1px;
+}
+.cpTarriefUsage {
+	float: right;
+	padding-top: 5px;
+	width: 66px;
+}
+.cpTarriefUsage p {
+	color: #40464b;
+	font-size: 13px;
+	line-height: 27px;
+	text-align: right;
+}
+.cpTarriefUsage p .textOne {
+	color: #0075b5;
+	font-size: 14px;
+	font-weight: bold;
+	/*padding: 0 4px 0 0;*/
+}
+.cpTarriefUsage p .textTwo {
+	color: #40464b;
+	font-size: 14px;
+	font-weight: bold;
+	/*padding: 0 4px 0 0;*/
+}
+.cpSignalStrength {
+	background: url("../images/icons-36x36.png") no-repeat scroll 0 -694px transparent;
+	float: left;
+	height: 17px;
+	margin: 10px 0 0 0;
+	width: 36px;
+}
+.cpConnectionDetails {
+	height: 52px;
+	margin: 3px 0 4px 0;
+	overflow: hidden;
+}
+.cpCurrentConnOnOff {
+	color: #345C7A;
+	font-size: 15px;
+	float: left;
+	font-weight: bold;
+	letter-spacing: normal;
+	line-height: 20px;
+	padding: 0 5px 0 0;
+	text-align: left;
+}
+.cpCurrentConnOn {
+	float: left;
+	margin: 1px 0 0 1px;
+	width: 48px;
+}
+.cpTimeStart {
+	float: right;
+	margin: 5px 1px 0 0;
+}
+.cpTime {
+	background: url("../images/timeIcon.png") no-repeat scroll 0 0 transparent;
+	color: #0075b5;
+	font-size: 11px;
+	float: right;
+	line-height: normal;
+	text-align: center;
+	width: 25px;
+	height: 25px;
+}
+.cpMainMid {
+	float: left;
+	height: 400px;
+	width: 374px;
+}
+.cpMainMid2 {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#DDDDDD', EndColorStr='#DEDEDE');
+	background: #DEDEDE;
+	background: -ms-linear-gradient(top, #DDDDDD, #DEDEDE);
+	background: -webkit-gradient(linear, left top, left bottom, from(#DDDDDD), to(#DEDEDE));
+	background: -moz-linear-gradient(top, #DDDDDD, #DEDEDE);
+	background: -o-linear-gradient(top, #DDDDDD, #DEDEDE);
+	border: 5px solid #EFEFEF;
+	border-radius: 156px;
+	box-shadow: 0 0 4px 0 #999999 inset;
+	height: 280px;
+	margin: 0 8px;
+	width: 280px;
+}
+.cpMainMid2 > div {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#DEDEDE');
+	background: #FFFFFF;
+	background: -ms-linear-gradient(top, #FFFFFF, #DEDEDE);
+	background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#DEDEDE));
+	background: -moz-linear-gradient(top, #FFFFFF, #DEDEDE);
+	background: -o-linear-gradient(top, #FFFFFF, #DEDEDE);
+	border: 1px solid #8C8C8C;
+	border-radius: 136px;
+	box-shadow: 0 0 8px 0 #999999;
+	height: 264px;
+	margin: 7px;
+}
+.cpRouter {
+	margin: 55px 0 0 0;
+	width:150px;
+	height:90px;
+	background: url("../images/routerDWR-932_1.png") no-repeat scroll 0 0 transparent;
+	
+}
+.cpMainMid2 > #tf1_tmpl_cpmaininfo > div > p, .cpMainMid2 > #tf1_tmpl_cpmaininfo > div > p .linkOne {
+	color: #345C7A;
+	font-weight: bold;
+	margin: 10px;
+}
+.cpMainMid2 > div > p .linkOne:hover {
+	text-decoration: none;
+}
+.cpMainMid2 > div > p b {
+	float: left;
+	line-height: 30px;
+	padding: 0 0 0 60px;
+}
+.cpMainMid2 > div > p span {
+	float: left;
+	padding: 0 0 0 10px;
+}
+.cpSetupWizard {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#CCCCCC', EndColorStr='#CDCDCD');
+	background: #CDCDCD;
+	background: -ms-linear-gradient(top, #CCCCCC, #CDCDCD);
+	background: -webkit-gradient(linear, left top, left bottom, from(#CCCCCC), to(#CDCDCD));
+	background: -moz-linear-gradient(top, #CCCCCC, #CDCDCD);
+	background: -o-linear-gradient(top, #CCCCCC, #CDCDCD);
+	border: 5px solid #EFEFEF;
+	border-radius: 40px;
+	box-shadow: 0 0 4px 0 #999999 inset;
+	height: 64px;
+	margin: 20px 8px 0;
+	width: 329px;
+}
+.cpWizardButtom {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#DEDEDE');
+	background: #FFFFFF;
+	background: -ms-linear-gradient(top, #FFFFFF, #DEDEDE);
+	background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#DEDEDE));
+	background: -moz-linear-gradient(top, #FFFFFF, #DEDEDE);
+	background: -o-linear-gradient(top, #FFFFFF, #DEDEDE);
+	border: 1px solid #8C8C8C;
+	border-radius: 40px;
+	color: #245B84;
+	cursor: pointer;
+	font-size: 19px;
+	font-weight: bold;
+	height: 52px;
+	margin: 6px;
+	text-shadow: 0 0 2px #999999, 2px 2px 0 #FFFFFF;
+	width: 316px;
+}
+.cpWizardButtom:hover {
+	border: 6px solid #EBBD22;
+	color: #954200;
+	height: 66px;
+	margin: -1px;
+	width: 333px;
+}
+/* mid end */
+
+.cpMainLeft > div > div > .cpCurrentConn h2, .cpMainRight > div > div > .cpCurrentConn h2 {
+	color: #40464B;
+	font-size: 13px;
+	font-style: normal;
+	font-weight: bold;
+	letter-spacing: normal;
+	line-height: 37px;
+	padding: 0;
+	text-align: left;
+}
+.cpBreak2 {
+	border-bottom: 1px dotted #797979;
+	height: 1px;
+}
+.cpCurrentConn {
+	overflow: hidden;
+	clear: both;
+}
+.cpconfigBtn {
+	float: right;
+	padding: 1px 0 0 0; 
+}
+.cpSubHeading {
+	overflow: hidden;
+}
+.wifiICons {
+	float: left;
+	height: 16px; 
+	width: 65px;
+}
+.userIcons {
+	background: url("../images/icons-36x36.png") no-repeat scroll 15px -796px transparent;
+	float: left;
+	height: 34px;
+	width: 66px;
+}
+.cpSubHeading .wifiIconn {
+	float: left;
+	width: 33%;
+}
+.cpSubHeading .wifiIconn p, .cpWiFiIcon p {
+	color: #345C7A;
+	font-size: 13px;
+	text-align: center;
+}
+.cpSubHeading .wifiIconn a, .cpWiFiIcon a {
+	color: #345C7A;
+	display: block;
+	font-size: 13px;
+	text-align: center;
+	text-decoration: none;
+}
+.cpSubHeading .wifiIconn a:hover, .cpWiFiIcon a:hover {
+	text-decoration: underline;
+}
+.cpWiFiIcon {
+	height: 36px;
+	float: left;
+	margin: 2px 0 0 0;
+	width: 34%;
+}
+.cpSubHeading .dnlaIcon {
+	background: url("../images/icons.png") no-repeat scroll 0 -234px transparent;
+	float: left;
+	height: 36px;
+	width: 48px;
+}
+.cpSubHeading .dnlaIcon a {
+	display: block;
+	height: 48px;
+	width: 48px;
+}
+.cpSubHeading .powerIcon {
+	background: url("../images/powerIcon.png") no-repeat scroll 0 0 transparent;
+	float: left;
+	height: 48px;
+	width: 48px;
+}
+.cpSubHeading .uploadIcon {
+	background: url("../images/icons.png") no-repeat scroll 0 -136px transparent;
+	float: left;
+	height: 48px;
+	width: 48px;
+}
+.cpSubHeading .powerIcon a {
+	display: block;
+	height: 48px;
+	width: 48px;
+}
+.cpSubHeading .dowmloadIcon {
+	background: url("../images/icons.png") no-repeat scroll 0 -184px transparent;
+	float: left;
+	height: 48px;
+	width: 48px;
+}
+.progressBarContent {
+	float: left;
+	margin: 0 0 0 10px;
+	width: auto;
+}
+.progressBarContent .progDescr {
+	color: #006600;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 0 0 4px 8px;
+}
+.progressBarContent .progDescr span, .progressBarContent .progDescrOne span {
+	padding: 0 0 0 24px;
+}
+.progressBarContent .progDescrOne {
+	color: #F89D06;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 0 0 4px 8px;
+}
+.wifiList {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#272727', EndColorStr='#000000');
+	background: #272727;
+	background: -ms-linear-gradient(top, #272727, #000000);
+	background: -webkit-gradient(linear, left top, left bottom, from(#272727), to(#000000));
+	background: -moz-linear-gradient(top, #272727, #000000);
+	background: -o-linear-gradient(top, #272727, #000000);
+	border: 1px solid #939393;
+	clear: both;
+	overflow: hidden;
+	padding: 8px 12px;
+	width: auto;
+	box-shadow: inset 1px 0px px 1px #4A4A4A;
+}
+.wifiList a {
+	color: #8DD5FF;
+	float: left;
+	font-size: 12px;
+	display: block;
+	line-height: 17px;
+	text-decoration: none;
+}
+.wifiList a span {
+	padding-left: 10px;
+}
+.configTitle {
+	color: #40464B;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: bold;
+	float: left;
+	letter-spacing: normal;
+	line-height: 27px;
+	padding: 4px 0 0 10px;
+	text-align: left;
+	width: 80px;
+}
+/* for Progress Bar */
+.barMeter {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#EDEDEF', EndColorStr='#C3C4CA');
+	background: #C3C4CA;
+	background: -ms-linear-gradient(top, #EDEDEF, #C3C4CA);
+	background: -webkit-gradient(linear, left top, left bottom, from(#EDEDEF), to(#C3C4CA));
+	background: -moz-linear-gradient(top, #EDEDEF, #C3C4CA);
+	background: -o-linear-gradient(top, #EDEDEF, #C3C4CA);
+	border: 2px solid #CCCCCC;
+	border-radius: 4px;
+	height: 22px;
+	position: relative;
+	overflow: hidden;
+	width: 130px;
+}
+.zip_gif{
+	background:url("../images/dlink.gif") no-repeat -80px;
+}
+.barMeter > span {
+	color: #333333;
+	display: block;
+	font-size: 12px;
+	font-weight: bold;
+	height: 100%;
+	line-height: 20px;
+	overflow: hidden;
+	position: absolute;
+	text-align: center;
+}
+.barColor1 > span {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr='#33A5FD',EndColorStr='#144289');
+	background: #144289;
+	background: -ms-linear-gradient(top,#33A5FD,#144289);
+	background: -webkit-gradient(linear,left top,left bottom,from(#33A5FD),to(#144289));
+	background: -moz-linear-gradient(top,#33A5FD,#144289);
+	background: -o-linear-gradient(top,#33A5FD,#144289);
+	border-radius: 2px;
+}
+/* end Progress Bar */
+
+.usageDisplay {
+	color: #333333;
+    font-weight: bold;
+    line-height: 22px;
+    position: relative;
+    text-align: center;
+    text-shadow: 0 1px 0 #FFFFFF;
+    top: 0;
+}
+.connectionType, .connectionType2 {
+	background: url("../images/on-off-2.png") no-repeat scroll 0 0;
+	cursor: pointer;
+	display: block;
+	float: left;
+	height: 24px;
+	margin: 7px 9px 0 0;
+	width: 24px;
+}
+.connectionTypeActive, .connectionType:hover {
+	background: url("../images/on-off-2.png") no-repeat scroll 0 -24px;
+	display: block;
+	float: left;
+	height: 24px;
+	margin: 7px 9px 0 0;
+	width: 24px;
+}
+.messaging {
+	overflow: hidden;
+}
+.inbox, .outbox {
+	float: left;
+	width: 65px;
+}
+.drafts {
+	float: left;
+	width: 66px;
+}
+.inboxIcon {
+	background: url("../images/icons-36x36.png") no-repeat scroll 14px -468px transparent;
+	height: 36px;
+	margin: 0 0 2px 0;
+}
+.outboxIcon {
+	background: url("../images/icons-36x36.png") no-repeat scroll 14px -720px transparent;
+	height: 36px;
+	margin: 0 0 2px 0;
+}
+.new_sms_icon1{
+	background: url("../images/new_sms.gif") no-repeat;
+	height: 36px;
+	margin:10px 0 2px 10px;
+	display:none;
+}
+.new_sms_icon2{
+	background: url("../images/new_sms.gif") no-repeat;
+	height: 36px;
+	margin:4px 0 0px 10px;
+}
+.new_sms_div{
+	float: left;
+	width: 65px;
+}
+.draftsIcon {
+	background: url("../images/icons-36x36.png") no-repeat scroll 15px -757px transparent;
+	height: 36px;
+	margin: 0 0 2px 0;
+}
+.inbox p, .outbox p, .drafts p ,.new_sms_div p{
+	color: #345C7A;
+	font-size: 12px;
+	line-height: 15px;
+	text-align: center;
+}
+.inbox a, .outbox a, .drafts a ,.new_sms_div a{
+	color: #40464B;
+	text-decoration: none;
+}
+.inbox a:hover, .outbox a:hover, .drafts a:hover {
+	text-decoration: underline;
+}
+
+.connectType {
+	background: url("../images/on-off-2.png") no-repeat scroll 0 0;
+	cursor: pointer;
+	display: block;
+	float: left;
+	height: 24px;
+	margin: 3px 5px 0 0;
+	width: 24px;
+}
+.connectTypeActive, .connectType:hover {
+	background: url("../images/on-off-2.png") no-repeat scroll 0 -24px;
+	display: block;
+	float: left;
+	height: 24px;
+	margin: 3px 5px 0 0;
+	width: 24px;
+}
+.connectionModeradio {
+	float: left;
+}
+.configTitleTwo {
+	color: #40464B;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: bold;
+	float: left;
+	letter-spacing: normal;
+	text-align: left;
+	width: 115px;
+}
+.firewallIcon {
+	background:url(../images/icons.png) 20px -422px  no-repeat;
+	float: left;
+	height: 48px;	
+	margin: 16px 0 20px 0;
+	width:100px;
+}
+.firewallIcon a{
+	height: 48px;	
+	width:48px;
+	display: block;
+}
+
+.firewallIconLeft {
+	float: left;
+}
+
+.signal1 {
+	background: url(../images/icons-3-48x32.png) 0 -164px no-repeat;
+	height: 32px;
+    float: left;
+    margin: 0px 0 0 5px;
+    width: 48px;
+}
+.signal2 {
+	background: url(../images/icons-3-48x32.png) 0 -202px no-repeat;
+	height: 32px;
+    float: left;
+    margin: 0px 0 0 5px;
+    width: 48px;
+}
+.signal3 {
+	background: url(../images/icons-3-48x32.png) 0 -240px no-repeat;
+    height: 32px;
+    float: left;
+    margin: 0px 0 0 5px;
+    width: 48px;
+}
+.signal4 {
+	background: url(../images/icons-3-48x32.png) 0 -281px no-repeat;
+    height: 32px;
+    float: left;
+    margin: 0px 0 0 5px;
+    width: 48px;
+}
+.signal5 {
+    background: url(../images/icons-3-48x32.png) 0 -317px no-repeat;
+    height: 32px;
+    float: left;
+    margin: 0px 0 0 5px;
+    width: 48px;
+}
+.signal6 {
+	background: url(../images/icons-3-48x32.png) 0 -317px no-repeat;
+	height: 32px;
+    float: left;
+    margin: 0px 0 0 5px;
+    width: 48px;
+}
+.charging1{
+	background: url(../images/icons-32x24.png) 0 0 no-repeat;
+	height: 24px;
+	float: left;
+	margin: 4px 0 0 0;
+	width: 32px;
+}
+.charging2{
+	background: url(../images/icons-32x24.png) 0 -24px no-repeat;
+	height: 24px;
+	float: left;
+	margin: 4px 0 0 0;
+	width: 32px;
+}
+.charging3{
+	background: url(../images/icons-32x24.png)  0 -48px no-repeat;
+	height: 24px;
+	float: left;
+	margin: 4px 0 0 0;
+	width: 32px;
+}
+.charging4{
+	background: url(../images/icons-32x24.png) 0 -72px no-repeat;
+	height: 24px;
+	float: left;
+	margin: 4px 0 0 0;
+	width: 32px;
+}
+.charging5{
+	background: url(../images/icons-32x24.png) 0 -96px no-repeat;
+	height: 24px;
+	float: left;
+	margin: 4px 0 0 0;
+	width: 32px;
+}
+.charging6{
+	background: url(../images/icons-2-32x24.png) 0 -568px no-repeat;
+	height: 24px;
+	float: left;
+	margin: 4px 0 0 0;
+	width: 32px;
+}
+.signal1 b, .signal2 span, .signal3 span, .signal4 span, .signal5 span, .signal6 dl {
+	float: right;
+	text-align: right;
+	margin: 0 20px;
+}
+.wifiSignal1 {
+    background: url(../images/icons-32x24.png) 0 -264px no-repeat;
+    float: left;
+    height: 36px;
+	margin: 0 0 0 12px;
+    width: 36px;
+}
+.wifiSignal2 {
+    background: url(../images/icons-32x24.png) 0 -300px no-repeat;
+    float: left;
+    height: 36px;
+	margin: 0 0 0 12px;
+    width: 36px;
+}
+
+.wifiSignal3 {
+    background: url(../images/icons-32x24.png) 0 -336px no-repeat;
+    float: left;
+    height: 36px;
+	margin: 0 0 0 12px;
+    width: 36px;
+}
+
+.wifiSignal4 {
+    background: url(../images/icons-32x24.png) 0 -372px no-repeat;
+    float: left;
+    height: 36px;
+	margin: 0 0 0 12px;
+    width: 36px;
+}
+
+.wifiSignal5 {
+    background: url(../images/icons-32x24.png) 0 -408px no-repeat;
+    float: left;
+    height: 36px;
+	margin: 0 0 0 12px;
+    width: 36px;
+}
+
+.cpInternetMode {
+	background: url("../images/icons-48x48.png") no-repeat scroll 0 -96px transparent;
+	float: left;
+	height: 48px;
+	/*margin: 0 10px 0 6px;*/
+	width: 48px;
+}
+
+.cpInternetMode1 {
+	background: url("../images/icons-48x48.png") no-repeat scroll 0 0 transparent;
+	float: left;
+	height: 48px;
+	/*margin: 0 10px 0 6px;*/
+	width: 48px;
+}
+.cpInternetMode2 {
+	background: url("../images/icons-48x48.png") no-repeat scroll 0 -48px transparent;
+	float: left;
+	height: 48px;
+	/*margin: 0 10px 0 6px;*/
+	width: 48px;
+}
+.textTwoSpan{
+
+line-height:15px !important;; float:left !important; font-size:11px !important; color:#345C7A;
+}
+
+.textTwoSpan:hover{
+ text-decoration:underline;
+}
+
+.powerSavingIcon {
+	background: url("../images/powerIcon.png") no-repeat scroll 0 0 transparent;
+	float: left;
+	height: 78px;
+	margin: 4px 0 3px 0;
+    overflow: hidden;
+	width: 78px;
+}
+.configTitleTwo span {
+   color: #0075B5;
+   float: right;
+   font-size: 12px;
+   font-style: normal;
+   font-weight: bold;
+   letter-spacing: normal;
+   line-height: 27px;
+   text-align: left;
+   /*width: 25px; */
+}
+
+.powerSavingLeft {
+	overflow: hidden;
+	float: left;
+	width: 115px;
+	/*padding: 0 0 0 10px;*/
+}
+.alertClass{
+	
+	display: block;
+	font-weight: normal; 
+	line-height: 16px;
+}
+.displayime {
+	color: #0075B5;
+	clear: both;
+    font-size: 11px;
+    line-height: 18px;
+    text-align: right;
+
+}
+
+/*Disbaled icons added */
+.signalGray1 {
+    background: url(../images/icons-3-48x32.png) 0 -594px no-repeat;
+    height: 32px;
+    float: left;
+    margin: 0px 0 0 5px;
+    width: 48px;
+}
+.signalGray2 {
+    background: url(../images/icons-3-48x32.png) 0 -624px no-repeat;
+    height: 32px;
+    float: left;
+    margin: 0px 0 0 5px;
+    width: 48px;
+}
+.signalGray3 {
+    background: url(../images/icons-3-48x32.png) 0 -656px no-repeat;
+    height: 32px;
+    float: left;
+    margin: 0px 0 0 5px;
+    width: 48px;
+}
+.signalGray4 {
+    background: url(../images/icons-3-48x32.png) 0 -688px no-repeat;
+    height: 32px;
+    float: left;
+    margin: 0px 0 0 5px;
+    width: 48px;
+}
+.signalGray5 {
+    background: url(../images/icons-3-48x32.png) 0 -720px no-repeat;
+    height: 32px;
+    float: left;
+    margin: 0px 0 0 5px;
+    width: 48px;
+}
+.signalGray6 {
+    background: url(../images/icons-3-48x32.png) 0 -752px no-repeat;
+    height: 32px;
+    float: left;
+    margin: 0px 0 0 5px;
+    width: 48px;
+}
+.cpInternetModeGray1 {
+    background: url("../images/icons-48x48.png") no-repeat scroll 0 -144px transparent;
+    float: left;
+    height: 48px;
+    width: 48px;
+}
+.cpInternetModeGray2 {
+    background: url("../images/icons-48x48.png") no-repeat scroll 0 -192px transparent;
+    float: left;
+    height: 48px;
+    width: 48px;
+}
+.cpInternetModeGray3 {
+    background: url("../images/icons-48x48.png") no-repeat scroll 0 -240px transparent;
+    float: left;
+    height: 48px;
+    width: 48px;
+}
+.cpInternetModeGray4{
+	float: left;
+    height: 48px;
+    width: 48px;
+}
+.dl_strength{
+	margin: 2px 0 0 5px;
+    float: right;
+    font-size: 9px;
+	width: 50px;
+}
+.dl_strength_none{
+	margin-left:20px;
+	width: 50px;
+}
+.login_pass_style{
+    display: block;
+	width:550px;
+	height:260px;
+	margin: 0 auto;
+	left: 750px;
+    top: 200px;
+	background: #FFFFFF;
+	border: 1px solid #8C8C8C;
+	border-radius: 8px;
+	position: fixed;
+	z-index: 102;
+}

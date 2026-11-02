@@ -1,0 +1,40 @@
+##### lighttpd
+lighttpd/1.4.43 (ssl) - a light and fast webserver
+  636 root       0:00 /usr/sbin/lighttpd -f /bmdefsys/etc/lighttpd.conf
+Syntax OK
+lighttpd.user: righe=0 utenti=admin 
+total 5
+drwxrwx---    1 www-data www-data      2048 Jun  7  2025 .
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 ..
+-rwxrwx---    1 www-data www-data        38 Jun  7  2025 lighttpd.user
+##### cgi-bin ed ecne
+ls: /bmdefsys/WEBSERVER/webpages/ecne: No such file or directory
+/bmdefsys/WEBSERVER/webpages/cgi-bin:
+total 8
+drwxrwx---    1 www-data www-data      2048 Jun  7  2025 .
+drwxrwx---    1 www-data www-data      2048 Jun  7  2025 ..
+-rwxrwx---    1 www-data www-data      3679 Oct 25 07:44 custom.cgi
+94dc5716854c842348ead6573e8508ec08f617dc6c33fec77ddc468d33375199  /bmdefsys/WEBSERVER/webpages/cgi-bin/custom.cgi
+##### strumenti
+openssl: /usr/bin/openssl
+setsid: /bin/setsid
+nohup: /bin/nohup
+reboot: /sbin/reboot
+md5sum: /bin/md5sum
+sha256sum: /bin/sha256sum
+awk: /bin/awk
+hexdump: /bin/hexdump
+od: /bin/od
+xxd: -
+timeout: /bin/timeout
+flock: /bin/flock
+printf \x: [A~"]
+printf %b: [A%\]
+awk %c: [A%\]
+dev urandom: 16 caratteri hex
+##### wpa_cli: formato di list_networks e scan_results
+network id / ssid / bssid / flags
+0	H3140	any	[CURRENT]
+bssid / frequency / signal level / flags / ssid
+##### interfacce per il calcolo dell'uscita
+default via 192.168.1.1 dev wlan0-vxd 

@@ -1,0 +1,5 @@
+[CDSwitch]
+CDID=SD Storage USB Device
+[UPDATE]
+lsDownloadbackup = false
+lsNewNVMechanism = true

@@ -1,0 +1,25 @@
+@echo off
+cd /d %~dp0
+%~d0
+
+cd .\Driver
+
+@if exist "InstallDriver.exe" (
+call InstallDriver.exe
+)
+
+cd..
+
+
+@if exist "Driver\Common" (
+call Driver\Common\InstallDriver.exe
+)
+set DownloadType="1QUICK"
+
+
+@if %DownloadType%=="QUICK" (
+@call dl.exe -quick
+) else (
+@call dl.exe 
+) 
+

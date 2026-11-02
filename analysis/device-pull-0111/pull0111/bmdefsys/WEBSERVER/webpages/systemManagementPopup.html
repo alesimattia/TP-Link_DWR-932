@@ -1,0 +1,887 @@
+<!-- System Management starts here -->
+<div id="tf1_systemManagement">
+	<div id="tf1_tmpl_sys_information"></div>
+	<script id="aboutTemplate" type="text/x-dot-template">
+	<form name="" id="" action="cgi-action.html" method="post">
+		<input type="hidden" name="thispage" id="thispage" value="controlPannel.html">
+		<h3>{{=global_lang["system_popup"]["about_dwr932"]+it.modelname || 'About DWR-932C' }}</h3>
+		<div class="popupContentDisplay">
+			<div class="configStatusContent">
+		  <div class="configRow2">
+            <label>{{=global_lang["system_popup"]["fw_ver"] || 'FW Version' }}</label>
+            <p>{{!it.SW_ver || ""}}</p>
+          </div>
+          <div class="break2">&nbsp;</div>	
+          <div class="configRow2">
+            <label>{{=global_lang["system_popup"]["hw_ver"] || 'Hardware Version' }}</label>
+            <p>{{=it.hw_ver || ""}}</p>
+          </div>
+          <div class="break2">&nbsp;</div>
+          <div class="configRow2">
+            <label>{{=global_lang["system_popup"]["imei"] || 'IMEI' }}</label>
+            <p>{{=it.imei || ""}}</p>
+          </div>
+          <div class="break2">&nbsp;</div>
+          <div class="configRow2">
+            <label>{{=global_lang["system_popup"]["sim_imsi"] || 'SIM IMSI' }}</label>
+            <p>{{=it.imsi || ""}}</p>
+          </div>
+          <div class="break2">&nbsp;</div>
+          <div class="configRow2">
+            <label>{{=global_lang["system_popup"]["model_name"] || 'Model Name' }}</label>
+            <p>{{=it.modelname || ""}}</p>
+          </div>
+          <div class="break2">&nbsp;</div>
+          <div class="configRow2">
+		  	{{ var statusStr;}}
+            <label>{{=global_lang["system_popup"]["battery_capacity"] || 'Battery Capacity' }} </label>
+			{{ if(it.capacity >=0 && it.capacity <2){ }}
+				{{statusStr = "charging1";}}
+			{{ } else if(it.capacity >=2 && it.capacity<25) { }}
+				{{statusStr = "charging2";}}
+			{{ } else if(it.capacity >=25 && it.capacity<50) { }}
+				{{statusStr = "charging3";}}
+			{{ } else if(it.capacity >=50 && it.capacity<75) { }}
+				{{statusStr = "charging4";}}
+			{{ } else if(it.capacity >= 75 && it.capacity <=100){ }}
+				{{statusStr = "charging5";}}			
+			{{ } else{ }}
+                {{statusStr = "charging6";}}	
+            {{ } }}
+			
+			{{ var capacityStr;}}
+			{{ if(it.capacity > 100){ }}
+			    {{capacityStr = capacity = global_lang['system_popup']['Battery_error'];}}
+			{{ }else{ }}
+			    {{ capacityStr = it.capacity + "%";}}
+			{{ } }}
+			<p>{{=capacityStr}}</p>
+			<span class={{=statusStr}}></span>
+           </div>
+          <div class="break2">&nbsp;</div>
+          <div class="configRow2">
+            <label>{{=global_lang["system_popup"]["sys_uptime"] || 'System Uptime' }} </label>
+            <p>{{=it.uptime || ""}}</p>
+          </div>
+          <div class="break2">&nbsp;</div>
+			
+			</div>
+			 
+	
+		</div>
+		
+	</form>
+	</script>
+	
+ 
+ 	
+</div>
+
+<!-- System Management Ends here -->
+ 
+ <!-- Admin Settings Start here-->
+ 
+ <div id="tf1_adminSettingsWrapper">
+  <div id="tf1_adminSettings">
+    <h3 data-localize="system_popup.admininstration">Administration</h3>
+    <div class="configForm">
+      <div class="configContent">
+        <div class="break"> &nbsp; </div>
+        <ul id="nav">
+          <li class="first"> <a href="systemManagementPopup.html"  page_id="tf1_account" onload-function="device_adminAccountOnload"  class="current" data-localize="system_popup.account">Account</a></li>
+          <li> <a href="systemManagementPopup.html" page_id="tf1_language"  onload-function="device_adminLangOnload" data-localize="system_popup.lang">Language</a> </li>
+          <li> <a href="systemManagementPopup.html" page_id="tf1_time" id="tf1_dateTime"  onload-function="deviceTimeOnload" data-localize="system_popup.DateTime">Date & Time</a> </li>
+        </ul>
+        <div id="ajax-content">
+          <div id="tf1_account">
+            <h4 data-localize="system_popup.account">Account</h4>
+            <div id="tf1_tmpl_account_info">
+			<script id="accountinfoTemplate" type="text/x-dot-template"> 
+            <form name="tf1_frmAccount" id="tf1_frmAccount" >
+              <div class="configRow">
+                <label>{{=global_lang["system_popup"]["uname"] || 'Username' }}</label>
+                <input type="text" value="{{! it.username || ""}}" name="" id="tf1_userName" maxlength="32" readonly="readonly">
+              </div>
+              <div class="break"> &nbsp; </div>
+              <div class="configRow">
+                <label>{{=global_lang["system_popup"]["old_pwd"] || 'Old Password' }} </label>
+                <input type="password" id="tf1_oldPassword" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf2_oldPassword').value=this.value" onblur="document.getElementById('tf2_oldPassword').value=this.value" value=""maxlength="32"/>
+				<input type="text" id="tf2_oldPassword" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf1_oldPassword').value=this.value" onblur="document.getElementById('tf1_oldPassword').value=this.value" value="" style="display:none;"maxlength="32"/>		
+              </div>
+              <div class="break"> &nbsp; </div>
+              <div class="configRow">
+                <label>{{=global_lang["system_popup"]["pwd"] || 'New Password' }} </label>
+                <input type="password" id="tf1_passwd" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf2_passwd').value=this.value" onblur="document.getElementById('tf2_passwd').value=this.value" value=""maxlength="32"/>
+				<input type="text" id="tf2_passwd" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf1_passwd').value=this.value" onblur="document.getElementById('tf1_passwd').value=this.value" value="" style="display:none;"maxlength="32"/>			
+              </div>
+              <div class="break"> &nbsp; </div>
+              <div class="configRow">
+                <label>{{=global_lang["system_popup"]["cnf_pwd"] || 'Confirm Password' }}</label>
+                <!-- <input type="password" name="" id="tf1_cnfPassword" value="{{! it.password || ""}}" maxlength="32"> -->
+				
+				<input type="password" id="tf1_cnfPassword" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf2_cnfPassword').value=this.value" onblur="document.getElementById('tf2_cnfPassword').value=this.value" value=""maxlength="32"/>
+				<input type="text" id="tf2_cnfPassword" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf1_cnfPassword').value=this.value" onblur="document.getElementById('tf1_cnfPassword').value=this.value" value="" style="display:none;"maxlength="32"/>
+				
+				<label>&nbsp;</label>	
+				<!-- <p><input type="checkbox" onclick="system_showKey(event,'tf1_cnfPassword');system_showKey(event,'tf1_passwd')"> {{=global_lang["common"]["show_char"] || 'Show Characters' }}</p> -->
+				
+				<p><input type="checkbox" onclick="show_login_Key(this)"> {{=global_lang["common"]["show_char"] || 'Show Characters' }}</p>
+				
+              </div>
+              <div class="break"> &nbsp; </div>
+              <div class="configRow">
+                <label>{{=global_lang["system_popup"]["auto_logout"] || 'Auto logout after' }} </label>              	<select id="tf1_auto_logout" size="1">								
+                    <!--<option value="180" {{ if (it.login_time == "180"){ }} selected {{}}}>3</option>-->				
+					<option value="300" {{ if (it.login_time == "300"){ }} selected {{}}}>5</option>				
+					<option value="600" {{ if (it.login_time == "600"){ }} selected {{}}}>10</option>
+					<option value="1800" {{ if (it.login_time == "1800"){ }} selected {{}}}>30</option>
+					<option value="3600" {{ if (it.login_time == "3600"){ }} selected {{}}}>60</option>
+					<!--<option value="999999" {{ if (it.login_time == "999999"){ }} selected {{}}}>{{=global_lang["system_popup"]["never"] || 'Never' }}</option>-->
+				</select>
+                <dl>[ {{=global_lang["system_popup"]["min"] || 'Minutes' }} ]</dl>
+				<label>&nbsp;</label>	
+				<input type="button" style="display:none;" value="{{=global_lang['common']['Update'] || 'Update' }}"  class="btnSubmit2" onclick="system_updateTimeOut();" >
+              </div>
+               
+             </form>
+             </script>
+             </div>
+            <div id="tf1_hdButtonBlock" style="display:none">
+                <input type="submit" value="Apply"  class="btnSubmit" onclick="return system_userAccountValidate()" data-localize="common.apply">
+                <input type="button" value="Cancel"  class="btnSubmit"  id="btnClose" data-localize="common.cancel">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div  class="submitRowPopup" id="tf1_btnBlock">
+        
+      </div>
+    </div>
+  </div>
+  <div id="tf1_language">
+
+  <form name="tf1_frmLanguage" id="tf1_frmLanguage" >
+
+  <div id="tf1_tmpl_language_info">
+  
+   <script id="languageTemplate" type="text/x-dot-template">
+
+      <h4>{{=global_lang["system_popup"]["lang"] || 'Language' }}</h4>
+      <div class="configRow">
+      {{##def.selected="selected"#}}
+        <label>{{=global_lang["system_popup"]["lang"] || 'Language' }}</label>
+        		<select id="tf1_deviceLanguage" size="1" >
+				
+							<option value="0" {{ if (it.language == 0){ }} {{#def.selected}} {{}}}>{{=global_lang["system_popup"]["lang_english"] || 'English' }}</option>
+							
+							<option value="1" {{ if (it.language == 1){ }} {{#def.selected}} {{}}}>{{=global_lang["system_popup"]["lang_german"] || 'german' }}</option>
+							<option value="2" {{ if (it.language == 2){ }} {{#def.selected}} {{}}}>{{=global_lang["system_popup"]["lang_french"] || 'french' }}</option>
+							<option value="3" {{ if (it.language == 3){ }} {{#def.selected}} {{}}}>{{=global_lang["system_popup"]["lang_spanish"] || 'spanish' }}</option>
+							<option value="4" {{ if (it.language == 4){ }} {{#def.selected}} {{}}}>{{=global_lang["system_popup"]["lang_italian"] || 'italian' }}</option>
+							<option value="5" {{ if (it.language == 5){ }} {{#def.selected}} {{}}}>{{=global_lang["system_popup"]["lang_Poland"] || 'Polski' }}</option>
+							<!---
+							<option value="2" {{ if (it.language == 2){ }} {{#def.selected}} {{}}}>{{=global_lang["system_popup"]["lang_chinese_traditional"] || 'Chinese Traditional' }}</option>
+							 <option value="1" {{ if (it.language == 1){ }} {{#def.selected}} {{}}}>{{=global_lang["system_popup"]["lang_Hungarian"] || 'Hungarian' }}</option> 
+							 --->
+							 <!--
+							 <option value="3" {{ if (it.language == 3){ }} {{#def.selected}} {{}}}>Arabic</option>
+							<option value="4" {{ if (it.language == 4){ }} {{#def.selected}} {{}}}>Russian</option>
+							<option value="5" {{ if (it.language == 5){ }} {{#def.selected}} {{}}}>Traditional Chinese</option>
+							<option value="6" {{ if (it.language == 6){ }} {{#def.selected}} {{}}}>Simplified Chinese</option>
+							<option value="7" {{ if (it.language == 7){ }} {{#def.selected}} {{}}}>Spanish</option>-->			 
+ 
+				</select>
+      </div>      
+    </script>
+    <div class="break"> &nbsp; </div>
+      <div id="tf1_hdButtonBlock" style="display:none">
+                <input type="button" value="Apply"  class="btnSubmit"  data-localize="common.apply" onclick="return languageApply()">
+                <input type="button" value="Cancel"  class="btnSubmit" data-localize="common.cancel"  id="btnClose" >
+            </div>
+    
+    </div>
+    </form>
+  </div>
+  <div id="tf1_time">
+  	<div id="tf1_tmpl_sntp_info">
+	<script id="sntpinfoTemplate" type="text/x-dot-template">
+    <form name="tf1_frmTime" id="tf1_Time" >
+      <h4>{{=global_lang["system_popup"]["DateTime"] || 'Date &amp; Time' }}</h4>
+      <div class="configRow">
+       {{var statuStr,statuVal;}}
+        <label>{{=global_lang["system_popup"]["sntp"] || 'SNTP' }}</label>
+        			{{  if(it.enableSntp == "1") { }}
+             	         {{statuStr="enable-disable-on";}}
+                         {{statuVal="1";}}
+                        
+					{{ } else { }}
+						 {{statuStr="enable-disable-off";}}
+                         {{statuVal="0";}}
+     				{{ } }}
+					<a class={{=statuStr}} alt=""  id="tf1_sntpEnableDisable"></a>
+       				<input type="hidden" value="{{=statuVal}}" name="SNTP" id="tf1_sntpEnableDisableValue">
+      </div>
+      <div id="tf1_setSNTPserver_Block_div">
+      <div class="break"> &nbsp; </div>
+      <div class="configRow" id="tf1_primarySntpServer_div">
+        <label>{{=global_lang["system_popup"]["primary_server"] || 'Primary SNTP Server' }} </label>
+        <input type="text" value="{{=it.primarySntp}}" name="" id="tf1_primarySntpServer" maxlength="50" >
+      </div>
+      <div class="break" id="break_primarySntpServer_div"> &nbsp; </div>
+      <div class="configRow" id="tf1_secondarySntpServer_div">
+        <label>{{=global_lang["system_popup"]["secondary_server"] || 'Secondary SNTP Server' }} </label>
+        <input type="text" value="{{=it.secondarySntp}}" name="" id="tf1_secondarySntpServer" maxlength="50">
+      </div>
+      <div class="break" id="break_secondarySntpServer_div"> &nbsp; </div>
+      <div class="configRow" id="tf1_tertiarySntpServer_div">
+        <label>{{=global_lang["system_popup"]["tertiary_server"] || 'Tertiary SNTP Server' }}</label>
+        <input type="text" value="{{=it.tertiarySntp}}" name="" id="tf1_tertiarySntpServer" maxlength="50">
+      </div>
+      <div class="break" id="break_tertiarySntpServer_div"> &nbsp; </div>
+      </div>
+      <div class="configRow" id="tf1_timezone_div">
+        <label>{{=global_lang["system_popup"]["timezoe"] || 'Time Zone' }}</label>
+        <select name="timezone" id="tf1_timezone" >
+       		<option value="1" {{ if (it.timezone == "1"){ }} selected {{}}} >UTC-12</option>
+			<option value="2" {{ if (it.timezone == "2"){ }} selected {{}}}>UTC-11</option>
+			<option value="3" {{ if (it.timezone == "3"){ }} selected {{}}}>UTC-10</option>
+			<option value="4" {{ if (it.timezone == "4"){ }} selected {{}}}>UTC-9:30</option>
+			<option value="5" {{ if (it.timezone == "5"){ }} selected {{}}}>UTC-9</option>
+			<option value="6" {{ if (it.timezone == "6"){ }} selected {{}}}>UTC-8</option>
+			<option value="7" {{ if (it.timezone == "7"){ }} selected {{}}}>UTC-7</option>
+			<option value="8" {{ if (it.timezone == "8"){ }} selected {{}}}>UTC-6</option>
+			<option value="9" {{ if (it.timezone == "9"){ }} selected {{}}}>UTC-5</option>
+			<option value="10" {{ if (it.timezone == "10"){ }} selected {{}}}>UTC-4:30</option>
+			<option value="11" {{ if (it.timezone == "11"){ }} selected {{}}}>UTC-4</option>
+			<option value="12" {{ if (it.timezone == "12"){ }} selected {{}}}>UTC-3:30</option>
+			<option value="13" {{ if (it.timezone == "13"){ }} selected {{}}}>UTC-3</option>
+			<option value="14" {{ if (it.timezone == "14"){ }} selected {{}}}>UTC-2</option>
+			<option value="15" {{ if (it.timezone == "15"){ }} selected {{}}}>UTC-1</option>
+			<option value="16" {{ if (it.timezone == "16"){ }} selected {{}}}>UTC+0</option>
+			<option value="17" {{ if (it.timezone == "17"){ }} selected {{}}}>UTC+1</option>
+			<option value="18" {{ if (it.timezone == "18"){ }} selected {{}}}>UTC+2</option>
+			<option value="19" {{ if (it.timezone == "19"){ }} selected {{}}}>UTC+3</option>
+			<option value="20" {{ if (it.timezone == "20"){ }} selected {{}}}>UTC+3:07</option>
+			<option value="21" {{ if (it.timezone == "21"){ }} selected {{}}}>UTC+3:30</option>
+			<option value="22" {{ if (it.timezone == "22"){ }} selected {{}}}>UTC+4</option>
+			<option value="23" {{ if (it.timezone == "23"){ }} selected {{}}}>UTC+4:30</option>
+			<option value="24" {{ if (it.timezone == "24"){ }} selected {{}}}>UTC+5</option>
+			<option value="25" {{ if (it.timezone == "25"){ }} selected {{}}}>UTC+5:30</option>
+			<option value="26" {{ if (it.timezone == "26"){ }} selected {{}}}>UTC+5:45</option>
+			<option value="27" {{ if (it.timezone == "27"){ }} selected {{}}}>UTC+6</option>
+			<option value="28" {{ if (it.timezone == "28"){ }} selected {{}}}>UTC+6:30</option>
+			<option value="29" {{ if (it.timezone == "29"){ }} selected {{}}}>UTC+7</option>
+			<option value="30" {{ if (it.timezone == "30"){ }} selected {{}}}>UTC+8</option>
+			<option value="31" {{ if (it.timezone == "31"){ }} selected {{}}}>UTC+8:45</option>
+			<option value="32" {{ if (it.timezone == "32"){ }} selected {{}}}>UTC+9</option>
+			<option value="33" {{ if (it.timezone == "33"){ }} selected {{}}}>UTC+9:30</option>
+			<option value="34" {{ if (it.timezone == "34"){ }} selected {{}}}>UTC+10</option>
+			<option value="35" {{ if (it.timezone == "35"){ }} selected {{}}}>UTC+10:30</option>
+			<option value="36" {{ if (it.timezone == "36"){ }} selected {{}}}>UTC+11</option>
+			<option value="37" {{ if (it.timezone == "37"){ }} selected {{}}}>UTC+11:30</option>
+			<option value="38" {{ if (it.timezone == "38"){ }} selected {{}}}>UTC+12</option>
+			<option value="39" {{ if (it.timezone == "39"){ }} selected {{}}}>UTC+12:45</option>
+			<option value="40" {{ if (it.timezone == "40"){ }} selected {{}}}>UTC+13</option>
+			<option value="41" {{ if (it.timezone == "41"){ }} selected {{}}}>UTC+14</option>
+        </select>
+      </div>
+      <div class="break" id="break_timezone_div"> &nbsp; </div>
+      <div id="tf1_synchronization_hide">
+      <div class="configRow" id="tf1_synchronization_div">
+        <label>{{=global_lang["system_popup"]["sync_cycle"] || 'Synchronization Cycle' }} </label>
+        <input type="text" value="{{=it.synccycle}}" name="" class="one" id="tf1_synchronization" onKeyPress="return numericValueCheck (event)" maxlength="2" onKeyDown="if (event.keyCode == 9) {return numericValueRangeCheck (this, '', '', 1, 24, true, global_lang['validation_msgs']['invalid_sync_cycle'], '');}">
+        <dl>
+          [ {{=global_lang["system_popup"]["hrs"] || 'Hours' }}  ]
+        </dl>
+      </div>
+      <div class="break" id="break_synchronization_div"> &nbsp; </div>
+      </div>
+      <div id="tf1_setDateTimeBlock_div">
+       <div class="configRow">
+        <label>{{=global_lang["system_popup"]["DateTime"] || 'Date &amp; Time' }} </label>
+        <input type="hidden" id="tf1_setDateTime"  onChange="onchangeValue()" readonly value="_ _ / _ _ / _ _ _ _   _ _ : _ _ _ _" class="displayTime">  
+		<div id="tf1_setDateTime"></div>
+        </div> 
+        <div class="break">&nbsp;</div>
+	  </div>		
+        <div class="configRow" id="tf1_setDateTimeValue_div">
+							        <label>{{=global_lang["system_popup"]["sel_dateTime"] || 'Selected Date and Time' }}</label>
+							 <input type="text" id="tf1_setDateTimeValue" name="dateTime.currentTime" readonly value="{{=it.dateTime}}" class="displayTime">
+							    </div>
+		<div class="break" > &nbsp; </div> 
+	<div class="configRow">
+       {{var statuStr,statuVal;}}
+        <label>{{=global_lang["system_popup"]["sav_dateTime"] || 'Daylight Saving' }}</label>
+        			{{  if(it.dst_enable == "1") { }}
+             	         {{statuStr="enable-disable-on";}}
+                         {{statuVal="1";}}
+                        
+					{{ } else { }}
+						 {{statuStr="enable-disable-off";}}
+                         {{statuVal="0";}}
+     				{{ } }}
+					<a class={{=statuStr}} alt=""  id="tf1_timeSavEnableDisable"></a>
+       				<input type="hidden" value="{{=statuVal}}" name="dst_enable" id="tf1_timeSavEnableDisableValue">
+      </div>
+			<div class="break" > &nbsp; </div> 
+	  <div class="configRow3" >
+		   <label>{{=global_lang["system_popup"]["start_date"] || 'Start Date' }}</label>
+		   	<div class="break" > &nbsp; </div> 
+		   <select name="start_w" id="tz_dst_start_w">
+						      <option value="1" {{ if (it.start_w  == "1"){ }} selected {{}}}>{{=global_lang["system_popup"]["first"] || 'First' }}</option>
+						      <option value="2" {{ if (it.start_w  == "2"){ }} selected {{}}}>{{=global_lang["system_popup"]["second"] || 'Second' }}</option>
+						      <option value="3" {{ if (it.start_w  == "3"){ }} selected {{}}}>{{=global_lang["system_popup"]["third"] || 'Third' }}</option>
+						      <option value="4" {{ if (it.start_w  == "4"){ }} selected {{}}}>{{=global_lang["system_popup"]["fourth"] || 'Fourth' }}</option>
+						      <option value="5" {{ if (it.start_w  == "5"){ }} selected {{}}}>{{=global_lang["system_popup"]["last"] || 'Last' }}</option>
+						    </select>
+						    &nbsp;<font>&nbsp;</font>&nbsp;
+						    <select name="start_d" id="tz_dst_start_d">
+						      <option value="0" {{ if (it.start_d  == "0"){ }} selected {{}}}>{{=global_lang["system_popup"]["sunday"] || 'Sunday' }}</option>
+						      <option value="1" {{ if (it.start_d  == "1"){ }} selected {{}}}>{{=global_lang["system_popup"]["monday"] || 'Monday' }}</option>
+						      <option value="2"  {{ if (it.start_d  == "2"){ }} selected {{}}}>{{=global_lang["system_popup"]["tuesday"] || 'Tuesday' }}</option>
+						      <option value="3"  {{ if (it.start_d  == "3"){ }} selected {{}}}>{{=global_lang["system_popup"]["wednesday"] || 'Wednesday' }}</option>
+						      <option value="4"  {{ if (it.start_d  == "4"){ }} selected {{}}}>{{=global_lang["system_popup"]["thursday"] || 'Thursday' }}</option>
+						      <option value="5"  {{ if (it.start_d  == "5"){ }} selected {{}}}>{{=global_lang["system_popup"]["friday"] || 'Friday' }}</option>
+						      <option value="6"  {{ if (it.start_d  == "6"){ }} selected {{}}}>{{=global_lang["system_popup"]["saturday"] || 'Saturday' }}</option>
+						    </select>
+						    &nbsp;&nbsp;<span>{{=global_lang["system_popup"]["of"] || 'of' }}</span>&nbsp;&nbsp;
+						    <select name="start_m" id="tz_dst_start_m">
+						      <option value="1" {{ if (it.start_m  == "1"){ }} selected {{}}}>{{=global_lang["system_popup"]["january"] || 'January' }}</option>
+						      <option value="2" {{ if (it.start_m  == "2"){ }} selected {{}}}>{{=global_lang["system_popup"]["february"] || 'February' }}</option>
+						      <option value="3" {{ if (it.start_m  == "3"){ }} selected {{}}}>{{=global_lang["system_popup"]["march"] || 'March' }}</option>
+						      <option value="4" {{ if (it.start_m  == "4"){ }} selected {{}}}>{{=global_lang["system_popup"]["april"] || 'April' }}</option>
+						      <option value="5" {{ if (it.start_m  == "5"){ }} selected {{}}}>{{=global_lang["system_popup"]["may"] || 'May' }}</option>
+						      <option value="6" {{ if (it.start_m  == "6"){ }} selected {{}}}>{{=global_lang["system_popup"]["june"] || 'June' }}</option>
+						      <option value="7" {{ if (it.start_m  == "7"){ }} selected {{}}}>{{=global_lang["system_popup"]["july"] || 'July' }}</option>
+						      <option value="8" {{ if (it.start_m  == "8"){ }} selected {{}}}>{{=global_lang["system_popup"]["august"] || 'August' }}</option>
+						      <option value="9" {{ if (it.start_m  == "9"){ }} selected {{}}}>{{=global_lang["system_popup"]["september"] || 'September' }}</option>
+						      <option value="10" {{ if (it.start_m  == "10"){ }} selected {{}}}>{{=global_lang["system_popup"]["october"] || 'October' }}</option>
+						      <option value="11" {{ if (it.start_m  == "11"){ }} selected {{}}}>{{=global_lang["system_popup"]["november"] || 'November' }}</option>
+						      <option value="12" {{ if (it.start_m  == "12"){ }} selected {{}}}>{{=global_lang["system_popup"]["december"] || 'December' }}</option>
+						    </select>
+							&nbsp;&nbsp;<span>{{=global_lang["system_popup"]["at"] || 'at' }}</span>&nbsp;&nbsp;
+						    <input type="text" id="tz_dst_start_clock" maxlength="2" size="2" value="{{! it.start_clock || ""}}" onBlur="check_num(this.value);" style="width:35px">
+						    &nbsp;&nbsp;<span>{{=global_lang["system_popup"]["clock"] || "o'clock" }}</span>&nbsp;&nbsp;
+
+	 </div>	
+     <div class="configRow3" >
+		   <label>{{=global_lang["system_popup"]["end_date"] || 'End Date' }}</label>
+           <div class="break" > &nbsp; </div> 
+			 <select name="end_w" id="tz_dst_end_w">
+						      <option value="1" {{ if (it.end_w  == "1"){ }} selected {{}}}>{{=global_lang["system_popup"]["first"] || 'First' }}</option>
+						      <option value="2" {{ if (it.end_w  == "2"){ }} selected {{}}}>{{=global_lang["system_popup"]["second"] || 'Second' }}</option>
+						      <option value="3" {{ if (it.end_w  == "3"){ }} selected {{}}}>{{=global_lang["system_popup"]["third"] || 'Third' }}</option>
+						      <option value="4" {{ if (it.end_w  == "4"){ }} selected {{}}}>{{=global_lang["system_popup"]["fourth"] || 'Fourth' }}</option>
+						      <option value="5" {{ if (it.end_w  == "5"){ }} selected {{}}}>{{=global_lang["system_popup"]["last"] || 'Last' }}</option>
+						    </select>
+						    &nbsp;<font>&nbsp;</font>&nbsp;
+						    <select name="end_d" id="tz_dst_end_d">
+						      <option value="0" {{ if (it.end_d  == "0"){ }} selected {{}}}>{{=global_lang["system_popup"]["sunday"] || 'Sunday' }}</option>
+						      <option value="1" {{ if (it.end_d  == "1"){ }} selected {{}}}>{{=global_lang["system_popup"]["monday"] || 'Monday' }}</option>
+						      <option value="2"  {{ if (it.end_d  == "2"){ }} selected {{}}}>{{=global_lang["system_popup"]["tuesday"] || 'Tuesday' }}</option>
+						      <option value="3"  {{ if (it.end_d  == "3"){ }} selected {{}}}>{{=global_lang["system_popup"]["wednesday"] || 'Wednesday' }}</option>
+						      <option value="4"  {{ if (it.end_d  == "4"){ }} selected {{}}}>{{=global_lang["system_popup"]["thursday"] || 'Thursday' }}</option>
+						      <option value="5"  {{ if (it.end_d  == "5"){ }} selected {{}}}>{{=global_lang["system_popup"]["friday"] || 'Friday' }}</option>
+						      <option value="6"  {{ if (it.end_d  == "6"){ }} selected {{}}}>{{=global_lang["system_popup"]["saturday"] || 'Saturday' }}</option>
+						    </select>
+						    &nbsp;&nbsp;<span>{{=global_lang["system_popup"]["of"] || 'of' }}</span>&nbsp;&nbsp;
+						    <select name="end_m" id="tz_dst_end_m">
+						       <option value="1" {{ if (it.end_m  == "1"){ }} selected {{}}}>{{=global_lang["system_popup"]["january"] || 'January' }}</option>
+						      <option value="2" {{ if (it.end_m  == "2"){ }} selected {{}}}>{{=global_lang["system_popup"]["february"] || 'February' }}</option>
+						      <option value="3" {{ if (it.end_m  == "3"){ }} selected {{}}}>{{=global_lang["system_popup"]["march"] || 'March' }}</option>
+						      <option value="4" {{ if (it.end_m  == "4"){ }} selected {{}}}>{{=global_lang["system_popup"]["april"] || 'April' }}</option>
+						      <option value="5" {{ if (it.end_m  == "5"){ }} selected {{}}}>{{=global_lang["system_popup"]["may"] || 'May' }}</option>
+						      <option value="6" {{ if (it.end_m  == "6"){ }} selected {{}}}>{{=global_lang["system_popup"]["june"] || 'June' }}</option>
+						      <option value="7" {{ if (it.end_m  == "7"){ }} selected {{}}}>{{=global_lang["system_popup"]["july"] || 'July' }}</option>
+						      <option value="8" {{ if (it.end_m  == "8"){ }} selected {{}}}>{{=global_lang["system_popup"]["august"] || 'August' }}</option>
+						      <option value="9" {{ if (it.end_m  == "9"){ }} selected {{}}}>{{=global_lang["system_popup"]["september"] || 'September' }}</option>
+						      <option value="10" {{ if (it.end_m  == "10"){ }} selected {{}}}>{{=global_lang["system_popup"]["october"] || 'October' }}</option>
+						      <option value="11" {{ if (it.end_m  == "11"){ }} selected {{}}}>{{=global_lang["system_popup"]["november"] || 'November' }}</option>
+						      <option value="12" {{ if (it.end_m  == "12"){ }} selected {{}}}>{{=global_lang["system_popup"]["december"] || 'December' }}</option>
+						    </select>
+						    &nbsp;&nbsp;<span>{{=global_lang["system_popup"]["at"] || 'at' }}</span>&nbsp;&nbsp;
+						    <input type="text" id="tz_dst_end_clock" maxlength="2" size="2" value="{{! it.end_clock || ""}}" onBlur="check_num(this.value);" style="width:35px">
+						    &nbsp;&nbsp;<span>{{=global_lang["system_popup"]["clock"] || "o'clock" }}</span>&nbsp;&nbsp;
+	</div>		
+			
+			
+			
+    </form>
+    </script>
+    </div>
+            <div id="tf1_hdButtonBlock" style="display:none">
+                <input type="button" value="Apply"  data-localize="common.apply" class="btnSubmit" onclick="setHiddenChks('tf1_Time');timeSntpApply();" class="displayTime">
+                <input type="button" value="Cancel"  class="btnSubmit" data-localize="common.cancel" id="btnClose" class="displayTime">
+            </div>
+  </div>
+
+  
+</div>
+ 
+ <!-- AdminSettings Ends here -->
+
+
+<div  id="tf1_systemProfileWrapper">
+<!-- Settings Profile starts here -->
+<div id="tf1_systemProfile">
+	<form name="frm_systemProfile" id="tf1_frm_systemProfile" action="" method="post">
+		<input type="hidden" name="thispage" id="thispage" value="controlPannel.html">
+		<h3 data-localize="system_popup.settings_profile">Settings Profile</h3>
+		<div class="popupContentDisplay">
+			<div class="configStatusContent">
+				<div class="break">
+					&nbsp;
+				</div>
+
+				<ul id="nav">
+					<li class="first">
+						<a href="systemManagementPopup.html" page_id="tf1_exportProfiles" onload-function="systemManagement_onloadExportProfiles" data-localize="system_popup.export_profiles" class="current">Export Profiles</a>
+					</li>
+					<li>
+					    <a href="systemManagementPopup.html" page_id="tf1_importProfiles" onload-function="systemManagement_onloadImportProfiles"  data-localize="system_popup.import_profiles">Import Profiles</a>
+					</li>
+                    <li>
+						<a href="systemManagementPopup.html" page_id="tf1_resetReboot" onload-function="" data-localize="system_popup.reset_reboot">Reset / Reboot</a>
+					</li>
+				</ul>
+
+				<div id="ajax-content">
+					<!-- first tab Content Starts -->
+                    <div id="tf1_exportProfiles">
+
+					<h4 data-localize="system_popup.export">Export</h4>
+					<div class="configRow">
+						<label data-localize="system_popup.current_profile">To Get Current Profile</label>
+						<input type="button" value="Click Me" class="btnSubmit" onclick="system_backUp()" data-localize="system_popup.click_me">
+
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					
+				</div>
+					<!-- first tab Content Ends-->
+				</div>
+			</div>
+		</div>
+
+	</form>
+</div>
+
+<!-- Second tab Content Starts -->
+					<div id="tf1_importProfiles">
+						<h4 data-localize="system_popup.import">Import</h4>
+
+						<div class="configRow">
+							<label data-localize="system_popup.sel">Select</label>
+							<input type="file" value="" id="tf1_WebCFGUpload" name="WebCFGUpload">
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+						<div class="configRow">
+							<label>&nbsp;</label>
+							<input type="button" value="Apply Import" class="btnSubmit"  onclick=" system_settingsProfilefileUploadCheck('tf1_WebCFGUpload', 'Please enter the full path and file name.')" data-localize="system_popup.apply_import">
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+
+					</div>
+
+
+
+<!-- Second tab Content Ends-->
+<!-- Second tab Content Starts -->
+<div id="tf1_resetReboot">
+
+	<h4 data-localize="system_popup.reset_reboot_description">Reset &amp; Reboot</h4>
+    <form id="tf1_reserRebootBlock">
+	<div class="configRow">
+		<input data-localize="system_popup.reset_to_default" type="button" value="Reset to Default" class="btnSubmit" onclick="system_resetTodefault()" />
+        <input type="button" value="Reboot" class="btnSubmit" onclick="system_reboot()" data-localize="system_popup.reboot"/>
+	</div>
+	<div class="break">
+		&nbsp;
+	</div>
+<div class="configRow">
+		
+
+	</div>
+	<div class="break">
+		&nbsp;
+	</div>
+	<div id="tf1_Progressbar"  style="display:none;">
+			<div class="configRow" style="width:98.8%" id="tf1_frm_statusBar">
+				<div class="usageDisplay">
+			 
+				</div>
+			</div>
+	</div>
+</form>
+</div>
+<!-- Second tab Content Ends-->
+</div>
+
+<!-- Settings Profile Ends here -->
+<!-- Firmware Upgrade Starts here -->
+<div id="tf1_firmwareUpgrade">
+	<div id="tf1_tmpl_fw_info"></div>
+	<script id="fwinfoTemplate" type="text/x-dot-template"> 
+	<form  method="post">
+		<input type="hidden" name="thispage" id="thispage" value="controlPanel.html">
+		<h3>{{=global_lang["system_popup"]["firmware_upgrade"] || 'Firmware Upgrade' }}</h3>
+		<div class="configForm">
+			<div class="configContent">
+				<h4>{{=global_lang["system_popup"]["up_myrouter"] || 'Upgrade My Router' }}</h4>
+				<div class="roundedBox">
+					<div class="configRow">
+     				<label>{{=global_lang["system_popup"]["up_myrouter"] || 'Upgrade My Router' }}</label>
+						<select size="1" onchange="system_upgradeTypeChange()" id="tf1_upgradeRouter">
+							<option value="1">{{=global_lang["system_popup"]["manual"] || 'Manual' }}</option>
+							<option value="2">{{=global_lang["system_popup"]["remote_server"] || 'Remote Server' }} </option>
+						</select>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow" id="tf1_systemUpgradeFile_div">
+						<label>{{=global_lang["system_popup"]["open_file"] || 'Open File' }} </label>
+						<input type="file"  name="WebFUpload" id="tf1_WebFUpload" >
+					</div>
+					<div class="break" id="break_systemUpgradeFile_div">
+						&nbsp;
+					</div>
+					<!--
+					<div class="configRow">
+						<label>{{=global_lang["system_popup"]["fw_new_ver"] || 'New Version' }}</label>
+						<p>
+							DWR-xxx-xxxx-xxxx-xxxx-xxxx-xxxx
+						</p>
+						<dl>
+							[ New ]
+
+						</dl>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					-->
+					<div class="configRow">
+						<label>{{=global_lang["system_popup"]["fw_cur_ver"] || 'Current Version'}}</label>
+						<p>
+							{{=it.Current_ver}}
+						</p>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div id="tf1_Progressbar"  style="display:none;">
+						<div class="configRow">
+						<div class="barMeter barColor1 zip_gif" style="width:98.8%" id="tf1_frm_statusBar">
+							<span style="width: 1%" ></span>
+							<div class="usageDisplay">
+               
+							</div>
+						</div>
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+						<div  class="configRow" id="tf1_ProgressBakbar">
+							<ul class="install">
+								<li class="meter-status active" id="tf1_manualSt_init">
+									1. {{=global_lang["system_popup"]["firmware_Downloading"] || 'Downloading' }}
+								</li>
+								<li id="tf1_manualSt_update" class="meter-status">
+									2. {{=global_lang["system_popup"]["updating"] || 'Updating' }}
+								</li>
+								<li id="tf1_manualSt_reboot" class="meter-status">
+									3. {{=global_lang["system_popup"]["rebooting"] || 'Rebooting' }}
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="submitRowPopup1">
+				<input type="button" value="Check Remote Server" id="tf1_btnRemote"  class="btnSubmit" onclick='showRemoteUpgradeProcess()'>
+
+				<input type="button" value='{{=global_lang["system_popup"]["dwnld_update"] || "Download and Update"}}' id="tf1_btnRemoteStartUpdate"  class="btnSubmit" onclick='showUpgradeProcess(1)'>
+
+				<input type="button" value="Check File" id="tf1_btnManual"  class="btnSubmit" onclick='system_firmWareCheckFile()'>
+				<input type="button" value='{{=global_lang["system_popup"]["start_update"] || "Start Update"}}' id="tf1_btnManualStartUpdate"  class="btnSubmit" onclick='showUpgradeProcess1()'>
+			</div>
+
+		</div>
+	</form>
+	</script>
+	
+</div>
+
+<!-- Firmware Upgrade Ends here -->
+<div id="tf1_networkStatisticsSettinsgWrapper">
+<!-- Network Statistics Settings Starts here -->
+<div id="tf1_networkStatisticsSettinsg">
+
+	<h3 data-localize="system_popup.net_stat_settings">Network Statistics Settings</h3>
+
+	<div class="configForm">
+		<div class="configContent">
+			<div class="break">
+				&nbsp;
+			</div>
+            
+            <h4>Statistics</h4>
+            
+			<div id="ajax-content" >
+				<!-- First tab data syarts here -->
+                <div id="tf1_statistics">
+                    <div id="tf1_tmpl_netusage_info"></div>
+                    <script id="networkstatTemplate" type="text/x-dot-template">
+					<h4 style=" float:left"> {{=global_lang["system_popup"]["current_packet_data"] || 'Packet Data' }} </h4>
+                    <div class="configRow" style=" float: right;margin: 8px -8px 0 0;">
+                        <input type="button" value='{{=global_lang["system_popup"]["clear_data"] || "Clear All Data" }}'  class="btnSubmit" onclick="system_clearAllData()">
+                    </div>
+                    <div class="blockOne">
+                        <!--<div class="leftBlock" style="width:240px;">
+                            <h3 class="headingOne">Current 810 <span>KB</span></h3>
+                            <div class="blockOneContent">
+                                <table cellspacing="0" cellpadding="0" border="0" class="tinytable">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                            <p class="currentDataUp">
+                                                373 KB<span>0.08 KB/s</span>
+                                            </p></td>
+                                            <td>
+                                            <p class="currentDataDown">
+                                                373 KB<span>0.04 KB/s</span>
+                                            </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Max. 1.33  KB/s</td>
+                                            <td>Max. 2.17 KB/s</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>-->
+                        <div class="leftBlock" style="width:240px;">
+
+			<h3  class="headingOne">{{=global_lang["system_popup"]["current"] || '' }} {{=it.total_mb}}</h3>
+                            <div class="blockOneContent">
+                                <table cellspacing="0" cellpadding="0" border="0" class="tinytable">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <p class="currentDataUp">
+                                                    {{=it.upload_mb}}
+                                                </p>
+                                            </td>
+
+                                            <td>
+                                                <p class="currentDataDown">
+                                                    {{=it.download_mb}} 
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <!--<tr>
+                                            <td>Max. 8.08 KB/s</td>
+                                            <td>Max. 80.74 KB/s</td>
+                                        </tr>-->
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="tf1_hdButtonBlock" style="display:none"></div>
+
+                    </div>
+                    </script>
+                </div>
+
+				<!-- First tab data ends here -->
+			</div>
+		</div>
+		<div id="tf1_btnBlock" class="submitRowPopup"></div>
+		<div id="tf1_hdButtonBlock" style="display:none">
+			<input type="button" value="Apply"  data-localize="common.apply" class="btnSubmit" onclick=" system_NetworkStatsPacketDataValidate('tf1_frm_systemNetWorkStatsPacketDt')">
+			<input type="button" value="Cancel"  class="btnSubmit" data-localize="common.cancel" id="btnClose">
+		</div>
+
+	</div>
+
+</div>
+
+<!--  tab two data starts -->
+				<div id="tf1_packetDataUsage" >
+					<div id="tf1_tmpl_packetdata_info"></div>
+					<script id="networkpacketdataTemplate" type="text/x-dot-template"> 		
+					<form name="systemNetWorkStatsPacketDt" id="tf1_frm_systemNetWorkStatsPacketDt">
+						<input type="hidden" name="thispage" id="thispage" value="controlPannel.html">
+						<h4>{{=global_lang["system_popup"]["notification_packet_data"] || 'Notification Setting for Packet Data Usage' }}</h4>
+						<div class="configRow">
+							<lable style="float: left; width: 100%;">
+								{{=global_lang["system_popup"]["max_limit"] || 'The max limitation for my netwrok packet data' }}
+							</lable>
+							<input type="text" style="float: left;" id="tf1_maxlimitPacketdata" onkeypress="return numericValueCheck (event)" value="{{=it.packetdat_maxlimit}}"/>
+							<dl>
+								[ MB ]
+							</dl>
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+						<div class="configRow">
+							<lable style="float: left; width: 100%;">
+								{{=global_lang["system_popup"]["remind_me"] || 'Remind me when data usage is more than' }}
+								<br />
+							</lable>
+							<input type="text"  style="float: left;" id="tf_dataUsage" onkeypress="return numericValueCheck (event)" value="80" readonly />
+							<dl>
+								[ % ]
+							</dl>
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+					</form>
+					</script>
+				</div>
+<!--  tab two data Ends -->
+
+<!-- Network Statistics Settinsg Ends here -->
+</div>
+<!-- Advanced Options Starts here -->
+
+<div id="tf1_advancedOptionsWrapper" >
+<div id="tf1_advancedOptions" >
+
+	<h3 data-localize="system_popup.advance_options">Advanced Options</h3>
+	<div class="configForm">
+		<div class="configContent">
+			<div class="break">
+				&nbsp;
+			</div>
+			<ul id="nav">
+				<li class="first">
+					<a href="systemManagementPopup.html" page_id="tf1_upnp" onload-function="system_onloadAdvancedOptUpnp" class="current" data-localize="system_popup.upnp">UPnP </a>
+				</li>
+				<li>
+					<a href="systemManagementPopup.html" id="tf1_systemPowerSaving" page_id="tf1_powerSaving" onload-function="system_onloadAdvancedOptPowerSaving" data-localize="system_popup.pwr_save">Power Saving</a>
+				</li>
+				<!--	
+				<li>
+					<a href="systemManagementPopup.html" page_id="tf1_lcdoff" onload-function="system_onloadAdvancedOptLcdOff"  data-localize="system_popup.lcd_off">Lcd Off</a>
+				</li>	
+				-->	
+			</ul>
+
+			<div id="ajax-content">
+
+				<!-- First tab data syarts here -->
+				<div id="tf1_upnp">
+				    <div id="tf1_tmpl_Upnp_status">
+				    <script id="UpnpstatusTemplate" type="text/x-dot-template"> 
+					<form name="tf1_upnp" id="tf1_frm_upnp" action="cgi-action.html" method="post">
+						<input type="hidden" name="thispage" id="thispage" value="controlPannel.html">
+						<div class="break">
+							&nbsp;
+						</div>
+						<div class="configRow">
+						{{var statuStr,statuVal;}}
+             	    	<label>{{=global_lang["system_popup"]["upnp"] || 'UPnP' }}</label>	
+							{{  if(it == 1) { }}
+		             	         {{statuStr="enable-disable-on";}}
+                         		 {{statusVal="1";}}
+							{{ } else { }}
+								 {{statuStr="enable-disable-off";}}
+                         		 {{statusVal="0";}}
+		                    {{ } }}
+							<a  alt="" class={{=statuStr}} id="css_tf1_Upnpenabledisable"></a>
+							<input type="hidden" value="{{=statusVal}}" name="" id="tf1_Upnpenabledisable">
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+
+						<p class="textBlock">
+							{{=global_lang["system_popup"]["upnp_info"] || 'Universal Plug and Play (UPnP) supports peer-to-peer Plug and Play functionality for network devices.' }}
+						</p>
+					</form>
+					</script>
+					</div>
+				</div>
+				<!-- First tab data ends here -->
+
+			</div>
+
+		</div>
+
+		<div id="tf1_btnBlock" class="submitRowPopup"></div>
+
+		<div id="tf1_hdButtonBlock" style="display:none;">
+			<input type="submit" data-localize="common.apply" value="Apply"  class="btnSubmit" onclick="setHiddenChks('tf1_frm_upnp');system_advancedOptUpnpvalidate('tf1_frm_upnp');">
+			<input type="submit" data-localize="common.cancel" value="Cancel"  class="btnSubmit" id="btnClose">
+		</div>
+	</div>
+
+</div>
+
+<!-- powerSaving content starts here -->
+<div id="tf1_powerSaving">
+	<div id="tf1_tmpl_powersave">
+	<script id="powersavingTemplate" type="text/x-dot-template"> 
+	<form id="tf1_frm_powerSavings" name="tf1_powerSavings">
+		<h4>{{=global_lang["system_popup"]["pwr_save"] || 'Power Saving' }}</h4>
+		{{##def.selected="selected"#}}
+         <div class="configRow">
+            <label>{{=global_lang["system_popup"]["suspend"] || 'Suspend' }} </label>
+            <select id="tf1_batteryidleTime" onchange="system_powersavingMode()">
+              <option value="0" {{ if (it.batteryidletime == 0){ }} {{#def.selected}} {{}}}>{{=global_lang["system_popup"]["disable"] || 'Disable' }}</option>
+              <option value="1" {{ if (it.batteryidletime == 1){ }} {{#def.selected}} {{}}}>{{=global_lang["system_popup"]["after_1min"] || 'After 1 Minutes' }} 
+              </option>
+              <option value="3" {{ if (it.batteryidletime == 3){ }} {{#def.selected}} {{}}}>{{=global_lang["system_popup"]["after_3mins"] || 'After 3 Minutes' }} 
+              </option>
+              <option value="5" {{ if (it.batteryidletime == 5){ }} {{#def.selected}} {{}}}> {{=global_lang["system_popup"]["after_5mins"] || 'After 5 Minutes' }} 
+              </option>
+            </select>
+			<p class="textBlock">{{=global_lang["system_popup"]["suspend_info"] || 'System will enter into the sleep mode, when there is no Wi-Fi client connected to this device.'}}</p>
+          </div>
+          <div class="break">&nbsp;</div>
+          <div class="configRow" id="tf1_deepsleepTime_div">
+            <label>{{=global_lang["system_popup"]["deep_sleep"] || 'Deep Sleep' }} </label>
+            <select id="tf1_deepsleepTime">
+              <option value="0"  {{ if (it.deepsleeptime == 0){ }} {{#def.selected}} {{}}}>{{=global_lang["system_popup"]["disable"] || 'Disable' }}</option>
+              <option value="10" {{ if (it.deepsleeptime == 10){ }} {{#def.selected}} {{}}}>{{=global_lang["system_popup"]["after_10mins"] || 'After 10 Minutes' }} 
+              </option>
+              <option value="20" {{ if (it.deepsleeptime == 20){ }} {{#def.selected}} {{}}}>{{=global_lang["system_popup"]["after_20mins"] || 'After 20 Minutes' }} 
+              </option>
+              <option value="30" {{ if (it.deepsleeptime == 30){ }} {{#def.selected}} {{}}}> {{=global_lang["system_popup"]["after_30mins"] || 'After 30 Minutes' }}
+              </option>
+            </select>
+			<p class="textBlock">{{=global_lang["system_popup"]["deep_sleep_info"] || 'System will enter into deep sleep mode, when there is no Internet access from this device.' }}</sp>
+          </div>
+          <div class="break"  id="break_deepsleepTime_div">&nbsp;</div>
+	</form>
+	</script>
+	</div>
+
+	<div id="tf1_hdButtonBlock" style="display:none;">
+
+		<input type="button" value="Apply" class="btnSubmit" onclick="system_advancedOptPowerSavingvalidate('tf1_frm_powerSavings');" data-localize="common.apply">
+		<input type="button" value="Cancel"  class="btnSubmit" id="btnClose" data-localize="common.cancel" >
+	</div>
+
+</div>
+
+<!-- powerSaving content Ends here -->
+
+</div>
+<!-- Advanced Options Ends here -->

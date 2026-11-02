@@ -1,0 +1,626 @@
+
+##### /var/rtl8192c (valori non sensibili)
+/bmdefsys/usr/bin/rtltools/script
+/bmdefsys/usr/bin/rtltools
+-- /var/rtl8192c/wlan0-vxd/
+11n_ther=0 
+11n_xcap=0 
+MIMO_TR_mode=3 
+account_rs_enabled=<omesso>
+account_rs_interval_time=<omesso>
+account_rs_ip=<omesso>
+account_rs_maxretry=<omesso>
+account_rs_password=<omesso>
+account_rs_port=<omesso>
+account_rs_update_delay=<omesso>
+account_rs_update_enabled=<omesso>
+aggregation=1 
+auth_type=2 
+autoch_1611_enable=0 
+band=11 
+basic_rates=15 
+beacon_interval=100 
+block_relay=0 
+board_ver=1 
+ch_hi=0 
+ch_low=0 
+channel=0 
+channel_bonding=1 
+coexist_enabled=1 
+control_sideband=0 
+countrycode=CN 
+countrycode_enable=1 
+default_ssid= 
+dtim_period=1 
+enable_1x=0 
+enable_supp_nonwpa=0 
+encrypt=6 
+fix_rate=0 
+frag_threshold=2346 
+gk_rekey=<omesso>
+group_id=0 
+guest_access=0 
+hidden_ssid=0 
+inactivity_time=30000 
+ip_addr=0.0.0.0 
+led_type=0 
+lock=
+mac_auth_enabled=0 
+macac_enabled=0 
+macac_num=0 
+macclone_enable=0 
+net_mask=255.255.255.0 
+network_type=0 
+nic0_addr=00017301FF10 
+nic1_addr=00017301FF19 
+power_scale=0 
+preamble_type=0 
+protection_disabled=1 
+psk_enable=<omesso>
+psk_format=<omesso>
+rate_adaptive_enabled=1 
+reg_domain=3 
+rs_interval_time=<omesso>
+rs_ip=<omesso>
+rs_maxretry=<omesso>
+rs_password=<omesso>
+rs_port=<omesso>
+rts_threshold=2347 
+short_gi=1 
+ssid=dlink_DWR-932_ 
+stbc_enabled=0 
+supp_nonwpa=0 
+supported_rate=4095 
+supported_sta_num=16 
+trswitch=0 
+tssi_1=0 
+tssi_2=0 
+tx_power_cck_a=0000000000000000000000000000 
+tx_power_cck_b=0000000000000000000000000000 
+tx_power_diff_ht20=0000000000000000000000000000 
+tx_power_diff_ht40_2s=0000000000000000000000000000 
+tx_power_diff_ofdm=0000000000000000000000000000 
+tx_power_ht40_1s_a=0000000000000000000000000000 
+tx_power_ht40_1s_b=0000000000000000000000000000 
+vap_enable=0 
+wds_enable=0 
+wds_pure=0 
+wep=<omesso>
+wep_default_key=<omesso>
+wep_key_type=<omesso>
+wepkey1_128_asc=<omesso>
+wepkey1_128_hex=<omesso>
+wepkey1_64_asc=<omesso>
+wepkey1_64_hex=<omesso>
+wepkey2_128_asc=<omesso>
+wepkey2_128_hex=<omesso>
+wepkey2_64_asc=<omesso>
+wepkey2_64_hex=<omesso>
+wepkey3_128_asc=<omesso>
+wepkey3_128_hex=<omesso>
+wepkey3_64_asc=<omesso>
+wepkey3_64_hex=<omesso>
+wepkey4_128_asc=<omesso>
+wepkey4_128_hex=<omesso>
+wepkey4_64_asc=<omesso>
+wepkey4_64_hex=<omesso>
+wifi_specific=2 
+wlan0_addr=DCEAE72F59B1 
+wlan1_addr=00017301FF11 
+wlan2_addr=00017301FF12 
+wlan3_addr=00017301FF13 
+wlan4_addr=00017301FF14 
+wlan5_addr=00017301FF15 
+wlan6_addr=00017301FF16 
+wlan7_addr=00017301FF17 
+wlan_disabled=0 
+wlan_mode=0 
+wmm_enabled=1 
+wpa2_cipher=3 
+wpa2_pre_auth=0 
+wpa_auth=2 
+wpa_cipher=3 
+wpa_psk=<omesso>
+wsc_auth=<omesso>
+wsc_configbyextreg=<omesso>
+wsc_configured=<omesso>
+wsc_disabled=<omesso>
+wsc_enc=<omesso>
+wsc_manual_enabled=<omesso>
+wsc_method=<omesso>
+wsc_pin=<omesso>
+wsc_psk=<omesso>
+wsc_registrar_enabled=<omesso>
+wsc_ssid=<omesso>
+wsc_upnp_enabled=<omesso>
+-- /var/rtl8192c/wlan0/
+11n_ther=0 
+11n_xcap=0 
+MIMO_TR_mode=3 
+account_rs_enabled=<omesso>
+account_rs_interval_time=<omesso>
+account_rs_ip=<omesso>
+account_rs_maxretry=<omesso>
+account_rs_password=<omesso>
+account_rs_port=<omesso>
+account_rs_update_delay=<omesso>
+account_rs_update_enabled=<omesso>
+aggregation=1 
+auth_type=2 
+autoch_1611_enable=0 
+band=11 
+basic_rates=15 
+beacon_interval=100 
+block_relay=0 
+board_ver=1 
+ch_hi=0 
+ch_low=0 
+channel=0 
+channel_bonding=1 
+coexist_enabled=1 
+control_sideband=0 
+countrycode=CN 
+countrycode_enable=1 
+default_ssid= 
+dtim_period=1 
+enable_1x=0 
+enable_supp_nonwpa=0 
+encrypt=4
+fix_rate=0 
+frag_threshold=2346 
+gk_rekey=<omesso>
+group_id=0 
+guest_access=0 
+hidden_ssid=0
+inactivity_time=30000 
+ip_addr=0.0.0.0 
+led_type=0 
+lock=
+mac_auth_enabled=0 
+macac_enabled=0 
+macac_num=0 
+macclone_enable=0 
+net_mask=255.255.255.0 
+network_type=0 
+nic0_addr=00017301FF10 
+nic1_addr=00017301FF19 
+power_scale=0 
+preamble_type=0 
+protection_disabled=1 
+psk_enable=<omesso>
+psk_format=<omesso>
+rate_adaptive_enabled=1 
+reg_domain=3 
+rs_interval_time=<omesso>
+rs_ip=<omesso>
+rs_maxretry=<omesso>
+rs_password=<omesso>
+rs_port=<omesso>
+rts_threshold=2347 
+short_gi=1 
+ssid=dlink_DWR-932_59B0
+stbc_enabled=0 
+supp_nonwpa=0 
+supported_rate=4095 
+supported_sta_num=3
+trswitch=0 
+tssi_1=0 
+tssi_2=0 
+tx_power_cck_a=0000000000000000000000000000 
+tx_power_cck_b=0000000000000000000000000000 
+tx_power_diff_ht20=0000000000000000000000000000 
+tx_power_diff_ht40_2s=0000000000000000000000000000 
+tx_power_diff_ofdm=0000000000000000000000000000 
+tx_power_ht40_1s_a=0000000000000000000000000000 
+tx_power_ht40_1s_b=0000000000000000000000000000 
+vap_enable=0 
+wds_enable=0 
+wds_pure=0 
+wep=<omesso>
+wep_default_key=<omesso>
+wep_key_type=<omesso>
+wepkey1_128_asc=<omesso>
+wepkey1_128_hex=<omesso>
+wepkey1_64_asc=<omesso>
+wepkey1_64_hex=<omesso>
+wepkey2_128_asc=<omesso>
+wepkey2_128_hex=<omesso>
+wepkey2_64_asc=<omesso>
+wepkey2_64_hex=<omesso>
+wepkey3_128_asc=<omesso>
+wepkey3_128_hex=<omesso>
+wepkey3_64_asc=<omesso>
+wepkey3_64_hex=<omesso>
+wepkey4_128_asc=<omesso>
+wepkey4_128_hex=<omesso>
+wepkey4_64_asc=<omesso>
+wepkey4_64_hex=<omesso>
+wifi_specific=2 
+wlan0_addr=DCEAE72F59B0 
+wlan1_addr=00017301FF11 
+wlan2_addr=00017301FF12 
+wlan3_addr=00017301FF13 
+wlan4_addr=00017301FF14 
+wlan5_addr=00017301FF15 
+wlan6_addr=00017301FF16 
+wlan7_addr=00017301FF17 
+wlan_disabled=0 
+wlan_mode=0 
+wmm_enabled=1 
+wpa2_cipher=2
+wpa2_pre_auth=0 
+wpa_auth=2
+wpa_cipher=3 
+wpa_psk=<omesso>
+wsc_auth=<omesso>
+wsc_configbyextreg=<omesso>
+wsc_configured=<omesso>
+wsc_disabled=<omesso>
+wsc_enc=<omesso>
+wsc_manual_enabled=<omesso>
+wsc_method=<omesso>
+wsc_pin=<omesso>
+wsc_psk=<omesso>
+wsc_registrar_enabled=<omesso>
+wsc_ssid=<omesso>
+wsc_upnp_enabled=<omesso>
+
+##### /proc driver Realtek
+SS_Result
+buf_info
+cam_info
+cmd
+gpio_ctrl
+led
+mib_11n
+mib_all
+mib_auth
+mib_brext
+mib_bssdesc
+mib_dkeytbl
+mib_erp
+mib_gkeytbl
+mib_misc
+mib_operation
+mib_rf
+mib_staconfig
+mib_wsc
+probe_info
+que_info
+sdio_dbginfo
+sta_dbginfo
+sta_info
+sta_keyinfo
+sta_queinfo
+stats
+up_event
+up_flag
+-- mib_rf
+  Dot11RFEntry...
+    dot11channel: 7
+    dot11ch_low: 0
+    dot11ch_hi: 0
+    pwrlevelCCK_A: 1f1f212121212121212121222223
+    pwrlevelCCK_B: 2323232323232323242424252526
+    pwrlevelHT40_1S_A: 2222242424252525262626272727
+    pwrlevelHT40_1S_B: 2626262626262626272727282828
+    pwrdiffHT40_2S: ffffffffffffffffffffffffffff
+    pwrdiffHT20: 0000000000000000000000000000
+    pwrdiffOFDM: 2222222222222222222222222222
+    power_percent: 100
+    shortpreamble: 0
+    trswitch: 0
+    disable_ch14_ofdm: 0
+    xcap: 25
+    tssi1: 0
+    tssi2: 0
+    ther: 0
+    MIMO_TR_hw_support: 2T2R
+    MIMO_TR_mode: 2T2R
+    TXPowerOffset: 2
+    force_1t2r: 0 (state:0)
+    chipVersion: RTL8192EnC
+    autoload fail: 0
+    efuse used bytes: 56
+efuse init map...
+    2981007c010003004200055810000000
+    1f2121212223222425262702ffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffff232323242526
+    262626272802ffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffff19ffffffffffff
+    ffffffffffffffffffffffffffffffff
+    7f40010334ffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffff
+efuse modify map...
+-- mib_operation
+  Dot11OperationEntry...
+    hwaddr: dceae72f59b0
+    opmode: 0x10
+    vap_init_seq: 0x0
+    hiddenAP: 0
+    dot11RTSThreshold: 2347
+    dot11FragmentationThreshold: 2346
+    dot11ShortRetryLimit: 0
+    dot11LongRetryLimit: 0
+    expiretime: 30000
+    led_type: 0
+    iapp_enable: 0
+    block_relay: 0
+    deny_any: 0
+    crc_log: 0
+    wifi_specific: 2
+    qos_enable: 1
+    apsd_enable: 0
+    net_work_type: BGN
+    disable_txsc: 0
+    disable_rxsc: 0
+    guest_access: 0
+    tdls_prohibited:  0
+    tdls_cs_prohibited:  0
+-- mib_11n
+  dot11nConfigEntry...
+    supportedmcs: 0000ffff
+    basicmcs: 00000000
+    use40M: 1
+    currBW: 40M
+    currBW(op): 20M
+    2ndchoffset: above
+    shortGI20M: 1
+    shortGI40M: 1
+    shortGI80M: 0
+    stbc: 0
+    ldpc: 0
+    ampdu: 1
+    amsdu: 0
+    ampduSndSz: 0
+    amsduMax: 0
+    amsduTimeout: 400
+    amsduNum: 15
+    lgyEncRstrct: 15
+    coexist: 1
+    bg_ap_timeout: 0
+    force_20_sta: 0x00000000
+    switch_20_sta: 0x00000000
+    bg_ap_rssi_chk_th: 20
+    txnoack: 0
+    ht_cap: 6e101fffff000000000000000000000000000000000000000000
+    ht_ie: 07050000000000000000000000000000000000000000
+    legacy_obss_to: 0
+    nomember_legacy_sta_to: 0
+    legacy_sta_num: 0
+    11nProtection: 0
+-- mib_misc
+  miscEntry...
+    show_hidden_bss: 0
+    ack_timeout: 0
+    private_ie: 
+    rxInt: 300
+    groupID: 0
+    rc_enable: 1
+    rc_winsz: 128
+    rc_timeout: 30000
+    vap_enable: 0
+    func_off: 0
+    40M map: 0x00000000
+    bws_enable: 4
+    bws_cntdown: 0
+    H2C clear: 0
+    H2C full: 0
+    False alarm: 1359
+    CCA: 1704
+-- wlan0-va0:
+cmd
+mib_11n
+mib_all
+mib_auth
+mib_brext
+mib_bssdesc
+mib_dkeytbl
+mib_erp
+mib_gkeytbl
+mib_misc
+  Dot11OperationEntry...
+    hwaddr: 000000000000
+    opmode: 0x10
+    vap_init_seq: 0xffffffff
+    hiddenAP: 0
+    dot11RTSThreshold: 2347
+    dot11FragmentationThreshold: 2347
+    dot11ShortRetryLimit: 0
+    dot11LongRetryLimit: 0
+    expiretime: 30000
+    led_type: 0
+    iapp_enable: 0
+    block_relay: 0
+    deny_any: 0
+    crc_log: 0
+    wifi_specific: 2
+    qos_enable: 1
+    apsd_enable: 0
+    net_work_type: BG
+    disable_txsc: 0
+    disable_rxsc: 0
+    guest_access: 0
+    tdls_prohibited:  0
+    tdls_cs_prohibited:  0
+
+##### iwpriv wlan0 (comandi disponibili)
+print_priv_info n=51
+wlan0     Available private ioctl :
+          set_mib          (89F1) : set 450 char  & get   0      
+          get_mib          (89F2) : set  40 char  & get 128 byte 
+          write_reg        (89F3) : set 128 char  & get   0      
+          read_reg         (89F4) : set 128 char  & get 128 byte 
+          write_mem        (89F5) : set 128 char  & get   0      
+          read_mem         (89F6) : set 128 char  & get 128 byte 
+          write_bb         (89FA) : set 128 char  & get   0      
+          read_bb          (89FB) : set 128 char  & get 128 byte 
+          write_rf         (89FC) : set 128 char  & get   0      
+          read_rf          (89FD) : set 128 char  & get 128 byte 
+          del_sta          (89F7) : set 128 char  & get   0      
+          write_eeprom     (89F8) : set 128 char  & get   0      
+          read_eeprom      (89F9) : set 128 char  & get 128 byte 
+          rf_pwr           (8B5B) : set  40 char  & get 128 char 
+          at_ss            (8B5C) : set   0       & get   0      
+          at_join          (8B5D) : set  40 char  & get   0      
+          mp_start         (8B61) : set   0       & get   0      
+          mp_stop          (8B62) : set   0       & get   0      
+          mp_rate          (8B63) : set  40 char  & get   0      
+          mp_channel       (8B64) : set  40 char  & get   0      
+          mp_txpower       (8B65) : set  40 char  & get   0      
+          mp_ctx           (8B66) : set 128 char  & get   0      
+          mp_arx           (8B67) : set  40 char  & get 128 char 
+          mp_bssid         (8B68) : set  40 char  & get   0      
+          mp_ant_tx        (8B69) : set  40 char  & get   0      
+          mp_ant_rx        (8B6A) : set  40 char  & get   0      
+          mp_bandwidth     (8B6B) : set  40 char  & get   0      
+          mp_phypara       (8B6C) : set  40 char  & get   0      
+          mp_query         (8B6D) : set  40 char  & get 128 char 
+          mp_pwrtrk        (8B6E) : set  40 char  & get   0      
+          mp_tssi          (8B6F) : set  40 char  & get 128 char 
+          mp_psd           (8BC9) : set  40 char  & get 128 char 
+          mp_ther          (8B77) : set  40 char  & get 128 char 
+          mp_reset_stats   (8B86) : set  40 char  & get 128 char 
+          mp_get_pwr       (8B87) : set  40 char  & get 128 char 
+          reg_dump         (8B78) : set  40 char  & get   0      
+          copy_mib         (8B79) : set  40 char  & get   0      
+          radio_off        (8B8E) : set 128 char  & get   0      
+          mimo             (8B8F) : set 128 char  & get 128      
+          acs              (8B9F) : set 128 char  & get 128      
+          ant_sts          (8B9D) : set 128 char  & get 512 char 
+          efuse_get        (8B9B) : set 128 char  & get 512 char 
+          efuse_set        (8B9A) : set 512 char  & get 128 char 
+          efuse_sync       (8B9C) : set 128 char  & get 128 char 
+          autoch           (8BC5) : set 128 char  & get   0      
+          add_acl_table    (8B96) : set  40 char  & get 128 byte 
+          del_acl_table    (8B97) : set  40 char  & get 128 byte 
+          get_acl_table    (8B98) : set  40 char  & get 128 byte 
+          clear_acl_table  (8B9E) : set  40 char  & get 128 byte 
+          reset_nop        (8BCE) : set 128 char  & get 128      
+          txpwr_apply      (8BCF) : set 128 char  & get 128      
+
+
+##### consumo CPU (top 1 iterazione)
+Mem: 60812K used, 108016K free, 1100K shrd, 0K buff, 27400K cached
+CPU: 10.0% usr 10.0% sys  0.0% nic 80.0% idle  0.0% io  0.0% irq  0.0% sirq
+Load average: 4.08 4.47 4.51 3/273 1054
+  PID  PPID USER     STAT   VSZ %VSZ CPU %CPU COMMAND
+ 1049 32031 root     R     2228  1.3   0 10.0 top -b -n 1
+  407     1 root     S <   188m114.0   0  0.0 /usr/bin/thermal-engine
+  796   795 root     S    90216 53.4   0  0.0 /bmdefsys/usr/bin/qcmap_fcgi
+  475     1 root     S    80008 47.3   0  0.0 QCMAP_ConnectionManager /bmdefsys/etc/mobileap_cfg.xml d
+  923     1 root     S    77908 46.1   0  0.0 /bmdefsys/usr/bin/sms_service
+  397     1 root     S    77624 45.9   0  0.0 /usr/bin/qmuxd
+  891     1 root     S    65100 38.5   0  0.0 /bmdefsys/usr/bin/bm_netstat
+  803   795 root     S    63544 37.6   0  0.0 /bmdefsys/usr/bin/debug_fcgi
+ 1247   883 root     S    56188 33.2   0  0.0 /bmdefsys/usr/bin/pe_service
+  337     1 root     S    53164 31.4   0  0.0 /usr/bin/time_daemon
+  955     1 root     S    48844 28.9   0  0.0 /bmdefsys/usr/bin/bm_fota
+  893     1 root     S    48560 28.7   0  0.0 /bmdefsys/usr/bin/bm_netrate
+  913     1 root     S    46952 27.8   0  0.0 /bmdefsys/usr/bin/deep_sleep_server
+  442     1 root     S    45420 26.8   0  0.0 /usr/bin/netmgrd
+  294     1 root     S    41808 24.7   0  0.0 /sbin/adbd
+  831     1 root     S    36804 21.7   0  0.0 /usr/bin/qti /dev/rmnet_ctrl /dev/smdcntl8
+ 1165     1 root     S    36772 21.7   0  0.0 cxmapp
+  824     1 root     S    36308 21.5   0  0.0 ipacm
+ 1248   883 root     S    30588 18.1   0  0.0 /bmdefsys/usr/bin/pe_service
+  972     1 root     S    20968 12.4   0  0.0 /usr/bin/mbimd
+  382     1 root     S    20716 12.2   0  0.0 /usr/bin/atfwd_daemon
+
+##### cpuidle
+state0: C0 usage=8641412 time=3715928286
+state1: C1 usage=0 time=0
+state2: C2 usage=343 time=318400
+state3: C3 usage=700451 time=6077747810
+1
+0
+1
+1
+
+##### thermal-engine / power_config
+#! /bin/sh
+#
+# Copyright (c) 2011-2013, The Linux Foundation. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimer in the documentation and/or other materials provided
+#       with the distribution.
+#     * Neither the name of The Linux Foundation nor the names of its
+#       contributors may be used to endorse or promote products derived
+#       from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# PM Configuration
+
+set -e
+
+case "$1" in
+  start)
+        soc_id=`cat /sys/devices/system/soc/soc0/id`
+        case "$soc_id" in
+        "104" | "105" | "106" | "107")
+                echo -n "Starting powerconfig for 9x15: "
+                echo 1 > /sys/module/pm_8x60/modes/cpu0/power_collapse/suspend_enabled
+
+##### wakelock / autosleep
+off
+cat: can't open '/sys/power/wake_lock': No such file or directory
+
+##### LED attivi (trigger e timer)
+power_led_blue b=1 t=none on= off=
+power_led_green b=0 t=none on= off=
+power_led_red b=0 t=none on= off=
+signal_led_blue b=0 t=none on= off=
+signal_led_green b=0 t=none on= off=
+signal_led_red b=255 t=timer on=500 off=500
+sled_led1 b=0 t=none on= off=
+sled_led2 b=0 t=none on= off=
+sled_led3 b=0 t=none on= off=
+sled_led4 b=0 t=none on= off=
+sms_led b=0 t=none on= off=
+wifi_led b=1 t=none on= off=
+
+##### display
+bits_per_pixel blank console cursor dev mode modes name pan power rotate state stride subsystem uevent virtual_size 
+bind spi0.0 uevent unbind 

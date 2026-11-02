@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+
+ <head>
+		<meta http-equiv="Content-Language" content="en-us">
+		<title>D-Link - DWR-932C</title>
+		<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" /> 
+		<script type="text/javascript" language="javascript" src="js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="js/doT.js"></script>
+		<script type="text/javascript" language="javascript" src="js/mis.js"></script>
+		<script type="text/javascript" language="javascript" src="js/textValidations.js"></script>
+        <script type="text/javascript" language="javascript" src="js/api/loginApi.js"></script>
+        <script type="text/javascript" language="javascript" src="js/jquery.localize.min.js" ></script>
+        <script type="text/javascript" language="javascript" src="js/json2.js"></script>
+		<script type="text/javascript" charset="utf-8">
+	/*
+	NAS_ACTIVE_BAND_ENUM_MIN_ENUM_VAL_V01 = -2147483647, < To force a 32 bit signed enum.  Do not change or use
+  NAS_ACTIVE_BAND_BC_0_V01 = 0, 
+  NAS_ACTIVE_BAND_BC_1_V01 = 1, 
+  NAS_ACTIVE_BAND_BC_3_V01 = 3, 
+  NAS_ACTIVE_BAND_BC_4_V01 = 4, 
+  NAS_ACTIVE_BAND_BC_5_V01 = 5, 
+  NAS_ACTIVE_BAND_BC_6_V01 = 6, 
+  NAS_ACTIVE_BAND_BC_7_V01 = 7, 
+  NAS_ACTIVE_BAND_BC_8_V01 = 8, 
+  NAS_ACTIVE_BAND_BC_9_V01 = 9, 
+  NAS_ACTIVE_BAND_BC_10_V01 = 10, 
+  NAS_ACTIVE_BAND_BC_11_V01 = 11, 
+  NAS_ACTIVE_BAND_BC_12_V01 = 12, 
+  NAS_ACTIVE_BAND_BC_13_V01 = 13, 
+  NAS_ACTIVE_BAND_BC_14_V01 = 14, 
+  NAS_ACTIVE_BAND_BC_15_V01 = 15, 
+  NAS_ACTIVE_BAND_BC_16_V01 = 16, 
+  NAS_ACTIVE_BAND_BC_17_V01 = 17, 
+  NAS_ACTIVE_BAND_BC_18_V01 = 18, 
+  NAS_ACTIVE_BAND_BC_19_V01 = 19, 
+  NAS_ACTIVE_BAND_GSM_450_V01 = 40, 
+  NAS_ACTIVE_BAND_GSM_480_V01 = 41, 
+  NAS_ACTIVE_BAND_GSM_750_V01 = 42, 
+  NAS_ACTIVE_BAND_GSM_850_V01 = 43, 
+  NAS_ACTIVE_BAND_GSM_900_EXTENDED_V01 = 44, 
+  NAS_ACTIVE_BAND_GSM_900_PRIMARY_V01 = 45, 
+  NAS_ACTIVE_BAND_GSM_900_RAILWAYS_V01 = 46, 
+  NAS_ACTIVE_BAND_GSM_1800_V01 = 47, 
+  NAS_ACTIVE_BAND_GSM_1900_V01 = 48, 
+  NAS_ACTIVE_BAND_WCDMA_2100_V01 = 80, 
+  NAS_ACTIVE_BAND_WCDMA_PCS_1900_V01 = 81, 
+  NAS_ACTIVE_BAND_WCDMA_DCS_1800_V01 = 82, 
+  NAS_ACTIVE_BAND_WCDMA_1700_US_V01 = 83, 
+  NAS_ACTIVE_BAND_WCDMA_850_V01 = 84, 
+  NAS_ACTIVE_BAND_WCDMA_800_V01 = 85, 
+  NAS_ACTIVE_BAND_WCDMA_2600_V01 = 86, 
+  NAS_ACTIVE_BAND_WCDMA_900_V01 = 87, 
+  NAS_ACTIVE_BAND_WCDMA_1700_JAPAN_V01 = 88, 
+  NAS_ACTIVE_BAND_WCDMA_1500_JAPAN_V01 = 90, 
+  NAS_ACTIVE_BAND_WCDMA_850_JAPAN_V01 = 91, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_1_V01 = 120, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_2_V01 = 121, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_3_V01 = 122, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_4_V01 = 123, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_5_V01 = 124, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_6_V01 = 125, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_7_V01 = 126, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_8_V01 = 127, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_9_V01 = 128, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_10_V01 = 129, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_11_V01 = 130, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_12_V01 = 131, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_13_V01 = 132, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_14_V01 = 133, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_17_V01 = 134, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_33_V01 = 135, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_34_V01 = 136, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_35_V01 = 137, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_36_V01 = 138, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_37_V01 = 139, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_38_V01 = 140, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_39_V01 = 141, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_40_V01 = 142, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_18_V01 = 143, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_19_V01 = 144, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_20_V01 = 145, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_21_V01 = 146, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_24_V01 = 147, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_25_V01 = 148, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_41_V01 = 149, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_42_V01 = 150, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_43_V01 = 151, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_23_V01 = 152, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_26_V01 = 153, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_32_V01 = 154, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_125_V01 = 155, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_126_V01 = 156, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_127_V01 = 157, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_28_V01 = 158, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_29_V01 = 159, 
+  NAS_ACTIVE_BAND_E_UTRA_OPERATING_BAND_30_V01 = 160, 
+  NAS_ACTIVE_BAND_TDSCDMA_BAND_A_V01 = 200, 
+  NAS_ACTIVE_BAND_TDSCDMA_BAND_B_V01 = 201, 
+  NAS_ACTIVE_BAND_TDSCDMA_BAND_C_V01 = 202, 
+  NAS_ACTIVE_BAND_TDSCDMA_BAND_D_V01 = 203, 
+  NAS_ACTIVE_BAND_TDSCDMA_BAND_E_V01 = 204, 
+  NAS_ACTIVE_BAND_TDSCDMA_BAND_F_V01 = 205, 
+  NAS_ACTIVE_BAND_ENUM_MAX_ENUM_VAL_V01 = 2147483647
+  */		
+		
+var global_current_band;
+function getBandStr(status) {
+    var band_list = {
+		"0" : "BC-0", "1" : "BC-1", "3" : "BC-3", "4" : "BC-4","5" : "BC-5",	
+		"6" : "BC-6", "7" : "BC-7", "8" : "BC-8", "9" : "BC-9", "10" : "BC-10",						
+		"11" : "BC-11",	"12" : "BC-12",	"13" : "BC-13",	"14" : "BC-14",	"15" : "BC-15",	
+		"16" : "BC-16",	"17" : "BC-17",	"18" : "BC-18",	"19" : "BC-19",	"40" : "GSM-450",
+		"41" : "GSM-480", "42" : "GSM-750",	"43" : "GSM-850", "44" : "GSM-900",
+		"45" : "GSM-900", "46" : "GSM-900", "47" : "GSM-1800", "48" : "GSM-1900",														
+		"80" : "WCDMA-2100", "81" : "WCDMA-PCS-1900", "82" : "WCDMA-DCS-1800",
+		"83" : "WCDMA-1700-US",	"84" : "WCDMA-850", "85" : "WCDMA-800",
+		"86" : "WCDMA-2600", "87" : "WCDMA-900", "88" : "WCDMA-1700-JAPAN",
+		"90" : "WCDMA-1500-JAPAN", "91" : "WCDMA-850-JAPAN",	
+		"120" : "B1", "121" : "B2", "122" : "B3", "123" : "B4", "124" : "B5",
+		"125" : "B6", "126" : "B7", "127" : "B8", "128" : "B9", "129" : "B10",
+		"130" : "B11", "131" : "B12", "132" : "B13", "133" : "B14", "134" : "B17",
+		"135" : "B33", "136" : "B34", "137" : "B35", "138" : "B36", "139" : "B37",
+		"140" : "B38", "141" : "B39", "142" : "B40", "143" : "B18", "144" : "B19",
+		"145" : "B20", "146" : "B21", "147" : "B24", "148" : "B25", "149" : "B41",
+		"150" : "B42", "151" : "B43", "152" : "B23", "153" : "B26", "154" : "B32",
+		"155" : "B125", "156" : "B126", "157" : "B127", "158" : "B28", "159" : "B29",
+		"160" : "B30",
+		"200" : "TDSCDMA-BAND-A","201" : "TDSCDMA-BAND-B","202" : "TDSCDMA-BAND-C",
+		"203" : "TDSCDMA-BAND-D","204" : "TDSCDMA-BAND-E","205" : "TDSCDMA-BAND-F"
+   };
+
+    if (status in band_list) {
+        return band_list[status];
+    }
+	else
+		return "unknown";
+}
+		$(document).ready(function() {
+			var request = $.ajax(
+			{
+				type: "GET",
+				url: "/data.ria?DynUpdate=bm_GetCurrentBandInfo",
+				dataType: "json"
+			});
+			request.done(function( responseData,textStatus, jqXHR ) {
+		        if(jqXHR.status == 401) {
+		            window.location = "index.html";
+		            return;
+		        }				
+				if(responseData.cmd_status == "Done")
+				{
+					var current_band = getBandStr(responseData.bm_currentBand);			
+					global_current_band = current_band;				
+					$("#band_result").html(current_band);				
+					GetCellLocationInfo();							
+				}	
+			});
+		    request.fail(function( jqXHR, textStatus, errorThrown) {           
+		           window.location = "index.html";
+		           return;
+		      
+		    });		
+		});	
+	function GetCellLocationInfo()
+	{	
+		var request = $.ajax(
+		{
+			type: "GET",
+			url: "/data.ria?DynUpdate=bm_GetCellLocationInfo",
+			dataType: "json"
+		});
+		request.done(function( responseData,textStatus, jqXHR )
+		{
+			if(responseData.cmd_status == "Done")
+			{
+				var NOffs_DL = 0;
+				var FDL_low = 0;
+				var DL_freq = 0;
+				var UL_freq = 0;
+				if(global_current_band == "B1")
+				{
+					NOffs_DL = 0;
+					FDL_low = 2110;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq - 190;
+				}	
+				else if(global_current_band == "B2")
+				{
+					NOffs_DL = 60;
+					FDL_low = 1930;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq - 80;
+				}						
+				else if(global_current_band == "B3")
+				{
+					NOffs_DL = 120;
+					FDL_low = 1805;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq - 95;
+				}
+				else if(global_current_band == "B4")
+				{
+					NOffs_DL = 195;
+					FDL_low = 2110;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq - 400;
+				}				
+				else if(global_current_band == "B5")
+				{
+					NOffs_DL = 240;
+					FDL_low = 869;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq - 45;
+				}								
+				else if(global_current_band == "B7")
+				{
+					NOffs_DL = 275;
+					FDL_low = 2620;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq - 120;
+				}
+				else if(global_current_band == "B8")
+				{
+					NOffs_DL = 345;
+					FDL_low = 925;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq - 45;
+				}
+				else if(global_current_band == "B17")
+				{
+					NOffs_DL = 573;
+					FDL_low = 734;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq - 30;
+				}				
+				else if(global_current_band == "B20")
+				{
+					NOffs_DL = 615;
+					FDL_low = 791;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq + 41;
+				}
+				else if(global_current_band == "B28")
+				{
+					NOffs_DL = 921;
+					FDL_low = 758;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq - 55;
+				}				
+				else if(global_current_band == "B38")
+				{
+					NOffs_DL = 3775;
+					FDL_low = 2570;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq;
+				}	
+				else if(global_current_band == "B39")
+				{
+					NOffs_DL = 3825;
+					FDL_low = 1880;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq;
+				}					
+				else if(global_current_band == "B40")
+				{
+					NOffs_DL = 3865;
+					FDL_low = 2300;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq;
+				}
+				else if(global_current_band == "B41")
+				{
+					NOffs_DL = 3965;
+					FDL_low = 2496;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq;
+				}
+				else if(global_current_band == "B42")
+				{
+					NOffs_DL = 4159;
+					FDL_low = 3400;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq;
+				}
+				else if(global_current_band == "B43")
+				{
+					NOffs_DL = 4359;
+					FDL_low = 3600;
+					DL_freq = FDL_low+parseInt(responseData.bm_Bandearfcn)/10 - NOffs_DL;
+					UL_freq = DL_freq;
+				}																				
+		        $("#dl_freq_result").html(DL_freq);
+				$("#ul_freq_result").html(UL_freq);									
+			}	
+		});	
+	}			
+		</script>        
+        <style>
+		  
+			.configRow1 > label {
+				width: 190px;	
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div align="center">
+			<div class="logo">
+				&nbsp;
+			</div>
+			<div class="mid midLogin" align="center">
+				 
+					<h1>Band information</h1>
+					<div class="inputBg1">
+						<div>
+							<div class="configRow1">
+								<label>Current band</label>
+                                 <p style="line-height:52px;" id="band_result"></p> 
+								 
+							</div>                           
+						</div>
+					</div>
+					 <div class="inputBg1">
+						<div>
+					  <div class="configRow1">
+								<label>Download frequency</label>
+                                 <p style="line-height:52px;" id="dl_freq_result"></p>
+								 
+							</div>
+                      </div>
+					</div>
+					 <div class="inputBg1">
+						<div>
+					  <div class="configRow1">
+								<label>Upload frequency</label>
+                                 <p style="line-height:52px;" id="ul_freq_result"></p>
+								 
+							</div>
+                      </div>
+					</div>					
+				<div class="break">
+					&nbsp;
+				</div>
+				<div class="break">
+					&nbsp;
+				</div>
+				 
+			</div>
+			<div class="footer" align="center" data-localize="login1.footer">
+				Copyright &#169; 2016 D-Link. All Rights Reserved.
+			</div>
+		</div>
+		<div id="tf1_overlay2" class="configDialogMask"></div>
+		<div class="errorPopup" id="tf1_error" style="display:none;"></div>
+		<div id="tf1_errorDialogTemplate" style="display:none">
+			<div>
+				<div class="errorHeading">
+					@@title@@
+				</div>
+				<div class="errorMessage">
+					@@msg@@
+				</div>
+				<div class="buttonsDiv2">
+					<input type="button" data-localize="common.ok" value="Ok" onClick="closeDialogAlert(event,'tf1_error')" class="btnSubmit">
+				</div>
+			</div>
+		</div>
+
+		<!-- Informtion Block -->
+		<div class="errorPopup" id="tf1_information" style="display:none;"></div>
+		<div id="tf1_infoDialogTemplate" style="display:none">
+			<div>
+				<div class="informationHeading">
+					@@title@@
+				</div>
+				<div class="errorMessage">
+					@@msg@@
+				</div>
+				<div class="buttonsDiv2">
+
+					<input type="button" data-localize="common.ok" value="Ok" onClick="closeDialogAlert(event,'tf1_information')" class="btnSubmit" >
+				</div>
+			</div>
+		</div>
+
+		 <script type="text/javascript" charset="utf-8">
+		 
+		  
+			var global_lang = new Object();
+
+			function parseINIString(idata){
+			    var regex = {  
+				    section: /^\s*\[\s*(.*)\s*\]\s*$/,  
+				    keyval: /^\s*([\w\.\-]+)\s*=\s*\x22(.*?)\x22\s*$/,  
+				    comment: /^\s*#.*$/   
+				};  
+				var rtval = {};  
+				var lines = idata.split(/\r\n|\r|\n/);  
+				var sec = null;  
+				var line,matchstr,str2;
+				//var replacestr=/[\\\"\\\\]/;
+				for(var i=0;i<lines.length;i++)
+				{
+					line = lines[i];	
+					//parse comment "#"				
+					if(regex.comment.test(line))
+					{  
+						continue;  
+					}
+					//parse keyval
+					else if(regex.keyval.test(line))
+					{  
+						matchstr = line.match(regex.keyval);  
+						str2=matchstr[2].replace(/\\\"/,"\"");
+						str2=str2.replace(/\\\\/,"\\");
+						if(sec)
+						{  
+							rtval[sec][matchstr[1]] = str2;  
+						}
+						else
+						{  
+							rtval[matchstr[1]] = str2;  
+						}  
+					}
+					//parse section
+					else if(regex.section.test(line))
+					{  
+						matchstr = line.match(regex.section);  
+						rtval[matchstr[1]] = {};  
+						sec = matchstr[1];  
+					}
+					else if(line.length == 0 && sec)
+					{  
+						sec = null;  
+					}
+				}
+				return rtval;  
+   			}
+ 
+ 	 
+			 
+			
+			/* Start:Language support */
+		
+			var systemData
+
+			$(document).ready(function() {
+				
+				 
+
+
+				HideDialog('tf1_overlay');		 
+
+			    var request = $.ajax({
+			    	url: "/data.ria?FileID=1&sect_name=DEVICE",       
+		       		 dataType: "text"
+		   		 });
+		    	request.done(function( responseData,textStatus, jqXHR ) {  
+		    		systemData = responseData.language;
+		    	});
+		    	request.fail(function( jqXHR, textStatus, errorThrown) {	
+		  	  	});
+		   	  request.always(function(responseData,textStatus, jqXHR ) {       
+		  	  });
+				  	  
+		  	  var localeLng = langString(systemData);
+		  	  //console.log(localeLng);
+		  	  var opts = { language: localeLng, pathPrefix: "/lang"};
+					opts.callback = function(data, defaultCallback) {
+			          global_lang = data;
+			          defaultCallback(data);
+			        }
+			        $("[data-localize]").localize("lang", opts)
+					 
+					/*use in scripts as {{=glb_lang["login1"]["welcome"]}} */
+
+					
+			});
+
+		/* End:Language support */
+		
+		</script>
+	</body>
+
+</html>

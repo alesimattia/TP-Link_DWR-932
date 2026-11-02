@@ -1,0 +1,811 @@
+
+<!-- Wi-Fi Status popUp starts here -->
+<div id="tf1_wifiStatus">
+<div id="tf1_tmpl_wifistatus_info">
+<script id="wifistatusinfoTemplate" type="text/x-dot-template"> 
+	<form name="" id="" action="cgi-action.html" method="post">
+		<input type="hidden" name="thispage" id="thispage" value="controlPannel.html">
+		<h3>{{=global_lang["wifi_popup"]["wifi_status"] || 'Wi-Fi Status' }}</h3>
+		<div class="popupContentDisplay">
+			<div class="configStatusContent">
+				<h4>{{=global_lang["wifi_popup"]["wifi_gen_info"] || 'General Information' }}</h4>
+
+				<div class="configRow2">
+					<label>{{=global_lang["wifi_popup"]["wifi_wps"] || 'Wi-Fi  WPS' }}</label>
+						{{var str;}}
+						{{if (it.wifi2point4 == "1"){ }}
+							{{str=global_lang["common"]["on_some"];}}
+						{{ } else { }}	
+							{{str=global_lang["common"]["off"];}}
+						{{ } }}	
+					<p class="wps_status">
+						{{=str}}
+					</p>
+				</div>
+				<div class="break2">
+					&nbsp;
+				</div>
+				<div class="configRow2">
+				<label>{{=global_lang["wifi_popup"]["wifi_2point4"] || 'Wi-Fi 2.4 GHz' }}</label>
+					{{  if(it.wifi2point4 == "1") { }}
+					<p>
+						{{=global_lang["common"]["on"] || 'ON' }}
+					</p>
+					{{ } else { }}
+					<p>
+						{{=global_lang["common"]["off"] || 'OFF' }}
+					</p>
+					{{ } }}
+				</div>
+				<div class="break2">
+					&nbsp;
+				</div>
+				<div class="configRow2">
+					<label>{{=global_lang["wifi_popup"]["cur_clients"] || 'Current Wi-Fi Clients' }}</label>
+					<p>
+						{{!it.Clientlist || "0"}}
+					</p>
+				</div>
+				<div class="break2">
+					&nbsp;
+				</div>
+
+				<h4>{{=global_lang["wifi_popup"]["wifi_status"] || 'Wi-Fi Status' }}</h4>
+				<div class="break">
+					&nbsp;
+				</div>
+				<div class="blockOne">
+					<div class="leftBlock" style="float: none;">
+									{{var statuStr;}}
+									{{  if(it.wifi2point4 == "1") { }}
+										{{statuStr="wifiSignal5";}}
+									{{ } else { }}
+										{{statuStr="wifiSignal1";}}
+									{{ } }}
+						<h3 class="wifiHeading"><span class="{{=statuStr}}">&nbsp;</span>{{=global_lang["wifi_popup"]["wifi_2point4"] || 'Wi-Fi 2.4 GHz' }}</h3>
+						<div class="blockOneContent">
+							<table cellpadding="0" cellspacing="0" border="0"  class="tinytable">
+
+								<tr>
+									<td width="50%">{{=global_lang["wifi_popup"]["ssid"] || 'SSID Name' }}</td>
+									<td width="50%">{{=it.SSIDname}}</td>
+								</tr>
+								<tr>
+									<td>{{=global_lang["wifi_popup"]["encryption"] || 'Encryption' }}</td>
+									<td><span class="wpa_protection">{{=(it.wpaMode || global_lang["wifi_popup"]["basic_protection"])+" - "}}</span>{{=it.cipherType || global_lang["wifi_popup"]["shared"]}}</td>
+								</tr>
+								<tr>
+									<td>{{=global_lang["wifi_popup"]["dhcp"] || 'DHCP' }}</td>
+									{{  if(it.dhcp_service == 1) { }}
+									<td>{{=global_lang["common"]["on_some"] || 'ON' }}</td>
+									{{ } else { }}
+									<td>{{=global_lang["common"]["off"] || 'OFF' }}</td>
+									{{ } }}
+								</tr>
+								<tr>
+									<td>{{=global_lang["wifi_popup"]["ip_addr"] || 'IP Address' }}</td>
+									<td>{{=it.ip_addr}}</td>
+								</tr>
+								<tr>
+									<td>{{=global_lang["wifi_popup"]["subnet"] || 'Subnet' }}</td>
+									<td>255.255.255.0</td>
+								</tr>
+								<tr>
+									<td>{{=global_lang["wifi_popup"]["mac_addr"] || 'MAC Address' }}</td>
+									<td>{{! it.MacAddr || "  "}}</td>
+								</tr>
+
+							</table>
+						</div>
+					</div>
+					 
+
+				</div>
+			</div>
+		</div>
+	</form>
+	</script>
+	</div>
+</div>
+ 
+<!-- WiFi Details block starts -->
+ 
+
+<div id="tf1_wifiStatusDetailsWrapper">
+
+	<div id="tf1_wifiStatusDetails">
+
+		<h3 data-localize="wifi_popup.wifi_control">Wi-Fi Control</h3>
+		<div class="configForm">
+			<div class="configContent">
+				<div class="break">
+					&nbsp;
+				</div>
+				<ul id="nav">
+					<li class="first">
+						<a href="wifiPopup.html" page_id="tf1_wifi2point4gStatus" class="current" onload-function="wifi_onloadStatusDetails" data-localize="wifi_popup.wifi_2point4">Wi-Fi 2.4 GHz</a>
+					</li>
+					<li>
+						<a href="wifiPopup.html" page_id="tf1_wifiWps" onload-function="wifi_onloadWps" data-localize="wifi_popup.wifi_wps">Wi-Fi WPS</a>
+					</li>
+				</ul>
+				<div id="ajax-content">
+					<div id="tf1_wifi2point4gStatus">
+						<div id="tf1_tmpl_wifi2point4gStatus"></div>
+				    	<script id="tf1_script_wifiControlTemplate" type="text/x-dot-template">
+						<!-- Start template -->
+						<h4>{{=global_lang["wifi_popup"]["wifi_2point4"] || 'Wi-Fi 2.4 GHz' }}</h4>
+						<form name="frm_wifiStatusDetails" id="tf1_frm_wifiStatusDetails" >
+							<div class="configRow">
+								{{var statuStr,statuVal;}}
+								<label>{{=global_lang["wifi_popup"]["wifi_2point4"] || 'Wi-Fi 2.4 GHz' }}</label>
+										{{  if(it.wifi_turnOnOff == 1) { }}
+											 {{statuStr="enable-disable-on";}}
+											 {{statuVal= "1";}}
+										{{ } else { }}
+											 {{statuStr="enable-disable-off";}}
+											 {{statuVal= "0";}}
+										{{ } }}
+								<a class="{{=statuStr}}" id="tf1_wifiEnable2point4Gh"></a>
+								<input type="hidden" name="wifiEnable2point4Gh" value="{{=statuVal}}" 
+								id="tf1_wifiEnable2point4GhValue">
+							</div>
+							<div class="break">
+								&nbsp;
+							</div>
+
+							<div class="configRow" id="tf1_wifi2point4Mode_div">
+								<label>{{=global_lang["wifi_popup"]["802.11_mode"] || '802.11 Mode' }}</label>
+								<!--
+								<p>Mixed 802.11 b/g/n</p>
+								-->
+								<select id="tf1_wifi2point4Mode" onchange="wifi_ModeSelect()" style="width:225px;">					
+									<option value="0"{{if(it["mode"] == 0) { }} selected {{}}}>{{=global_lang["wifi_popup"]["802.11 B only"]}}</option>
+									<option value="3"{{if(it["mode"] == 3) { }} selected {{}}}>{{=global_lang["wifi_popup"]["802.11 G only"]}}</option>
+									<option value="4"{{if(it["mode"] == 4) { }} selected {{}}}>{{=global_lang["wifi_popup"]["802.11 N only"]}}</option>
+									<option value="1"{{if(it["mode"] == 1) { }} selected {{}}}>{{=global_lang["wifi_popup"]["802.11 B/G mixed"]}}</option>
+									<option value="2"{{if(it["mode"] == 2) { }} selected {{}}}>{{=global_lang["wifi_popup"]["802.11 B/G/N mixed"]}}</option>
+								</select>								
+								
+								
+							</div>
+							<div class="break" id="break_wifi2point4Mode_div">
+								&nbsp;
+							</div>
+							<div class="configRow" id="tf1_wifi2point4ChannelWidth_div">
+								<label>{{=global_lang["wifi_popup"]["channel_width"] || 'Channel Width' }}</label>
+								<!--								
+								<p>Auto 20/40 Mhz</p>
+								-->
+								<select id="tf1_wifi2point4ChannelWidth" style="width:225px;">
+									<option value="0"{{if(it["channel_width"] == 0) { }} selected {{}}}>{{=global_lang["wifi_popup"]["HT20"] || 'HT20'}}</option>
+									<option value="2"{{if(it["channel_width"] == 2) { }} selected {{}}}>{{=global_lang["wifi_popup"]["HT40"] || 'HT40'}}</option>
+									<option value="1"{{if(it["channel_width"] == 1) { }} selected {{}}}>{{=global_lang["wifi_popup"]["HT20/40 Mixed"] || 'HT20/40 Mixed'}}</option>
+								</selecT>								
+							</div>
+							<div class="break" id="break_wifi2point4ChannelWidth_div">
+								&nbsp;
+							</div>
+							<div class="configRow" id="tf1_wifi2point4wifi_div">
+								<label>{{=global_lang["wifi_popup"]["wifi_channel"] || 'Wi-Fi Channel' }}</label>
+								<select id="tf1_wifi2point4wifi" onchange="wifi_ChannelSelect()" style="width:225px;">
+									<option value="0" {{ if (it.channel == 0){ }} selected {{}}}>{{=global_lang["wifi_popup"]["auto_channel"] || 'Auto Channel' }}</option>
+									<option value="1" {{ if (it.channel == 1){ }} selected {{}}}>1</option>
+									<option value="2" {{ if (it.channel == 2){ }} selected {{}}}>2</option>
+									<option value="3" {{ if (it.channel == 3){ }} selected {{}}}>3</option>
+									<option value="4" {{ if (it.channel == 4){ }} selected {{}}}>4</option>
+									<option value="5" {{ if (it.channel == 5){ }} selected {{}}}>5</option>
+									<option value="6" {{ if (it.channel == 6){ }} selected {{}}}>6</option>
+									<option value="7" {{ if (it.channel == 7){ }} selected {{}}}>7</option>
+									<option value="8" {{ if (it.channel == 8){ }} selected {{}}}>8</option>
+									<option value="9" {{ if (it.channel == 9){ }} selected {{}}}>9</option>
+									<option value="10" {{ if (it.channel == 10){ }} selected {{}}}>10</option>
+									<option value="11" {{ if (it.channel == 11){ }} selected {{}}}>11</option>
+									<option value="12" {{ if (it.channel == 12){ }} selected {{}}}>12</option>
+									<option value="13" {{ if (it.channel == 13){ }} selected {{}}}>13</option>
+									<!--<option value="14" {{ if (it.channel == 14){ }} selected {{}}}>14</option>
+									<option value="15" {{ if (it.channel == 15){ }} selected {{}}}>15</option>
+									<option value="16" {{ if (it.channel == 16){ }} selected {{}}}>16</option>-->
+								</select>
+							</div>
+							<div class="break" id="break_wifi2point4wifi_div">
+								&nbsp;
+							</div>
+
+						</form>
+						<div id="tf1_hdButtonBlock" style="display:none">
+							<input type="button" value='{{=global_lang["common"]["apply"] || "Apply" }}'  class="applySubmit" id="tf1_btnApply" onclick="wifi_statusDetailsValidate('tf1_frm_wifiStatusDetails')">
+							<input type="button" value='{{=global_lang["common"]["cancel"] || "Cancel" }}'  class="btnSubmit" id="btnClose" >
+						</div>
+						
+						</script> <!-- End Dot Template -->
+						 
+					</div>
+				</div>
+			</div>
+
+			<div id="tf1_btnBlock" class="submitRowPopup">
+				 
+			</div>
+		</div>
+	</div>
+	<div id="tf1_wifiWps">
+		<h4 data-localize="wifi_popup.wifi_wps">Wi-Fi WPS</h4>
+		<div id="tf1_tmpl_wifiwpsstatus_info"></div>
+		<script id="wifiwpsstatusinfoTemplate" type="text/x-dot-template">
+		<form name="frm_wifiStatusWpsDetails" id="tf1_frm_wifiWpsStatusDetails" >
+		   <div id="tf1_pbcSection"> <!-- Start PBC Section -->
+        	<div class="configRow">
+				<label style="width:150px">{{=global_lang["wifi_popup"]["pbc"] || 'PBC' }}</label>
+				<input type="button" id="tf1_wifiPbcStart" name="wifiEnableWps" value='{{=global_lang["wifi_popup"]["start_via_pbc"] || "Start Via PBC" }}' class="btnSubmit2" onclick="wifi_setPBC()">
+				<input type="button" id="tf1_wifi_pbcAbort" 
+				value='{{=global_lang["wifi_popup"]["abort_via_pbc"] || "abort_via_pbc" }}' class="btnSubmit2" onclick="wifi_abortPbc()" style="display:none">
+			</div>
+			<div class="break">&nbsp;</div>
+		   </div> <!-- End PBC Section -->
+			
+			<div id="tf1_pinSection"> <!-- Start Pin Section -->
+			<div class="configRow">
+ 			{{var statuStr,statuVal;}}
+        	<label style="width:150px">{{=global_lang["wifi_popup"]["use_pin_mode"] || 'Use PIN Mode' }}</label>
+					{{statuStr="enable-disable-off";}}
+        			{{  if(it.enablepinmode == "1") { }}
+             	         {{statuStr="enable-disable-on";}}
+                         {{statuVal="1";}}
+                    {{ } else { }}
+						 {{statuStr="enable-disable-off";}}
+                         {{statuVal="0";}}
+                    {{ } }}
+				<a  alt="" class="{{=statuStr}}" id="tf1_wifiEnablePin" style="margin-left: 5px;"></a>
+				<input type="hidden" name="pin" value="{{=statuVal}}" id="tf1_wifiEnablePinValue">
+			</div>
+			<div class="break" >&nbsp;</div>
+            <div id="tf1_pinBlock_div">
+            <div class="configRow">
+				<label style="width:150px">{{=global_lang["wifi_popup"]["pin"] || 'PIN' }}</label>
+				<input type="text" name="pin" value="{{=it.enrolleepin}}" id="tf1_enterPin" maxlength="8" style="width:100px; margin-left: 8px;"> 	
+				<input type="button" id="tf1_wifi_startPin" name="wifiEnableWps" value='{{=global_lang["wifi_popup"]["start_via_pin"] || "Start Via PIN" }}' class="btnSubmit2" onclick="wifi_startpin()">
+				<input type="button" id="tf1_wifi_abortPin" name="wifiEnableWps" value='{{=global_lang["wifi_popup"]["abort_via_pin"] || "Abort PIN" }}' class="btnSubmit2" onclick="wifi_abortPin()" style="display:none">
+			</div>
+			<div class="break">&nbsp;</div>
+			
+		   
+             <div class="configRow" >
+				<label class="wps_label" style="width:150px">&nbsp;</label>
+				<input type="button" id="tf1_wps_generate"  value='{{=global_lang["wifi_popup"]["gen_new"] || "Generate New" }}' class="btnSubmit2" id="tf1_generateNew" onclick="wifi_generatenew()" style="margin:2px">
+                <input type="button" id="tf1_wps_default" value='{{=global_lang["wifi_popup"]["use_default"] || "Use Default" }}' class="btnSubmit2" id="tf1_generateDefault" onclick="wifi_usedefault()" style="margin:2px" >
+			</div>
+			<div class="break">&nbsp;</div>
+            </div>
+			
+			</div> <!-- End Pin Section -->
+            <div class="configRow" id="tf1_wps_status_div">
+            <div class="barMeter barColor1"  style="width:98%">
+						<span style="width:0%" id="tf1_wps_statusMeter"></span>
+						<div class="usageDisplay">
+							 
+						</div>
+					</div>
+            </div>
+
+		</form>
+		</script>
+		<div id="tf1_hdButtonBlock" style="display:none">
+			<!--
+			<input type="button" value="Apply"  class="btnSubmit" id="tf1_btnApply" onclick="wifi_statusDetailsWpsValidate('tf1_frm_wifiWpsStatusDetails')">
+			<input type="button" value="Reset"  class="btnSubmit" id="tf1_btnReset"
+			onclick="wifi_statusDetailsWpsReset('tf1_frm_wifiWpsStatusDetails')"> -->
+		</div>
+
+	</div>
+
+</div>
+<!-- WiFi Details block ends -->
+
+<!-- WiFi Clients Starts -->
+<div id="tf1_wifiClients">
+	<form id="tf1_wifi2point4ClientsList" name="wifiSecurity2point4G">
+		<input type="hidden" name="thispage" id="thispage" value="controlPannel.html">
+		<h3 data-localize="wifi_popup.wifi_clients">Wi-Fi Clients</h3>
+		<div class="configForm">
+			<div class="configContent">
+				<h4 data-localize="wifi_popup.wifi_cliet_list">Wi-Fi 2.4 GHz Clients List</h4>
+				 
+ 						 <div id="tablewrapper">
+							<div id="tableheader">
+								<div class="search">
+									<select id="columns" onchange="sorter.search('query')" style="display:none;"></select>
+									<select id="pagedropdown" style="display:none;"></select>
+									<input type="text" placeholder="search"  data-localize="common.search" id="query" onkeyup="sorter.search('query')" onKeypress="if (event.keyCode == 13) { return false; }"/>
+									<span class="details">
+										<div>
+											<span data-localize="common.records">Records</span>: <span id="totalrecords"></span>&nbsp;&nbsp;<span data-localize="common.showing"> of </span>&nbsp;<span id="startrecord"></span>-<span id="endrecord"></span> 
+										</div> </span>
+									<div id="tablelocation">
+										<div>
+											<select onchange="sorter.size(this.value)" class="one mac_one">
+												<option value="5">5</option>
+                                                <!--<option value="1">1</option>-->
+												<option value="10" selected="selected">10</option>
+												<!--<option value="20">20</option>-->
+												<!--<option value="All" data-localize="application_popup.all">All</option>-->
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<script id="wifi_ClientTemplate" type="text/x-dot-template">     
+							{{~ it :value:index}} 
+							{{ if (value.mac != '' ) { }}
+            	               <tr>
+                                    <td>{{=value.hname}} </td> 
+                                    <td>{{=value.ip}}</td> 
+									<td>{{=value.mac}}</td> 
+                                    <td>
+                                    <a  id="tf1_mac{{=index}}" class="enable-disable-on" ></a>
+				                        <input type="hidden" value="1" mac="{{=value.mac}}" name="Compatibility" class="clientsList"></td> 
+                                </tr>
+                            {{ } }}
+                             {{~}}         
+                    
+                            </script>
+							<table cellpadding="0" cellspacing="0" border="0" id="tf1_wifi2gClientTbl" class="tinytable">
+								<thead>
+									<tr>
+										<th><h6 data-localize="wifi_popup.host_name">Host Name</h6></th>
+										<th><h6 data-localize="wifi_popup.ip_addr">IP Address</h6></th>
+										<th><h6 data-localize="wifi_popup.mac_addr">Mac Address</h6></th>
+										<th><h6 data-localize="wifi_popup.access">Access</h6></th>
+									</tr>
+								</thead>
+								<tbody id="tf1_wifiClientsTblbody"></tbody>
+							</table>
+							<div id="tablefooter">
+								<div id="tablenav">
+									<div>
+										<img src="images/first.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1,true)" />
+										<img src="images/previous.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1)" />
+										<img src="images/next.gif" width="16" height="16" alt="First Page" onclick="sorter.move(1)" />
+										<img src="images/last.gif" width="16" height="16" alt="Last Page" onclick="sorter.move(1,true)" />
+									</div>
+									<div class="pageCount">
+										<span data-localize="common.pages">Pages</span>&nbsp;
+                                        <span id="totalpages"></span>&nbsp;
+                                        <span data-localize="common.current_page"> of </span>&nbsp;
+										<span id="currentpage"></span>  
+									</div>
+								</div>
+							</div>
+
+						</div>
+                
+                
+			</div>
+			
+			 
+		</div>
+			<div class="submitRowPopup" id="tf1_wifi_client_btns">
+				<input type="button" data-localize="common.apply" id="tf1_btnApply" value="Apply"  class="btnSubmit apply" onclick="wifi_2point4ClientsListValidate('tf1_wifi2point4ClientsList')" >
+						<input type="button" data-localize="common.cancel" value="Cancel"  class="btnSubmit cancel" id="btnClose"  >
+				</div>
+	</form>
+</div>
+
+<!-- WiFi Clients ends -->
+
+ 
+<!-- Wi-Fi Security Settings starts here -->
+<div id="tf1_wifiSecuritySettings">
+	<div id="tf1_tmpl_wifisecurity_info"></div>
+	<script id="wifisecurityinfoTemplate" type="text/x-dot-template">    
+	<form id="tf1_frm_wifiSecurity2point4G" name="wifiSecurity2point4G">
+		<input type="hidden" name="thispage" id="thispage" value="controlPannel.html">
+		<h3>{{=global_lang["wifi_popup"]["wifi_sec_settings"] || 'Wi-Fi Security Settings' }}</h3>
+		<div class="configForm">
+			<div class="configContent">
+				<h4>{{=global_lang["wifi_popup"]["wifi_ssid"] || 'Wi-Fi 2.4 GHz SSID' }}</h4>
+				<div class="roundedBox">
+ 						<div id="tf1_wifi2point4g">
+						<div class="configRow" id="tf1_ssidWi-Fi2point4g_div">
+							<label>{{=global_lang["wifi_popup"]["ssid_2point4"] || 'SSID For Wi-Fi 2.4 GHz' }}</label>
+							<input type="text" id="tf1_ssidWi-Fi2point4g" value="{{=it.SSID}}" maxlength="32" />
+						</div>
+						<div class="break" id="break_ssidWi-Fi2point4g_div">
+							&nbsp;
+						</div>
+						<div class="configRow" id="tf1_ssidVisibility_div">
+							{{var statuStr,statuVal;}}
+							<label>{{=global_lang["wifi_popup"]["ssid_visibility"] || 'SSID Visibility' }}</label>
+							{{  if(it.broadcastSSID == "1") { }}
+								 {{statuStr="enable-disable-off";}}
+								 {{statuVal="1";}}
+							{{ } else { }}
+								 {{statuStr="enable-disable-on";}}
+								 {{statuVal="0";}}
+							{{ } }}
+							<a id="tf1_ssidVisibility" class="{{=statuStr}}" alt=""></a>
+							<input type="hidden" value="{{=statuVal}}" name="" id="tf1_ssidVisibilityValue">
+						</div>
+						<div class="break" id="break_ssidVisibility_div">
+							&nbsp;
+						</div>
+						<div class="configRow" id="tf1_maxClientnum_div">
+							<label>{{=global_lang["wifi_popup"]["max_client_num"] || 'Max Client Number' }}</label>
+							<select id="tf1_maxClientnum" name="max_sta" onchange="tf1_maxClientnum_suggest();" style="width:206px;">	
+								<option value="1" {{ if (it.max_sta == "1"){ }} selected {{}}}>1</option>
+                                <option value="2" {{ if (it.max_sta == "2"){ }} selected {{}}}>2</option>
+                                <option value="3" {{ if (it.max_sta == "3"){ }} selected {{}}}>3</option>
+                                <option value="4" {{ if (it.max_sta == "4"){ }} selected {{}}}>4</option>
+                                <option value="5" {{ if (it.max_sta == "5"){ }} selected {{}}}>5</option>
+                                <option value="6" {{ if (it.max_sta == "6"){ }} selected {{}}}>6</option>
+                                <option value="7" {{ if (it.max_sta == "7"){ }} selected {{}}}>7</option>
+								<option value="8" {{ if (it.max_sta == "8"){ }} selected {{}}}>8</option>
+								<option value="9" {{ if (it.max_sta == "9"){ }} selected {{}}}>9</option>
+								<option value="10" {{ if (it.max_sta == "10"){ }} selected {{}}}>10</option>
+								<option value="16" {{ if (it.max_sta == "16"){ }} selected {{}}}>16</option>
+								<option value="20" {{ if (it.max_sta == "20"){ }} selected {{}}}>20</option>
+								<option value="25" {{ if (it.max_sta == "25"){ }} selected {{}}}>25</option>
+								<option value="30" {{ if (it.max_sta == "30"){ }} selected {{}}}>30</option>
+								<option value="32" {{ if (it.max_sta == "32"){ }} selected {{}}}>32</option>
+							</select>
+							<!--
+							<input type="text" id="tf1_maxClientnum" value="8" onkeypress="return numericValueCheck (event)"/>
+							-->
+						</div>
+						<div class="break" id="break_maxClientnum_div">
+							&nbsp;
+						</div>
+
+						<div class="configRow" id="tf1_protction_div">
+							<label>{{=global_lang["wifi_popup"]["protection"] || 'Protection' }}</label>
+							<select size="1" id="tf1_protection" onchange="wifi_SecurityprotectionSelect()">
+								<option value="0" {{ if (it.protection == 0){ }} selected {{}}}>{{=global_lang["wifi_popup"]["no_protection"] || 'No Protection' }}</option>								
+								<option value="2" {{ if (it.protection == 2){ }} selected {{}}}>{{=global_lang["wifi_popup"]["basic_protection"] || 'Basic Protection' }}</option>
+								<option value="3" {{ if (it.protection == 3){ }} selected {{}}}>{{=global_lang["wifi_popup"]["advanced_protection"] || 'Advanced Protection' }} </option>
+							</select>
+						</div>
+						<div class="break" id="break_protction_div">
+							&nbsp;
+						</div>
+						
+						
+						<div class="configRow" id="tf1_authenticationType_div">
+							<label>{{=global_lang["wifi_popup"]["auth_type"] || 'Authentication Type' }}</label>
+							<!---<select data-label="droplist" id="tf1_authenticationType">
+								<option value="Open" selected="">{{=global_lang["wifi_popup"]["open"] || 'Open' }}</option>
+								<option value="Shared">{{=global_lang["wifi_popup"]["shared"] || 'Shared' }}</option>
+							</select> -->
+							<p>{{=global_lang["wifi_popup"]["shared"] || 'Shared' }}</p>
+							<!--<p>{{=global_lang["wifi_popup"]["auto"] || 'Auto' }}</p>-->
+						</div>
+						<div class="break"  id="break_authenticationType_div">
+							&nbsp;
+						</div>
+						
+						
+						<div class="configRow" id="tf1_wpaMode_div">
+							<label>{{=global_lang["wifi_popup"]["wpa_mode"] || 'WPA Mode' }}</label>
+							<select  id="tf1_wpaMode" onchange="wifi_changeWpaMode()">
+								<option value="Auto" {{if(it.wpaMode == "Auto"){ }} selected {{}}}>{{=global_lang["wifi_popup"]["auto_wpa_wpa2"] || 'Auto (WPA2 or WPA)' }}</option>
+								<option value="WPA2" {{ if(it.wpaMode == "WPA2"){ }} selected {{}}}>{{=global_lang["wifi_popup"]["wpa2"] || 'WPA2' }}</option>
+								<!-- <option value="WPA" {{ if(it.wpaMode == "WPA"){ }} selected {{}}}>{{=global_lang["wifi_popup"]["wpa"] || 'WPA' }}</option> -->
+							</select>
+						</div>
+						<div class="break" id="break_wpaMode_div">
+							&nbsp;
+						</div>
+
+						<div class="configRow" id="tf1_cipherType_div">
+							<label>{{=global_lang["wifi_popup"]["cipher_type"] || 'Cipher Type' }} </label>
+							<input type="hidden" id="tf1_hid_cipherType" value="{{=it.cipherType}}">
+							<select id="tf1_cipherType">
+								<option value="Auto" {{if(it.cipherType == "Auto"){ }} selected {{}}}>{{=global_lang["wifi_popup"]["aes_tkip"] || 'AES / TKIP' }}</option>
+								<option value="AES" {{if(it.cipherType == "AES"){ }} selected {{}}}>{{=global_lang["wifi_popup"]["aes"] || 'AES' }}</option>
+								<!--
+								<option value="TKIP" {{if(it.cipherType == "TKIP"){ }} selected {{}}}>{{=global_lang["wifi_popup"]["tkip"] || 'TKIP' }}</option> -->
+							</select>
+						</div>
+						<div class="break" id="break_cipherType_div">
+							&nbsp;
+						</div>
+						<div class="configRow" id="tf1_preSharedkey_div">
+							<label>{{=global_lang["wifi_popup"]["pre_shared_key"] || 'Pre-Shared Key' }}</label>
+							<input type="password" id="tf1_preSharedkey" maxlength="64" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf2_preSharedkey').value=this.value" onblur="document.getElementById('tf2_preSharedkey').value=this.value" value="{{=it.passphrase}}"/>
+							<input type="text" id="tf2_preSharedkey" maxlength="64" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf1_preSharedkey').value=this.value" onblur="document.getElementById('tf1_preSharedkey').value=this.value" value="{{=it.passphrase}}" style="display:none;"/>
+							<input id="tf1_wpa2_generate" class="btnSubmit2" type="button" onclick="wpa2_key_get()" value='{{=global_lang["setup_wizard"]["new_key"] || "New Key" }}' style="padding-left:2px !important;padding-right:2px !important;">
+						<label>&nbsp;</label>
+							<p><input type="checkbox" onclick="showKey(this)"> {{=global_lang["common"]["show_char"] || 'Show Characters' }}</p>
+                        
+						</div>
+						<div class="break" id="break_preSharedkey_div">
+							&nbsp;
+						</div>
+						<div class="configRow" id="tf1_key_div">
+							<label>{{=global_lang["wifi_popup"]["wep_passphrase"] || 'WEP Passphrase' }}</label>
+							<input type="text"   id="tf1_key" style="width: 160px;" maxlength="32" />
+							<input type="button" value='{{=global_lang["wifi_popup"]["generate"] || "Generate" }}' class="btnSubmit2" onclick="generateWepKeys()" />
+						</div>
+						<div class="break" id="break_key_div">
+							&nbsp;
+						</div>
+						<div class="configRow" id="tf1_keyTable_div">
+
+							<table cellpadding="0" cellspacing="0" border="0" class="tinytable">
+								<thead>
+									<tr>
+									<th><h6>{{=global_lang["wifi_popup"]["default_key"] || 'Default Key'}}
+</h6></th>
+									<th><h6>{{=global_lang["wifi_popup"]["key_type"] || 'Key Type'}}</h6></th>
+									<th><h6>{{=global_lang["wifi_popup"]["key_no"] || 'Key No'}}</h6></th>
+									<th><h6>{{=global_lang["wifi_popup"]["generate_keys"] || 'Generated Keys'}}</h6></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+									{{var keyTypeStr;}}
+										{{  if(it.wepKey.length == 10 ) { }}
+											 {{keyTypeStr="enable-disable2-on";}}									
+										{{ } else { }}
+											 {{keyTypeStr="enable-disable2-off";}}					  
+								   		{{ } }}
+										<td>
+										<input type="radio" value="0" name="rdbWepKey" {{ if (it.wepKeyIndex == "0" || it.wepKeyIndex == "") { }} checked {{ } }} id="tf1_rdbWepKey0">
+										</td>
+										
+										<td>
+										{{ if (it.wepKeyIndex == "0" && it.wepKey.length == 10) { }}
+											<a id="tf1_toggle_keyType0" alt="" class="enable-disable2-on" onclick="wifi_keyTypeChange()"></a>
+									  	{{ }else{ }}
+									  		<a id="tf1_toggle_keyType0" alt="" class="enable-disable2-off" onclick="wifi_keyTypeChange()"></a>
+									  	{{ } }}
+										<input type="hidden" value="0" name="" >
+										</td>
+										<td>{{=global_lang["wifi_popup"]["key1"] || 'Key 1'}}</td>
+										<td>
+										<input type="text" class="textbox"  readonly="readonly" id="tf1_txtWepKey0" 
+										
+										{{ if (it.wepKeyIndex == "0") { }} value="{{=it.wepKey}}" {{ } }}
+										
+										 disabled="disabled" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+										<input type="radio" value="1" name="rdbWepKey" id="tf1_rdbWepKey1" {{ if (it.wepKeyIndex == "1") { }} checked {{ } }}>
+										</td>
+										<td>
+										{{ if (it.wepKeyIndex == "1" && it.wepKey.length > 10) { }}
+											<a id="tf1_toggle_keyType1" alt="" class="enable-disable2-off" onclick="wifi_keyTypeChange()"></a>
+									  	{{ }else{ }}
+									  		<a id="tf1_toggle_keyType1" alt="" class="enable-disable2-on" onclick="wifi_keyTypeChange()"></a>
+									  	{{ } }}																				
+										<input type="hidden" value="0" name="" >
+										</td>
+										<td>{{=global_lang["wifi_popup"]["key2"] || 'Key 2'}}</td>
+										<td>
+										<input type="text" class="textbox" id="tf1_txtWepKey1" {{ if (it.wepKeyIndex == "1") { }} value="{{=it.wepKey}}" {{ } }} readonly="readonly" disabled="disabled"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+										<input type="radio" value="2" name="rdbWepKey" id="tf1_rdbWepKey2" {{ if (it.wepKeyIndex == "2") { }} checked {{ } }}>
+										</td>
+										<td>
+										{{ if (it.wepKeyIndex == "2" && it.wepKey.length == 10) { }}
+											<a id="tf1_toggle_keyType2" alt="" class="enable-disable2-on" onclick="wifi_keyTypeChange()"></a>
+									  	{{ }else{ }}
+									  		<a id="tf1_toggle_keyType2" alt="" class="enable-disable2-off" onclick="wifi_keyTypeChange()"></a>
+									  	{{ } }}																					
+										<input type="hidden" value="0" name="" >
+										</td>
+										<td>{{=global_lang["wifi_popup"]["key3"] || 'Key 3'}}</td>
+										<td>
+										<input type="text" class="textbox" id="tf1_txtWepKey2" {{ if (it.wepKeyIndex == "2") { }} value="{{=it.wepKey}}" {{ } }}  readonly="readonly" disabled="disabled"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+										<input type="radio" value="3" name="rdbWepKey" id="tf1_rdbWepKey3" {{ if (it.wepKeyIndex == "3") { }} checked {{ } }}>
+										</td>
+										<td>
+										{{ if (it.wepKeyIndex == "3" && it.wepKey.length == 10) { }}
+											<a id="tf1_toggle_keyType3" alt="" class="enable-disable2-on" onclick="wifi_keyTypeChange()"></a>
+									  	{{ }else{ }}
+									  		<a id="tf1_toggle_keyType3" alt="" class="enable-disable2-off" onclick="wifi_keyTypeChange()"></a>
+									  	{{ } }}																					
+										<input type="hidden" value="0" name="">
+										</td>
+										<td>{{=global_lang["wifi_popup"]["key4"] || 'Key 4'}}</td>
+										<td>
+										<input type="text" class="textbox" id="tf1_txtWepKey3" {{ if (it.wepKeyIndex == "3") { }} value="{{=it.wepKey}}" {{ } }} readonly="readonly" disabled="disabled"/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+				</div>
+			</div>
+			</div>
+		</div>
+				<div class="submitRowPopup">
+					<input type="button" value='{{=global_lang["common"]["apply"] || "Apply" }}'  class="btnSubmit" onclick="wifi_Security2point4Validate('tf1_frm_wifiSecurity2point4G')">
+					<input type="button" value='{{=global_lang["common"]["cancel"] || "Cancel" }}'  class="btnSubmit" id="btnClose" >
+				</div>
+	</form>
+	</script>
+</div>	 
+<!-- Wi-Fi Security Settings Ends here -->
+<!-- MAC Filter starts here -->
+<div id="tf1_macFilter">
+	<form name="" id="tf1_frm_wifiMacFilter" action="cgi-action.html" method="post">
+		<input type="hidden" name="thispage" id="thispage" value="controlPannel.html">
+		<h3 data-localize="wifi_popup.mac_filter_settings">MAC Filter Settings</h3>
+
+		<!-- MAC Filter For Whitelist data Starts -->
+		<div class="configTableForm" id="tf1_wifiMacFilterForm" style="display:none">
+			<div class="configContent">
+				<h4 id="tf1_h4NewMac" data-localize="common.add_new">Add New</h4>
+
+				<div class="roundedBox">
+					<div class="innerClose">
+						<a class="close2" href="#" onclick="wifi_formClose(event)" title="Close"></a>
+					</div>
+
+					<div class="configRow">
+						<label data-localize="wifi_popup.mac_addr">MAC Address</label>
+						<input type="text" id="tf1_macAddress" onkeydown="return macAddrVerify (event, this, true, '', '')" onkeypress="return numericValueCheck (event, 'ABCDEFabcdef:')" maxlength="17">
+					</div>                    
+					<div class="break">
+						&nbsp;
+					</div>
+					 
+
+				</div>
+			</div>
+			<div class="submitRowPopup">
+			  <input type="button" value="Apply" id="tf1_btn_macFilterAdd"  class="btnSubmit" onclick='wifi_macFilter()' data-localize="common.apply">
+			  <input type="button" value="Cancel"  class="btnSubmit" onclick="wifi_formClose(event)" data-localize="common.cancel">
+			</div>
+		</div>
+		<!-- MAC Filter For Whitelist data ends-->
+		<div class="configForm">
+			<div id="tf1_macTemplate"></div>
+			<script id="tf1_script_macTemplate" type="text/x-dot-template">
+			<div class="configContent">				
+				<h4>{{=global_lang["wifi_popup"]["mac_filter_2point4"] || 'MAC Filter For Wi-Fi 2.4 GHz' }}  </h4>
+				<div class="roundedBox">
+
+					<div class="configRow">
+						<label>{{=global_lang["wifi_popup"]["mac_filter"] || 'MAC Filter' }}</label>
+						
+										{{  if(it.mode == "2") { }}
+											 {{statuStr="enable-disable-on";}}
+											 {{statuVal= "1";}}
+										{{ } else { }}
+											 {{statuStr="enable-disable-off";}}
+											 {{statuVal= "0";}}
+										{{ } }}
+								<a onclick="hideorshowMacFilterBlock()" class="{{=statuStr}}" id="tf1_macFilterMode"></a>
+								<input type="hidden" name="wifiEnable2point4Gh" value="{{=statuVal}}" 
+								id="tf1_hid_macFilterMode">
+						 <!---	
+						 <select id="tf1_macFilterMode">
+						 	<option value="0" {{ if (it.mode == "0"){ }} selected {{}}}>Disabled</option>
+						 	<option value="1" {{ if (it.mode == "1"){ }} selected {{}}}>Allow (White List Only)</option> 
+						 	<option value="2" {{ if (it.mode == "2"){ }} selected {{}}}>Deny (Black List Only)</option>
+						 </select> --->
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+
+					<div id="tf1_MacFilterBlock_div" >
+
+						<h4>{{=global_lang["wifi_popup"]["mac_filter_black_list"] || 'MAC Filter For Black List' }}</h4>
+						 
+						<div id="tablewrapper">
+							<div id="tableheader">
+								<div class="search">
+									<select id="columns" onchange="sorter.search('query')" style="display:none;"></select>
+									<select id="pagedropdown" style="display:none;"></select>
+									<input type="text" placeholder='{{=global_lang["common"]["search"] ||"search" }}'  id="query" onkeyup="sorter.search('query')" onKeypress="if (event.keyCode == 13) { return false; }"/>
+									<span class="details">
+										<div>
+											{{=global_lang["common"]["records"] ||'Records' }}:
+											&nbsp;<span id="totalrecords"></span>&nbsp;&nbsp;
+											{{=global_lang["common"]["showing"] ||'Showing' }}&nbsp;
+											<span id="startrecord"></span>-<span id="endrecord"></span>
+										</div> </span>
+									<div id="tablelocation">
+										<div>
+											<select onchange="sorter.size(this.value)" class="one">
+												<!--<option value="5">5</option>-->
+												<option value="10" selected="selected">10</option>
+												<!--<option value="20">20</option>-->
+												<!--<option value="All">{{=global_lang["application_popup"]["all"] || 'All' }}</option>-->
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							 
+							<table cellpadding="0" cellspacing="0" border="0" id="tf1_wifiMacBlackFilterTbl" class="tinytable">
+								<thead>
+									<tr>
+										<th><h6>{{=global_lang["wifi_popup"]["mac_id"] || 'ID' }}</h6></th>
+										<th><h6>{{=global_lang["wifi_popup"]["mac_delete"] || 'Delete' }}</h6></th>
+										<th><h6>{{=global_lang["wifi_popup"]["mac_addr"] || 'Mac Address' }}</h6></th>
+										 
+									</tr>
+								</thead>
+								 <tbody>		
+								{{~it.blackList :value:index}}							 
+
+
+									<tr class="blackMac" >
+										<td>{{=index+1}}</td>
+										<td>
+										<input type="checkbox" chk-id="{{=it.blackListKeys[index]}}" class="chkBlack"  />
+										</td>
+										<td>{{=value}}</td>
+										 
+									</tr>
+									 				    
+								{{~}}
+													 
+								</tbody>								 
+							</table>
+							 <input type="hidden" value="{{=it.blackListKeys[index]}}" id="tf1_nextMacId"  />
+							<div id="tablefooter">
+								<div id="tablenav" style="display:none;">
+									<div>
+										<img src="images/first.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1,true)" />
+										<img src="images/previous.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1)" />
+										<img src="images/next.gif" width="16" height="16" alt="First Page" onclick="sorter.move(1)" />
+										<img src="images/last.gif" width="16" height="16" alt="Last Page" onclick="sorter.move(1,true)" />
+									</div>
+									<div class="pageCount">
+										<span data-localize="common.pages">
+											{{=global_lang["common"]["pages"] ||'Pages' }}
+										</span>&nbsp;
+										<span id="totalpages"></span>&nbsp;
+										<span data-localize="common.of">
+											{{=global_lang["common"]["current_page"] ||'Current Page' }}
+										</span>&nbsp;
+										<span id="currentpage"></span>
+									</div>
+								</div>
+							</div>
+							<div class="break">
+								&nbsp;
+							</div>
+							<div>
+								<a href="#" class="btnSubmit" onclick="wifi_addMacFilterForm(event)">+ {{=global_lang["wifi_popup"]["new_filter"] || 'Add New' }}</a>
+							</div>
+							<div class="break">
+								&nbsp;
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+			</div>
+			<div class="submitRowPopup">
+				<input type="button" id="tf1_btn_macFilter" 
+				value='{{=global_lang["common"]["apply"] || "Apply" }}'  class="btnSubmit" onclick="wifi_macFilterValidate('tf1_frm_wifiMacFilter')">
+				<input type="button" value='{{=global_lang["common"]["cancel"] || "Cancel" }}'  class="btnSubmit" id="btnClose" >
+				<span id="tf1_showPleaseWait" style="margin-left:10px; line-height:30px; display:none;">                     
+                     {{=global_lang['common']['please_wait']}}            
+                    
+                    </span>
+				<div class="tableDetails" id="tf1_currentFilterCounter">
+					{{=global_lang["wifi_popup"]["cur_black_list"] || 'Current Black List' }} ( <span id="tf1_macCount">{{=index+1}}</span> / <span id="tf1_macCountMax">10</span> )
+				</div>
+			</div>
+		    </script>	 
+		</div>
+	</form>
+</div>
+<!-- MAC Filter Ends here -->

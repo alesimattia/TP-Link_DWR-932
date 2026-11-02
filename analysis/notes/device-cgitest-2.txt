@@ -1,0 +1,55 @@
+== autenticazione e anti-CSRF
+OK   senza REMOTE_USER -> 401
+OK   GET autenticato mostra la sezione repeater
+OK   form con token anti-CSRF
+OK   POST senza token -> 403
+OK   POST con token errato -> 403
+OK   POST con Origin estraneo -> 403
+== potenza TX
+OK   power=100 applicata
+OK   power=33 rifiutata
+== validazione input
+OK   SSID non esadecimale rifiutato
+OK   SSID di 33 byte rifiutato
+OK   password di 4 caratteri rifiutata
+OK   password con byte 0x7f rifiutata
+OK   password con a capo rifiutata
+OK   esadecimale di lunghezza dispari rifiutato
+OK   azione sconosciuta rifiutata
+OK   id non numerico rifiutato
+OK   id inesistente rifiutato
+OK   nessuna rete creata dagli input rifiutati
+== aggiunta reti a caldo
+OK   STA connessa prima delle aggiunte
+OK   rete aperta salvata come riserva
+OK   connessione attuale non interrotta dall'aggiunta
+OK   TEST-CGI in list_networks (id 1)
+OK   TEST-CGI key_mgmt=NONE
+OK   TEST-CGI salvata nel file
+OK   rete WPA salvata come riserva
+OK   TEST-CGI-WPA key_mgmt=WPA-PSK
+OK   password con spazi, virgolette, % e \ scritta esattamente
+OK   rete con SSID ostile salvata
+OK   SSID ostile mostrato con escape HTML
+OK   nessun tag dall'SSID nella pagina
+OK   reti salvate elencate
+== eliminazione reti di prova
+OK   eliminata TEST-CGI-WPA
+OK   eliminata TEST-CGI
+OK   eliminata rete con SSID ostile
+OK   numero di reti tornato a 1
+OK   nessuna rete di prova nel file
+OK   connessione a monte ancora attiva
+== Connetti (priorità alla rete scelta)
+OK   Connetti su H3140
+OK   di nuovo connessa a H3140 dopo Connetti
+OK   H3140 priority=10
+== ricerca reti
+OK   sezione reti disponibili
+OK   H3140 trovata con pulsante Usa
+== lighttpd: autenticazione via HTTPS su loopback
+OK   custom.cgi senza credenziali -> 401
+OK   custom.cgi con password errata -> 401
+OK   web UI originale / -> 200
+OK   web UI originale /index.html senza richiesta Basic -> 302
+RISULTATO: 46 OK, 0 FAIL

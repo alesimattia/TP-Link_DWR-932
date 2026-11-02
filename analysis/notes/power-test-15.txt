@@ -1,0 +1,25 @@
+-- prima (powerpercent attuale)
+wlan0     get_mib:100  
+reg e00: wlan0 read_reg:39 39 39 39 
+reg e04: wlan0 read_reg:39 39 39 39 
+reg e08: wlan0 read_reg:3 144 33 48 
+reg e10: wlan0 read_reg:37 37 37 37 
+reg e14: wlan0 read_reg:37 37 37 37 
+reg 830: wlan0 read_reg:40 40 40 40 
+reg 834: wlan0 read_reg:40 40 40 40 
+reg 838: wlan0 read_reg:35 35 35 48 
+reg 86c: wlan0 read_reg:33 33 33 35 
+rf_pwr: wlan0 rf_pwr:[FAIL] No sign to know to add or subtract
+txpwr_apply: 
+-- dopo set_mib powerpercent=15 + txpwr_apply
+wlan0     get_mib:15  
+reg e00: wlan0 read_reg:23 23 23 23 
+reg e04: wlan0 read_reg:23 23 23 23 
+reg e08: wlan0 read_reg:3 144 17 48 
+reg e10: wlan0 read_reg:21 21 21 21 
+reg e14: wlan0 read_reg:21 21 21 21 
+reg 830: wlan0 read_reg:24 24 24 24 
+reg 834: wlan0 read_reg:24 24 24 24 
+reg 838: wlan0 read_reg:19 19 19 48 
+reg 86c: wlan0 read_reg:17 17 17 19 
+rf_pwr: wlan0 rf_pwr:[FAIL] No sign to know to add or subtract

@@ -1,0 +1,541 @@
+<!-- Wizard Setup popup starts here -->
+<div id="tf1_statusWizard">
+	<div id="tf1_tmpl_cpwizard"></div>
+	<script id="cp_wizardTemplate" type="text/x-dot-template">
+	<form name="" id="tf1_frm_setupwizard" action="" method="post">
+		<input type="hidden" name="thispage" id="thispage" value="controlPanel.html">
+		<ul class="wizardMenu">
+			<li id="list1">
+				<div class="one stepParent">
+					<div class="two stepChild">
+						<p>
+							<b>1</b><span>{{=global_lang["setup_wizard"]["setup_cn_settings"] || 'Connection
+								<br />
+								Settings' }}</span>
+						</p>
+					</div>
+				</div>
+			</li>
+
+			<li id="list2">
+				<div class="stepParent">
+					<div class="stepChild">
+						<p>
+							<b>2</b><span>{{=global_lang["wifi_popup"]["wizard_status_left_tab"] || 'Wi-Fi
+								<br />
+								Settings' }}</span>
+						</p>
+					</div>
+				</div>
+			</li>
+			<li id="list3">
+				<div class="stepParent">
+					<div class="stepChild">
+						<p>
+							<b>3</b><span>{{=global_lang["system_popup"]["admin_left_tab"] || 'Admin
+								<br />
+								Settings' }}</span>
+						</p>
+					</div>
+				</div>
+			</li>
+			<li id="list4">
+				<div class="stepParent">
+					<div class="stepChild">
+						<p>
+							<b>4</b><span>{{=global_lang["setup_wizard"]["apply_settings"] || 'Apply
+								<br />
+								Settings' }}</span>
+						</p>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<!-- Screen One --->
+		<div class="wizardFormStarts screen" id="tf1_ConnectionScreen">
+			 <div class="setupConfig">
+				<h4>{{=global_lang["setup_wizard"]["apn_for_LTE"] || 'APN For LTE/3G' }}</h4>
+				<div class="configRow">
+					<label>{{=global_lang["internet_popup"]["apnselemode"] || 'APN Selection Mode' }}</label>
+					<select  name="apnMode" id="tf1_setup_apnMode" onchange="setup_apnModeChange()" >
+						<option selected value="0" {{ if(it["apn"]["apn"]["APN_0"]["type"] == 0) { }} selected {{ } }}>{{=global_lang["internet_popup"]["apn_auto"] || 'Auto' }}</option>
+						<option value="1" {{ if(it["apn"]["apn"]["APN_0"]["type"] == 1) { }} selected {{ } }}>{{=global_lang["internet_popup"]["apn_manual"] || 'Manual' }}</option>
+					</select>
+				</div>
+				<div class="break">
+					&nbsp;
+				</div>
+
+				<div class="configRow">
+					{{var statuStr,statuVal;}}
+					<label>{{=global_lang["internet_popup"]["dataroaming"] || 'Allow Data Roaming' }}</label>
+					{{if(it["apn"]["apn"]["COMMON"]["roaming_conx"] == "1") { }}
+						 {{statuStr="enable-disable-on";}}
+						 {{statuVal="1";}}
+                    {{ } else { }}
+						 {{statuStr="enable-disable-off";}}
+						 {{statuVal="0";}}
+					{{ } }}
+					<a alt="" class="{{=statuStr}}" id=""></a>
+					<input type="hidden" value="{{=statuVal}}" name="" id="tf1_allowroaming_cpwizard">
+				</div>
+				<div class="break">
+					&nbsp;
+				</div>
+				<div class="configRow" id="tf1_setup_apnAuto_div">
+					<label>{{=global_lang["internet_popup"]["apn"] || 'APN' }}</label>
+					<select id="tf1_setup_apnAuto" onchange="setup_AutoApnChange()">
+						{{ var apnRecords = it["apn"]["apn_list"]["multi_apn0"];}}
+							{{ for (var item in apnRecords) { }}
+							  	{{ if (apnRecords[item].apn != "" && apnRecords[item].apn) { }}				
+								<option  {{ if ( apnRecords[item].apn.toLowerCase() == it["apn"]["apn"]["APN_0"]["apn"].toLowerCase() ) {}} selected {{ } }}value="{{=apnRecords[item].apn}}">{{=apnRecords[item].apn}}</option>
+								{{ } }}
+							{{ } }}
+						</select>
+				</div>
+				<div class="break" id="break_setup_apnAuto_div">
+					&nbsp;
+				</div>
+				<div class="configRow" id="tf1_setup_apnManual_div">
+					<label>{{=global_lang["internet_popup"]["apn"] || 'APN' }}</label>
+					<input type="text" name="apn" id="tf1_setup_apnManual" maxlength="32" value="{{! it["apn"]["apn"]["APN_0"]["apn"] || "" }}">
+				</div>
+				<div class="break" id="break_setup_apnManual_div">
+					&nbsp;
+				</div>
+				<div class="configRow">
+					<label>{{=global_lang["internet_popup"]["apn_uname"] || 'User Name' }}</label>
+					<input type="text"  name="userName" id="tf1_setup_userName" maxlength="32" value='{{! it["apn"]["apn"]["APN_0"]["uname"] || "" }}'>
+				</div>
+				<div class="break">
+					&nbsp;
+				</div>
+				<div class="configRow" >
+					<label>{{=global_lang["internet_popup"]["apn_pwd"] || 'Password' }}</label>
+					<input type="password" name="Password" id="tf1_setup_Password" maxlength="32"  value='{{! it["apn"]["apn"]["APN_0"]["passwd"] || "" }}'>
+				</div>
+				<div class="break">
+					&nbsp;
+				</div>
+				
+				 <div class="configRow" id="tf1_apnMethod_div">
+						<label>{{=global_lang["internet_popup"]["apn_method"] || 'APN Method' }}</label>
+						<select size="1" id="tf1_apnAuth" >
+						<option {{ if (it["apn"]["apn"]["APN_0"]["auth"] == "3"){ }} selected {{}}} value="3">{{=global_lang["internet_popup"]["pap&chap"] || 'Auto (PAP & CHAP)' }}</option>                        
+							<option {{ if (it["apn"]["apn"]["APN_0"]["auth"] == "1"){ }} selected {{}}} value="1">{{=global_lang["internet_popup"]["pap"] || 'PAP' }}</option>
+							<option {{ if (it["apn"]["apn"]["APN_0"]["auth"] == "2"){ }} selected {{}}} value="2">{{=global_lang["internet_popup"]["chap"] || 'CHAP' }}</option>
+							<option {{ if (it["apn"]["apn"]["APN_0"]["auth"] == "0"){ }} selected {{}}} value="0">{{=global_lang["internet_popup"]["None"] || 'None' }}</option>                            
+                        </select>
+					</div>
+					<div class="break" id="break_apnMethod_div">
+						&nbsp;
+					</div>
+			
+		
+			</div>
+			<div class="steupWizardBottom">
+				<div class="submitSetup">
+					<input type="hidden" id="tf1_pageNextStep" value="tf1_lte3GScreen1"  />
+					<input type="hidden" id="tf1_step" value="2" />
+					<input type="button" class="btnSubmit" value='{{=global_lang["setup_wizard"]["next"] || "Next" }}' onclick="setup_apnconfig1Validate()">
+                    
+				</div>
+			</div>
+		</div>
+		<!-- Screen One Ends--->
+
+		<!-- Screen Two --->
+		<div class="wizardFormStarts screen" style="display:none;" id="tf1_lte3GScreen1">
+			 <div class="setupConfig">
+				<h4> {{=global_lang["wifi_popup"]["wifi_ssid"] || 'Wi-Fi 2.4 GHz SSID' }}</h4>
+				<div class="configRow">
+					<label>{{=global_lang["wifi_popup"]["ssid_2point4"] || 'SSID For Wi-Fi 2.4 GHz' }}</label>
+					<input type="text" id="tf1_wifi2point4G" maxlength="32" value='{{! it["wifi"]["wifi"]["AP1"]["ssid"] || "" }}'>
+				</div>
+				<div class="break">
+					&nbsp;
+				</div>
+				<div class="configRow">
+					<label>{{=global_lang["wifi_popup"]["protection"] || 'Protection' }}</label>
+					<select  name="" id="tf1_setup_encryptionMode" onchange="setup_encryptionModeChange()">
+					<option value="0" {{ if (it.protection == 0){ }} selected {{}}}>{{=global_lang["wifi_popup"]["no_protection"] || 'No Protection' }}</option>
+					<option value="2" {{ if (it.protection == 2){ }} selected {{}}}>{{=global_lang["wifi_popup"]["basic_protection"] || 'Basic Protection' }}</option>							
+					<option value="3" {{ if (it.protection == 3){ }} selected {{}}}>{{=global_lang["wifi_popup"]["advanced_protection"] || 'Advanced Protection' }}</option>
+					</select>
+				</div>
+				<div class="break">
+					&nbsp;
+				</div>
+				 <div class="configRow" id="tf1_authenticationType_div">
+							<label>{{=global_lang["wifi_popup"]["auth_type"] || 'Authentication Type' }}</label>
+							<!---<select data-label="droplist" id="tf1_authenticationType">
+								<option value="Open" selected="">Open</option>
+								<option value="Shared">Shared</option>
+							</select> -->
+
+						 <p>{{=global_lang["wifi_popup"]["shared"] || 'Shared' }}</p> 
+						<!--	<p>{{=global_lang["wifi_popup"]["auto"] || 'Auto' }}</p>-->
+				  </div>
+				  <div class="break"  id="break_authenticationType_div">
+					  &nbsp;
+				  </div>
+
+				<div id="tf1_setup_advancedProtEncryption_div">
+					<div class="configRow" id="tf1_wpaMode_div">
+						<label>{{=global_lang["wifi_popup"]["wpa_mode"] || 'WPA Mode' }}</label>
+						<select class="u1083" id="tf1_wpaMode" onchange="wifi_changeWpaMode()">
+					<option value="Auto" {{if(it.wpaMode == "Auto"){ }} selected {{}}}>{{=global_lang["wifi_popup"]["auto_wpa_wpa2"] || 'Auto (WPA2 or WPA)' }}</option>
+								<option value="WPA2" {{ if(it.wpaMode == "WPA2"){ }} selected {{}}}>{{=global_lang["wifi_popup"]["wpa2"] || 'WPA2' }}</option>
+								<!-- <option value="WPA" {{ if(it.wpaMode == "WPA"){ }} selected {{}}}>{{=global_lang["wifi_popup"]["wpa"] || 'WPA' }}</option> -->
+						</select>
+					</div>
+					<div class="break" id="break_wpaMode_div">
+						&nbsp;
+					</div>
+					
+					<div class="configRow" id="tf1_cipherType_div">
+							<label>{{=global_lang["wifi_popup"]["cipher_type"] || 'Cipher Type' }}</label>
+							<input type="hidden" id="tf1_hid_cipherType" value="{{=it.cipherType}}">
+							<select id="tf1_cipherType">
+								<option value="Auto" {{if(it.cipherType == "Auto"){ }} selected {{}}}>{{=global_lang["wifi_popup"]["aes_tkip"] || 'AES / TKIP' }}</option>
+								<option value="AES" {{if(it.cipherType == "AES"){ }} selected {{}}}>{{=global_lang["wifi_popup"]["aes"] || 'AES' }}</option>
+								<!-- <option value="TKIP" {{if(it.cipherType == "TKIP"){ }} selected {{}}}>{{=global_lang["wifi_popup"]["tkip"] || 'TKIP' }}</option> -->
+							</select>
+						</div>
+						<div class="break" id="break_cipherType_div">
+							&nbsp;
+						</div>
+					
+					<div class="configRow" id="tf1_preSharedkey_div">
+							<label>{{=global_lang["wifi_popup"]["pre_shared_key"] || 'Pre-Shared Key' }}</label>
+							<input type="password" id="tf1_preSharedkey" maxlength="64" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf2_preSharedkey').value=this.value" onblur="document.getElementById('tf2_preSharedkey').value=this.value" value="{{=it.passphrase}}"/>
+							<input type="text" id="tf2_preSharedkey" maxlength="64" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf1_preSharedkey').value=this.value" onblur="document.getElementById('tf1_preSharedkey').value=this.value" value="{{=it.passphrase}}" style="display:none;"/>
+							<input id="tf1_wpa2_generate" class="btnSubmit2" type="button" onclick="wpa2_key_get()" value='{{=global_lang["setup_wizard"]["new_key"] || "New Key" }}' style="padding-left:2px !important;padding-right:2px !important;">
+							 
+							<p><input type="checkbox" onclick="showKey(this)"> {{=global_lang["common"]["show_char"] || 'Show Characters' }}</p>
+                        
+						</div>
+					<div class="break" id="break_preSharedkey_div">
+						&nbsp;
+					</div>
+					<div class="configRow" id="tf1_key_div">
+						<label>{{=global_lang["wifi_popup"]["wep_passphrase"] || 'WEP Passphrase' }}</label>
+							<input type="text"   id="tf1_key" style="width: 160px;" maxlength="32" />
+							<input type="button" value='{{=global_lang["wifi_popup"]["generate"] || "Generate" }}' class="btnSubmit2" onclick="generateWepKeys()" style="float:right" />
+						</div>
+						<div class="break" id="break_key_div">
+							&nbsp;
+						</div>
+						<div class="configRow" id="tf1_keyTable_div">
+
+							<table cellpadding="0" cellspacing="0" border="0" class="tinytable">
+								<thead>
+								 <tr>
+									<th><h6>{{=global_lang["wifi_popup"]["default_key"] || 'Default Key'}}
+</h6></th>
+									<th><h6>{{=global_lang["wifi_popup"]["key_type"] || 'Key Type'}}</h6></th>
+									<th><h6>{{=global_lang["wifi_popup"]["key_no"] || 'Key No'}}</h6></th>
+									<th><h6>{{=global_lang["wifi_popup"]["generate_keys"] || 'Generated Keys'}}</h6></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+										<input type="radio" value="0" name="rdbWepKey" {{ if (it.wepKeyIndex == "0" || it.wepKeyIndex == "") { }} checked {{ } }} id="tf1_rdbWepKey0">
+										</td>
+										{{ if (it.wepKeyIndex == "0" && it.wepKey.length == 10) { }}
+										<td><a id="tf1_toggle_keyType0" alt="" class="enable-disable2-on" onclick="wifi_keyTypeChange()"></a>
+									  	{{ }else{ }}
+										<td><a id="tf1_toggle_keyType0" alt="" class="enable-disable2-off" onclick="wifi_keyTypeChange()"></a>
+									  	{{ } }}										
+										<input type="hidden" value="0" name="" >
+										</td>
+										<td>{{=global_lang["wifi_popup"]["key1"] || 'Key 1'}}</td>
+										<td>
+										<input type="text" class="textbox"  readonly="readonly" id="tf1_txtWepKey0" 
+										
+										{{ if (it.wepKeyIndex == "0") { }} value="{{=it.wepKey}}" {{ } }}
+										
+										 />
+										</td>
+									</tr>
+									<tr>
+										<td>
+										<input type="radio" value="1" name="rdbWepKey" id="tf1_rdbWepKey1" {{ if (it.wepKeyIndex == "1") { }} checked {{ } }}>
+										</td>
+										{{ if (it.wepKeyIndex == "1" && it.wepKey.length > 10) { }}
+										<td><a id="tf1_toggle_keyType1" alt="" class="enable-disable2-off" onclick="wifi_keyTypeChange()"></a>
+									  	{{ }else{ }}
+										<td><a id="tf1_toggle_keyType1" alt="" class="enable-disable2-on" onclick="wifi_keyTypeChange()"></a>
+									  	{{ } }}																					
+										<input type="hidden" value="0" name="" >
+										</td>
+										<td>{{=global_lang["wifi_popup"]["key2"] || 'Key 2'}}</td>
+										<td>
+										<input type="text" class="textbox" id="tf1_txtWepKey1" {{ if (it.wepKeyIndex == "1") { }} value="{{=it.wepKey}}" {{ } }} readonly="readonly" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+										<input type="radio" value="2" name="rdbWepKey" id="tf1_rdbWepKey2" {{ if (it.wepKeyIndex == "2") { }} checked {{ } }}>
+										</td>
+										{{ if (it.wepKeyIndex == "2" && it.wepKey.length== 10) { }}
+										<td><a id="tf1_toggle_keyType2" alt="" class="enable-disable2-on" onclick="wifi_keyTypeChange()"></a>
+									  	{{ }else{ }}
+										<td><a id="tf1_toggle_keyType2" alt="" class="enable-disable2-off" onclick="wifi_keyTypeChange()"></a>
+									  	{{ } }}																					
+										<input type="hidden" value="0" name="" >
+										</td>
+										<td>{{=global_lang["wifi_popup"]["key3"] || 'Key 3'}}</td>
+										<td>
+										<input type="text" class="textbox" id="tf1_txtWepKey2" {{ if (it.wepKeyIndex == "2") { }} value="{{=it.wepKey}}" {{ } }}  readonly="readonly"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+										<input type="radio" value="3" name="rdbWepKey" id="tf1_rdbWepKey3" {{ if (it.wepKeyIndex == "3") { }} checked {{ } }}>
+										</td>
+										{{ if (it.wepKeyIndex == "2" && it.wepKey.length== 10) { }}
+										<td><a id="tf1_toggle_keyType3" alt="" class="enable-disable2-on" onclick="wifi_keyTypeChange()"></a>
+									  	{{ }else{ }}
+										<td><a id="tf1_toggle_keyType3" alt="" class="enable-disable2-off" onclick="wifi_keyTypeChange()"></a>
+									  	{{ } }}																					
+										<input type="hidden" value="0" name="">
+										</td>
+										<td>{{=global_lang["wifi_popup"]["key4"] || 'Key 4'}}</td>
+										<td>
+										<input type="text" class="textbox" id="tf1_txtWepKey3" {{ if (it.wepKeyIndex == "3") { }} value="{{=it.wepKey}}" {{ } }} />
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+				</div>
+			</div>
+
+			<div class="steupWizardBottom">
+				<div class="submitSetup">
+					<input type="button" class="btnSubmit" value='{{=global_lang["setup_wizard"]["previous"] || "Previous" }}' onclick="setup_previousStep('tf1_ConnectionScreen',1)">
+					<input type="button" class="btnSubmit" value='{{=global_lang["setup_wizard"]["next"] || "Next" }}' onclick="setup_wifiHotSpotWifiValidate()">
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Screen Two Ends--->
+
+		<!-- Screen Three --->
+		<div class="wizardFormStarts screen" style="display:none;" id="tf1_lte3GScreen2">
+
+			<div class="setupConfig">
+				<h4>{{=global_lang["setup_wizard"]["setup_admin_settings"] || 'Admin Settings' }}</h4>
+				<div class="configRow" style="display:none;">
+					<label>{{=global_lang["system_popup"]["uname"] || 'Username' }}</label>
+					<input type="text" id="tf1_username" value='{{! it["device"]["DEVICE"]["web_usrname"] || "" }}' readonly="readonly" maxlength="32">
+				</div>
+				<div class="configRow">
+                <label>{{=global_lang["system_popup"]["old_pwd"] || 'Old Password' }} </label>
+                <input type="password" id="tf1_oldPassword" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf2_oldPassword').value=this.value" onblur="document.getElementById('tf2_oldPassword').value=this.value" value="" maxlength="32"/>
+				<input type="text" id="tf2_oldPassword" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf1_oldPassword').value=this.value" onblur="document.getElementById('tf1_oldPassword').value=this.value" value="" style="display:none;" maxlength="32"/>		
+              </div>
+				<div class="break">
+					&nbsp;
+				</div>
+
+				<div class="configRow">
+					<label>{{=global_lang["system_popup"]["pwd"] || 'Password' }}</label>
+					<input type="password" id="tf1_passwd" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf2_passwd').value=this.value" onblur="document.getElementById('tf2_passwd').value=this.value" value="" maxlength="32"/>
+				    <input type="text" id="tf2_passwd" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf1_passwd').value=this.value" onblur="document.getElementById('tf1_passwd').value=this.value" value="" style="display:none;" maxlength="32"/>
+				</div>
+				<div class="break">
+					&nbsp;
+				</div>
+                <div class="configRow">
+					<label>{{=global_lang["system_popup"]["cnf_pwd"] || 'Confirm Password' }}</label>
+					<!-- <input type="password" id="tf1_cnfPassword" maxlength="32" value='{{! it["device"]["DEVICE"]["web_passwd"] || "" }}'><p><input type="checkbox" onclick="system_showKey(event,'tf1_cnfPassword');system_showKey(event,'tf1_password')"> {{=global_lang["common"]["show_char"] || 'Show Characters' }}</p> -->
+					
+					<input type="password" id="tf1_cnfPassword" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf2_cnfPassword').value=this.value" onblur="document.getElementById('tf2_cnfPassword').value=this.value" value="" maxlength="32"/>
+					<input type="text" id="tf2_cnfPassword" onkeypress="return alphaNumericValueCheckForWifi (event)" onkeyup="document.getElementById('tf1_cnfPassword').value=this.value" onblur="document.getElementById('tf1_cnfPassword').value=this.value" value="" style="display:none;" maxlength="32"/><p><input type="checkbox" onclick="show_login_Key(this)"> {{=global_lang["common"]["show_char"] || 'Show Characters' }}</p>
+					
+				</div>
+				<div class="break">
+					&nbsp;
+				</div>
+                <div class="configRow">
+					<label>{{=global_lang["system_popup"]["lang"] || 'Language' }}</label>
+					<select size="1" id="tf1_Language">
+							<!---
+							<option value="2" {{ if (ui_config.Dyn_Status["up_5s"]["lang"] == 2){ }} selected {{}}}>{{=global_lang["system_popup"]["lang_chinese_traditional"] || 'Chinese Traditional' }}</option>
+							  <option value="1" {{ if (ui_config.Dyn_Status["up_5s"]["lang"] == 1){ }} selected {{}}}>{{=global_lang["system_popup"]["lang_Hungarian"] || 'Hungarian' }}</option>
+							  --->
+							<option value="0" {{ if (ui_config.Dyn_Status["up_5s"]["lang"] == 0){ }} selected {{}}}>{{=global_lang["system_popup"]["lang_english"] || 'English' }}</option>
+							<option value="1" {{ if (ui_config.Dyn_Status["up_5s"]["lang"] == 1){ }} selected {{}}}>{{=global_lang["system_popup"]["lang_german"] || 'german' }}</option>
+							<option value="2" {{ if (ui_config.Dyn_Status["up_5s"]["lang"] == 2){ }} selected {{}}}>{{=global_lang["system_popup"]["lang_french"] || 'french' }}</option>
+							<option value="3" {{ if (ui_config.Dyn_Status["up_5s"]["lang"] == 3){ }} selected {{}}}>{{=global_lang["system_popup"]["lang_spanish"] || 'spanish' }}</option>
+							<option value="4" {{ if (ui_config.Dyn_Status["up_5s"]["lang"] == 4){ }} selected {{}}}>{{=global_lang["system_popup"]["lang_italian"] || 'italian' }}</option>
+							<option value="5" {{ if (ui_config.Dyn_Status["up_5s"]["lang"] == 5){ }} selected {{}}}>{{=global_lang["system_popup"]["lang_Poland"] || 'Polski' }}</option>
+								 
+						</select>
+				</div>
+				<div class="break">&nbsp;</div>
+                <h4>{{=global_lang["system_popup"]["DateTime"] || 'Date &amp; Time' }}</h4>
+                <div class="configRow">
+		{{var statuStr,statuVal;}}		
+        <label>{{=global_lang["system_popup"]["sntp"] || 'SNTP' }} </label>
+		{{  if(it["device"]["SNTP"]["enable"] == "1") { }}
+             	         {{statuStr="enable-disable-on";}}
+                         {{statuVal="1";}}
+                        
+					{{ } else { }}
+						 {{statuStr="enable-disable-off";}}
+                         {{statuVal="0";}}
+     				{{ } }}
+        <a class="{{=statuStr}}" alt="" id="tf1_sntpEnableDisable2"></a>
+        <input type="hidden" value="{{=statuVal}}" name="SNTP" id="tf1_sntpEnableDisable2value">
+      </div>
+      <div class="break"> &nbsp; </div>
+      <div class="configRow" id="tf1_primarySntpServer2_div">
+        <label>{{=global_lang["system_popup"]["primary_server"] || 'Primary SNTP Server' }} </label>
+        <input type="text" value='{{! it["device"]["SNTP"]["server1"] || ""}}' name="" id="tf1_primarySntpServer2" maxlength="50" >
+      </div>
+      <div class="break" id="break_primarySntpServer2_div"> &nbsp; </div>
+      <div class="configRow" id="tf1_secondarySntpServer2_div">
+        <label>{{=global_lang["system_popup"]["secondary_server"] || 'Secondary SNTP Server' }} </label>
+        <input type="text" value='{{! it["device"]["SNTP"]["server2"] || ""}}' name="" id="tf1_secondarySntpServer2" maxlength="50" >
+      </div>
+      <div class="break" id="break_secondarySntpServer2_div"> &nbsp; </div>
+      <div class="configRow" id="tf1_tertiarySntpServer2_div">
+        <label>{{=global_lang["system_popup"]["tertiary_server"] || 'Tertiary SNTP Server' }} </label>
+        <input type="text" value='{{! it["device"]["SNTP"]["server3"] || ""}}' name="" id="tf1_tertiarySntpServer2" maxlength="50" >
+      </div>
+      <div class="break" id="break_tertiarySntpServer2_div"> &nbsp; </div>
+      <div class="configRow" id="tf1_timezone2_div">
+        <label>{{=global_lang["system_popup"]["timezoe"] || 'Time Zone' }}</label>
+        <select name="timezone" id="tf1_timezone2" >
+           	<option value="1" {{ if (it["device"]["SNTP"]["timezone"] == "1"){ }} selected {{}}} >UTC-12</option>
+			<option value="2" {{ if (it["device"]["SNTP"]["timezone"] == "2"){ }} selected {{}}}>UTC-11</option>
+			<option value="3" {{ if (it["device"]["SNTP"]["timezone"] == "3"){ }} selected {{}}}>UTC-10</option>
+			<option value="4" {{ if (it["device"]["SNTP"]["timezone"] == "4"){ }} selected {{}}}>UTC-9:30</option>
+			<option value="5" {{ if (it["device"]["SNTP"]["timezone"] == "5"){ }} selected {{}}}>UTC-9</option>
+			<option value="6" {{ if (it["device"]["SNTP"]["timezone"] == "6"){ }} selected {{}}}>UTC-8</option>
+			<option value="7" {{ if (it["device"]["SNTP"]["timezone"] == "7"){ }} selected {{}}}>UTC-7</option>
+			<option value="8" {{ if (it["device"]["SNTP"]["timezone"] == "8"){ }} selected {{}}}>UTC-6</option>
+			<option value="9" {{ if (it["device"]["SNTP"]["timezone"] == "9"){ }} selected {{}}}>UTC-5</option>
+			<option value="10" {{ if (it["device"]["SNTP"]["timezone"] == "10"){ }} selected {{}}}>UTC-4:30</option>
+			<option value="11" {{ if (it["device"]["SNTP"]["timezone"] == "11"){ }} selected {{}}}>UTC-4</option>
+			<option value="12" {{ if (it["device"]["SNTP"]["timezone"] == "12"){ }} selected {{}}}>UTC-3:30</option>
+			<option value="13" {{ if (it["device"]["SNTP"]["timezone"] == "13"){ }} selected {{}}}>UTC-3</option>
+			<option value="14" {{ if (it["device"]["SNTP"]["timezone"] == "14"){ }} selected {{}}}>UTC-2</option>
+			<option value="15" {{ if (it["device"]["SNTP"]["timezone"] == "15"){ }} selected {{}}}>UTC-1</option>
+			<option value="16" {{ if (it["device"]["SNTP"]["timezone"] == "16"){ }} selected {{}}}>UTC+0</option>
+			<option value="17" {{ if (it["device"]["SNTP"]["timezone"] == "17"){ }} selected {{}}}>UTC+1</option>
+			<option value="18" {{ if (it["device"]["SNTP"]["timezone"] == "18"){ }} selected {{}}}>UTC+2</option>
+			<option value="19" {{ if (it["device"]["SNTP"]["timezone"] == "19"){ }} selected {{}}}>UTC+3</option>
+			<option value="20" {{ if (it["device"]["SNTP"]["timezone"] == "20"){ }} selected {{}}}>UTC+3:07</option>
+			<option value="21" {{ if (it["device"]["SNTP"]["timezone"] == "21"){ }} selected {{}}}>UTC+3:30</option>
+			<option value="22" {{ if (it["device"]["SNTP"]["timezone"] == "22"){ }} selected {{}}}>UTC+4</option>
+			<option value="23" {{ if (it["device"]["SNTP"]["timezone"] == "23"){ }} selected {{}}}>UTC+4:30</option>
+			<option value="24" {{ if (it["device"]["SNTP"]["timezone"] == "24"){ }} selected {{}}}>UTC+5</option>
+			<option value="25" {{ if (it["device"]["SNTP"]["timezone"] == "25"){ }} selected {{}}}>UTC+5:30</option>
+			<option value="26" {{ if (it["device"]["SNTP"]["timezone"] == "26"){ }} selected {{}}}>UTC+5:45</option>
+			<option value="27" {{ if (it["device"]["SNTP"]["timezone"] == "27"){ }} selected {{}}}>UTC+6</option>
+			<option value="28" {{ if (it["device"]["SNTP"]["timezone"] == "28"){ }} selected {{}}}>UTC+6:30</option>
+			<option value="29" {{ if (it["device"]["SNTP"]["timezone"] == "29"){ }} selected {{}}}>UTC+7</option>
+			<option value="30" {{ if (it["device"]["SNTP"]["timezone"] == "30"){ }} selected {{}}}>UTC+8</option>
+			<option value="31" {{ if (it["device"]["SNTP"]["timezone"] == "31"){ }} selected {{}}}>UTC+8:45</option>
+			<option value="32" {{ if (it["device"]["SNTP"]["timezone"] == "32"){ }} selected {{}}}>UTC+9</option>
+			<option value="33" {{ if (it["device"]["SNTP"]["timezone"] == "33"){ }} selected {{}}}>UTC+9:30</option>
+			<option value="34" {{ if (it["device"]["SNTP"]["timezone"] == "34"){ }} selected {{}}}>UTC+10</option>
+			<option value="35" {{ if (it["device"]["SNTP"]["timezone"] == "35"){ }} selected {{}}}>UTC+10:30</option>
+			<option value="36" {{ if (it["device"]["SNTP"]["timezone"] == "36"){ }} selected {{}}}>UTC+11</option>
+			<option value="37" {{ if (it["device"]["SNTP"]["timezone"] == "37"){ }} selected {{}}}>UTC+11:30</option>
+			<option value="38" {{ if (it["device"]["SNTP"]["timezone"] == "38"){ }} selected {{}}}>UTC+12</option>
+			<option value="39" {{ if (it["device"]["SNTP"]["timezone"] == "39"){ }} selected {{}}}>UTC+12:45</option>
+			<option value="40" {{ if (it["device"]["SNTP"]["timezone"] == "40"){ }} selected {{}}}>UTC+13</option>
+			<option value="41" {{ if (it["device"]["SNTP"]["timezone"] == "41"){ }} selected {{}}}>UTC+14</option>
+       </select>
+      </div>
+      <div class="break" id="break_timezone2_div"> &nbsp; </div>
+      <div class="configRow" id="tf1_synchronization2_div">
+        <label>{{=global_lang["system_popup"]["sync_cycle"] || 'Synchronization Cycle' }} </label>
+        <input type="text" value='{{! it["device"]["SNTP"]["update_period"] || ""}}'  maxlength="2" name="" class="one" id="tf1_synchronization2" onKeyPress="return numericValueCheck (event)" onKeyDown="if (event.keyCode == 9) {return numericValueRangeCheck (this, '', '', 1, 24, true, global_lang['validation_msgs']['invalid_sync_cycle'], '');}">
+        <dl>
+          [ {{=global_lang["system_popup"]["hrs"] || 'Hours' }}  ]
+        </dl>
+        </div>
+        <div class="break" id="break_synchronization2_div">&nbsp;</div>
+		<div id="tf1_setDateTimeBlock_div">
+        <div class="configRow">
+        <label>{{=global_lang["system_popup"]["DateTime"] || 'Date &amp; Time' }} </label>
+        <input type="hidden" id="tf1_setDateTime"  onChange="onchangeValue()" readonly value="_ _ / _ _ / _ _ _ _   _ _ : _ _ _ _" class="displayTime">  
+		<div id="tf1_setDateTime"></div>
+        </div> 
+        <div class="break">&nbsp;</div>
+        <div class="configRow" id="tf1_setDateTimeValue_div">
+									{{dateSplit = ui_config.Dyn_Status["up_5s"]["system_date"].split(" ");}}
+									{{datepart1 = dateSplit[0];}}
+									{{datepart2 = dateSplit[1];}}
+									{{datepart1Split = datepart1.split("/");}}
+									{{datepart2Split = datepart2.split(":");}}
+   									{{var dateObj = new Date(parseInt(datepart1Split[0],10),parseInt(datepart1Split[1],10)-1,parseInt(datepart1Split[2],10),parseInt(datepart2Split[0],10),parseInt(datepart2Split[1],10),parseInt(datepart2Split[2],10));}}
+									{{var dateString  = $.scroller.formatDate("yy-mm-dd hh:ii A",dateObj);}}
+							        <label>{{=global_lang["system_popup"]["sel_dateTime"] || 'Selected Date and Time' }}</label>
+							 <input type="text" id="tf1_setDateTimeValue" name="dateTime.currentTime" readonly value="{{=dateString}}" class="displayTime">
+							    </div>
+							    <div class="break" > &nbsp; </div> 
+
+		 </div>		 
+				 
+
+				 
+			</div>
+
+			<div class="steupWizardBottom">
+				<div class="submitSetup">
+					<input type="button" class="btnSubmit" value='{{=global_lang["setup_wizard"]["previous"] || "Previous" }}' 	onclick="setup_previousStep('tf1_lte3GScreen1',2);">
+					<input type="button" class="btnSubmit" value='{{=global_lang["setup_wizard"]["next"] || "Next" }}' onclick="setup_adminSettingValidate()">
+				</div>
+			</div>
+
+		</div>
+		<!-- Screen Three Ends--->
+
+		<!-- Screen Four --->
+		<div class="wizardFormStarts screen" style="display:none;" id="tf1_lte3GScreen3">
+
+			<div class="setupConfig">
+				<h4>{{=global_lang["setup_wizard"]["apply_seetings"] ||'Apply Settings Now !!'}}</h4>
+				<p>
+					1. {{=global_lang["setup_wizard"]["pls_check_all"] || 'Please check all settings in this wizard again before you click "Apply".' }}
+				</p>
+				<p>
+					2. {{=global_lang["setup_wizard"]["after_reboot"] || 'After applied new settings, you system will need to reboot.' }}
+				</p>
+				<div class="break" style="height:60px;">
+					&nbsp;
+				</div>
+				<div id="tf1_Progressbar"  style="display:none;">
+					<div class="configRow" style="width:98.8%" id="tf1_frm_statusBar">
+						<div class="usageDisplay">
+					 
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="steupWizardBottom">
+				<div class="submitSetup">
+					<input type="button" class="btnSubmit" value='{{=global_lang["setup_wizard"]["previous"] || "Previous" }}' 	onclick="setup_previousStep('tf1_lte3GScreen2',3);">
+					<input type="button" class="btnSubmit" value='{{=global_lang["common"]["apply"] || "Apply" }}' onclick="setHiddenChks('tf1_frm_setupwizard');setup_saveSetting(event,'tf1_frm_setupwizard');">
+				</div>
+			</div>
+			
+		</div>
+		<!-- Screen Four Ends--->
+ 
+
+		<!-- Wizars setup popup Ends here -->
+	</form>
+	</script>
+</div>

@@ -1,0 +1,29 @@
+#! /bin/sh
+#
+#Copyright (c) 2012-2013 Qualcomm Technologies, Inc.  All Rights Reserved.
+#Qualcomm Technologies Proprietary and Confidential.
+
+set -e
+
+case "$1" in
+  start)
+        echo -n "Starting bm_fota: "
+        start-stop-daemon -S -b -a /bmdefsys/usr/bin/bm_fota
+        echo "done"
+        ;;
+  stop)
+        echo -n "Stopping bm_fota: "
+        start-stop-daemon -K -n /bmdefsys/usr/bin/bm_fota
+        echo "done"
+        ;;
+  restart)
+        $0 stop
+        $0 start
+        ;;
+  *)
+        echo "Usage bm_fota { start | stop | restart}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

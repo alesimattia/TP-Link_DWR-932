@@ -1,0 +1,213 @@
+@charset "utf-8";
+
+.setupWizard {
+	background: #FFFFFF;
+	border: 3px solid #207CD2;
+	float: right;
+	height: 362px;
+	padding: 16px;
+	width: 692px; 
+}
+
+.setupWizardIcon {
+	background: url("../images/menuIcons.png") no-repeat -450px -32px;
+	float: left;
+	height: 90px;
+	width: 90px;
+}
+
+.wizardMenu {
+	overflow: hidden;
+	padding: 0;
+}
+
+.wizardMenu li {
+	float: left;
+	margin: 0 12px 0 0
+}
+
+.wizardMenu li > div {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr='#E5E5E5',EndColorStr='#F7F7F7');
+	background: #E5E5E5;
+	background: -ms-linear-gradient(top,#E5E5E5,#F7F7F7);
+	background: -webkit-gradient(linear,left top,left bottom,from(#E5E5E5),to(#F7F7F7));
+	background: -moz-linear-gradient(top,#E5E5E5,#F7F7F7);
+	background: -o-linear-gradient(top,#E5E5E5,#F7F7F7);
+	border: 1px solid #EDEDED;
+	border-radius: 33px;
+	float: left;
+	height: 49px;
+	width: 157px;
+}
+
+.wizardMenu li > div > div {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr='#D3D3D3',EndColorStr='#EBEAEA');
+	background: #D3D3D3;
+	background: -ms-linear-gradient(top,#D3D3D3,#EBEAEA);
+	background: -webkit-gradient(linear,left top,left bottom,from(#D3D3D3),to(#EBEAEA));
+	background: -moz-linear-gradient(top,#D3D3D3,#EBEAEA);
+	background: -o-linear-gradient(top,#D3D3D3,#EBEAEA);
+	border: 1px solid #BCBCBC;
+	border-radius: 30px;
+	color: #9E9E9E;
+	font-size: 14px;
+	font-weight: bold;
+	height: 41px;
+	text-align: center;
+	margin: 3px;
+	width: 149px;
+}
+
+.wizardMenu li > div.one {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr='#8BDCFF',EndColorStr='#DEF5FF');
+	background: #8BDCFF;
+	background: -ms-linear-gradient(top,#8BDCFF,#DEF5FF);
+	background: -webkit-gradient(linear,left top,left bottom,from(#8BDCFF),to(#DEF5FF));
+	background: -moz-linear-gradient(top,#8BDCFF,#DEF5FF);
+	background: -o-linear-gradient(top,#8BDCFF,#DEF5FF);
+	border: 1px solid #DAF4FF;
+	border-radius: 33px;
+	float: left;
+	height: 49px;
+	width: 157px;
+}
+
+.wizardMenu li > div.one > div.two {
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr='#009FE3',EndColorStr='#6BDEFF');
+	background: #009FE3;
+	background: -ms-linear-gradient(top,#009FE3,#6BDEFF);
+	background: -webkit-gradient(linear,left top,left bottom,from(#009FE3),to(#6BDEFF));
+	background: -moz-linear-gradient(top,#009FE3,#6BDEFF);
+	background: -o-linear-gradient(top,#009FE3,#6BDEFF);
+	border: 1px solid #31AEF5;
+	border-radius: 30px;
+	color: #FFFFFF;
+	font-size: 14px;
+	font-weight: bold;
+	height: 41px;
+	text-align: center;
+	margin: 3px;
+	width: 149px;
+}
+
+.wizardMenu li > div > div > p {
+	margin: 0 auto;
+	width: 149px;
+}
+
+.wizardMenu b {
+	float: left;
+	font-size: 32px;
+	line-height: 40px;
+	padding: 0 0 0 20px;
+}
+.wizardMenu span {
+	float: left;
+	font-size: 12px;
+	padding: 6px 0 0 5px;
+	text-align: left;
+}
+
+.connectionTypeMenu {
+	clear: both;
+	margin-bottom: 4px;
+	overflow: hidden;
+}
+
+.connectionTypeMenu li {
+	float: left;
+	padding-right: 30px;
+}
+
+.connectionTypeMenu li.last {
+	padding-right: 0;
+}
+
+.connectionTypeMenu li a {
+	background: url("../images/on-off-2.png") no-repeat scroll 0 0;
+	color: #404040;
+	display: block;
+	font-size: 14px;
+	height: 24px;
+	line-height: 24px;
+	padding: 0 0 0 34px;
+	text-decoration: none;
+}
+
+.connectionTypeMenu li a:hover, .connectionTypeMenu li a.active {
+	background: url("../images/on-off-2.png") no-repeat scroll 0 -24px;
+}
+
+.wizardImfInfo {
+	background: #EEFAFF;
+	border-radius: 8px;
+	height: 215px;
+	margin: 0 16px 0 5px;
+	padding: 12px 0 0 0;
+}
+
+.wizardImfInfo .wizardImfInfoTitle {
+	background: url("../images/icons.png") no-repeat scroll -43px -383px;
+	height: 34px;
+	margin: 0 0 0 -5px;
+}
+
+.wizardImfInfo .wizardImfInfoTitle > p {
+	background: none repeat scroll 0 0 #009AE9;
+	color: #FFFFFF;
+	font-size: 18px;
+	float: left;
+	height: 30px;
+	line-height: 30px;
+	margin: 0 0 0 5px;
+	padding: 0 30px 0 10px;
+	min-width: 120px;
+}
+
+.wizardImfInfo .wizardStepOne {
+	background: url("../images/wizardPics.png") no-repeat scroll 0 0;
+	height: 175px;
+	margin: 0 auto;
+	width: 484px;
+}
+
+.wizardImfInfo .wizardStepTwo {
+	background: url("../images/wizardPics.png") no-repeat scroll 0 -176px;
+	height: 175px;
+	margin: 0 auto;
+	width: 500px;
+}
+
+.wizardImfInfo .wizardStepThree {
+	background: url("../images/wizardPics.png") no-repeat scroll 0 -351px;
+	height: 175px;
+	margin: 0 auto;
+	width: 500px;
+}
+
+.steupWizardBottom {
+	border-top: 1px dotted #797979;
+	overflow: hidden;
+	padding-top: 8px;
+	width: 692px;
+}
+.submitSetup {
+	float: right;
+	overflow: hidden;
+}
+.submitSetup .btnSubmit {
+	margin-left: 8px;
+	margin-right: 0;
+}
+
+.setupConfig {
+	height: 249px;
+	margin: 8px 0;
+	overflow-y: scroll;
+}
+
+.wizardFormStarts {
+	border-top: 1px dotted #797979;
+	height: 302px;
+	margin: 8px 0 0 0;
+}

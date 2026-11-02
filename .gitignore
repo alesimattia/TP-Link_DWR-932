@@ -1,0 +1,30 @@
+# Sistema
+.DS_Store
+__pycache__/
+*.pyc
+
+# sorgenti GPL, riscaricabili da ftp.dlink.de
+/gpl/
+
+# Dump NAND del device: restano versionati solo README e checksum
+/backup/*
+!/backup/README.md
+!/backup/MD5SUMS.txt
+
+# File estratti da firmware, tarball GPL e backup
+/analysis/fw-extract/
+/analysis/fw0104-extract/
+/analysis/gpl-extract/
+/analysis/backup-extract-0111/
+
+# Download binari parziali (head di exe, code di zip, PDF)
+/analysis/web-downloads/exe_bins/
+/analysis/web-downloads/exe_head/
+/analysis/web-downloads/zipcd/
+/analysis/web-downloads/pdfs/
+
+# Tool pesanti riscaricabili: resta versionato il digest del download di Ghidra
+/tools/ghidra/*
+!/tools/ghidra/ghidra_12.1.4.digest.txt
+.venv/
+venv/

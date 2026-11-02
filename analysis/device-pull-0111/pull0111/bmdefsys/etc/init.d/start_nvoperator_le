@@ -1,0 +1,28 @@
+#! /bin/sh
+#
+# QCMAP_Web_CLIENT.   init.d script to start the Data Software's QCMAP_Web_CLIENT. daemon
+
+set -e
+
+case "$1" in
+  start)
+        echo -n "Starting nvoperator: "
+        start-stop-daemon -S -b -a /bmdefsys/usr/bin/nvoperator
+        echo "done"
+        ;;
+  stop)
+        echo -n "Stopping nvoperator: "
+        start-stop-daemon -K -n /bmdefsys/usr/bin/nvoperator
+        echo "done"
+        ;;
+  restart)
+        $0 stop
+        $0 start
+        ;;
+  *)
+        echo "Usage nvoperator { start | stop | restart}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

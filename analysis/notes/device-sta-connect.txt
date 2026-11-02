@@ -1,0 +1,19 @@
+OK
+OK
+reti in wpa_supplicant.conf: 1
+##### stato STA
+wpa_state=DISCONNECTED
+Frequency:2.412 GHz
+##### route, NAT e firewall
+192.168.0.0/24 dev bridge0  proto kernel  scope link  src 192.168.0.1 
+-P POSTROUTING ACCEPT
+-P INPUT ACCEPT
+-A INPUT -p tcp -m tcp --dport 5555 -j DROP
+-A INPUT -i bridge0 -p tcp -m multiport --dports 53,80,443 -j ACCEPT
+-A INPUT -p tcp -j REJECT --reject-with icmp-port-unreachable
+##### connettivita dal DWR
+PING 8.8.8.8 (8.8.8.8): 56 data bytes
+ping: sendto: Network is unreachable
+
+nslookup: can't resolve 'example.com'
+##### log

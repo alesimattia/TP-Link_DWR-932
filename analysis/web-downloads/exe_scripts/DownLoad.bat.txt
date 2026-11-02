@@ -1,0 +1,105 @@
+@echo off
+
+cd %~dp0
+%~d0
+
+echo wait for device
+
+set /a DeviceState=0
+set /a ADBDevices=0
+set /a CheckTime=0
+set /a retry=0
+
+:Retry
+set /A retry=%retry%+1
+set /a CheckTime=0
+:CheckFastboot
+
+::check bootloader mode or not
+fastboot.exe devices |(find /i "fastboot")&&(set /a DeviceState=2)||(set /a DeviceState=1)
+
+set /A CheckTime=%CheckTime%+1
+
+
+::if it is bootloader, goto download
+@if %DeviceState% equ 2 (goto :download)
+
+::if not bootloader ,check adb device or not
+
+
+if "%CheckTime%"=="10" (
+
+@if %DeviceState% equ 0 (goto :exceptionEnd)
+
+
+echo Switch CDRom..
+CDToBootloaderFor9x15.exe  
+@if "%retry%" == "5" (
+goto :exceptionEnd
+)
+
+goto :Retry
+)
+
+
+echo Found bootloader or adb  %CheckTime%
+ping -n 2 127.0.0.1>nul
+goto :CheckFastboot
+)
+
+
+:download
+@if exist "mdm-recovery-image-boot-mdm9625*.img" (
+fastboot.exe flash recovery mdm-recovery-image-boot-mdm9625*.img
+if %errorlevel% NEQ 0  (goto:exceptionEnd)
+)
+@if exist "msm-mdm-recovery-image-eglibc-ipk--mdm9625*.rootfs.yaffs2" (
+fastboot.exe flash recoveryfs msm-mdm-recovery-image-eglibc-ipk--mdm9625*.rootfs.yaffs2
+if %errorlevel% NEQ 0  (goto:exceptionEnd)
+)
+@if exist "mdm9625*bmdefsys.usrfs.yaffs2" (
+fastboot.exe flash bmdefsys mdm9625*bmdefsys.usrfs.yaffs2
+if %errorlevel% NEQ 0  (goto:exceptionEnd)
+)
+@if exist "mdm-perf-image-boot-mdm9625-perf.img" (
+fastboot.exe flash boot mdm-perf-image-boot-mdm9625-perf.img
+if %errorlevel% NEQ 0  (goto:exceptionEnd)
+)
+@if exist "mdm-image-boot-mdm9625.img" (
+fastboot.exe flash boot mdm-image-boot-mdm9625.img
+if %errorlevel% NEQ 0  (goto:exceptionEnd)
+)
+fastboot.exe -m 30 flash system *.rootfs.yaffs2
+if %errorlevel% NEQ 0 (goto:exceptionEnd)
+
+fastboot.exe -m 30 flash userdata mdm9625-*.usrfs.yaffs2
+if %errorlevel% NEQ 0  (goto:exceptionEnd)
+
+@if exist "cdrom.img" (
+fastboot.exe -m 30 flash cdrom cdrom.img
+if %errorlevel% NEQ 0  (goto:exceptionEnd)
+)
+fastboot.exe reboot
+
+echo Update successfully!
+
+ping -n 8 127.0.0.1>nul
+exit 0
+
+
+:reboot
+
+adb wait-for-device
+
+echo wait for reboot...
+adb shell sys_reboot bootloader
+
+goto :download
+
+
+:exceptionEnd
+adb kill-server
+
+echo Failed to update,please try again!
+pause
+exit 1

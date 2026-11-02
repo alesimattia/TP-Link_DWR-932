@@ -1,0 +1,59 @@
+#tree, #tree2 {
+	overflow: hidden;
+}
+#tree label, #tree2 label {
+	color: #446896;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 14px;
+	position: relative;
+}
+#tree label input, #tree2 label input {
+	left: 0;
+	margin: 0 5px 0 0;
+	position: relative;
+	top: 1px;
+}
+#tree li, #tree2 li {
+	list-style: none;
+	line-height: 16px;
+}
+#tree li ul, #tree2 li ul {
+	margin-left: 20px;
+}
+
+#tree li ul li ul li, #tree2 li ul li ul li {
+	margin-left: 20px;
+}
+#tree li ul li ul li label input, #tree2 li ul li ul li label input {
+	margin: 0 16px 0 0;
+}
+
+a.driveTreeExpand {
+	background: url("../images/toggleIcon.png") 0 1px no-repeat;
+	cursor: pointer;
+	height: 14px;
+	padding: 0 4px 0 16px;
+}
+a.driveTreeCollapse {
+	background: url("../images/toggleIcon.png") 0 -13px no-repeat;
+	height: 14px;
+	padding: 0 4px 0 16px;
+}
+
+.fileIcon {
+	background: url("../images/fileIcon.png") 16px 0 no-repeat;
+	height: 14px;
+}
+
+#firstStep {
+	margin-left: 20px;
+}
+#firstStep input {
+	margin: 0 25px 0 0;
+}
+
+#firstStep  span {
+	margin: 0 0 0 10px;
+}
+

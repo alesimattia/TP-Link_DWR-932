@@ -1,0 +1,58 @@
+62 KB/s (1010 bytes in 0.015s)
+##### wpa_supplicant
+bssid=40:b6:e7:45:e1:0a
+ssid=H3140
+id=0
+wpa_state=COMPLETED
+network id / ssid / bssid / flags
+0	H3140	any	[CURRENT]
+key_mgmt=WPA-PSK scan_ssid=1 disabled=0
+"H3140"psk impostata: si
+##### visibilita rete a monte
+40:b6:e7:45:e1:0a	2442	-46	[WPA2-PSK-CCMP][ESS]	H3140
+##### interfacce
+wlan0-vxd  IEEE 802.11bgn  ESSID:"H3140"  
+          Mode:Managed  Frequency:2.442 GHz  Access Point: 40:B6:E7:45:E1:0A   
+          Bit Rate=143 Mb/s   Sensitivity:0/0  
+Frequency:2.442 GHz
+##### kernel (driver Realtek / vxd)
+[   95.715882] cliW: vxd req
+[   95.718489] acli: start_ss_t ss_req:4 scanning:0 is_root:1  
+[   97.693084] cliW: scan ind to => sp:0 ss:4
+[   97.698423] cliW: scan done 4 ss_req_ongoing = 0
+[   97.702441] event_indicate_wpas +++ event = 0xe
+[  130.006231] cliW: wildcard ssid 
+[  130.008430] cliW: vxd req
+[  130.012985] acli: start_ss_t ss_req:4 scanning:0 is_root:1  
+[  131.973160] cliW: scan ind to => sp:0 ss:4
+[  131.976286] cliW: scan done 4 ss_req_ongoing = 0
+[  131.981198] event_indicate_wpas +++ event = 0xe
+[  251.988911] cliW: wildcard ssid 
+[  251.991143] cliW: vxd req
+[  251.993753] acli: start_ss_t ss_req:4 scanning:0 is_root:1  
+[  253.953669] cliW: scan ind to => sp:0 ss:4
+[  253.956784] cliW: scan done 4 ss_req_ongoing = 0
+[  253.962362] event_indicate_wpas +++ event = 0xe
+[  373.968968] cliW: wildcard ssid 
+[  373.972268] cliW: vxd req
+[  373.973912] acli: start_ss_t ss_req:4 scanning:0 is_root:1  
+[  375.933035] cliW: scan ind to => sp:0 ss:4
+[  375.936144] cliW: scan done 4 ss_req_ongoing = 0
+[  375.941071] event_indicate_wpas +++ event = 0xe
+[  375.948997] rtl_siwauth : cmd:5 val:1
+[  375.951630] rtl_siwauth : cmd:6 val:1
+[  375.964806] rtl_siwauth : cmd:0 val:4
+[  375.968443] rtl_siwauth : cmd:1 val:8
+[  375.976108] rtl_siwauth : cmd:2 val:8
+[  375.979321] rtl_siwauth : cmd:3 val:2
+[  375.982386] rtl_siwauth : cmd:10 val:1
+[  375.986119] rtl_siwauth : cmd:8 val:0
+[  375.989840] rtl_siwauth : cmd:12 val:0
+[  375.993501] cliW: wrqu->freq.m: 244200000 chan:7 
+[  375.999524] cliW: join opmode: 8 res:1 
+[  376.002325] going to join bss: H3140
+[  376.005881] cliw: start join... in ch:7
+[  376.169462] event_indicate_wpas +++ event = 0xb
+[  382.647217] device wlan0-vxd entered promiscuous mode
+[  403.043167] cliW: try scanning in association
+[  403.047557] event_indicate_wpas +++ event = 0xe

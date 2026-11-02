@@ -1,0 +1,82 @@
+* daemon not running. starting it now on port 5037 *
+* daemon started successfully *
+140 KB/s (2260 bytes in 0.015s)
+##### identita
+uid=0(root) gid=0(root)
+Linux mdm9625-perf 3.4.0+ #1 PREEMPT Fri Jun 28 17:14:54 CST 2024 armv7l GNU/Linux
+ 13:43:16 up 1 min,  0 users,  load average: 3.15, 1.03, 0.36
+##### binari (percorso + sha256)
+QCMAP_ConnectionManager: /bmdefsys/usr/bin/QCMAP_ConnectionManager c071a48f1632d21bb5ebc3b7376c0ac224001b8968439422bd7133d81190f62d 195076B
+QCMAP_StaInterface: /bmdefsys/usr/bin/QCMAP_StaInterface 05c35a42fbc7a3ae8fbff4a02ac8aa926f5fa23c632d33fef96ff0c29f4bf9ff 4796B
+qcmap_fcgi: /bmdefsys/usr/bin/qcmap_fcgi ade3017aaf3ef7f43ae6e35c02a8d9484aa0085804c5af93fcb3eff933c43022 481696B
+wpa_supplicant: /usr/sbin/wpa_supplicant 85096639d7f67e499b5041861ec2c413b050e33354ea975da268bbe7e2c6419a 613240B
+wpa_cli: /usr/sbin/wpa_cli de34a6dbdb5ff58d3d5a4ab5b27872b75848495cc83c4d1768aeb9c30c8b213c 60068B
+dhcpcd: /usr/sbin/dhcpcd c8cc34ac0eef4ab69e5f320cf9a192809e2f70ae850d7dda22bad16b712fa0d3 80392B
+pimd: /usr/sbin/pimd 12f2107d79b4b1ed2cfdc831b0a17c73e93733de840f83f6bee2d9ae6edcbcac 102492B
+ebtables: /usr/sbin/ebtables 12b811e1906aa6eae3e23577e8dda004c1783d84494a2489a8bc2f3b42c5b086 7668B
+iptables: /usr/sbin/iptables 3e8b08b1554ed9eb3f375af61c64f53bd27d7e12ac93aca2e8bc6ea8bcedd603 416928B
+libqcmap_cm: /bmdefsys/usr/lib/libqcmap_cm.so.1 7fa891fcc675a634b175a93319f9b52f9585204bf5a73fcf97cffbc408f40e78 81508B
+##### wpa_supplicant
+wpa_supplicant v2.0-devel
+Copyright (c) 2003-2012, Jouni Malinen <j@w1.fi> and contributors
+drivers:
+  wext = Linux wireless extensions (generic)
+  nl80211 = Linux nl80211/cfg80211
+  ar6003 = Linux wireless extension for AR6003
+options:
+  -b = optional bridge interface name
+  -B = run daemon in the background
+--
+  -D = driver name (can be multiple drivers: nl80211,wext)
+  -e = entropy file
+  -g = global ctrl_interface
+  -K = include keys (passwords, etc.) in debug output
+  -t = include timestamp in debug messages
+  -h = show this help text
+  -L = show license (BSD)
+##### configurazione (solo chiavi rilevanti)
+	<Module>ar6003</Module>
+	<WlanMode>AP</WlanMode>
+	<APIPAddr>192.168.0.1</APIPAddr>
+		<SupplicantCfg>/bmdefsys/etc/wpa_supplicant.conf</SupplicantCfg>
+		<STAModeConnType>1</STAModeConnType>
+	<MobileAPEnableAtBootup>1</MobileAPEnableAtBootup>
+	<WLANEnableAtBootup>1</WLANEnableAtBootup>
+ctrl_interface=/var/run/wpa_supplicant
+autoscan=periodic:120
+update_config=1
+reti configurate in wpa_supplicant.conf: 0
+wlan0-vxd wlan_mode=0  wlan0 wlan_mode=0
+wlan0-vxd network_type=0  wlan0 network_type=0
+wlan0-vxd wlan_disabled=0  wlan0 wlan_disabled=0
+wlan0-vxd channel=0  wlan0 channel=0
+wlan0-vxd channel_bonding=1  wlan0 channel_bonding=1
+##### stato runtime
+  487 root       0:00 QCMAP_ConnectionManager /bmdefsys/etc/mobileap_cfg.xml d
+wlan0-vxd Link encap:Ethernet  HWaddr 00:00:00:00:00:00  
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+wlan0-vxd  IEEE 802.11-DS  Access Point: Not-Associated   Bit Rate:2 Mb/s   
+          RTS thr:off   Fragment thr=2347 B   
+wlan0-vx  get_mib:16  0  0  0  
+wlan0     get_mib:16  0  0  0  
+##### firewall e route
+-P INPUT ACCEPT
+-A INPUT -p tcp -m tcp --dport 5555 -j DROP
+-A INPUT -i bridge0 -p tcp -m multiport --dports 53,80,443 -j ACCEPT
+-A INPUT -p tcp -j REJECT --reject-with icmp-port-unreachable
+-P POSTROUTING ACCEPT
+192.168.0.0/24 dev bridge0  proto kernel  scope link  src 192.168.0.1 
+rmnet6:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+rmnet1:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+wlan0-vxd:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+rmnet5:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+wlan0-va0:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+bridge0:       0       0    0    0    0     0          0         0     2144      72    0    0    0     0       0          0
+rmnet0:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+rmnet4:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+ wlan0:  282956     727    0    0    0     0          0         0     4046      23    0    0    0     0       0          0
+rmnet3:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+rmnet7:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+rmnet2:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+##### syslog: occorrenze di valori stringa registrati da qcmap_fcgi (solo conteggio)
+0
