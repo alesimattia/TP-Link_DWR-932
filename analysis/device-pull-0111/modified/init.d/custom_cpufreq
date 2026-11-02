@@ -1,0 +1,20 @@
+#!/bin/sh
+# Governor e limiti di frequenza della CPU del DWR-932: all'avvio applica quelli salvati in bm_custom.conf,
+# dopo power_config (S50), che imposta ondemand.
+# Installato come /etc/init.d/custom_cpufreq con il link /etc/rc5.d/S99custom_cpufreq.
+
+CF=/bmdefsys/usr/bin/custom_cpufreq.sh
+
+case "$1" in
+	start)
+		[ -x "$CF" ] && "$CF" applica
+		;;
+	stop)
+		;;
+	*)
+		echo "uso: $0 {start|stop}" >&2
+		exit 1
+		;;
+esac
+
+exit 0

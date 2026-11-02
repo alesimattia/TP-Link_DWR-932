@@ -1,0 +1,13 @@
+uptime 75.16 s
+governor powersave, limiti 300000-748800, cur 300000, pe: performance
+-rwxr-xr-x    1 root     root          3146 Nov  2  2026 /bmdefsys/usr/bin/custom_cpufreq.sh
+-rwxr-xr-x    1 root     root           430 Nov  2  2026 /etc/init.d/custom_cpufreq
+lrwxrwxrwx    1 root     root            24 Nov  2  2026 /etc/rc5.d/S99custom_cpufreq -> ../init.d/custom_cpufreq
+OK   all'avvio governor powersave (power_config aveva messo ondemand)
+OK   all'avvio limiti 300000-748800
+OK   frequenza 300 MHz
+OK   pe_service in esecuzione (5 processi)
+OK   pe_service caricato dal file modificato
+ripristinato: governor performance, limiti 300000-998400, conf: 
+
+RISULTATO: 5 OK, 0 FAIL

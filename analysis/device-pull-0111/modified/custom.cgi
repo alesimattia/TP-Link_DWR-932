@@ -1,6 +1,7 @@
 #!/bin/sh
 # Pagina custom della web UI del DWR-932: repeater Wi-Fi (Wi-Fi come uscita internet, modalità QCMAP AP-STA),
-# potenza TX Wi-Fi, beacon interval e DTIM. Il country code non compare: è fissato su IT da wlan_8192c.sh.
+# potenza TX Wi-Fi, beacon interval e DTIM, governor e limiti di frequenza della CPU. Il country code non compare:
+# è fissato su IT da wlan_8192c.sh.
 # Con ?api=autoreboot risponde in JSON alla tab "Riavvio programmato" del popup Amministrazione della web UI
 # stock (js/custom_autoreboot.js); la POST action=autoreboot salva la configurazione.
 # Eseguita da lighttpd come CGI, come root.
@@ -20,6 +21,8 @@ WL0=/var/rtl8192c/wlan0
 WPA="wpa_cli -i wlan0-vxd"
 USERS=/bmdefsys/www/lighttpd.user
 AR=/bmdefsys/usr/bin/custom_autoreboot.sh
+CF=/bmdefsys/usr/bin/custom_cpufreq.sh
+CPUFREQ=/sys/devices/system/cpu/cpu0/cpufreq
 TOKF=/tmp/custom_cgi.csrf
 FAILF=/tmp/custom_cgi.fail
 LOCK=/tmp/custom_cgi.lock
@@ -90,6 +93,14 @@ conf_set() {
 sta_cfg_on() { grep -q '<WlanMode>AP-STA</WlanMode>' "$CFG"; }
 sta_running() { pidof wpa_supplicant >/dev/null 2>&1; }
 backup_once() { [ -e "$2" ] || cp -p "$1" "$2"; }
+# Vero se $1 è una delle frequenze in kHz supportate dalla CPU
+freq_ok() {
+	case "$1" in ''|*[!0-9]*) return 1;; esac
+	case " $(cat "$CPUFREQ/scaling_available_frequencies" 2>/dev/null) " in *" $1 "*) return 0;; esac
+	return 1
+}
+# Frequenza in kHz scritta in MHz (748800 -> 748,8 MHz)
+mhz() { awk -v f="$1" 'BEGIN { s = sprintf("%.1f", f / 1000); sub(/\.0$/, "", s); sub(/\./, ",", s); print s " MHz" }'; }
 
 # Pagina di attesa e riavvio del device. $1 = titolo, $2 = cosa viene applicato
 reboot_page() {
@@ -240,6 +251,19 @@ if [ "$REQUEST_METHOD" = "POST" ]; then
 		$WPA save_config >/dev/null 2>&1
 		redirect sta_selected
 		;;
+	cpu)
+		gov=$(field gov)
+		fmin=$(field fmin)
+		fmax=$(field fmax)
+		case "$gov" in auto|performance|ondemand|conservative|powersave) ;; *) redirect err_val;; esac
+		freq_ok "$fmin" && freq_ok "$fmax" || redirect err_val
+		[ "$fmin" -le "$fmax" ] || redirect err_cpu
+		conf_set cpu_governor "$gov"
+		conf_set cpu_min_freq "$fmin"
+		conf_set cpu_max_freq "$fmax"
+		$CF applica >/dev/null 2>&1
+		redirect cpu_ok
+		;;
 	autoreboot)
 		en=$(field enable)
 		hh=$(field hour)
@@ -295,6 +319,8 @@ esac
 case "&$QUERY_STRING&" in *'&scan=1&'*) SCAN=1;; *) SCAN=0;; esac
 case "$msg" in
 	power_ok) MSG="Potenza TX applicata."; MCL=ok;;
+	cpu_ok) MSG="Impostazioni della CPU applicate."; MCL=ok;;
+	err_cpu) MSG="La frequenza minima non può superare la massima: nessuna modifica."; MCL=err;;
 	bcn_same) MSG="Beacon e DTIM sono già impostati su questi valori: nessuna modifica."; MCL=ok;;
 	sta_added) MSG="Rete salvata: connessione in corso (può richiedere fino a 30 secondi, la pagina si aggiorna da sola)."; MCL=ok; RELOAD=20;;
 	sta_saved) MSG="Rete salvata: verrà usata quando il repeater è attivo."; MCL=ok;;
@@ -547,6 +573,86 @@ cat <<HTML
 </fieldset>
 </form>
 HTML
+
+# --- CPU: governor e limiti di frequenza ---
+cgov=$(sed -n 's/^cpu_governor=//p' "$CONF" 2>/dev/null | head -1)
+case "$cgov" in auto|performance|ondemand|conservative|powersave) ;; *) cgov=auto;; esac
+hwmin=$(cat "$CPUFREQ/cpuinfo_min_freq" 2>/dev/null)
+hwmax=$(cat "$CPUFREQ/cpuinfo_max_freq" 2>/dev/null)
+cmin=$(sed -n 's/^cpu_min_freq=//p' "$CONF" 2>/dev/null | head -1)
+cmax=$(sed -n 's/^cpu_max_freq=//p' "$CONF" 2>/dev/null | head -1)
+freq_ok "$cmin" || cmin=$hwmin
+freq_ok "$cmax" || cmax=$hwmax
+if [ "$cmin" -gt "$cmax" ] 2>/dev/null; then cmin=$hwmin; cmax=$hwmax; fi
+govnow=$(cat "$CPUFREQ/scaling_governor" 2>/dev/null)
+fnow=$(cat "$CPUFREQ/scaling_cur_freq" 2>/dev/null)
+lmin=$(cat "$CPUFREQ/scaling_min_freq" 2>/dev/null)
+lmax=$(cat "$CPUFREQ/scaling_max_freq" 2>/dev/null)
+tis=$(awk '{ f[NR] = $1; t[NR] = $2; s += $2 }
+	END { if (s > 0) for (i = 1; i <= NR; i++) { m = sprintf("%.1f", f[i] / 1000); sub(/\.0$/, "", m); sub(/\./, ",", m)
+		printf "%s%s MHz %d%%", (i > 1 ? ", " : ""), m, int(t[i] * 100 / s + 0.5) } }' "$CPUFREQ/stats/time_in_state" 2>/dev/null)
+temp=""
+for z in /sys/class/thermal/thermal_zone*; do
+	case "$(cat "$z/type" 2>/dev/null)" in tsens_tz_sensor*) ;; *) continue;; esac
+	t=$(cat "$z/temp" 2>/dev/null)
+	case "$t" in ''|*[!0-9]*) continue;; esac
+	[ -z "$temp" ] || [ "$t" -gt "$temp" ] && temp=$t
+done
+# pe_service modificato: 1 = attivo, 2 = installato ma in uso ancora quello vecchio (fino al riavvio), 0 = originale
+pe_mod=0
+grep -q custom_cpufreq.sh /bmdefsys/usr/bin/pe_service 2>/dev/null && pe_mod=1
+for p in $(pidof pe_service); do
+	ls -l "/proc/$p/exe" 2>/dev/null | grep -q deleted && pe_mod=2
+done
+
+echo '<form method="post" action="custom.cgi">'
+csrf_input
+echo '<input type="hidden" name="action" value="cpu">'
+echo '<fieldset><legend>CPU: governor e frequenze</legend>'
+echo '<table class="stato">'
+govtxt=$govnow
+[ "$cgov" = auto ] && govtxt="$govnow (scelto da pe_service)"
+echo "<tr><td>Governor in uso</td><td>$(h "$govtxt")</td></tr>"
+echo "<tr><td>Frequenza attuale</td><td>$(h "$(mhz "$fnow")")</td></tr>"
+echo "<tr><td>Limiti attuali</td><td>$(h "$(mhz "$lmin") – $(mhz "$lmax")")</td></tr>"
+[ -n "$tis" ] && echo "<tr><td>Tempo per frequenza dall'avvio</td><td>$(h "$tis")</td></tr>"
+[ -n "$temp" ] && echo "<tr><td>Temperatura (sensore più caldo)</td><td>$(h "$temp") °C</td></tr>"
+echo '</table>'
+if [ "$lmin" != "$cmin" ] || [ "$lmax" != "$cmax" ]; then
+	echo '<p><small>I limiti attuali sono diversi da quelli salvati: li ha cambiati la protezione termica (thermal-engine) oppure non sono ancora stati applicati. Tornano quelli salvati con Applica o al riavvio.</small></p>'
+fi
+case "$pe_mod" in
+	0) echo '<p class="msg err">pe_service non è la versione modificata: con un governor diverso da Automatico può sostituirlo con performance o ondemand.</p>';;
+	2) echo '<p class="msg err">pe_service modificato installato: diventa attivo al prossimo riavvio del router. Fino ad allora può sostituire il governor scelto con performance o ondemand.</p>';;
+esac
+echo ' <label for="gov">Governor</label>'
+echo ' <select id="gov" name="gov">'
+opt2 auto "$cgov" "Automatico (originale D-Link), predefinito"
+opt2 performance "$cgov" "performance: sempre alla frequenza massima"
+opt2 ondemand "$cgov" "ondemand: sale subito sotto carico, scende a riposo"
+opt2 conservative "$cgov" "conservative: sale e scende per gradi"
+opt2 powersave "$cgov" "powersave: sempre alla frequenza minima"
+echo ' </select>'
+for campo in fmin fmax; do
+	if [ "$campo" = fmin ]; then
+		echo ' <label for="fmin">Frequenza minima</label>'
+		fsel=$cmin
+	else
+		echo ' <label for="fmax">Frequenza massima</label>'
+		fsel=$cmax
+	fi
+	echo " <select id=\"$campo\" name=\"$campo\">"
+	for f in $(cat "$CPUFREQ/scaling_available_frequencies" 2>/dev/null); do
+		case "$f" in *[!0-9]*) continue;; esac
+		opt2 "$f" "$fsel" "$(mhz "$f")"
+	done
+	echo ' </select>'
+done
+echo ' <button type="submit">Applica</button>'
+echo "<p><small>Automatico è il comportamento originale del firmware: governor ondemand, che pe_service sostituisce con performance quando il carico della CPU supera il 51% e ripristina dopo circa 2 minuti di carico basso. Le frequenze minima e massima valgono per tutti i governor: performance usa la massima, powersave la minima. Frequenze basse riducono consumo e calore, ma anche la velocità del Wi-Fi e dell'instradamento. Applicato subito, persistente al riavvio; il reset di fabbrica non lo cambia.</small></p>"
+echo "<p><small>Se la temperatura sale troppo, la protezione termica (thermal-engine) abbassa la frequenza massima; quando la temperatura rientra riporta i limiti a $(h "$(mhz "$hwmin")") – $(h "$(mhz "$hwmax")") fino al prossimo Applica o riavvio.</small></p>"
+echo '</fieldset>'
+echo '</form>'
 
 cat <<'HTML'
 <script>

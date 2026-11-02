@@ -45,4 +45,6 @@ CAVEAT TRASFERIMENTO PC→Mac (link SSH/Wi-Fi molto instabile, 2026-10-24/25):
   loop: offset = dimensione locale corrente; ripeti finché size == atteso. Verificato md5-identico. Poi `gunzip`/ricompone sul Mac.
 - Niente `sleep` in foreground (bloccato): per backoff usare `ping -c N`.
 
+PROCESSI LUNGHI DA adb shell (2026-11-02): `setsid sh script --figlio </dev/null >log 2>&1 &` + `sleep 2` PRIMA che la shell esca, altrimenti la chiusura della sessione adb uccide il figlio prima di setsid (log mai creato); nel figlio chiudere gli fd > 2. Ogni sessione SSH sul PC Windows termina anche adb server ("daemon started" a ogni comando): normale. Comandi adb ravvicinati (ogni ~20 s) generano picchi di carico che tengono pe_service su performance → [[dwr932-f1-cpufreq]].
+
 NOTA quoting SSH→cmd→adb: comandi semplici (id, cat, ls singolo) OK; pipe a grep con pattern tra virgolette o `\|` si rompono (doppio escaping). Preferire `adb.exe pull <path>` + analisi locale, o `adb push` di uno script sul device + `adb shell sh /cache/x.sh`, o comandi senza virgolette annidate.

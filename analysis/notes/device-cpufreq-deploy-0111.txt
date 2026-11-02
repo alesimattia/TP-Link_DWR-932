@@ -1,0 +1,25 @@
+2cddca0c82fa44316fc8245dc77e8f7d  /cache/pe_service.new
+774198f3bfc19330916369b6e573d948  /bmdefsys/usr/bin/pe_service
+95f645dbfd053f1d3e3a1ce9649a023752f56bb80c947bb9eda232ccf50e20fa  /bmdefsys/WEBSERVER/webpages/cgi-bin/custom.cgi
+2359a8e63ecfb7f67e8e71b4a6879f513c5b6f49b1482cf5a3c06ff09011f981  /bmdefsys/WEBSERVER/webpages/controlPanel.html
+534015ce3ad7dc02c9bfbe395e44900f58100bd04b0b1fa85608e66f53559ac8  /bmdefsys/WEBSERVER/webpages/systemManagementPopup.html
+8a1564e23266d6a0704765a29c2dd55e50668a495f0d35921964900fb6857955  /bmdefsys/WEBSERVER/webpages/js/custom_autoreboot.js
+1002d7435ec84ee1945aba8f29e009080d0b06058698272d4963d89c289375cc  /bmdefsys/usr/bin/custom_autoreboot.sh
+74b92de742c98f75da666fa63373b840dc0107b18812ee03f6a5bd31365e2d6a  /etc/init.d/custom_autoreboot
+9f9a25fce93599ebe9fb3e1c9ade2d9062d0763259ccecf071471d1161d1eeca  /bmdefsys/usr/bin/custom_cpufreq.sh
+9a6a5c6fcc0eb4740f02a91ef694af52f7c6bfb46b1713e4bd04adc787f41c4f  /etc/init.d/custom_cpufreq
+03ae0468c1c3743dd8f81a6416c862606f140c4681363d410cea213ede3600fc  /bmdefsys/usr/bin/pe_service
+4b0a2d05059903857f98c85724b8be67dfec5be8dd8eee26f3b9e5a62e33cc6a  /bmdefsys/etc/lighttpd.conf
+-rwxrwx---    1 www-data www-data     34244 Nov  2 16:50 /bmdefsys/WEBSERVER/webpages/cgi-bin/custom.cgi
+-rwxrwx---    1 www-data www-data     43862 Nov  2 16:50 /bmdefsys/WEBSERVER/webpages/controlPanel.html
+-rwxrwx---    1 www-data www-data      3617 Nov  2 16:50 /bmdefsys/WEBSERVER/webpages/js/custom_autoreboot.js
+-rwxrwx---    1 www-data www-data     49973 Nov  2 16:50 /bmdefsys/WEBSERVER/webpages/systemManagementPopup.html
+-rwxr-xr-x    1 root     root          4759 Nov  2 16:50 /bmdefsys/usr/bin/custom_autoreboot.sh
+-rwxr-xr-x    1 root     root          3146 Nov  2 16:50 /bmdefsys/usr/bin/custom_cpufreq.sh
+-rwxr-xr-x    1 root     root         29872 Nov  2 16:50 /bmdefsys/usr/bin/pe_service
+-rwxr-xr-x    1 root     root           486 Nov  2 16:50 /etc/init.d/custom_autoreboot
+-rwxr-xr-x    1 root     root           430 Nov  2 16:50 /etc/init.d/custom_cpufreq
+lrwxrwxrwx    1 root     root            27 Nov  2 16:50 /etc/rc5.d/S99custom_autoreboot -> ../init.d/custom_autoreboot
+lrwxrwxrwx    1 root     root            24 Nov  2 16:50 /etc/rc5.d/S99custom_cpufreq -> ../init.d/custom_cpufreq
+pe_service modificato installato: attivo dal prossimo riavvio del device
+lighttpd.conf originale: nessun riavvio necessario

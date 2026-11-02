@@ -13,7 +13,7 @@ CORREZIONI da evidenza live 01.11 (sovrascrivono inferenze da GPL 01.04):
 - Chip Wi-Fi = Realtek RTL8192ES SDIO 2T2R (driver rtl8192es.ko, "Realtek WLAN driver v1.7"), NON Atheros AR6003 (il DTB/mobileap_cfg dice ar6003 ma è un residuo: il driver caricato è Realtek). Config runtime in /var/rtl8192c/<iface>/ (persistente, su rootfs). Tool: /bmdefsys/usr/bin/rtltools/{iwpriv,flash,wscd,webs,auth}. NIENTE hostapd (lo stack è wscd/webs Realtek). Interfacce: wlan0 (AP), wlan0-va0 (VAP guest, non inizializzata), wlan0-vxd (repeater/STA vdev).
 - Binari ASSENTI sul 01.11 (c'è il flag ma NON il binario → NON è uno sblocco, va cross-compilato+aggiunto): smbd/nmbd (Samba), nodogsplash/ndsctl (captive portal), minidlna (DLNA), mount.cifs, ntfs-3g, cpufreq-set, ethtool.
 - Binari PRESENTI/attivi sul 01.11: miniupnpd, avahi-daemon, wpa_supplicant/wpa_cli, iw/iwconfig/iwpriv/iwlist, iptables/ip6tables (xtables-multi), tc, led_ctl/setleds, miniui, deep_sleep_server, bm_netstat/bm_dataLimit/bm_netrate, crond/crontab, httpd.
-- cpufreq: governor attuale "performance" fisso a 998400 kHz; disponibili conservative/ondemand/userspace/powersave/performance; freq 300000/600000/748800/998400.
+- cpufreq: stock = ondemand a riposo, performance sotto carico (commutato da pe_service, NON fisso); disponibili conservative/ondemand/userspace/powersave/performance; freq 300000/600000/748800/998400. Dettagli e implementazione → [[dwr932-f1-cpufreq]].
 - Spazio libero: / (rootfs) ~8,9 MB, /bmdefsys ~40 MB, /cache ~127 MB.
 
 LEGENDA blocco: CFG=solo flag config (edit root) | API=qcmap_fcgi gestisce chiave/handler | UI-=web UI 01.04 senza riferimenti | UI+=web UI 01.04 già espone | CT=off a compile-time (bmtfeatures.h) | BIN?=binario non trovato in estrazione 01.04, verificare 01.11 | HW=limite hardware.
@@ -36,7 +36,7 @@ FUNZIONI (chiave config = valore attuale)
 - Roaming dati: mobileap_cfg Roaming=0 | UI+ (impostazione utente, non bloccata).
 - Altri off non bloccati: MacFilterMode=0 (UI+ wifi), TZ_DST_ENABLE=0, LanIp6Mode=0 (EnableIPV6=1). VPN passthrough IPSEC/PPTP/L2TP=1 già on. wwan_flood_block=1 on.
 - Wi-Fi driver (Realtek, via iwpriv set_mib su wlan0 + txpwr_apply; file persistenti in /var/rtl8192c/wlan0/): countrycode, countrycode_enable, reg_domain(3=ETSI), channel(0=auto), channel_bonding(0=20M/1=40M; già in UI stock come "Larghezza canale"), band, hidden_ssid, supported_sta_num, beacon_interval(MIB bcnint), dtim_period(MIB dtimperiod), powerpercent(0-100, scala TX AGC: 100→reg 0x39, 15→0x23). get_mib/read_reg per leggere. init.sh ricarica tutto.
-- Risparmio energetico: batteryidletime=0, deepsleeptime=0 (deep_sleep_server; UI+ systemManagementPopup/system.js) | lcd_off_time=60 | LED via /sys/class/leds/* (power/signal/wifi/sms/sled1-4, led_ctl) | cpufreq governor "performance"@998MHz, opzioni conservative/ondemand/userspace/powersave via /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor.
+- Risparmio energetico: batteryidletime=0, deepsleeptime=0 (deep_sleep_server; UI+ systemManagementPopup/system.js) | lcd_off_time=60 | LED via /sys/class/leds/* (power/signal/wifi/sms/sled1-4, led_ctl) | cpufreq governor stock ondemand/performance gestito da pe_service (→ [[dwr932-f1-cpufreq]]).
 - Debug nascosti (debug_post_set.cgi SENZA auth): adb, telnet (pw hardcoded, policy: non usare), diag comp 2034, test mode AT+BMFTM → root (vedi [[dwr932-f1-rootaccess]]).
 - Kernel: TTL/HL mangle OK (xtables-multi, iptables attivo, IP_NF_TARGET_TTL, XT_TARGET_HL); TUN/PPP/L2TP assenti → no OpenVPN/WireGuard senza .ko.
 - HW NO: 5 GHz/11ac (Realtek RTL8192ES = solo 2.4 GHz 11n; 2T2R da probe: chipVersion RTL8192EnC, MIMO_TR_mode 2T2R, supportedmcs 0000ffff, bitrate 143 Mb/s a 20 MHz).
@@ -119,6 +119,6 @@ OBIETTIVI UTENTE DA IMPLEMENTARE (richiesti 2026-10-25, NON in questa chat; tutt
 6. NON SERVE: n° max client già nella UI stock (max_sta in wifi.js/wifiPopup.html).
 7. FATTO 2026-11-02: beacon interval / DTIM in custom.cgi → sezione BEACON/DTIM sotto.
 8. FATTO 2026-11-02: repeater Wi-Fi (AP-STA, variante WISP/NAT) con pagina web e pulsante nella home → [[dwr932-f1-repeater-procedure]], [[dwr932-f1-webui-mod]]. Resta solo il collaudo del failover LTE con SIM.
-9. Governor CPU selezionabile (scaling_governor: conservative/ondemand/userspace/powersave/performance).
+9. FATTO 2026-11-02: governor CPU e frequenza minima/massima nella pagina custom.cgi → [[dwr932-f1-cpufreq]].
 10. Fissare TTL/HL con iptables (xtables-multi; regola mangle POSTROUTING, persistente via init). ATTENZIONE: QCMAP 01.11 contiene `iptables -t mangle --flush` (quando scatti non è analizzato) → la regola va riapplicata con un hook, non basta metterla una volta al boot.
 11. Gestione remota web UI da WAN (EnableWebserverWWANAccess=1 via QCMAP; avviso sicurezza: espone l'admin su internet).

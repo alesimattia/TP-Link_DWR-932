@@ -1,0 +1,44 @@
+inizio: uptime 248 s, governor ondemand, limiti 300000-998400, pe: ondemand
+conf: 
+2cddca0c82fa44316fc8245dc77e8f7d  /bmdefsys/usr/bin/pe_service
+pe_service 1236: /bmdefsys/usr/bin/pe_service
+pe_service 1235: /bmdefsys/usr/bin/pe_service
+pe_service 1234: /bmdefsys/usr/bin/pe_service
+pe_service 1233: /bmdefsys/usr/bin/pe_service
+pe_service 954: /bmdefsys/usr/bin/pe_service
+OK   pe_service in esecuzione = file modificato (nessun exe cancellato)
+OK   pe_service su disco modificato
+== auto: riposo
+OK   auto a riposo: ondemand (dopo 0 s)
+OK   ultima richiesta di pe_service: ondemand
+== auto: carico
+OK   auto sotto carico: performance (dopo 2 s)
+OK   richiesta di pe_service registrata: performance
+OK   sotto carico a 998,4 MHz (letto 998400)
+OK   auto dopo il carico: torna ondemand (dopo 126 s)
+== manuale (powersave, 300-748,8 MHz): carico
+OK   powersave mantenuto per 15 s sotto carico
+OK   powersave sotto carico a 300 MHz (letto 300000)
+OK   richiesta performance di pe_service registrata e ignorata
+== ritorno ad auto
+OK   auto riprende la richiesta in sospeso: performance
+OK   poi pe_service torna a ondemand (dopo 125 s)
+OK   limiti 300000-998400
+== statistiche
+300000 11368
+600000 126
+748800 170
+998400 40305
+transizioni: 207
+tsens_tz_sensor0 37
+tsens_tz_sensor1 37
+tsens_tz_sensor2 37
+tsens_tz_sensor3 37
+tsens_tz_sensor4 38
+pa_therm0 763573
+pa_therm1 68
+Nov  2 13:56:17 mdm9625-perf user.err pe_service: wps_wifi_key_monitor : start!!
+fine: governor ondemand, limiti 300000-998400, conf: 
+
+RISULTATO: 14 OK, 0 FAIL
+FINE

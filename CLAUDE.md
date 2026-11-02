@@ -46,14 +46,13 @@ Aggiorna questi file man mano che emergono risultati nuovi: è il posto per i de
 
 ## Funzionalità sbloccabili
 
-Funzioni assenti nella web UI stock 01.11. Già fatte: potenza di trasmissione Wi-Fi, paese IT bloccato, repeater Wi-Fi, beacon e DTIM, riavvio programmato (tab nel popup Amministrazione della UI stock). Escluse perché la UI stock le ha già: canale Wi-Fi, larghezza di canale 20/40 MHz, numero massimo di client, gestione remota, filtro URL, DMZ, filtro MAC, roaming, risparmio energetico, UPnP.
+Funzioni assenti nella web UI stock 01.11. Già fatte: potenza di trasmissione Wi-Fi, paese IT bloccato, repeater Wi-Fi, beacon e DTIM, riavvio programmato (tab nel popup Amministrazione della UI stock), governor e frequenza minima/massima della CPU. Escluse perché la UI stock le ha già: canale Wi-Fi, larghezza di canale 20/40 MHz, numero massimo di client, gestione remota, filtro URL, DMZ, filtro MAC, roaming, risparmio energetico, UPnP.
 
 Il supporto esiste già nel firmware o nel driver Wi-Fi: manca solo una sezione nella pagina custom.cgi, che le riapplica a ogni avvio come per la potenza di trasmissione.
 - creare una memoria CLAUDE dedicata ad ogni funzionalità implementata
 
 | Funzione | A cosa serve | Cosa c'è già nel firmware |
 |---|---|---|
-| Governor della CPU | Meno consumo e calore, più autonomia. Oggi la CPU è fissa al massimo (998 MHz) | Governor del kernel ondemand, conservative e powersave |
 | Spegnimento dei LED | Risparmio e discrezione | Controllo dei LED da `/sys/class/leds` |
 | Limite dati con blocco | Utile con SIM a consumo: blocca il traffico oltre una soglia mensile | `bm_dataLimit` e `bm_netstat` già attivi; la UI mostra solo una parte |
 | DNS personalizzati | Per esempio 1.1.1.1, 9.9.9.9 o DNS che bloccano la pubblicità | `manual_wwanDns_*` gestite dal firmware |

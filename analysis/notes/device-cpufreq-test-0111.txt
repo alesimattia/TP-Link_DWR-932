@@ -1,0 +1,94 @@
+stato iniziale: performance 300000 998400, cur 998400, pe: performance
+conf iniziale: 
+== pagina
+OK   sezione CPU presente
+OK   5 governor nel menu
+OK   4 frequenze in ciascuno dei 2 menu
+OK   frequenze scritte in MHz
+OK   altre sezioni intatte
+<fieldset><legend>CPU: governor e frequenze</legend>
+<table class="stato">
+<tr><td>Governor in uso</td><td>performance (scelto da pe_service)</td></tr>
+<tr><td>Frequenza attuale</td><td>998,4 MHz</td></tr>
+<tr><td>Limiti attuali</td><td>300 MHz – 998,4 MHz</td></tr>
+<tr><td>Tempo per frequenza dall'avvio</td><td>300 MHz 78%, 600 MHz 0%, 748,8 MHz 0%, 998,4 MHz 22%</td></tr>
+<tr><td>Temperatura (sensore più caldo)</td><td>38 °C</td></tr>
+</table>
+ <label for="gov">Governor</label>
+ <select id="gov" name="gov">
+<option value="auto" selected>Automatico (originale D-Link), predefinito</option>
+<option value="performance">performance: sempre alla frequenza massima</option>
+<option value="ondemand">ondemand: sale subito sotto carico, scende a riposo</option>
+<option value="conservative">conservative: sale e scende per gradi</option>
+<option value="powersave">powersave: sempre alla frequenza minima</option>
+ </select>
+ <label for="fmin">Frequenza minima</label>
+ <select id="fmin" name="fmin">
+<option value="300000" selected>300 MHz</option>
+<option value="600000">600 MHz</option>
+<option value="748800">748,8 MHz</option>
+<option value="998400">998,4 MHz</option>
+ </select>
+ <label for="fmax">Frequenza massima</label>
+ <select id="fmax" name="fmax">
+<option value="300000">300 MHz</option>
+<option value="600000">600 MHz</option>
+<option value="748800">748,8 MHz</option>
+<option value="998400" selected>998,4 MHz</option>
+ </select>
+ <button type="submit">Applica</button>
+<p><small>Automatico è il comportamento originale del firmware: governor ondemand, che pe_service sostituisce con performance quando il carico della CPU supera il 51% e ripristina dopo circa 2 minuti di carico basso. Le frequenze minima e massima valgono per tutti i governor: performance usa la massima, powersave la minima. Frequenze basse riducono consumo e calore, ma anche la velocità del Wi-Fi e dell'instradamento. Applicato subito, persistente al riavvio; il reset di fabbrica non lo cambia.</small></p>
+<p><small>Se la temperatura sale troppo, la protezione termica (thermal-engine) abbassa la frequenza massima; quando la temperatura rientra riporta i limiti a 300 MHz – 998,4 MHz fino al prossimo Applica o riavvio.</small></p>
+</fieldset>
+OK   pagina senza credenziali -> 401
+== anti-CSRF
+OK   POST senza token -> 403
+OK   POST con Origin estraneo -> 403
+== validazione
+OK   governor userspace rifiutato
+OK   governor con caratteri estranei rifiutato
+OK   frequenza non supportata rifiutata
+OK   frequenza non numerica rifiutata
+OK   frequenza vuota rifiutata
+OK   minima sopra la massima rifiutata
+OK   bm_custom.conf invariato dopo i rifiuti
+OK   sysfs invariato dopo i rifiuti
+tr: short write
+OK   messaggio err_cpu mostrato
+== governor e limiti applicati
+OK   performance accettato
+OK   conf salvata
+OK   sysfs: performance 300000-998400
+OK   performance -> 998,4 MHz
+OK   performance con massima 600 MHz -> 600 MHz
+OK   powersave con minima 748,8 MHz -> 748,8 MHz
+OK   minima = massima = 600 MHz
+OK   conservative 300000-998400
+OK   ondemand con massima 748,8 MHz
+tr: short write
+OK   pagina: massima salvata selezionata
+tr: short write
+OK   pagina: governor salvato selezionato
+OK   il kernel conserva i limiti al cambio di governor
+== pe (richieste di pe_service)
+OK   governor manuale: richiesta di pe_service registrata e ignorata
+OK   ritorno ad auto: riprende l'ultima richiesta di pe_service
+OK   auto: pe ondemand applicato
+OK   auto: pe performance applicato
+OK   pe con governor non previsto rifiutato
+OK   auto senza richieste di pe_service -> ondemand (come power_config)
+== applica con configurazioni anomale
+OK   da minima 998,4 MHz a massima 600 MHz senza errori
+OK   valori corrotti -> auto e limiti hardware
+OK   minima sopra la massima nel file -> limiti hardware
+tr: short write
+OK   pagina: con file anomalo mostra i limiti hardware
+OK   senza chiavi cpu_* -> auto, 300000-998400
+tr: short write
+OK   pagina: predefinito Automatico
+OK   comando sconosciuto -> errore
+== ripristino
+stato finale: performance 300000 998400, pe: performance
+conf finale: 
+
+RISULTATO: 42 OK, 0 FAIL
