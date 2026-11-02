@@ -1,0 +1,15 @@
+2a696dea488ae311729d7808d26a7ffcd2c3c68fbc74fdd5e51ac70558419b74  /bmdefsys/WEBSERVER/webpages/cgi-bin/custom.cgi
+2359a8e63ecfb7f67e8e71b4a6879f513c5b6f49b1482cf5a3c06ff09011f981  /bmdefsys/WEBSERVER/webpages/controlPanel.html
+534015ce3ad7dc02c9bfbe395e44900f58100bd04b0b1fa85608e66f53559ac8  /bmdefsys/WEBSERVER/webpages/systemManagementPopup.html
+8a1564e23266d6a0704765a29c2dd55e50668a495f0d35921964900fb6857955  /bmdefsys/WEBSERVER/webpages/js/custom_autoreboot.js
+1002d7435ec84ee1945aba8f29e009080d0b06058698272d4963d89c289375cc  /bmdefsys/usr/bin/custom_autoreboot.sh
+74b92de742c98f75da666fa63373b840dc0107b18812ee03f6a5bd31365e2d6a  /etc/init.d/custom_autoreboot
+4b0a2d05059903857f98c85724b8be67dfec5be8dd8eee26f3b9e5a62e33cc6a  /bmdefsys/etc/lighttpd.conf
+-rwxrwx---    1 www-data www-data     28379 Nov  2 13:51 /bmdefsys/WEBSERVER/webpages/cgi-bin/custom.cgi
+-rwxrwx---    1 www-data www-data     43862 Nov  2 13:51 /bmdefsys/WEBSERVER/webpages/controlPanel.html
+-rwxrwx---    1 www-data www-data      3617 Nov  2 13:51 /bmdefsys/WEBSERVER/webpages/js/custom_autoreboot.js
+-rwxrwx---    1 www-data www-data     49973 Nov  2 13:51 /bmdefsys/WEBSERVER/webpages/systemManagementPopup.html
+-rwxr-xr-x    1 root     root          4759 Nov  2 13:51 /bmdefsys/usr/bin/custom_autoreboot.sh
+-rwxr-xr-x    1 root     root           486 Nov  2 13:51 /etc/init.d/custom_autoreboot
+lrwxrwxrwx    1 root     root            27 Nov  2 13:51 /etc/rc5.d/S99custom_autoreboot -> ../init.d/custom_autoreboot
+lighttpd.conf originale: nessun riavvio necessario

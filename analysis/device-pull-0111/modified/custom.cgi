@@ -1,6 +1,8 @@
 #!/bin/sh
 # Pagina custom della web UI del DWR-932: repeater Wi-Fi (Wi-Fi come uscita internet, modalità QCMAP AP-STA),
 # potenza TX Wi-Fi, beacon interval e DTIM. Il country code non compare: è fissato su IT da wlan_8192c.sh.
+# Con ?api=autoreboot risponde in JSON alla tab "Riavvio programmato" del popup Amministrazione della web UI
+# stock (js/custom_autoreboot.js); la POST action=autoreboot salva la configurazione.
 # Eseguita da lighttpd come CGI, come root.
 # Autenticazione HTTP Basic verificata qui: utente e password della web UI. /bmdefsys/www/lighttpd.user contiene
 # "utente:md5(password)" (la pagina di login D-Link invia CryptoJS.MD5 della password), quindi lighttpd con
@@ -17,6 +19,7 @@ VXD=/var/rtl8192c/wlan0-vxd
 WL0=/var/rtl8192c/wlan0
 WPA="wpa_cli -i wlan0-vxd"
 USERS=/bmdefsys/www/lighttpd.user
+AR=/bmdefsys/usr/bin/custom_autoreboot.sh
 TOKF=/tmp/custom_cgi.csrf
 FAILF=/tmp/custom_cgi.fail
 LOCK=/tmp/custom_cgi.lock
@@ -75,6 +78,7 @@ h() { printf '%s' "$1" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g'
 # Valore di un campo del corpo POST (i nomi usati sono solo [a-z_])
 field() { printf '&%s&' "$BODY" | sed -n "s/.*&$1=\([^&]*\)&.*/\1/p"; }
 redirect() { printf 'Status: 303 See Other\r\nLocation: custom.cgi?m=%s\r\nCache-Control: no-store\r\n\r\n' "$1"; exit 0; }
+redirect_api() { printf 'Status: 303 See Other\r\nLocation: custom.cgi?api=autoreboot&m=%s\r\nCache-Control: no-store\r\n\r\n' "$1"; exit 0; }
 deny() { printf 'Status: 403 Forbidden\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n'; echo "Richiesta rifiutata: ricarica la pagina e riprova."; exit 0; }
 conf_set() {
 	tmp="$CONF.tmp.$$"
@@ -236,6 +240,30 @@ if [ "$REQUEST_METHOD" = "POST" ]; then
 		$WPA save_config >/dev/null 2>&1
 		redirect sta_selected
 		;;
+	autoreboot)
+		en=$(field enable)
+		hh=$(field hour)
+		mm=$(field minute)
+		# Giorni cron 0-6 (0 = domenica) separati da virgole, che nel corpo urlencoded arrivano come %2C
+		gg=$(field days | sed 's/%2[Cc]/,/g')
+		case "$en" in 0|1) ;; *) redirect_api err_val;; esac
+		case "$hh" in [01][0-9]|2[0-3]) ;; *) redirect_api err_val;; esac
+		case "$mm" in [0-5][0-9]) ;; *) redirect_api err_val;; esac
+		if [ -n "$gg" ]; then
+			printf '%s' "$gg" | grep -Eq '^[0-6](,[0-6]){0,6}$' || redirect_api err_days
+		fi
+		giorni=""
+		for d in 1 2 3 4 5 6 0; do
+			case ",$gg," in *",$d,"*) giorni="$giorni${giorni:+,}$d";; esac
+		done
+		[ "$en" = 1 ] && [ -z "$giorni" ] && redirect_api err_days
+		conf_set autoreboot_enable "$en"
+		conf_set autoreboot_time "$hh:$mm"
+		# Disattivando senza giorni restano quelli salvati prima
+		[ -n "$giorni" ] && conf_set autoreboot_days "$giorni"
+		$AR applica >/dev/null 2>&1
+		redirect_api ar_ok
+		;;
 	*)
 		redirect err_val
 		;;
@@ -244,6 +272,26 @@ fi
 
 # --- GET: stato corrente ---
 msg=$(printf '&%s&' "$QUERY_STRING" | sed -n 's/.*&m=\([a-z_]*\)&.*/\1/p')
+
+# Stato del riavvio programmato in JSON per la tab della web UI stock: ogni valore è validato o ha formato fisso
+case "&$QUERY_STRING&" in *'&api=autoreboot&'*)
+	en=$(sed -n 's/^autoreboot_enable=//p' "$CONF" 2>/dev/null | head -1)
+	ora=$(sed -n 's/^autoreboot_time=//p' "$CONF" 2>/dev/null | head -1)
+	gg=$(sed -n 's/^autoreboot_days=//p' "$CONF" 2>/dev/null | head -1)
+	[ "$en" = 1 ] || en=0
+	case "$ora" in [01][0-9]:[0-5][0-9]|2[0-3]:[0-5][0-9]) ;; *) ora=04:00;; esac
+	printf '%s' "$gg" | grep -Eq '^[0-6](,[0-6]){0,6}$' || gg=1,2,3,4,5,6,0
+	set -- $(TZ=$(cat /etc/TZ 2>/dev/null) date '+%d/%m/%Y %H:%M %z %Y')
+	adesso="$1 $2"
+	fuso=$3
+	case "$fuso" in [+-][0-9][0-9][0-9][0-9]) ;; *) fuso="";; esac
+	if [ "$4" -ge 2025 ] 2>/dev/null; then orologio=1; else orologio=0; fi
+	printf 'Content-Type: application/json; charset=utf-8\r\nCache-Control: no-store\r\n\r\n'
+	printf '{"enable":%s,"time":"%s","days":"%s","now":"%s","utc_offset":"%s","clock_ok":%s,"csrf":"%s","m":"%s"}\n' \
+		"$en" "$ora" "$gg" "$adesso" "$fuso" "$orologio" "$TOK" "$msg"
+	exit 0
+	;;
+esac
 case "&$QUERY_STRING&" in *'&scan=1&'*) SCAN=1;; *) SCAN=0;; esac
 case "$msg" in
 	power_ok) MSG="Potenza TX applicata."; MCL=ok;;

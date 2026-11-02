@@ -1,0 +1,25 @@
+ora del router: 21:52, giorno 1, uptime 1238 s
+esito: custom.cgi?api=autoreboot&m=ar_ok
+56 21 * * 1 /bmdefsys/usr/bin/custom_autoreboot.sh esegui
+crond: 22903
+uptime: 40 s
+UTC: 2026-11-02 13:56:42   locale: 2026-11-02 21:56:42
+crond: 1157 cmdline: crond 
+crontab:
+56 21 * * 1 /bmdefsys/usr/bin/custom_autoreboot.sh esegui
+ultimo riavvio programmato: 2026-11-02 21:56
+syslog salvato prima del riavvio:
+Nov  2 21:56:00 mdm9625-perf user.notice riavvio_programmato: riavvio programmato alle 21:56
+autoreboot_enable=1
+autoreboot_time=21:56
+autoreboot_days=1
+esito: custom.cgi?api=autoreboot&m=ar_ok
+autoreboot_days=1
+autoreboot_enable=0
+autoreboot_time=04:00
+esito: custom.cgi?api=autoreboot&m=ar_ok
+autoreboot_enable=0
+autoreboot_time=04:00
+autoreboot_days=1,2,3,4,5,6,0
+crontab-righe: 0
+1157

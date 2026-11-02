@@ -1,0 +1,285 @@
+* daemon not running. starting it now on port 5037 *
+* daemon started successfully *
+222 KB/s (2064 bytes in 0.009s)
+
+##### uptime / data
+79.69 61.06
+Mon Nov  2 13:32:54 UTC 2026
+Mon Nov  2 13:32:54 UTC 2026
+TZ file:
+GMT-8
+date con TZ: 2026-11-02 21:32:54 GMT 1 1
+Thu Jan  1 03:10:35 1970  0.000000 seconds
+11435
+-rw-r--r--    1 root     root            13 Nov  2 13:31 /etc/timestamp
+110213312026
+off
+
+##### NTP / ora in bm_config.conf
+NTPEnable=1
+NTPServer=1.my.pool.ntp.org
+NTPServer2=2.my.pool.ntp.org
+NTPServer3=3.my.pool.ntp.org
+NTPServer4=4.my.pool.ntp.org
+NTPTimeout=10
+NTPRetrySleep=5
+NTPSyncInterval=3600
+TZ_DST_ENABLE=0
+TZ_DST_START_M=4
+TZ_DST_START_W=1
+TZ_DST_START_D=0
+TZ_DST_START_CLOCK=2
+TZ_DST_END_M=10
+TZ_DST_END_W=5
+TZ_DST_END_D=0
+TZ_DST_END_CLOCK=2
+AUTOREBOOT_default=0
+AUTOREBOOT_enable=0
+AUTOREBOOT_Schedule_hour=0
+AUTOREBOOT_Schedule_minute=0
+AUTOREBOOT_Schedule_Type=0
+AUTOREBOOT_Schedule_WEEK=0
+AUTOREBOOT_Schedule_DAY=0
+341
+
+##### busybox / crond
+BusyBox v1.23.1 (2024-06-28 16:53:59 CST) multi-call binary.
+ls: /usr/sbin/crond: No such file or directory
+lrwxrwxrwx    1 root     root             7 Jun 28  2024 /bin/crontab -> busybox
+lrwxrwxrwx    1 root     root            14 Jun 28  2024 /sbin/crond -> ../bin/busybox
+pidof crond: 
+1
+
+##### /var/spool e crontab
+ls: /var/spool/cron: No such file or directory
+ls: /var/spool/cron/crontabs: No such file or directory
+/var:
+total 166
+drwxr-xr-x    1 root     root          2048 Nov  2 13:31 .
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 ..
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 backups
+lrwxrwxrwx    1 root     root            14 Jun 28  2024 cache -> volatile/cache
+drwxr-xr-x    1 root     root          2048 Jun  7  2025 db
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 lib
+drwxr-sr-x    1 root     root          2048 Jun 28  2024 local
+lrwxrwxrwx    1 root     root            13 Jun 28  2024 lock -> volatile/lock
+lrwxrwxrwx    1 root     root            12 Jun 28  2024 log -> volatile/log
+srwxr-xr-x    1 root     root          2048 Jun  7  2025 qmux_client_socket    446
+srwxr-xr-x    1 root     root          2048 Jun  7  2025 qmux_client_socket    447
+srwxr-xr-x    1 root     root          2048 Nov  2 13:04 qmux_client_socket    452
+srwxr-xr-x    1 root     root          2048 Nov  2 13:31 qmux_client_socket    453
+srwxr-xr-x    1 root     root          2048 Jun  7  2025 qmux_client_socket    479
+srwxr-xr-x    1 root     root          2048 Nov  2 13:04 qmux_client_socket    485
+srwxr-xr-x    1 root     root          2048 Nov  2 13:31 qmux_client_socket    486
+srwxr-xr-x    1 root     root          2048 Jun 28  2024 qmux_client_socket    729
+srwxr-xr-x    1 root     root          2048 Jun  2  2025 qmux_client_socket    737
+srwxr-xr-x    1 root     root          2048 Jun  2  2025 qmux_client_socket    739
+srwxr-xr-x    1 root     root          2048 Nov  2 11:23 qmux_client_socket    749
+srwxr-xr-x    1 root     root          2048 Jun  2  2025 qmux_client_socket    752
+srwxr-xr-x    1 root     root          2048 Nov  2 11:23 qmux_client_socket    753
+srwxr-xr-x    1 root     root          2048 Nov  2 11:23 qmux_client_socket    761
+srwxr-xr-x    1 root     root          2048 Nov  2 11:23 qmux_client_socket    783
+srwxr-xr-x    1 root     root          2048 Nov  2 13:04 qmux_client_socket    938
+srwxr-xr-x    1 root     root          2048 Nov  2 11:27 qmux_client_socket    939
+srwxr-xr-x    1 root     root          2048 Nov  2 13:31 qmux_client_socket    945
+srwxr-xr-x    1 root     root          2048 Nov  2 13:04 qmux_client_socket    951
+srwxr-xr-x    1 root     root          2048 Nov  2 13:31 qmux_client_socket    954
+srwxr-xr-x    1 root     root          2048 Nov  2 11:27 qmux_client_socket    959
+srwxr-xr-x    1 root     root          2048 Nov  2 11:27 qmux_client_socket    961
+srwxr-xr-x    1 root     root          2048 Nov  2 13:31 qmux_client_socket    963
+srwxr-xr-x    1 root     root          2048 Nov  2 13:04 qmux_client_socket    968
+srwxr-xr-x    1 root     root          2048 Nov  2 11:22 qmux_client_socket   1082
+srwxr-xr-x    1 root     root          2048 Nov  2 11:22 qmux_client_socket   1086
+srwxr-xr-x    1 root     root          2048 Jun  2  2025 qmux_client_socket   1092
+srwxr-xr-x    1 root     root          2048 Jun  7  2025 qmux_client_socket   1096
+srwxr-xr-x    1 root     root          2048 Jun  2  2025 qmux_client_socket   1099
+srwxr-xr-x    1 root     root          2048 Nov  2 11:22 qmux_client_socket   1100
+srwxr-xr-x    1 root     root          2048 Jun  7  2025 qmux_client_socket   1102
+srwxr-xr-x    1 root     root          2048 Jun  7  2025 qmux_client_socket   1110
+srwxr-xr-x    1 root     root          2048 Nov  2 11:22 qmux_client_socket   1112
+srwxr-xr-x    1 root     root          2048 Jun  7  2025 qmux_client_socket   1119
+srwxr-xr-x    1 root     root          2048 Jun  7  2025 qmux_client_socket   1131
+srwxr-xr-x    1 root     root          2048 Jun  7  2025 qmux_client_socket   1133
+srwxr-xr-x    1 root     root          2048 Jun  7  2025 qmux_client_socket   1143
+srwxr-xr-x    1 root     root          2048 Jun  7  2025 qmux_client_socket   1160
+srwxr-xr-x    1 root     root          2048 Nov  2 11:22 qmux_client_socket   1174
+srwxr-xr-x    1 root     root          2048 Nov  2 11:23 qmux_client_socket   1184
+srwxr-xr-x    1 root     root          2048 Nov  2 11:27 qmux_client_socket   1188
+srwxr-xr-x    1 root     root          2048 Nov  2 13:31 qmux_client_socket   1190
+srwxr-xr-x    1 root     root          2048 Jun  7  2025 qmux_client_socket   1193
+srwxr-xr-x    1 root     root          2048 Nov  2 13:04 qmux_client_socket   1195
+srwxr-xr-x    1 root     root          2048 Nov  2 11:23 qmux_client_socket   1201
+srwxr-xr-x    1 root     root          2048 Nov  2 11:27 qmux_client_socket   1216
+srwxr-xr-x    1 root     root          2048 Nov  2 13:04 qmux_client_socket   1217
+srwxr-xr-x    1 root     root          2048 Nov  2 13:31 qmux_client_socket   1218
+srwxr-xr-x    1 root     root          2048 Jun  7  2025 qmux_client_socket   1280
+srwxr-xr-x    1 root     root          2048 Jun  7  2025 qmux_client_socket   1281
+srwxr-xr-x    1 root     root          2048 Jun  7  2025 qmux_client_socket   1306
+srwxr-xr-x    1 root     root          2048 Jun  2  2025 qmux_client_socket   1354
+srwxr-xr-x    1 root     root          2048 Jun 28  2024 qmux_client_socket   5546
+srwxr-xr-x    1 root     root          2048 Jun  2  2025 qmux_client_socket   5664
+srwxr-xr-x    1 root     root          2048 Jun 28  2024 qmux_client_socket   9399
+srw-rw----    1 root     root          2048 Nov  2 13:31 qmux_connect_socket
+-rw-r--r--    1 root     root         10064 Nov  2 13:31 rdsh_proxy_log.dat
+-rw-r--r--    1 root     root         12288 Nov  2 13:31 rdsh_proxy_raw.dat
+-rw-r--r--    1 root     root            13 Jun  7  2025 remote_usb_ip
+drwxr-xr-x    1 root     root          2048 Jun  7  2025 rtl8192c
+lrwxrwxrwx    1 root     root            12 Jun 28  2024 run -> volatile/run
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 spool
+-rw-r--r--    1 root     root          5076 Jun  7  2025 syslog_messages
+lrwxrwxrwx    1 root     root            12 Jun 28  2024 tmp -> volatile/tmp
+drwxrwxrwt    7 root     root           140 Jan  1  1970 volatile
+----r-----    1 root     root           536 Nov  2 13:31 wpa-wlan0.conf
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 wps
+----r-----    1 root     root          2335 Nov  2 13:31 wsc-wlan0.conf
+prw-r--r--    1 root     root          2048 Nov  2 13:31 wscd-wlan0.fifo
+
+/var/spool:
+total 6
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 .
+drwxr-xr-x    1 root     root          2048 Nov  2 13:31 ..
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 mail
+crontab: can't change directory to '/var/spool/cron/crontabs': No such file or directory
+rootfs on / type rootfs (rw)
+/dev/root on / type yaffs2 (rw,relatime)
+proc on /proc type proc (rw,relatime)
+sysfs on /sys type sysfs (rw,relatime)
+debugfs on /sys/kernel/debug type debugfs (rw,relatime)
+tmpfs on /dev type tmpfs (rw,relatime,size=64k,mode=755)
+devpts on /dev/pts type devpts (rw,relatime,mode=600)
+tmpfs on /dev/shm type tmpfs (rw,relatime,mode=777)
+tmpfs on /var/volatile type tmpfs (rw,relatime,size=67584k)
+/dev/mtdblock21 on /usr type yaffs2 (rw,relatime)
+/dev/mtdblock19 on /bmdefsys type yaffs2 (rw,relatime)
+/dev/mtdblock18 on /etc/backup type yaffs2 (rw,relatime)
+/dev/mtdblock17 on /mnt/cdrom type yaffs2 (rw,relatime)
+/dev/mtdblock12 on /cache type yaffs2 (rw,relatime)
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/root                25984     17136      8848  66% /
+/dev/mtdblock12         128384      3072    125312   2% /cache
+/dev/mtdblock19          51584     11084     40500  21% /bmdefsys
+
+##### init: rc5.d e rc6.d
+lrwxrwxrwx    1 root     root            42 Jun 28  2024 S60start_QCMAP_ConnectionManager_le -> ../init.d/start_QCMAP_ConnectionManager_le
+lrwxrwxrwx    1 root     root            18 Jun 28  2024 S70lighttpd -> ../init.d/lighttpd
+lrwxrwxrwx    1 root     root            24 Jun 28  2024 S90start_ipacm_le -> ../init.d/start_ipacm_le
+lrwxrwxrwx    1 root     root            22 Jun 28  2024 S90start_qti_le -> ../init.d/start_qti_le
+lrwxrwxrwx    1 root     root            19 Jun 28  2024 S97data-init -> ../init.d/data-init
+lrwxrwxrwx    1 root     root            31 Jun 28  2024 S98start_diag_socket_log -> ../init.d/start_diag_socket_log
+lrwxrwxrwx    1 root     root            22 Jun 28  2024 S99rmnologin.sh -> ../init.d/rmnologin.sh
+lrwxrwxrwx    1 root     root            23 Jun 28  2024 S99stop-bootlogd -> ../init.d/stop-bootlogd
+/etc/rc0.d:
+total 18
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 .
+drwxr-xr-x    1 root     root          2048 Nov  2 13:31 ..
+lrwxrwxrwx    1 root     root            24 Jun 28  2024 K01modem-shutdown -> ../init.d/modem-shutdown
+lrwxrwxrwx    1 root     root            23 Jun 28  2024 K01time_serviced -> ../init.d/time_serviced
+lrwxrwxrwx    1 root     root            24 Jun 28  2024 K10start_ipacm_le -> ../init.d/start_ipacm_le
+lrwxrwxrwx    1 root     root            22 Jun 28  2024 K10start_qti_le -> ../init.d/start_qti_le
+lrwxrwxrwx    1 root     root            19 Jun 28  2024 K15data-init -> ../init.d/data-init
+lrwxrwxrwx    1 root     root            24 Jun 28  2024 K19avahi-dnsconfd -> ../init.d/avahi-dnsconfd
+lrwxrwxrwx    1 root     root            16 Jun 28  2024 K20dbus-1 -> ../init.d/dbus-1
+lrwxrwxrwx    1 root     root            20 Jun 28  2024 K40networking -> ../init.d/networking
+lrwxrwxrwx    1 root     root            42 Jun 28  2024 K40start_QCMAP_ConnectionManager_le -> ../init.d/start_QCMAP_ConnectionManager_le
+lrwxrwxrwx    1 root     root            22 Jun 28  2024 K50power_config -> ../init.d/power_config
+lrwxrwxrwx    1 root     root            24 Jun 28  2024 K60thermal-engine -> ../init.d/thermal-engine
+lrwxrwxrwx    1 root     root            18 Jun 28  2024 K70lighttpd -> ../init.d/lighttpd
+lrwxrwxrwx    1 root     root            14 Jun 28  2024 K80adbd -> ../init.d/adbd
+lrwxrwxrwx    1 root     root            22 Jun 28  2024 K80atfwd_daemon -> ../init.d/atfwd_daemon
+lrwxrwxrwx    1 root     root            23 Jun 28  2024 K80diagrebootapp -> ../init.d/diagrebootapp
+lrwxrwxrwx    1 root     root            17 Jun 28  2024 K80ipthdme -> ../init.d/ipthdme
+lrwxrwxrwx    1 root     root            17 Jun 28  2024 K80netmgrd -> ../init.d/netmgrd
+lrwxrwxrwx    1 root     root            15 Jun 28  2024 K80qmuxd -> ../init.d/qmuxd
+lrwxrwxrwx    1 root     root            15 Jun 28  2024 K80qrngd -> ../init.d/qrngd
+lrwxrwxrwx    1 root     root            31 Jun 28  2024 K80start_diag_socket_log -> ../init.d/start_diag_socket_log
+lrwxrwxrwx    1 root     root            16 Jun 28  2024 K90syslog -> ../init.d/syslog
+lrwxrwxrwx    1 root     root            18 Jun 28  2024 S20sendsigs -> ../init.d/sendsigs
+lrwxrwxrwx    1 root     root            21 Jun 28  2024 S25save-rtc.sh -> ../init.d/save-rtc.sh
+lrwxrwxrwx    1 root     root            22 Jun 28  2024 S31umountnfs.sh -> ../init.d/umountnfs.sh
+lrwxrwxrwx    1 root     root            18 Jun 28  2024 S40umountfs -> ../init.d/umountfs
+lrwxrwxrwx    1 root     root            14 Jun 28  2024 S90halt -> ../init.d/halt
+lrwxrwxrwx    1 root     root            18 Jun 28  2024 S99shutdown -> ../init.d/shutdown
+
+/etc/rc6.d:
+total 17
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 .
+drwxr-xr-x    1 root     root          2048 Nov  2 13:31 ..
+lrwxrwxrwx    1 root     root            24 Jun 28  2024 K01modem-shutdown -> ../init.d/modem-shutdown
+lrwxrwxrwx    1 root     root            23 Jun 28  2024 K01time_serviced -> ../init.d/time_serviced
+lrwxrwxrwx    1 root     root            24 Jun 28  2024 K10start_ipacm_le -> ../init.d/start_ipacm_le
+lrwxrwxrwx    1 root     root            22 Jun 28  2024 K10start_qti_le -> ../init.d/start_qti_le
+lrwxrwxrwx    1 root     root            19 Jun 28  2024 K15data-init -> ../init.d/data-init
+lrwxrwxrwx    1 root     root            24 Jun 28  2024 K19avahi-dnsconfd -> ../init.d/avahi-dnsconfd
+lrwxrwxrwx    1 root     root            16 Jun 28  2024 K20dbus-1 -> ../init.d/dbus-1
+lrwxrwxrwx    1 root     root            20 Jun 28  2024 K40networking -> ../init.d/networking
+lrwxrwxrwx    1 root     root            42 Jun 28  2024 K40start_QCMAP_ConnectionManager_le -> ../init.d/start_QCMAP_ConnectionManager_le
+lrwxrwxrwx    1 root     root            22 Jun 28  2024 K50power_config -> ../init.d/power_config
+lrwxrwxrwx    1 root     root            24 Jun 28  2024 K60thermal-engine -> ../init.d/thermal-engine
+lrwxrwxrwx    1 root     root            18 Jun 28  2024 K70lighttpd -> ../init.d/lighttpd
+lrwxrwxrwx    1 root     root            14 Jun 28  2024 K80adbd -> ../init.d/adbd
+lrwxrwxrwx    1 root     root            22 Jun 28  2024 K80atfwd_daemon -> ../init.d/atfwd_daemon
+lrwxrwxrwx    1 root     root            23 Jun 28  2024 K80diagrebootapp -> ../init.d/diagrebootapp
+lrwxrwxrwx    1 root     root            17 Jun 28  2024 K80ipthdme -> ../init.d/ipthdme
+lrwxrwxrwx    1 root     root            17 Jun 28  2024 K80netmgrd -> ../init.d/netmgrd
+lrwxrwxrwx    1 root     root            15 Jun 28  2024 K80qmuxd -> ../init.d/qmuxd
+lrwxrwxrwx    1 root     root            15 Jun 28  2024 K80qrngd -> ../init.d/qrngd
+lrwxrwxrwx    1 root     root            31 Jun 28  2024 K80start_diag_socket_log -> ../init.d/start_diag_socket_log
+lrwxrwxrwx    1 root     root            16 Jun 28  2024 K90syslog -> ../init.d/syslog
+lrwxrwxrwx    1 root     root            18 Jun 28  2024 S20sendsigs -> ../init.d/sendsigs
+lrwxrwxrwx    1 root     root            21 Jun 28  2024 S25save-rtc.sh -> ../init.d/save-rtc.sh
+lrwxrwxrwx    1 root     root            22 Jun 28  2024 S31umountnfs.sh -> ../init.d/umountnfs.sh
+lrwxrwxrwx    1 root     root            18 Jun 28  2024 S40umountfs -> ../init.d/umountfs
+lrwxrwxrwx    1 root     root            16 Jun 28  2024 S99reboot -> ../init.d/reboot
+ls: /etc/init.d/custom_autoreboot: No such file or directory
+-rwxr-xr-x    1 root     root           681 Jun 28  2024 /etc/init.d/busybox-cron
+
+##### syslog salvato dal riavvio stock
+-rw-r--r--    1 root     root          5076 Jun  7  2025 /var/syslog_messages
+
+##### processi con /dev/mtd* aperti
+fine elenco mtd
+
+##### upgrade in corso
+ls: /cache/upgrade.zip: No such file or directory
+ls: /cache/upgrade.bin: No such file or directory
+ls: /tmp/WebFUploadState: No such file or directory
+total 1762
+drwxr-xr-x    1 root     root          2048 Nov  2 13:32 .
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 ..
+-rw-r--r--    1 root     root           363 Oct 25 01:49 at_probe.sh
+-rw-r--r--    1 root     root          5338 Jun  7  2025 backup_rtl8192c_pre_it.tgz
+drwx------    1 root     root          2048 Jun 28  2024 bm_fota
+-rw-r--r--    1 root     root           748 Nov  2 13:13 ccheck.sh
+-rwxrwx---    1 www-data www-data     43574 Jun 28  2024 controlPanel.html.orig
+-rwxrwx---    1 www-data www-data      3679 Oct 25 07:44 custom.cgi.prev
+-rw-r--r--    1 root     root          2260 Nov  2 10:38 dwr_apsta_check.sh
+-rw-r--r--    1 root     root           989 Nov  2 10:42 dwr_apsta_disable.sh
+-rw-r--r--    1 root     root          1128 Nov  2 10:42 dwr_apsta_enable.sh
+-rw-r--r--    1 root     root          1428 Nov  2 10:43 dwr_apsta_status.sh
+-rw-r--r--    1 root     root          2064 Nov  2 13:33 dwr_autoreboot_probe.sh
+-rw-r--r--    1 root     root          4759 Nov  2 13:01 dwr_beacon_cgitest.sh
+-rw-r--r--    1 root     root           856 Nov  2 12:44 dwr_beacon_live_test.sh
+-rw-r--r--    1 root     root          1418 Nov  2 12:43 dwr_beacon_probe.sh
+-rw-r--r--    1 root     root          9843 Nov  2 13:01 dwr_cgitest.sh
+-rw-r--r--    1 root     root          1150 Nov  2 11:40 dwr_cgitest_mode.sh
+-rw-r--r--    1 root     root          2210 Nov  2 13:13 dwr_deploy_ui.sh
+-rw-r--r--    1 root     root          1293 Nov  2 12:45 dwr_initsh_apsta_test.sh
+-rw-r--r--    1 root     root          4446 Oct 25 07:10 dwr_inventory.sh
+-rw-r--r--    1 root     root          1929 Nov  2 11:06 dwr_lighttpd_authtest.sh
+-rw-r--r--    1 root     root          1371 Nov  2 11:37 dwr_lighttpd_hdrtest.sh
+-rw-r--r--    1 root     root           870 Oct 25 07:30 dwr_power_test.sh
+-rw-r--r--    1 root     root          2131 Oct 25 07:15 dwr_probe_wifi_power.sh
+-rw-r--r--    1 root     root          1498 Nov  2 10:51 dwr_sta_apply.sh
+-rw-r--r--    1 root     root           979 Nov  2 10:50 dwr_sta_connectivity.sh
+-rw-r--r--    1 root     root          1010 Nov  2 10:49 dwr_sta_diag.sh
+-rw-r--r--    1 root     root          1255 Nov  2 11:00 dwr_ui_probe.sh
+-rw-r--r--    1 root     root          1924 Nov  2 12:12 dwr_upnp_probe.sh
+-rw-r--r--    1 root     root          2094 Nov  2 12:13 dwr_upnp_soap_ro.sh
+-rw-r--r--    1 root     root          1063 Oct 25 07:53 dwr_verify.sh
+-rw-r--r--    1 root     root           748 Jun  7  2025 init_apply.log
+-rw-r--r--    1 root     root           711 Jun  7  2025 init_it.log
+-rw-r--r--    1 root     root           746 Jun  7  2025 init_pw.log
+-rw-r--r--    1 root     root           711 Nov  2 12:45 initsh_test.log
+-rw-r--r--    1 root     root         26784 Jun  7  2025 inv.txt
+-rw-r--r--    1 root     root           107 Nov  2 13:02 ipt.sh
+-rw-r--r--    1 root     root           405 Nov  2 12:57 l2.sh

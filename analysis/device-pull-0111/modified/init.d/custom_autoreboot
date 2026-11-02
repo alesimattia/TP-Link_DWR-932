@@ -1,0 +1,20 @@
+#!/bin/sh
+# Riavvio programmato del DWR-932: all'avvio rigenera la riga nel crontab di root da bm_custom.conf e
+# avvia crond senza aspettare la prima sincronizzazione NTP (dopo la quale qcmap_fcgi riavvia crond).
+# Installato come /etc/init.d/custom_autoreboot con il link /etc/rc5.d/S99custom_autoreboot.
+
+AR=/bmdefsys/usr/bin/custom_autoreboot.sh
+
+case "$1" in
+	start)
+		[ -x "$AR" ] && "$AR" applica
+		;;
+	stop)
+		;;
+	*)
+		echo "uso: $0 {start|stop}" >&2
+		exit 1
+		;;
+esac
+
+exit 0

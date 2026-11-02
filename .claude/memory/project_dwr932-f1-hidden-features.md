@@ -27,7 +27,7 @@ FUNZIONI (chiave config = valore attuale)
 - mDNS: mobileap_cfg MDNS=0 | avahi-daemon PRESENTE 01.11 → sbloccabile via flag.
 - URL filter: urlFilterEnable=0 (+urlFilterKeywords) | API | UI+ applications.js.
 - Quota dati/blocco: quota_limit=0, block_onlimit=0, week_start, recount_mday; netstat_enable=0, netstat_sim_type, netstat_data_total, netstat_validity_period, netstat_auto_check | API | UI+ parziale (controlPanel.js quota_limit, netstat) | bin bm_netstat, bm_dataLimit.
-- Auto-reboot programmato: AUTOREBOOT_enable=0 (+_default, Schedule_hour/minute/Type/WEEK/DAY) | API | UI- → serve UI nuova.
+- Auto-reboot programmato: AUTOREBOOT_* in bm_config.conf INERTI (qcmap_fcgi li legge/scrive soltanto, nessun consumatore) → implementato con crond + custom_autoreboot.sh + tab nella UI stock, FATTO 2026-11-02 → [[dwr932-f1-autoreboot]].
 - Risposta ping WAN: wwan_ping_enable=0 | API | UI-.
 - DNS WAN manuali: manual_wwanDns_enable=0 (+pri/sec addr) | API bm_manual_wwanDns_get/set | UI?.
 - apn_profile_mode=0 | API.
@@ -61,6 +61,7 @@ RICETTA REA/Ghidra (per decompilare altri handler quando si implementano gli obi
 - `rea search <bin> '<regex>' --kind strings --mode regex --provider ghidra --snapshot analysis/rea/qcmap_fcgi_0111.snapshot --format json` → trova indirizzo stringa; poi `rea xrefs <bin> <addr> ...` → indirizzi funzioni che la usano; poi `rea decompile <bin> <addr> ...` → pseudo-C. Lo snapshot riusa l'analisi (veloce).
 - Binario STRIPPED: `--kind procedures` NON trova nulla (nessun nome) → usare sempre il percorso stringa→xrefs→decompile per indirizzo. normalized_result della search = lista {address,value}; della xrefs = lista indirizzi.
 - Tool MCP rea__* FUNZIONANTI dal 2026-11-02 (env attiva): open_binary(path, snapshot_path=analysis/rea/qcmap_fcgi_0111.snapshot) → search_strings regex → xrefs → resolve_containing_procedure → procedure_pseudo_code; close_binary senza snapshot_path (non sovrascrivere). Indirizzo Ghidra = offset file + 0x8000 (`strings -t x` + 0x8000).
+- Codice che Ghidra non delimita (es. gestori di segnale, xrefs vuote, resolve "not_in_procedure"): `xcrun llvm-objdump -d --triple=armv7 <bin> > x.dis` (disassemblato completo ~4,6 MB, rigenerabile, non versionato) + `python3 -I tools/resolve_pcrel.py x.dis <bin> <da> <a>` = stringhe PC-relative e bl. PLT → simbolo: stub `add r12,pc,#0; add r12,r12,#0x70000; ldr pc,[r12,#off]!` → GOT = stub+8+0x70000+off, poi `llvm-objdump --dynamic-reloc`. Indirizzi in memoria struct bm_config: cercare `movw rX, #0x1167`-style.
 
 MAPPA FUNZIONI qcmap_fcgi 01.11 (sha256 ade3017aaf3ef7…, analysis/device-pull-0111/qcmap_fcgi; indirizzi validi solo per questo binario):
 - Login doLogin (0x1be88): confronta l'MD5 inviato dal browser con /bmdefsys/www/lighttpd.user ("admin:<md5hex>"); token di 32 char da /dev/urandom solo in memoria; record /www/qcmap_session 31 B = tv_sec, tv_usec, IP (16 B), timeout, etichetta (NIENTE token); cookie Set-Cookie qSessId=<token>; anti-bruteforce /www/login_attempt. Check: doCheckAuth 0x1c80c (IP + token + timeout), parser_CheckAuth 0x1b834 (login.cgi POST check_valid=qSessId=...). authID: refreshToken 0x1c954 (6 cifre, loggato in syslog).
@@ -112,7 +113,7 @@ BEACON/DTIM (analisi + implementazione 2026-11-02, REA/Ghidra su qcmap_fcgi 01.1
 OBIETTIVI UTENTE DA IMPLEMENTARE (richiesti 2026-10-25, NON in questa chat; tutti con toggle in custom.cgi, persistenti e riapplicati al boot):
 1. UPnP: CHIUSO 2026-11-02. L'utente usa l'interruttore della UI stock e ha deciso che non serve un toggle in custom.cgi. Restano proposte facoltative, non richieste, da rilanciare solo se l'utente lo chiede: hardening miniupnpd.conf (secure_mode=yes, allow 1024-65535 192.168.0.0/24 1024-65535 + deny), regole raw PREROUTING (8201/1900/5351 solo da bridge0) con hook in /etc/init.d/miniupnpd, patch opzionale di ForceTermination, pulizia dei PortFwding UPnP persistenti, sync DNAT su wlan0-vxd per il repeater, sezione in custom.cgi (stato, interruttore, mappature, avviso CGNAT).
 2. mDNS/Bonjour on/off (flag MDNS + avahi).
-3. Auto-reboot programmato (AUTOREBOOT_* in bm_config.conf, gestito da qcmap_fcgi; crond per lo schedule).
+3. FATTO 2026-11-02: riavvio programmato (orario + giorni della settimana) dalla tab "Riavvio programmato" del popup Amministrazione → [[dwr932-f1-autoreboot]].
 4. Quota dati + blocco a soglia + statistiche traffico (netstat_enable, quota_limit, block_onlimit, recount_mday, week_start; bm_netstat/bm_dataLimit già attivi).
 5. NON SERVE: canale e larghezza ("Larghezza canale", channel_width 2=HT40 / 1=HT20/40 Mixed, wifiPopup.html:178) sono già nella UI stock (corretto dall'utente 2026-11-02; il grep su channel_bonding/bandwidth non li trovava).
 6. NON SERVE: n° max client già nella UI stock (max_sta in wifi.js/wifiPopup.html).

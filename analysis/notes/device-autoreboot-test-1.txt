@@ -1,0 +1,54 @@
+== API e autenticazione
+OK   API senza credenziali -> 401
+OK   API autenticata -> JSON
+     {"enable":0,"time":"04:00","days":"1,2,3,4,5,6,0","now":"02/11/2026 21:41","utc_offset":"+0800","clock_ok":1,"csrf":"…","m":""}
+OK   JSON nel formato atteso
+OK   JSON con il token anti-CSRF della pagina
+OK   codice esito riportato (anche con il parametro anti-cache di jQuery)
+OK   codice esito non alfabetico scartato
+== anti-CSRF
+OK   POST senza token -> 403
+OK   POST con token errato -> 403
+OK   POST con Origin estraneo -> 403
+== validazione
+OK   hour=24 rifiutata
+OK   minute=60 rifiutato
+OK   minute a una cifra rifiutato
+OK   enable=2 rifiutato
+OK   giorno 7 rifiutato
+OK   separatore ; rifiutato
+OK   attivazione senza giorni rifiutata
+OK   bm_custom.conf invariato dopo i rifiuti
+== salvataggio, crontab e crond
+OK   attivazione alle 09:30 accettata
+OK   conf: attivo alle 09:30
+OK   giorni normalizzati: 0,1,1 -> 1,0
+OK   API riporta i valori salvati
+OK   riga di crontab corretta
+OK   riga estranea del crontab intatta
+OK   crond avviato
+OK   crond 9972 senza variabili HTTP_ del CGI
+OK   crond 9972 senza il lock di custom.cgi
+OK   crond 9972 senza argomenti
+OK   seconda POST subito dopo non bloccata
+OK   una sola riga del riavvio programmato
+OK   disattivazione accettata
+OK   conf: disattivo, giorni conservati
+OK   riga tolta dal crontab
+OK   riga estranea ancora intatta
+== esegui (dry-run)
+OK   accetta: attivo, giorno e orario di adesso
+OK   rifiuta: funzione disattivata
+OK   rifiuta: orario non valido nel file (trattato come disattivato)
+OK   rifiuta: giorno non previsto
+OK   rifiuta: 10 minuti di ritardo
+OK   rifiuta: uptime di 2 minuti
+OK   rifiuta: riavvio già fatto oggi
+OK   rifiuta: /cache/upgrade.zip presente
+OK   accetta di nuovo dopo i rifiuti
+== ripristino
+OK   crontab ripristinato
+crontab attuale:
+conf attuale:
+
+RISULTATO: 43 OK, 0 FAIL
