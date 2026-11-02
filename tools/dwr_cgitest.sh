@@ -143,7 +143,8 @@ rm -f /tmp/custom_cgi.fail
 c=$(richiesta / | head -1 | cut -d' ' -f2)
 [ "$c" = 200 ]; check "web UI originale / -> $c" $?
 iptables -D INPUT -i lo -j ACCEPT
-grep -q "window.location.href='/cgi-bin/custom.cgi'" /bmdefsys/WEBSERVER/webpages/controlPanel.html; check "pulsante Repeater Wi-Fi nella home" $?
+grep -q "window.location.href='/cgi-bin/custom.cgi'" /bmdefsys/WEBSERVER/webpages/controlPanel.html; check "pulsante Funzionalità avanzate nella home" $?
+grep -q 'value="FUNZIONALIT&Agrave; AVANZATE"' /bmdefsys/WEBSERVER/webpages/controlPanel.html; check "testo del pulsante FUNZIONALITÀ AVANZATE" $?
 [ "$(grep -c 'class="cpSetupWizard"' /bmdefsys/WEBSERVER/webpages/controlPanel.html)" = 2 ]; check "pulsante sotto Setup Wizard (2 blocchi cpSetupWizard)" $?
 
 rm -f "$TU" /tmp/custom_cgi.fail

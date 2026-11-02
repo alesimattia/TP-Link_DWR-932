@@ -1,0 +1,30 @@
+186 KB/s (1293 bytes in 0.006s)
+--- prima (uptime 3727.97 s)
+
+wlan0: UP RUNNING 
+
+wlan0-vxd: UP RUNNING 
+
+key_mgmt=WPA2-PSK
+
+wpa_state=COMPLETED
+
+ip_address=192.168.1.151
+
+bridge name bridge id STP enabled interfaces bridge0 8000.b29016ea8371 no wlan0 
+
+default via 192.168.1.1 dev wlan0-vxd 
+
+wlan0     get_mib:200  0  0  0  
+
+BCN_INTERVAL b,554 wlan0     read_reg:100  
+
+
+##### (output del test perso perché il Mac era scollegato da internet; stato raccolto dopo con comandi separati, 2026-11-02)
+init.sh terminato regolarmente (/cache/initsh_test.log: "<<<ENABLE wlan0>>>").
+~10 min dopo: wlan0 e wlan0-vxd UP RUNNING, wpa_state=COMPLETED, ip 192.168.1.151, bridge0 con wlan0, MASQUERADE su wlan0-vxd,
+ma wlan0-vxd RX 2 / TX 0, /proc/wlan0-vxd/sta_info "active: 0", ARP 192.168.1.1 flags 0x0 (incompleto),
+DNS e wget falliti; dal Mac TCP 192.168.1.151:8201 in timeout (prima del test: raggiungibile).
+wpa_cli reassociate: OK ma nessun effetto (active 0, TX 0 dopo 15 s).
+adb reboot: dopo il boot active 1, TX in crescita, ARP completo, wget "Microsoft Connect Test", 8201 raggiungibile dal Mac.
+Conclusione: in AP-STA la ricarica a caldo init.sh rompe il collegamento a monte finché non si riavvia.

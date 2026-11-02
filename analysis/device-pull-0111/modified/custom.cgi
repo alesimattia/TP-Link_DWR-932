@@ -1,6 +1,7 @@
 #!/bin/sh
 # Pagina custom della web UI del DWR-932: repeater Wi-Fi (Wi-Fi come uscita internet, modalità QCMAP AP-STA),
-# potenza TX Wi-Fi e country code (fissato su IT, non modificabile). Eseguita da lighttpd come CGI, come root.
+# potenza TX Wi-Fi, beacon interval e DTIM. Il country code non compare: è fissato su IT da wlan_8192c.sh.
+# Eseguita da lighttpd come CGI, come root.
 # Autenticazione HTTP Basic verificata qui: utente e password della web UI. /bmdefsys/www/lighttpd.user contiene
 # "utente:md5(password)" (la pagina di login D-Link invia CryptoJS.MD5 della password), quindi lighttpd con
 # auth.require non può verificarla; lighttpd passa l'header Authorization al CGI come HTTP_AUTHORIZATION.
@@ -12,6 +13,8 @@ CONF=/bmdefsys/etc/bm_custom.conf
 CFG=/bmdefsys/etc/mobileap_cfg.xml
 SUPP=/bmdefsys/etc/wpa_supplicant.conf
 VXD=/var/rtl8192c/wlan0-vxd
+# Configurazione persistente di wlan0 (rootfs yaffs2), letta da wlan_8192c.sh a ogni inizializzazione del Wi-Fi
+WL0=/var/rtl8192c/wlan0
 WPA="wpa_cli -i wlan0-vxd"
 USERS=/bmdefsys/www/lighttpd.user
 TOKF=/tmp/custom_cgi.csrf
@@ -84,6 +87,25 @@ sta_cfg_on() { grep -q '<WlanMode>AP-STA</WlanMode>' "$CFG"; }
 sta_running() { pidof wpa_supplicant >/dev/null 2>&1; }
 backup_once() { [ -e "$2" ] || cp -p "$1" "$2"; }
 
+# Pagina di attesa e riavvio del device. $1 = titolo, $2 = cosa viene applicato
+reboot_page() {
+	sync
+	printf 'Content-Type: text/html; charset=utf-8\r\nCache-Control: no-store\r\n\r\n'
+	cat <<HTML
+<!doctype html><html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>DWR-932 - Riavvio</title>
+<style>:root{color-scheme:light dark}body{font-family:system-ui,sans-serif;max-width:560px;margin:24px auto;padding:0 16px;line-height:1.5}</style>
+</head><body><h1>$1</h1>
+<p>Il router si sta riavviando per applicare $2: il Wi-Fi del DWR resta spento per circa un minuto.
+Ricollega il dispositivo al Wi-Fi del DWR se non lo fa da solo.</p>
+<p>La pagina si ricarica da sola tra <span id="t">90</span> secondi, oppure <a href="custom.cgi">ricaricala ora</a>.</p>
+<script>var n=90;setInterval(function(){n--;if(n<=0){location.href='custom.cgi';}else{document.getElementById('t').textContent=n;}},1000);</script>
+</body></html>
+HTML
+	setsid sh -c 'sleep 3; /sbin/reboot' </dev/null >/dev/null 2>&1 &
+	exit 0
+}
+
 # Imposta la modalità QCMAP (AP oppure AP-STA) e riavvia: QCMAP la legge solo all'avvio
 set_mode_and_reboot() {
 	if [ "$1" = on ]; then
@@ -94,27 +116,12 @@ set_mode_and_reboot() {
 		sed -i 's|<WlanMode>[A-Z-]*</WlanMode>|<WlanMode>AP-STA</WlanMode>|' "$CFG"
 		echo 1 > "$VXD/wlan_mode"
 		echo 0 > "$VXD/network_type"
-		titolo="Repeater attivato"
+		reboot_page "Repeater attivato" "la modalità"
 	else
 		sed -i 's|<WlanMode>[A-Z-]*</WlanMode>|<WlanMode>AP</WlanMode>|' "$CFG"
 		echo 0 > "$VXD/wlan_mode"
-		titolo="Repeater disattivato"
+		reboot_page "Repeater disattivato" "la modalità"
 	fi
-	sync
-	printf 'Content-Type: text/html; charset=utf-8\r\nCache-Control: no-store\r\n\r\n'
-	cat <<HTML
-<!doctype html><html lang="it"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"><title>DWR-932 - Riavvio</title>
-<style>:root{color-scheme:light dark}body{font-family:system-ui,sans-serif;max-width:560px;margin:24px auto;padding:0 16px;line-height:1.5}</style>
-</head><body><h1>$titolo</h1>
-<p>Il router si sta riavviando per applicare la modalità: il Wi-Fi del DWR resta spento per circa un minuto.
-Ricollega il dispositivo al Wi-Fi del DWR se non lo fa da solo.</p>
-<p>La pagina si ricarica da sola tra <span id="t">90</span> secondi, oppure <a href="custom.cgi">ricaricala ora</a>.</p>
-<script>var n=90;setInterval(function(){n--;if(n<=0){location.href='custom.cgi';}else{document.getElementById('t').textContent=n;}},1000);</script>
-</body></html>
-HTML
-	setsid sh -c 'sleep 3; /sbin/reboot' </dev/null >/dev/null 2>&1 &
-	exit 0
 }
 
 # --- POST: azioni ---
@@ -138,6 +145,23 @@ if [ "$REQUEST_METHOD" = "POST" ]; then
 		$IWPRIV wlan0 txpwr_apply >/dev/null 2>&1
 		conf_set wifi_power_percent "$power"
 		redirect power_ok
+		;;
+	beacon)
+		bcn=$(field bcn)
+		dtim=$(field dtim)
+		case "$bcn" in 100|150|200|300) ;; *) redirect err_val;; esac
+		case "$dtim" in 1|2|3|4|5) ;; *) redirect err_val;; esac
+		if [ "$bcn" = "$(cat "$WL0/beacon_interval")" ] && [ "$dtim" = "$(cat "$WL0/dtim_period")" ]; then
+			redirect bcn_same
+		fi
+		backup_once "$WL0/beacon_interval" /cache/wlan0_beacon_interval.orig
+		backup_once "$WL0/dtim_period" /cache/wlan0_dtim_period.orig
+		echo "$bcn" > "$WL0/beacon_interval"
+		echo "$dtim" > "$WL0/dtim_period"
+		# Il driver programma il beacon interval nella radio solo quando inizializza wlan0. La ricarica a caldo
+		# della web UI stock (init.sh) in modalità repeater lascia wlan0-vxd associato solo per wpa_supplicant,
+		# senza traffico: si applica quindi con un riavvio, in cui wlan_8192c.sh legge questi file.
+		reboot_page "Beacon e DTIM salvati" "beacon interval e DTIM"
 		;;
 	sta_on)
 		set_mode_and_reboot on
@@ -223,6 +247,7 @@ msg=$(printf '&%s&' "$QUERY_STRING" | sed -n 's/.*&m=\([a-z_]*\)&.*/\1/p')
 case "&$QUERY_STRING&" in *'&scan=1&'*) SCAN=1;; *) SCAN=0;; esac
 case "$msg" in
 	power_ok) MSG="Potenza TX applicata."; MCL=ok;;
+	bcn_same) MSG="Beacon e DTIM sono già impostati su questi valori: nessuna modifica."; MCL=ok;;
 	sta_added) MSG="Rete salvata: connessione in corso (può richiedere fino a 30 secondi, la pagina si aggiorna da sola)."; MCL=ok; RELOAD=20;;
 	sta_saved) MSG="Rete salvata: verrà usata quando il repeater è attivo."; MCL=ok;;
 	sta_reserve) MSG="Rete salvata come riserva: il DWR resta sulla rete attuale. Usa Connetti per passare a quella nuova."; MCL=ok;;
@@ -239,7 +264,11 @@ cur=100
 [ -f "$CONF" ] && cur=$(sed -n 's/^wifi_power_percent=//p' "$CONF" | head -1)
 case "$cur" in ''|*[!0-9]*) cur=100;; esac
 mibpwr=$($IWPRIV wlan0 get_mib powerpercent 2>/dev/null | sed -n 's/.*get_mib:\([0-9]*\).*/\1/p')
-country=$($IWPRIV wlan0 get_mib countrystr 2>/dev/null)
+bcn=$(cat "$WL0/beacon_interval" 2>/dev/null)
+dtim=$(cat "$WL0/dtim_period" 2>/dev/null)
+# Beacon interval in uso dalla radio: registro BCN_INTERVAL (read_reg stampa i byte in decimale, dal più significativo)
+bcnhw=$($IWPRIV wlan0 read_reg w,554 2>/dev/null | sed -n 's/.*read_reg://p' | awk 'NF >= 2 { print $1 * 256 + $2 }')
+dtimdrv=$($IWPRIV wlan0 get_mib dtimperiod 2>/dev/null | sed -n 's/.*get_mib:\([0-9]*\).*/\1/p')
 apfreq=$(iwconfig wlan0 2>/dev/null | sed -n 's/.*Frequency:\([0-9.]*\) GHz.*/\1/p')
 apch=$(awk -v f="$apfreq" 'BEGIN { m = int(f * 1000 + 0.5); if (m == 2484) print 14; else if (m > 0) print (m - 2407) / 5 }')
 uscita=$(ip route 2>/dev/null | awk '/^default/ { for (i = 1; i <= NF; i++) if ($i == "dev") print $(i + 1); exit }')
@@ -254,6 +283,8 @@ if sta_cfg_on; then MODO=on; else MODO=off; fi
 if sta_running; then RUN=1; else RUN=0; fi
 
 opt() { sel=""; [ "$1" = "$cur" ] && sel=" selected"; echo "<option value=\"$1\"$sel>$1%</option>"; }
+# $1 = valore, $2 = valore corrente, $3 = testo
+opt2() { sel=""; [ "$1" = "$2" ] && sel=" selected"; echo "<option value=\"$1\"$sel>$3</option>"; }
 csrf_input() { echo "<input type=\"hidden\" name=\"csrf\" value=\"$TOK\">"; }
 
 printf 'Content-Type: text/html; charset=utf-8\r\nCache-Control: no-store\r\n\r\n'
@@ -273,7 +304,7 @@ cat <<'HTML'
  button{cursor:pointer;margin-top:8px}
  .msg{padding:10px 12px;border-radius:6px;background:#2e7d3222;border:1px solid #2e7d3288}
  .msg.err{background:#c6282822;border-color:#c6282888}
- .ro{opacity:.7} small{color:#8889}
+ small{color:#8889}
  table{width:100%;border-collapse:collapse;margin:8px 0} td,th{text-align:left;padding:4px 6px;border-bottom:1px solid #8883;vertical-align:middle}
  th{font-weight:600} td form{display:inline;margin:0} td button{margin:0 4px 0 0;padding:3px 8px;font-size:.9rem}
  .stato td:first-child{width:40%;color:#888}
@@ -415,7 +446,7 @@ cat <<'HTML'
 </fieldset>
 HTML
 
-# --- Potenza TX e country code ---
+# --- Potenza TX e beacon/DTIM ---
 echo '<form method="post" action="custom.cgi">'
 csrf_input
 cat <<HTML
@@ -431,11 +462,42 @@ cat <<HTML
  <p><small>Valore driver corrente: powerpercent=$(h "${mibpwr:-?}"). 100% = potenza piena, valori più bassi riducono consumo e copertura. Persistente al riavvio.</small></p>
 </fieldset>
 </form>
-<fieldset class="ro"><legend>Country code Wi-Fi</legend>
- <label>Regione regolatoria</label>
- <input type="text" value="IT (ETSI)" readonly>
- <p><small>Fissato su Italia (IT) nel firmware, non modificabile. Driver: countrystr=$(h "$country").</small></p>
+HTML
+
+echo '<form method="post" action="custom.cgi" data-confirm="Applicare beacon e DTIM? Il router si riavvia (circa un minuto) e i dispositivi collegati si disconnettono.">'
+csrf_input
+cat <<HTML
+<input type="hidden" name="action" value="beacon">
+<fieldset><legend>Beacon e DTIM</legend>
+ <label for="bcn">Beacon interval</label>
+ <select id="bcn" name="bcn">
+HTML
+for v in 100 150 200 300; do
+	t="$v TU (circa $((v * 1024 / 1000)) ms)"
+	[ "$v" = 100 ] && t="$t, predefinito"
+	opt2 "$v" "$bcn" "$t"
+done
+cat <<HTML
+ </select>
+ <label for="dtim">DTIM period (ogni quanti beacon)</label>
+ <select id="dtim" name="dtim">
+HTML
+for v in 1 2 3 4 5; do
+	t=$v
+	[ "$v" = 1 ] && t="1, predefinito"
+	opt2 "$v" "$dtim" "$t"
+done
+case "$bcn$dtim" in
+	''|*[!0-9]*) dtms="?";;
+	*) dtms=$((bcn * dtim * 1024 / 1000));;
+esac
+cat <<HTML
+ </select>
+ <button type="submit">Applica e riavvia</button>
+ <p><small>I dispositivi in risparmio energetico si svegliano a ogni beacon DTIM per ricevere broadcast e multicast: un DTIM più alto allunga la batteria di telefoni e tablet, ma ritarda broadcast e multicast (ARP, ricerca di stampanti, AirPlay, Chromecast). Un beacon interval più alto riduce il tempo radio occupato dai beacon, ma alcuni dispositivi possono metterci di più a trovare la rete. Sul consumo del DWR l'effetto è minimo.</small></p>
+ <p><small>Intervallo DTIM salvato: circa $(h "$dtms") ms. In uso: beacon=$(h "${bcnhw:-?}") TU (radio), DTIM=$(h "${dtimdrv:-?}") (driver). Persistente al riavvio; il reset di fabbrica riporta 100 e 1.</small></p>
 </fieldset>
+</form>
 HTML
 
 cat <<'HTML'

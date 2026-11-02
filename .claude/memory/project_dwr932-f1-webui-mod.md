@@ -1,6 +1,6 @@
 ---
 name: dwr932-f1-webui-mod
-description: DWR-932 F1 fw 01.11 - modifiche alla web UI originale (pulsante "Repeater Wi-Fi" sotto Setup Wizard in controlPanel.html) e pagina custom.cgi; come funziona la web UI D-Link (lighttpd/qcmap_fcgi, login MD5, sessioni), autenticazione e anti-CSRF della pagina, file e hash, deploy, test, rollback, vincoli
+description: DWR-932 F1 fw 01.11 - modifiche alla web UI originale (pulsante "FUNZIONALITÀ AVANZATE" sotto Setup Wizard in controlPanel.html) e pagina custom.cgi; come funziona la web UI D-Link (lighttpd/qcmap_fcgi, login MD5, sessioni), autenticazione e anti-CSRF della pagina, file e hash, deploy, test, rollback, vincoli
 metadata:
   type: project
 ---
@@ -16,12 +16,13 @@ WEB UI ORIGINALE (lighttpd 1.4.43 con ssl, /bmdefsys/etc/lighttpd.conf, docroot 
 
 MODIFICA 1: pulsante nella home (controlPanel.html, righe CRLF)
 - Originale: sha256 78f7fecb9e0f2d47…, 43574 B, www-data:www-data 770 (copia in analysis/device-pull-0111/pull0111/bmdefsys/WEBSERVER/webpages/).
-- Inserito, subito dopo il <div class="cpSetupWizard"> del Setup Wizard, un secondo blocco con le stesse classi: `<div class="cpSetupWizard">` + `<input type="button" value="Repeater Wi-Fi" class="cpWizardButtom" onClick="window.location.href='/cgi-bin/custom.cgi';" />` + `</div>` (righe \r\n, indentazione con tab, testo fisso senza data-localize). Sotto il Setup Wizard c'è spazio sufficiente.
-- Ricetta (python -I, binario): trovare l'unico 'class="cpWizardButtom" onClick="openSetupWizardPopup(' e inserire il blocco dopo il primo '</div>\r\n' che lo segue. Risultato sha256 eddc058c…, 43752 B → analysis/device-pull-0111/modified/webpages/controlPanel.html. Dopo un upgrade firmware rigenerarlo sul nuovo file invece di copiare quello vecchio.
+- Inserito, subito dopo il <div class="cpSetupWizard"> del Setup Wizard, un secondo blocco con le stesse classi: `<div class="cpSetupWizard">` + `<input type="button" value="FUNZIONALIT&Agrave; AVANZATE" class="cpWizardButtom" onClick="window.location.href='/cgi-bin/custom.cgi';" />` + `</div>` (righe \r\n, indentazione con tab, testo fisso senza data-localize). Sotto il Setup Wizard c'è spazio sufficiente.
+- Ricetta (python -I, binario): trovare l'unico 'class="cpWizardButtom" onClick="openSetupWizardPopup(' e inserire il blocco dopo il primo '</div>\r\n' che lo segue. Risultato sha256 6dae2b80…, 43766 B (testo rinominato su richiesta dell'utente il 2026-11-02, prima "Repeater Wi-Fi" = eddc058c…; entità &Agrave; per non dipendere dalla codifica; testo largo ~250 px su 316) → analysis/device-pull-0111/modified/webpages/controlPanel.html. Dopo un upgrade firmware rigenerarlo sul nuovo file invece di copiare quello vecchio.
 - Il browser può mostrare la home dalla cache: ricaricare.
 
-MODIFICA 2: pagina custom.cgi (/bmdefsys/WEBSERVER/webpages/cgi-bin/custom.cgi; sorgente analysis/device-pull-0111/modified/custom.cgi, sha256 adad9223…)
-- Sezioni: Repeater Wi-Fi (stato, Attiva/Disattiva con riavvio, reti salvate con Connetti/Elimina, ricerca reti, Aggiungi rete), Potenza TX (whitelist, /bmdefsys/etc/bm_custom.conf), Country code IT (sola lettura).
+MODIFICA 2: pagina custom.cgi (/bmdefsys/WEBSERVER/webpages/cgi-bin/custom.cgi; sorgente analysis/device-pull-0111/modified/custom.cgi, sha256 5c2495eb… dal 2026-11-02; 35087b12… = con riquadro country; adad9223… = commit 44ec142)
+- Sezioni: Repeater Wi-Fi (stato, Attiva/Disattiva con riavvio, reti salvate con Connetti/Elimina, ricerca reti, Aggiungi rete), Potenza TX (whitelist, /bmdefsys/etc/bm_custom.conf), Beacon e DTIM (file nativi /var/rtl8192c/wlan0 + riavvio, vedi [[dwr932-f1-hidden-features]] sezione BEACON/DTIM). Riquadro "Country code Wi-Fi / Regione regolatoria" RIMOSSO su richiesta dell'utente (2026-11-02): IT non deve essere né modificabile né mostrato; il lock resta in wlan_8192c.sh (verificato dopo: countrystr 73 84, regdomain 3).
+- reboot_page "$titolo" "$cosa": pagina di attesa 90 s + `setsid sh -c 'sleep 3; /sbin/reboot'`, usata da cambio modalità e beacon/DTIM.
 - AUTENTICAZIONE (fatta nel CGI): lighttpd passa l'header Authorization come HTTP_AUTHORIZATION (verificato con tools/dwr_lighttpd_hdrtest.sh) → base64 -d → l'utente deve coincidere con il campo 1 di lighttpd.user e `md5sum` della password (passata via stdin) con il campo 2. Altrimenti 401 con `WWW-Authenticate: Basic realm="DWR-932 impostazioni avanzate", charset="UTF-8"`. Stesse credenziali della web UI.
 - Anti-bruteforce: /tmp/custom_cgi.fail; 2 s di attesa per ogni errore; con almeno 5 errori in 10 minuti → 429 per 10 minuti; il contatore si azzera a ogni accesso riuscito.
 - File utenti alternativo CUSTOM_CGI_USERS accettato SOLO se GATEWAY_INTERFACE è vuoto (test da shell; lighttpd lo imposta sempre).

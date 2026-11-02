@@ -18,7 +18,7 @@ PREREQUISITI
 PROCEDURA CONSIGLIATA (pagina web)
 1. Controllare sul device: sha256 /bmdefsys/WEBSERVER/webpages/controlPanel.html == 78f7fecb9e0f2d47… (originale 01.11). Se diverso → rigenerare il pulsante sul file attuale (ricetta in [[dwr932-f1-webui-mod]]).
 2. Copiare sul PC: analysis/device-pull-0111/modified/custom.cgi → dwr/custom.cgi.new; analysis/device-pull-0111/modified/webpages/controlPanel.html → dwr/controlPanel.html.new; tools/dwr_deploy_ui.sh. `adb push` dei tre file in /cache, poi `adb shell sh /cache/dwr_deploy_ui.sh` (sh -n, backup una tantum, scrittura con cat che mantiene owner/permessi, reboot solo se lighttpd.conf ≠ /cache/lighttpd.conf.orig).
-3. Utente, da un dispositivo sul Wi-Fi del DWR: home della web UI → pulsante "Repeater Wi-Fi" sotto "Setup Wizard" (oppure https://192.168.0.1/cgi-bin/custom.cgi) → login del browser con admin + password della web UI → "Attiva repeater e riavvia" (circa 1 min) → "Cerca reti Wi-Fi" → "Usa" sulla rete → password → "Salva e collega" → riquadro Repeater: Stato "Connesso", Uscita internet "Wi-Fi a monte (repeater)".
+3. Utente, da un dispositivo sul Wi-Fi del DWR: home della web UI → pulsante "FUNZIONALITÀ AVANZATE" sotto "Setup Wizard" (oppure https://192.168.0.1/cgi-bin/custom.cgi) → login del browser con admin + password della web UI → "Attiva repeater e riavvia" (circa 1 min) → "Cerca reti Wi-Fi" → "Usa" sulla rete → password → "Salva e collega" → riquadro Repeater: Stato "Connesso", Uscita internet "Wi-Fi a monte (repeater)".
 
 PROCEDURA ALTERNATIVA (solo adb, senza pagina)
 1. tools/dwr_apsta_enable.sh sul device: backup /cache/{mobileap_cfg.xml,wpa_supplicant.conf,vxd_wlan_mode,vxd_network_type}.orig una tantum; `sed -i 's|<WlanMode>[A-Z-]*</WlanMode>|<WlanMode>AP-STA</WlanMode>|' /bmdefsys/etc/mobileap_cfg.xml`; `echo 1 > /var/rtl8192c/wlan0-vxd/wlan_mode`; `echo 0 > /var/rtl8192c/wlan0-vxd/network_type`; sync.
@@ -37,6 +37,7 @@ ROLLBACK
 - Modalità: pulsante "Disattiva repeater" (le reti salvate restano) oppure tools/dwr_apsta_disable.sh (ripristina i /cache/*.orig, wpa_supplicant.conf senza reti) + reboot.
 
 TRAPPOLE
+- In AP-STA NON ricaricare il Wi-Fi a caldo con init.sh (verificato 2026-11-02). Probabile anche salvando il Wi-Fi dalla UI stock (il writer 0x16a94 lancia lo stesso init.sh; NON verificato: l'handler chiama anche QCMAP SetWLANConfig): wlan0-vxd resta "COMPLETED" ma senza traffico finché non si riavvia il device. Sintomi: TX 0 su wlan0-vxd, /proc/wlan0-vxd/sta_info active 0. Rimedio: reboot.
 - lighttpd: mai riavviarlo a caldo (qcmap_fcgi rilanciato non reinizializza QMI → web UI giù, rimedio = reboot) e mai avviarlo da adb (resta legato allo stderr della sessione).
 - Da una sessione adb `setsid sh -c 'sleep 3; reboot' &` a volte non parte → negli script reboot sincrono; da CGI sotto lighttpd funziona.
 - `wpa_cli reconfigure` interrompe la connessione in corso; dopo serve `wpa_cli scan` (autoscan ogni 120 s).
@@ -47,5 +48,5 @@ TRAPPOLE
 
 STATO LASCIATO 2026-11-02
 - AP-STA attivo; rete H3140 (router di casa, BSSID 40:b6:e7:45:e1:0a, canale 7) con priority 10; IP STA 192.168.1.151.
-- Installati: custom.cgi (sha256 adad9223…), controlPanel.html con pulsante (eddc058c…), lighttpd.conf originale (4b0a2d05…).
+- Installati: custom.cgi (sha256 5c2495eb…, con sezione beacon/DTIM, senza riquadro country), controlPanel.html con pulsante (6dae2b80…), lighttpd.conf originale (4b0a2d05…).
 - DWR ancora in test mode. L'utente ha confermato dal browser login e funzionamento.

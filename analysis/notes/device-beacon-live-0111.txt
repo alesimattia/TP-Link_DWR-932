@@ -1,0 +1,29 @@
+132 KB/s (856 bytes in 0.006s)
+--- prima
+wlan0     get_mib:100  0  0  0  
+wlan0     get_mib:1  0  0  0  
+b,554 wlan0     read_reg:100  
+b,555 wlan0     read_reg:0  
+w,554 wlan0     read_reg:0  100  
+dw,554 wlan0     read_reg:0  100  0  100  
+    dot11BeaconPeriod: 100
+    dot11DTIMPeriod: 1
+--- dopo set_mib bcnint=200 dtimperiod=3
+wlan0     get_mib:200  0  0  0  
+wlan0     get_mib:3  0  0  0  
+b,554 wlan0     read_reg:100  
+b,555 wlan0     read_reg:0  
+w,554 wlan0     read_reg:0  100  
+dw,554 wlan0     read_reg:0  100  0  100  
+    dot11BeaconPeriod: 200
+    dot11DTIMPeriod: 3
+ch=7 rssi=-45 beacon=100 dtim=- ie=0B ssid=<oscurato> bssid=<oscurato>
+ch=7 rssi=-48 beacon=100 dtim=- ie=0B ssid=<oscurato> bssid=<oscurato>
+ch=7 rssi=-52 beacon=100 dtim=- ie=0B ssid=<oscurato> bssid=<oscurato>
+ch=5 rssi=-56 beacon=100 dtim=- ie=0B ssid=<oscurato> bssid=<oscurato>
+ch=1 rssi=-66 beacon=100 dtim=- ie=0B ssid=<oscurato> bssid=<oscurato>
+ch=11 rssi=-68 beacon=100 dtim=- ie=0B ssid=<oscurato> bssid=<oscurato>
+ch=10 rssi=-72 beacon=100 dtim=- ie=0B ssid=<oscurato> bssid=<oscurato>
+ch=3 rssi=-84 beacon=100 dtim=- ie=0B ssid=<oscurato> bssid=<oscurato>
+ch=1 rssi=-84 beacon=100 dtim=- ie=0B ssid=<oscurato> bssid=<oscurato>
+ch=13 rssi=-92 beacon=100 dtim=- ie=0B ssid=<oscurato> bssid=<oscurato>

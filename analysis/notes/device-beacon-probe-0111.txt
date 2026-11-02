@@ -1,0 +1,48 @@
+* daemon not running. starting it now on port 5037 *
+* daemon started successfully *
+87 KB/s (1418 bytes in 0.015s)
+##### identita
+ 12:43:50 up  1:00,  0 users,  load average: 4.21, 4.25, 4.14
+	<WlanMode>AP-STA</WlanMode>
+##### persistenza di /var/rtl8192c
+rootfs on / type rootfs (rw)
+/dev/root on / type yaffs2 (rw,relatime)
+tmpfs on /var/volatile type tmpfs (rw,relatime,size=67584k)
+/dev/mtdblock19 on /bmdefsys type yaffs2 (rw,relatime)
+drwxr-xr-x    1 root     root          2048 Nov  2 11:24 /var
+drwxr-xr-x    1 root     root          2048 Jun  7  2025 /var/rtl8192c
+drwxr-xr-x    1 root     root          2048 Jun  7  2025 /var/rtl8192c/wlan0
+/var/rtl8192c
+/dev/root                25984     17120      8864  66% /
+##### file di configurazione
+beacon_interval=100
+dtim_period=1
+channel=0
+channel_bonding=1
+coexist_enabled=1
+wlan_disabled=0
+-rw-r--r--    1 root     root             4 Jun  7  2025 /var/rtl8192c/wlan0/beacon_interval
+-rw-r--r--    1 root     root             2 Jun  7  2025 /var/rtl8192c/wlan0/dtim_period
+##### MIB del driver
+wlan0 flags: wlan0     Link encap:Ethernet  HWaddr DC:EA:E7:2F:59:B0  
+wlan0     get_mib:100  0  0  0  
+wlan0     get_mib:1  0  0  0  
+wlan0-vxd flags: wlan0-vxd Link encap:Ethernet  HWaddr DC:EA:E7:2F:59:B1  
+wlan0-vxd  get_mib:100  0  0  0  
+wlan0-vxd  get_mib:1  0  0  0  
+##### registro hardware BCN_INTERVAL (0x554, 2 byte)
+wlan0     read_reg:0  100  
+##### /proc del driver
+SS_Result buf_info cam_info cmd gpio_ctrl led mib_11n mib_all mib_auth mib_brext mib_bssdesc mib_dkeytbl mib_erp mib_gkeytbl mib_misc mib_operation mib_rf mib_staconfig mib_wsc probe_info que_info sdio_dbginfo sta_dbginfo sta_info sta_keyinfo sta_queinfo stats up_event up_flag 
+    dot11BeaconPeriod: 100
+    dot11DTIMPeriod: 1
+    dot11BeaconPeriod: 100
+    dot11DTIMPeriod: 1
+    beacon_prd: 0
+    dtim_prd: 0
+    beacon_ie: dd180050f204104a00011010440001021049000600372a000120
+    beacon_ielen: 26
+##### processi Wi-Fi
+ 1019 root       0:00 /bmdefsys/usr/bin/rtltools/webs -x
+ 1276 root       0:03 wpa_supplicant -i wlan0-vxd -Dwext -B -c /bmdefsys/etc/wpa_supplicant.conf
+ 1279 root       0:00 wpa_cli -i wlan0-vxd -p /var/run/wpa_supplicant -B -a /bmdefsys/usr/bin/QCMAP_StaInterface

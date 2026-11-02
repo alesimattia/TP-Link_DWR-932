@@ -1,0 +1,67 @@
+adad92233c7a1f24f851c07df1103f845a704ac3538c1f50255c55e9d756d70f  /bmdefsys/WEBSERVER/webpages/cgi-bin/custom.cgi
+35087b12481a3b8a3648ca7b29cdc434c2822617e6337c545c18882e190d30d9  /bmdefsys/WEBSERVER/webpages/cgi-bin/custom.cgi
+eddc058cda64210cf61b05864e88df026a7c5c05ef7c2b290a97ef834ca468f9  /bmdefsys/WEBSERVER/webpages/controlPanel.html
+4b0a2d05059903857f98c85724b8be67dfec5be8dd8eee26f3b9e5a62e33cc6a  /bmdefsys/etc/lighttpd.conf
+-rwxrwx---    1 www-data www-data     26328 Nov  2 11:26 /bmdefsys/WEBSERVER/webpages/cgi-bin/custom.cgi
+-rwxrwx---    1 www-data www-data     43752 Nov  2 11:26 /bmdefsys/WEBSERVER/webpages/controlPanel.html
+lighttpd.conf originale: nessun riavvio necessario
+== pagina (valori salvati 100/1)
+OK   sezione presente
+OK   form con azione beacon
+OK   beacon salvato selezionato
+OK   DTIM salvato selezionato
+OK   valori in uso dal registro e dal driver
+OK   sezione potenza ancora presente
+== input rifiutati (nessun riavvio)
+OK   rifiutato: bcn=250&dtim=1
+OK   rifiutato: bcn=100&dtim=0
+OK   rifiutato: bcn=100&dtim=6
+OK   rifiutato: bcn=&dtim=1
+OK   rifiutato: bcn=100
+OK   rifiutato: bcn=1000&dtim=1
+OK   rifiutato: bcn=100;reboot&dtim=1
+OK   rifiutato: bcn=0100&dtim=1
+OK   POST senza token -> 403
+OK   valori invariati: nessun riavvio
+OK   messaggio valori invariati
+OK   file non modificati
+superati 18, falliti 0
+== POST beacon=200 dtim=3 (il device si riavvia)
+OK   pagina di riavvio
+OK   file beacon_interval=200
+OK   file dtim_period=3
+superati 3, falliti 0
+== dopo il riavvio (uptime 52.54 s)
+OK   file persistenti: 200/3
+OK   MIB bcnint=200
+OK   MIB dtimperiod=3
+OK   registro radio BCN_INTERVAL=200
+OK   la pagina mostra i valori in uso
+OK   beacon selezionato nella pagina
+OK   DTIM selezionato nella pagina
+OK   repeater associato nel driver (attivi=1)
+OK   internet tramite il repeater
+superati 9, falliti 0
+ch=7 rssi=-42 beacon=100 dtim=- ie=0B ssid=<oscurato> bssid=<oscurato>
+ch=7 rssi=-44 beacon=200 dtim=- ie=0B ssid=<oscurato> bssid=<oscurato>
+ch=11 rssi=-65 beacon=100 dtim=- ie=0B ssid=<oscurato> bssid=<oscurato>
+ch=1 rssi=-65 beacon=100 dtim=- ie=0B ssid=<oscurato> bssid=<oscurato>
+== POST beacon=100 dtim=1 (il device si riavvia)
+OK   pagina di riavvio
+OK   file beacon_interval=100
+OK   file dtim_period=1
+superati 3, falliti 0
+== dopo il riavvio (uptime 52.71 s)
+OK   file persistenti: 100/1
+OK   MIB bcnint=100
+OK   MIB dtimperiod=1
+OK   registro radio BCN_INTERVAL=100
+OK   la pagina mostra i valori in uso
+OK   beacon selezionato nella pagina
+OK   DTIM selezionato nella pagina
+OK   repeater associato nel driver (attivi=1)
+OK   internet tramite il repeater
+superati 9, falliti 0
+-rw-r--r--    1 root     root             4 Jun  7  2025 /cache/wlan0_beacon_interval.orig
+-rw-r--r--    1 root     root             2 Jun  7  2025 /cache/wlan0_dtim_period.orig
+ch=7 rssi=-42 beacon=100 dtim=- ie=0B ssid=<oscurato> bssid=<oscurato>

@@ -1,5 +1,5 @@
 #!/bin/sh
-# Installa sul DWR-932 la pagina custom.cgi (repeater, potenza TX, country code) e il pulsante "Repeater Wi-Fi"
+# Installa sul DWR-932 la pagina custom.cgi (repeater, potenza TX, beacon e DTIM) e il pulsante "FUNZIONALITÀ AVANZATE"
 # sotto "Setup Wizard" nella home della web UI originale (controlPanel.html).
 # Prima copiare con adb push: /cache/custom.cgi.new e /cache/controlPanel.html.new
 # Backup una tantum: /cache/custom.cgi.prev, /cache/controlPanel.html.orig. Ripristino: dwr_deploy_ui.sh --ripristina

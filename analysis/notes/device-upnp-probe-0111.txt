@@ -1,0 +1,94 @@
+* daemon not running. starting it now on port 5037 *
+* daemon started successfully *
+206 KB/s (1924 bytes in 0.009s)
+##### identita
+uid=0(root) gid=0(root)
+Linux mdm9625-perf 3.4.0+ #1 PREEMPT Fri Jun 28 17:14:54 CST 2024 armv7l GNU/Linux
+ 12:12:16 up 28 min,  0 users,  load average: 4.48, 4.24, 3.58
+##### binari e file (percorso + sha256)
+/usr/sbin/miniupnpd f908f8e8527c21d7ecbbc0f1ffe32aae6faabaa2fe21be556a090841b7eba272 80488B
+/etc/init.d/miniupnpd f731d1b97dd4c51880390620f2679fe1be4dd962dcc8805215469c4fea0be945 1174B
+/etc/miniupnpd/miniupnpd.conf 86f6f9296b8f73e0a4fd6d2a4f47b92715f0db7265085330705d7fe77a92da29 3486B
+/usr/lib/libqcmap_client.so.1 -
+/usr/sbin/minissdpd -
+##### miniupnpd.conf (senza commenti)
+listening_ip=bridge0
+port=8201
+enable_natpmp=yes
+enable_upnp=yes
+friendly_name=9x25 MobileAP UPnP
+secure_mode=no
+presentation_url=/192.168.225.1:8201
+system_uptime=yes
+notify_interval=60
+clean_ruleset_interval=600
+uuid=be10c896-7560-4553-a6db-d1df9ec7b02d
+serial=12345678
+model_number=1
+allow 0-65535 0.0.0.0/0 0-65535
+##### configurazione QCMAP e bm_config
+	<DmzIP>0.0.0.0</DmzIP>
+	<EnableWebserverWWANAccess>0</EnableWebserverWWANAccess>
+	<WlanMode>AP-STA</WlanMode>
+	<UPnP>1</UPnP>
+	<DLNA>0</DLNA>
+	<MDNS>0</MDNS>
+voci PortFwding in mobileap_cfg.xml: 0
+wwan_upnp_disable=1
+##### processi
+  487 root       0:01 QCMAP_ConnectionManager /bmdefsys/etc/mobileap_cfg.xml d
+  613 nobody     0:00 dnsmasq -i bridge0 -I lo -z --dhcp-range=bridge0,192.168.0.20,192.168.0.60,255.255.255.0,43200 --dhcp-hostsfile=/etc/dhcp_hosts --dhcp-option-force=6,192.168.0.1
+  619 root       0:00 /usr/sbin/miniupnpd -f /etc/miniupnpd/miniupnpd.conf
+619
+##### interfacce e indirizzi
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN 
+    inet 127.0.0.1/8 scope host lo
+11: bridge0: <BROADCAST,MULTICAST,ALLMULTI,PROMISC,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP 
+    inet 192.168.0.1/24 brd 192.168.0.255 scope global bridge0
+12: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master bridge0 state UNKNOWN qlen 1000
+    inet 169.254.1.1/24 brd 169.254.1.255 scope global wlan0
+13: wlan0-vxd: <BROADCAST,MULTICAST,ALLMULTI,PROMISC,UP,LOWER_UP> mtu 1500 qdisc mq state UP qlen 1000
+    inet 192.168.1.151/24 brd 192.168.1.255 scope global wlan0-vxd
+default via 192.168.1.1 dev wlan0-vxd 
+192.168.0.0/24 dev bridge0  proto kernel  scope link  src 192.168.0.1 
+192.168.1.0/24 dev wlan0-vxd  scope link 
+##### socket in ascolto
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       
+udp        0      0 192.168.0.1:5351        0.0.0.0:*                           
+udp        0      0 192.168.0.1:53          0.0.0.0:*                           
+udp        0      0 0.0.0.0:67              0.0.0.0:*                           
+udp        0      0 192.168.0.1:54889       0.0.0.0:*                           
+udp        0      0 0.0.0.0:1900            0.0.0.0:*                           
+udp        0      0 fe80::b090:16ff:fee7:806e:53 :::*                                
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       
+tcp        0      0 0.0.0.0:8201            0.0.0.0:*               LISTEN      
+tcp        0      0 127.0.0.1:5037          0.0.0.0:*               LISTEN      
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      
+tcp        0      0 192.168.0.1:53          0.0.0.0:*               LISTEN      
+tcp        2      0 0.0.0.0:443             0.0.0.0:*               LISTEN      
+tcp        0      0 fe80::b090:16ff:fee7:806e:53 :::*                    LISTEN      
+##### firewall (filter completo, nat PREROUTING/POSTROUTING)
+-P INPUT ACCEPT
+-P FORWARD ACCEPT
+-P OUTPUT ACCEPT
+-N WebserverWWANAccess
+-N urlFilter
+-A INPUT -j WebserverWWANAccess
+-A INPUT -i wlan0-vxd -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 8201 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 5555 -j DROP
+-A INPUT -i bridge0 -p tcp -m multiport --dports 53,80,443 -j ACCEPT
+-A INPUT -p tcp -j REJECT --reject-with icmp-port-unreachable
+-A INPUT -i wlan0-vxd -j DROP
+-A FORWARD -i bridge0 -j urlFilter
+-A FORWARD -i bridge0 -p tcp -m state --state INVALID -j DROP
+-A WebserverWWANAccess -d 192.168.1.151/32 -p tcp -m tcp --dport 443 -j DROP
+-A WebserverWWANAccess -d 192.168.1.151/32 -p tcp -m tcp --dport 80 -j DROP
+-P PREROUTING ACCEPT
+-P POSTROUTING ACCEPT
+-A POSTROUTING -o wlan0-vxd -j MASQUERADE --random
+##### syslog: righe miniupnpd/UPnP recenti
+Nov  2 11:24:06 mdm9625-perf daemon.notice miniupnpd[619]: HTTP listening on port 8201
+Nov  2 11:24:06 mdm9625-perf daemon.notice miniupnpd[619]: Listening for NAT-PMP traffic on port 5351

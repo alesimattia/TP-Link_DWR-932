@@ -10,7 +10,7 @@ Workspace di reverse engineering del router 4G **D-Link DWR-932 HW F1, FW 01.11.
 - fare reverse engineering del firmware e installare un firmware custom per sbloccare nuove funzionalità;
 - ottimizzare le prestazioni o il consumo energetico.
 
-Non è un progetto software: non ci sono build, lint o test, e la cartella non è un repo git. Il lavoro consiste nell'analizzare firmware, sorgenti GPL e documentazione, e nello scrivere script di analisi.
+- Ogni funzionalità introdotta deve essere controllabile da interfaccia grafica Web UI
 
 ## Memoria di progetto: leggerla all'inizio di ogni sessione
 
@@ -43,6 +43,35 @@ Aggiorna questi file man mano che emergono risultati nuovi: è il posto per i de
   tar -xzf gpl/DWR-932_sw_revf1_GPLcode.tar.gz -C analysis/gpl-extract './DWR-932F1_01.04.EU_GPLCODE/<percorso>'
   ```
 - **Possibili vie di accesso (da verificare):** console UART (`SERIAL_MSM_HSL_CONSOLE`), Qualcomm download mode (`MSM_DLOAD_MODE`), JTAG, servizi di rete noti sulla rev B (telnet/SSH, UDP 39889, `debug*.cgi`, UPnP 2869).
+
+## Funzionalità sbloccabili
+
+Funzioni assenti nella web UI stock 01.11. Già fatte: potenza di trasmissione Wi-Fi, paese IT bloccato, repeater Wi-Fi, beacon e DTIM. Escluse perché la UI stock le ha già: canale Wi-Fi, larghezza di canale 20/40 MHz, numero massimo di client, gestione remota, filtro URL, DMZ, filtro MAC, roaming, risparmio energetico, UPnP.
+
+Il supporto esiste già nel firmware o nel driver Wi-Fi: manca solo una sezione nella pagina custom.cgi, che le riapplica a ogni avvio come per la potenza di trasmissione.
+- creare una memoria CLAUDE dedicata ad ogni funzionalità implementata
+
+| Funzione | A cosa serve | Cosa c'è già nel firmware |
+|---|---|---|
+| Governor della CPU | Meno consumo e calore, più autonomia. Oggi la CPU è fissa al massimo (998 MHz) | Governor del kernel ondemand, conservative e powersave |
+| Spegnimento dei LED | Risparmio e discrezione | Controllo dei LED da `/sys/class/leds` |
+| Riavvio programmato | Connessione 4G più stabile nel tempo | Chiavi `AUTOREBOOT_*` gestite dal firmware, più crond |
+| Limite dati con blocco | Utile con SIM a consumo: blocca il traffico oltre una soglia mensile | `bm_dataLimit` e `bm_netstat` già attivi; la UI mostra solo una parte |
+| DNS personalizzati | Per esempio 1.1.1.1, 9.9.9.9 o DNS che bloccano la pubblicità | `manual_wwanDns_*` gestite dal firmware |
+| TTL fisso | Nasconde il tethering agli operatori che lo limitano. Verificare che il contratto lo permetta | Regola iptables supportata dal kernel; va riapplicata con un hook perché QCMAP svuota quelle regole |
+| Risposta al ping da internet | Diagnostica, utilità bassa | `wwan_ping_enable` |
+
+### Sperimentali, da collaudare
+
+- **Rete Wi-Fi ospiti (secondo SSID).** Il driver ha già l'interfaccia virtuale e la configurazione QCMAP esiste, ma la funzione è disattivata nella build. Va verificato che l'isolamento tra ospiti e LAN funzioni davvero. L'impegno è medio-alto.
+- **mDNS/Bonjour con riflettore in modalità repeater.** Con avahi (già presente) i dispositivi collegati al DWR potrebbero vedere stampanti e servizi simili della rete di casa. Funziona solo per i servizi in cui è il dispositivo collegato ad aprire la connessione.
+- **Blocco delle bande LTE.** Passa per il modem (QMI/NV) e non è ancora stato esplorato: c'è il rischio di toccare la NVRAM.
+
+### Non sbloccabili senza compilare programmi nuovi
+
+- Condivisione della microSD (Samba), DLNA, captive portal, supporto NTFS: i programmi non sono nel firmware.
+- VPN (OpenVPN, WireGuard): manca anche il supporto nel kernel.
+- Impossibili: Wi-Fi a 5 GHz (il chip è solo 2,4 GHz) e OpenWrt.
 
 ## Regole operative
 

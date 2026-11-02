@@ -1,0 +1,23 @@
+* daemon not running. starting it now on port 5037 *
+* daemon started successfully *
+277 KB/s (2094 bytes in 0.007s)
+##### busybox nc
+BusyBox v1.23.1 (2024-06-28 16:53:59 CST) multi-call binary.
+
+Usage: nc [-iN] [-wN] [-l] [-p PORT] [-f FILE|IPADDR PORT] [-e PROG]
+##### rootDesc.xml
+nc: timed out
+
+##### control URL usato: /ctl/IPConn
+##### GetExternalIPAddress
+nc: timed out
+
+##### GetStatusInfo
+nc: timed out
+
+##### GetGenericPortMappingEntry 0
+nc: timed out
+
+##### SCPD WANIPConnection (solo nomi delle azioni)
+
+5002 KB/s (80488 bytes in 0.015s)
