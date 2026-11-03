@@ -1,0 +1,171 @@
+
+##### file di configurazione dati
+ls: /etc/data/: No such file or directory
+== /etc/IPACM_cfg.xml
+<system xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ipacm_cfg.xsd">
+	<IPACM>
+		<IPACMIface>
+			   <Category>LAN</Category>
+			   <Name>rmnet0</Name>
+			   <Category>WAN</Category>
+			   <Name>rmnet1</Name>
+			   <Category>WAN</Category>
+			   <Name>wlan0</Name>
+			   <Name>wlan1</Name>
+		</IPACMIface>
+		<IPACMPrivateSubnet>
+		</IPACMPrivateSubnet>
+		<IPACMALG>
+		</IPACMALG>
+		<IPACMNAT>		
+ 	        <MaxNatEntries>100</MaxNatEntries>
+		</IPACMNAT>
+		</IPACM>
+
+##### mobileap_cfg.xml: voci di rete (senza APN/password)
+<NATType>SYM</NATType>
+<NatEntryGenericTimeout>200</NatEntryGenericTimeout>
+<NatEntryICMPTimeout>30</NatEntryICMPTimeout>
+<NatEntryTCPEstablishedTimeout>3600</NatEntryTCPEstablishedTimeout>
+<NatEntryUDPTimeout>60</NatEntryUDPTimeout>
+<EnableIPV4>1</EnableIPV4>
+<EnableIPV6>1</EnableIPV6>
+<AutoConnect>1</AutoConnect>
+<Roaming>0</Roaming>
+
+##### kernel: rete, scheduler, IPA, offload
+CONFIG_BRIDGE_NETFILTER=y
+CONFIG_DEFAULT_TCP_CONG="cubic"
+CONFIG_IPA=y
+CONFIG_IP_NF_MANGLE=y
+CONFIG_IP_NF_TARGET_TTL=y
+CONFIG_MSM_BAM_DMUX=y
+CONFIG_MSM_IPC_LOGGING=y
+CONFIG_MSM_IPC_ROUTER=y
+CONFIG_MSM_IPC_ROUTER_SMD_XPRT=y
+CONFIG_MSM_RMNET_WWAN=y
+CONFIG_NETFILTER_XT_TARGET_TCPMSS=y
+CONFIG_NET_CLS_FW=y
+CONFIG_NET_SCH_FIFO=y
+CONFIG_NET_SCH_HTB=y
+CONFIG_NET_SCH_PRIO=y
+CONFIG_NF_CONNTRACK_AMANDA=y
+CONFIG_NF_CONNTRACK_BROADCAST=y
+CONFIG_NF_CONNTRACK_EVENTS=y
+CONFIG_NF_CONNTRACK_FTP=y
+CONFIG_NF_CONNTRACK_H323=y
+CONFIG_NF_CONNTRACK_IPV4=y
+CONFIG_NF_CONNTRACK_IPV6=y
+CONFIG_NF_CONNTRACK_IRC=y
+CONFIG_NF_CONNTRACK_MARK=y
+CONFIG_NF_CONNTRACK_NETBIOS_NS=y
+CONFIG_NF_CONNTRACK_PPTP=y
+CONFIG_NF_CONNTRACK_PROCFS=y
+CONFIG_NF_CONNTRACK_PROC_COMPAT=y
+CONFIG_NF_CONNTRACK_SIP=y
+CONFIG_NF_CONNTRACK_SNMP=y
+CONFIG_NF_CONNTRACK_TFTP=y
+CONFIG_NF_CONNTRACK_TIMESTAMP=y
+CONFIG_PREEMPT=y
+CONFIG_PREEMPT_COUNT=y
+CONFIG_PREEMPT_RCU=y
+CONFIG_RMNET_SMD_CTL_CHANNEL=""
+CONFIG_RMNET_SMD_DATA_CHANNEL=""
+CONFIG_TCP_CONG_CUBIC=y
+cubic
+cubic reno
+bridge0 lo rmnet0 rmnet1 rmnet2 rmnet3 rmnet4 rmnet5 rmnet6 rmnet7 sit0 wlan0 wlan0-va0 wlan0-vxd 
+/dev/ipa                       /sys/bus/platform/drivers/ipa
+/dev/ipa_tethering_bridge
+
+##### interfacce: MTU, coda, qdisc
+rmnet0 mtu=2000 txqlen=1000 stato=down
+rmnet1 mtu=2000 txqlen=1000 stato=down
+bridge0 mtu=1500 txqlen=0 stato=up
+wlan0 mtu=1500 txqlen=1000 stato=unknown
+wlan0-vxd mtu=1500 txqlen=1000 stato=down
+qdisc mq 0: dev wlan0 root 
+
+##### regole iptables rilevanti (MSS, TTL, mangle)
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P FORWARD ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+
+##### sysctl rete
+net/ipv4/ip_forward = 1
+net/ipv4/tcp_mtu_probing = 0
+net/core/netdev_max_backlog = 1000
+net/core/rmem_max = 163840
+net/core/wmem_max = 163840
+net/netfilter/nf_conntrack_tcp_timeout_established = 3600
+net/netfilter/nf_conntrack_udp_timeout = 60
+net/netfilter/nf_conntrack_udp_timeout_stream = 60
+net/ipv4/ip_default_ttl = 64
+
+##### power collapse e sospensione
+set -e
+case "$1" in
+  start)
+        soc_id=`cat /sys/devices/system/soc/soc0/id`
+        case "$soc_id" in
+        "104" | "105" | "106" | "107")
+                echo -n "Starting powerconfig for 9x15: "
+                echo 1 > /sys/module/pm_8x60/modes/cpu0/power_collapse/suspend_enabled
+                echo 1 > /sys/module/pm_8x60/modes/cpu0/standalone_power_collapse/suspend_enabled
+                echo 1 > /sys/module/pm_8x60/modes/cpu0/power_collapse/idle_enabled
+                echo 1 > /sys/module/pm_8x60/modes/cpu0/standalone_power_collapse/idle_enabled
+                echo 1 > /sys/module/rpm_resources/enable_low_power/pxo
+                echo 2 > /sys/module/rpm_resources/enable_low_power/vdd_dig
+                echo 2 > /sys/module/rpm_resources/enable_low_power/vdd_mem
+                echo ondemand > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+                echo "done"
+                ;;
+         esac
+         case "$soc_id" in
+         "134" | "148" | "149" | "150" | "151" | "152" | "173" | "174" | "175")
+                echo -n "Starting powerconfig for 9x25: "
+                echo 1 > /sys/module/pm_8x60/modes/cpu0/power_collapse/suspend_enabled
+                echo 1 > /sys/module/pm_8x60/modes/cpu0/standalone_power_collapse/suspend_enabled
+                echo 1 > /sys/module/pm_8x60/modes/cpu0/power_collapse/idle_enabled
+                echo 1 > /sys/module/pm_8x60/modes/cpu0/standalone_power_collapse/idle_enabled
+                echo 1 > /sys/module/lpm_resources/enable_low_power/pxo
+                echo 1 > /sys/module/lpm_resources/enable_low_power/vdd_dig
+                echo 675000 > /sys/module/lpm_resources/enable_low_power/vdd_mem
+                echo ondemand > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+                echo "done";
+                ;;
+         esac
+         case "$soc_id" in
+         "116" | "142" | "154")
+                echo -n "Starting powerconfig for 8x30: "
+                echo 1 > /sys/module/pm_8x60/modes/cpu0/power_collapse/suspend_enabled
+                echo 1 > /sys/module/pm_8x60/modes/cpu1/power_collapse/suspend_enabled
+                echo 1 > /sys/module/pm_8x60/modes/cpu0/standalone_power_collapse/suspend_enabled
+                echo 1 > /sys/module/pm_8x60/modes/cpu1/standalone_power_collapse/suspend_enabled
+                echo 1 > /sys/module/pm_8x60/modes/cpu0/standalone_power_collapse/idle_enabled
+/sys/module/pm_8x60/modes/cpu0/power_collapse/suspend_enabled = 1
+/sys/module/pm_8x60/modes/cpu0/standalone_power_collapse/suspend_enabled = 1
+/sys/module/pm_8x60/modes/cpu0/wfi/suspend_enabled = 1
+/sys/module/pm_8x60/modes/cpu0/power_collapse/idle_enabled = 1
+/sys/module/pm_8x60/modes/cpu0/retention/idle_enabled = 0
+/sys/module/pm_8x60/modes/cpu0/standalone_power_collapse/idle_enabled = 1
+/sys/module/pm_8x60/modes/cpu0/wfi/idle_enabled = 1
+/sys/power/autosleep = off
+
+##### processi del percorso dati
+   96 root       0:00 [k_rmnet_mux_wor]
+  406 root       0:01 /usr/bin/qmuxd
+  453 root       0:00 /usr/bin/netmgrd
+  486 root       0:02 QCMAP_ConnectionManager /bmdefsys/etc/mobileap_cfg.xml d
+ 1063 root       0:00 ipacm
+ 1068 root       0:00 /usr/bin/qti /dev/rmnet_ctrl /dev/smdcntl8
+ 1071 root       0:00 /usr/bin/qti /dev/rmnet_ctrl1 /dev/smdcntl9
+ 1076 root       0:00 /usr/bin/qti /dev/rmnet_ctrl2 /dev/smdcntl10
+ 1079 root       0:00 /usr/bin/qti /dev/rmnet_ctrl3 /dev/smdcntl11
+
+##### modem: file leggibili (senza identificativi)
+149
+(null)
+2.2
