@@ -46,7 +46,7 @@ Aggiorna questi file man mano che emergono risultati nuovi: è il posto per i de
 
 ## Funzionalità sbloccabili
 
-Funzioni assenti nella web UI stock 01.11. Già fatte: potenza di trasmissione Wi-Fi, paese IT bloccato, repeater Wi-Fi, beacon e DTIM, riavvio programmato (tab nel popup Amministrazione della UI stock), governor e frequenza minima/massima della CPU, stato live (LTE, temperature, CPU, batteria, Wi-Fi) nella colonna sinistra della home. Escluse perché la UI stock le ha già: canale Wi-Fi, larghezza di canale 20/40 MHz, numero massimo di client, gestione remota, filtro URL, DMZ, filtro MAC, roaming, risparmio energetico, UPnP.
+Funzioni assenti nella web UI stock 01.11. Già fatte: potenza di trasmissione Wi-Fi, paese IT bloccato, repeater Wi-Fi, beacon e DTIM, riavvio programmato (tab nel popup Amministrazione della UI stock), governor e frequenza minima/massima della CPU, stato live (LTE, temperature, CPU, batteria, Wi-Fi) nella colonna sinistra della home, blocco delle bande LTE (riquadro nel popup Internet → Modalità di connessione). Escluse perché la UI stock le ha già: canale Wi-Fi, larghezza di canale 20/40 MHz, numero massimo di client, gestione remota, filtro URL, DMZ, filtro MAC, roaming, risparmio energetico, UPnP.
 
 Il supporto esiste già nel firmware o nel driver Wi-Fi: manca solo una sezione nella pagina custom.cgi, che le riapplica a ogni avvio come per la potenza di trasmissione.
 - creare una memoria CLAUDE dedicata ad ogni funzionalità implementata
@@ -63,7 +63,6 @@ Il supporto esiste già nel firmware o nel driver Wi-Fi: manca solo una sezione 
 
 - **Rete Wi-Fi ospiti (secondo SSID).** Il driver ha già l'interfaccia virtuale e la configurazione QCMAP esiste, ma la funzione è disattivata nella build. Va verificato che l'isolamento tra ospiti e LAN funzioni davvero. L'impegno è medio-alto.
 - **mDNS/Bonjour con riflettore in modalità repeater.** Con avahi (già presente) i dispositivi collegati al DWR potrebbero vedere stampanti e servizi simili della rete di casa. Funziona solo per i servizi in cui è il dispositivo collegato ad aprire la connessione.
-- **Blocco delle bande LTE.** Passa per il modem (QMI/NV) e non è ancora stato esplorato: c'è il rischio di toccare la NVRAM.
 
 ### Non sbloccabili senza compilare programmi nuovi
 
@@ -82,10 +81,9 @@ Valutazione del 2026-11-03 fatta senza SIM: nessuna misura via radio, i guadagni
 3. **Wi-Fi a 40 MHz.** È configurato a 40 MHz, ma la regola di coesistenza 20/40 lo riporta a 20 quando sente reti vicine.
    - Prima prova: scegli un canale fisso più libero (1, 6 o 11) invece di "auto".
    - Opzione aggiuntiva: un interruttore in custom.cgi che disattiva la coesistenza e forza i 40 MHz. Raddoppia la velocità teorica, ma disturba le reti vicine e in ambienti affollati può peggiorare.
-4. **Blocco della banda LTE**, nella pagina custom.cgi. Il firmware ha già una funzione nativa che la UI non usa; permette di bloccare **B3, B7 o B20**. Utile per esempio per forzare B3 (1800 MHz, più capacità) quando l'operatore ti tiene su B20 (800 MHz, spesso congestionata), o viceversa per la copertura in casa. Attenzione a tre cose:
-   - **"Automatico" dimentica due bande:** la modalità "auto" del firmware abilita solo B3+B7+B20 ed escluderebbe B1 e B8, usate in Italia. Va implementata salvando e ripristinando la maschera originale del modem.
-   - **Carrier aggregation:** se l'operatore aggrega due bande, il blocco la disattiva. Dal firmware non si vede se è in uso.
-   - **Persistenza:** l'impostazione resta salvata nel modem; si annulla con la stessa funzione.
+4. **Blocco della banda LTE: fatto il 2026-11-03**, nel riquadro "Bande LTE e carrier aggregation" del popup Internet → Modalità di connessione. Si scelgono liberamente le bande supportate dal modem (B1, B3, B7, B8, B20, B38, B40) con il comando AT+BMBANDPREF; dettagli in [project_dwr932-f1-lteband.md](.claude/memory/project_dwr932-f1-lteband.md). Utile per esempio per forzare B3 (1800 MHz, più capacità) quando l'operatore ti tiene su B20 (800 MHz, spesso congestionata), o viceversa per la copertura in casa. Attenzione a due cose:
+   - **Carrier aggregation:** non ha un interruttore e nel modem non risulta disattivata; la attiva la rete quando combina due bande abilitate. Con una sola banda non c'è aggregazione tra bande diverse. Dal firmware non si vede se è in uso.
+   - **Persistenza:** l'impostazione resta salvata nel modem anche dopo il riavvio; si annulla dallo stesso riquadro (pulsante Tutte).
 5. **CPU a supporto del routing.** Tutto il traffico tra LTE e Wi-Fi passa dalla CPU: l'acceleratore hardware IPA c'è, ma il chip Wi-Fi Realtek non può usarlo. Il governor ondemand parte da 300 MHz e sale solo sotto carico alto. Propongo un'opzione nella sezione CPU, "prestazioni quando l'LTE è connesso", oppure una soglia di salita più bassa (60-70% invece di 95%). Il costo è un consumo maggiore; il guadagno si misura con uno speed test.
 6. **Clamp dell'MSS (dimensione massima dei segmenti TCP).** Se il tuo operatore usa un MTU sotto 1500 (si vede solo con la SIM), alcuni siti si bloccano o rallentano. La regola TCPMSS esiste nel kernel ma non è attiva. Va riapplicata con un hook, perché QCMAP svuota le regole, come per il TTL. Rischio basso.
 7. **Coesistenza tra LTE e Wi-Fi.** Se la banda servente è B7 (2600 MHz), conviene tenere il Wi-Fi sui canali 1-6, lontano dai canali alti dei 2,4 GHz. Posso mostrare un suggerimento nel riquadro in base alla banda. Costo basso.
@@ -101,7 +99,7 @@ Valutazione del 2026-11-03 fatta senza SIM: nessuna misura via radio, i guadagni
 
 - **Antenna esterna:** non ci sono connettori. Si potrebbe solo aprire il case e saldare cavetti su eventuali punti di test della scheda, non verificati: è un intervento hardware incerto.
 - **Aggiornare il firmware del modem:** è fermo al 2019 (R602_1.1.1_190219), non ne esistono di più recenti e le immagini sono firmate.
-- **Modificare la NVRAM del modem** (categoria, combinazioni di carrier aggregation): non è leggibile da Linux e c'è il rischio di perdere calibrazione o IMEI.
+- **Modificare la NVRAM del modem** (categoria, combinazioni di carrier aggregation): da Linux non è leggibile; dal PC Windows i file EFS si leggono via DIAG (`tools/dwr_diag_efs_read.ps1`, solo lettura). Scriverli resta sconsigliato: c'è il rischio di perdere calibrazione o IMEI.
 - **Mitigazione termica:** thermal-engine non limita il modem. Le sue regole riguardano solo CPU e tensioni sui sensori tsens; i termistori degli amplificatori, assurdi perché non montati, li apre ma non li usa. È un'inferenza statica: cosa faccia internamente il firmware del modem resta ignoto.
 
 **Per misurare i guadagni serve una SIM dati.** Il protocollo che propongo: in ogni posizione e per ogni banda annotare RSRP, SINR e banda dal riquadro, più download e upload da uno speed test su un client.

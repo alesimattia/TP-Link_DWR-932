@@ -1,0 +1,50 @@
+risposta 0x7D: 7d0501001f000000
+dsatcmdp.c:1693 [ssid 5012] Command Name +BMBANDPREF Op = 0xb  | 
+dsatext.c:4038 [ssid 5000] dsatext_exec_bmbandpref_cmd: 0x%llX 0x%llX 0x%llX  | 4195200, 68, 0
+dsatext.c:1131 [ssid 5000] cmd:%d,cmd_err:%d | 1, 0, 0
+dsatext.c:644 [ssid 5000] [BM]: dsatext_async_event_handler; | 0, 0, 0
+dsatext.c:646 [ssid 5000] cmd:%d | 13, 0, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 3, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 4, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 5, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 20, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 21, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 179, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 180, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 182, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 183, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 184, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 199, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 200, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 227, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 228, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 1089877, 0
+gl1_arbitrator_cxm.c:182 [ssid 4001] GARB -> CXM : FN=%d CXM FREQ IND for %d SCELL ARFCNS and 4 Bands | 1089878, 1
+dsatext.c:1718 [ssid 5000] srv_status:%d, srv_domain:%d | 0, 0, 0
+dsatext.c:1737 [ssid 5000] subs_info_pre:%d en_nw_type_ind_mode:%d | 0, 0, 0
+dsatext.c:1738 [ssid 5000] prev_reported_mode[%d]:%d mode:%d | 0, 0, 0
+dsatext.c:1718 [ssid 5000] srv_status:%d, srv_domain:%d | 0, 0, 0
+dsatext.c:1737 [ssid 5000] subs_info_pre:%d en_nw_type_ind_mode:%d | 0, 0, 0
+dsatext.c:1738 [ssid 5000] prev_reported_mode[%d]:%d mode:%d | 0, 0, 0
+tle_log.c:610 [ssid 81] MCC:222, MNC:1, LAC:25302, CellId:10781, Band:0, BsIc:19, Arfcn:7 | 
+tle_log.c:610 [ssid 81] MCC:222, MNC:1, LAC:25302, CellId:10781, Band:0, BsIc:19, Arfcn:7 | 
+tle_log.c:610 [ssid 81] MCC:222, MNC:1, LAC:25302, CellId:10781, Band:0, BsIc:19, Arfcn:7 | 
+dsatext.c:1718 [ssid 5000] srv_status:%d, srv_domain:%d | 1, 4, 0
+dsatext.c:1689 [ssid 5000] report urc info:%d | 30, 0, 0
+dsatext.c:1737 [ssid 5000] subs_info_pre:%d en_nw_type_ind_mode:%d | 0, 0, 0
+dsatext.c:1738 [ssid 5000] prev_reported_mode[%d]:%d mode:%d | 0, 0, 0
+dsatext.c:1718 [ssid 5000] srv_status:%d, srv_domain:%d | 1, 0, 0
+dsatext.c:1689 [ssid 5000] report urc info:%d | 30, 0, 0
+dsatext.c:1737 [ssid 5000] subs_info_pre:%d en_nw_type_ind_mode:%d | 0, 0, 0
+dsatext.c:1738 [ssid 5000] prev_reported_mode[%d]:%d mode:%d | 0, 0, 0
+AT+BMBANDPREF=2000000400380,44,0
+OK
+dsatcmdp.c:1693 [ssid 5012] Command Name +BMBANDPREF Op = 0x5  | 
+dsatext.c:4096 [ssid 5000] band_pref=0x%llx lte_band_pref=0x%llx tds_band_pref=0x%llx | 4195200, 68, 63
+dsatrsp.c:419 [ssid 5012] Command output 
++BMBANDPREF: | 
++BMBANDPREF: 0x2000000400380, 0x44, 0x3F
+frame per comando: 0x79=1564 0x7d=1 0x92=11277
+AT+BMBANDPREF=2000000400380,A0000800C5,0
+OK
++BMBANDPREF: 0x2000000400380, 0xA0000800C5, 0x3F

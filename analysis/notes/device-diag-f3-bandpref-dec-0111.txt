@@ -1,0 +1,16 @@
+0 KB/s (477 bytes in 1.000s)
+risposta 0x7D: 7d0501001f000000
+dsatcmdp.c:1693 [ssid 5012] Command Name +BMBANDPREF Op = 0xb  | 
+dsatext.c:4032 [ssid 5000] tds_band_pref & ph_ptr->tds_band_capability %llx | 0, 0, 0
+dsatext.c:4082 [ssid 5000] band value is out of range 0x%llx,0x%llx,0x%llx | 1466000658, 104, 99
+AT+BMBANDPREF=562949957616512,68,63
+ERROR
+dsatcmdp.c:1693 [ssid 5012] Command Name +BMBANDPREF Op = 0x5  | 
+dsatext.c:4096 [ssid 5000] band_pref=0x%llx lte_band_pref=0x%llx tds_band_pref=0x%llx | 4195200, 524485, 63
+dsatrsp.c:419 [ssid 5012] Command output 
++BMBANDPREF: | 
++BMBANDPREF: 0x2000000400380, 0xA0000800C5, 0x3F
+frame per comando: 0x79=373 0x7d=1 0x92=9805
+AT+BMBANDPREF=562949957616512,687195291845,63
+ERROR
++BMBANDPREF: 0x2000000400380, 0xA0000800C5, 0x3F

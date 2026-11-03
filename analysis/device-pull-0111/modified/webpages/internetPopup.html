@@ -1,0 +1,915 @@
+
+<!-- Current Network Status  here -->
+<div id="tf1_networkStatus">
+<div id="tf1_tmpl_network_information">
+	<script id="networkInfoTemplate" type="text/x-dot-template">	
+	<form name="tf1_frmInternetStatus" id="tf1_frmInternetStatus" action="" method="post">
+		<input type="hidden" name="thispage" id="thispage" value="controlPannel.html" />
+		<h3>{{=global_lang["internet_popup"]["current_netstatus"] || 'Current Network Status' }}</h3>
+		<div class="popupContentDisplay">
+			<div class="configStatusContent">
+				<h4>{{=global_lang["internet_popup"]["cell_info"] || 'Cellular Information' }}</h4>
+				<div class="configRow2">
+					<label>{{=global_lang["internet_popup"]["netprovider"] || 'Network Provider' }}</label>
+					{{ if(ui_config.Dyn_Status["up_5s"]["ipv4"]["status"] == "Connected") { }}
+						{{var statuStr;}}
+						{{ if ( it.signal_level == "0") { }}
+							  {{statuStr="signal1";}}
+						{{ } else if( it.signal_level == "1") { }}	  
+							 {{statuStr="signal2";}}	
+						{{ } else if( it.signal_level == "2") { }}	  
+							 {{statuStr="signal3";}}	
+						{{ } else if( it.signal_level == "3") { }}	  
+							 {{statuStr="signal4";}}	
+						{{ } else if( it.signal_level == "4") { }}	  
+							 {{statuStr="signal5";}}	
+						{{ } else { }}
+							  {{statuStr="signal5";}}
+						{{ } }}
+					{{ } }}
+					
+					{{ if(ui_config.Dyn_Status["up_5s"]["ipv4"]["status"] == "Disconnected") { }}
+					
+						{{var statuStr;}}
+						{{ if ( it.signal_level == "0") { }}
+							  {{statuStr="signalGray1";}}
+						{{ } else if( it.signal_level == "1") { }}	  
+							 {{statuStr="signalGray2";}}	
+						{{ } else if( it.signal_level == "2") { }}	  
+							 {{statuStr="signalGray3";}}	
+						{{ } else if( it.signal_level == "3") { }}	  
+							 {{statuStr="signalGray4";}}	
+						{{ } else if( it.signal_level == "4") { }}	  
+							 {{statuStr="signalGray5";}}	
+						{{ } else { }}
+							  {{statuStr="signalGray6";}}
+						{{ } }}
+					
+					{{ } }}
+					
+					{{ if ( it.operator_name == "Searching") { }}
+						<p>
+						{{=global_lang["cpsection"]["Searching"] || 'Searching' }}
+						</p>  
+						{{ } else if( it.operator_name == "No Service") { }}	  
+						<p>
+						{{=global_lang["cpsection"]["no_service"] || 'No Service' }}
+						</p> 
+						{{ } else if( it.operator_name == "PUK Lock status") { }}	  
+						<p>
+						{{=global_lang["cpsection"]["puk_lock"] || 'PUK Lock status' }}
+						</p> 
+						{{ } else if( it.operator_name == "PIN Lock status") { }}	  
+						<p>
+						{{=global_lang["cpsection"]["pin_lock"] || 'PIN Lock status' }}
+						</p> 
+						{{ } else { }}
+						<p>
+							   {{! it.operator_name || ui_config.Dyn_Status["up_5s"]["signal"]["modem"]["opname"]}}
+						</p>
+						{{ } }}	 
+					<span class={{=statuStr}}></span>
+					{{ if ( it.operator_name == "Searching" || it.operator_name == "No Service" || it.network_type == "" || it.operator_name == "NO SIM") { }}
+									 <dl> 
+									dBm
+									</dl>
+									{{ } else { }}
+									 <dl> 
+										   {{=it.signal_strength}}dBm
+									</dl>
+									{{ } }}
+				</div>
+				<div class="break2">
+					&nbsp;
+				</div>
+				<div class="configRow2">
+					{{var network_service;}}
+					<label>{{=global_lang["internet_popup"]["nettype"] || 'Network Type' }}</label>
+						{{if(it.network_type == "G" || it.network_type == "E") {}}
+							{{network_service = "2G";}}
+						{{ } else { }}	
+							{{network_service = it.network_type;}}
+						{{ } }}	
+					<p>
+						{{=global_disconnect_service || network_service}}
+					</p>
+				</div>
+				<div class="break2">
+					&nbsp;
+				</div>
+				<div class="configRow2">
+					<label>{{=global_lang["internet_popup"]["cntime"] || 'Connection Time' }}</label>
+					<p>
+						 {{! it.connection_time || ""}}
+					</p>
+				</div>
+				<div class="break2">
+					&nbsp;
+				</div>
+				<h4>{{=global_lang["internet_popup"]["network_status"] || 'Network Status' }}</h4>
+				<div class="configRow2">
+					<label>{{=global_lang["internet_popup"]["ipAddress"] || 'IP Address (IPV4)' }}</label>
+					<p>
+						{{! it.ipAddr || ""}}
+					</p>
+				</div>
+				<div class="break2">
+					&nbsp;
+				</div>
+				<div class="configRow2">
+					<label>{{=global_lang["internet_popup"]["avgdl"] || 'Total DL' }}</label>
+					<p>
+						{{=it.Average_DL}}
+					</p>
+				</div>
+				<div class="break2">
+					&nbsp;
+				</div>
+				<div class="configRow2">
+					<label>{{=global_lang["internet_popup"]["avgul"] || 'Total UL' }}</label>
+					<p>
+						{{=it.Average_UL}}
+					</p>
+				</div>
+				<div class="break2">
+					&nbsp;
+				</div>
+			</div>
+		</div>
+	</form>
+	</script>
+	</div>
+</div>
+<!-- Current Network Status Ends here -->
+<!-- APN Settings Starts here -->
+<div id="tf1_apnSettings">
+	<div id="tf1_tmpl_apn_info">
+	<script id="apninfoTemplate" type="text/x-dot-template">
+	<form name="frm_internetApnSettings" id="tf1_frm_internetApnSettings"  method="post" >
+		<input type="hidden" name="thispage" id="thispage" value="index.html" />
+		<h3>{{=global_lang["internet_popup"]["apn-settings"] || 'APN Settings' }}</h3>
+		<!-- table popup data -->
+		<div class="configTableForm" id="tf1_setupInternetApnForm" style="display:none;">
+			<div class="configContent">
+				<h4>{{=global_lang["common"]["add_new"] || 'Add New' }}</h4>
+				<div class="roundedBox">
+					<div class="innerClose">
+						<a class="close2" href="#" onclick="internet_formClose(event)" title="Close"></a>
+					</div>
+					<div class="configRow">
+						<label>Name</label>
+						<input type="text" id="tf1_internetApnName" />
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+						<label>APN</label>
+						<input type="text"  id="tf1_internetApn" />
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<!--
+					<div class="configRow">
+						<label>Dial Number</label>
+						<input type="text" />
+					</div>
+					-->
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+						<label>User Name</label>
+						<input type="text" />
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+						<label>Password</label>
+						<input type="text" />
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+				</div>
+			</div>
+			<div class="submitRowPopup">
+				<input type="button" value="Apply"  class="btnSubmit" onclick="internet_addNewApnValidate()" />
+				<input type="button" value="Cancel"  class="btnSubmit" />
+			</div>
+		</div>
+		<!-- table popup data ends-->
+		<div class="configForm">
+			<div class="configContent">
+				<h4>{{=global_lang["internet_popup"]["apn_setting"] || 'Access Point Name (APN) Settings' }}</h4>
+				<div class="roundedBox">
+					<div class="configRow">
+						<label>{{=global_lang["internet_popup"]["apnselemode"] || 'APN Selection Mode' }}</label>
+						<select  name="apnMode" id="tf1_apnMode"  onchange="internet_apnModeSelect();">
+							<option selected value="Auto" {{ if(it["apn"]["APN_0"]["type"] == 0) { }} selected {{ } }}>{{=global_lang["internet_popup"]["apn_auto"] || 'Auto' }}</option>
+							<option value="Manual"  {{ if(it["apn"]["APN_0"]["type"] == 1) { }} selected {{ } }}>{{=global_lang["internet_popup"]["apn_manual"] || 'Manual' }}</option>
+							
+						</select>
+					</div>
+				</div>
+				<h4>{{=global_lang["internet_popup"]["apnmode"] || 'APN Mode' }}</h4>
+				<div class="roundedBox">
+					<div class="configRow" id="tf1_networkType_div">
+						<label>{{=global_lang["internet_popup"]["apn"] || 'APN' }}</label>
+						<select id="tf1_networkType" onchange="internet_AutoApnChange()">
+						{{ var apnRecords = it["apn_list"]["multi_apn0"];}}
+							{{ for (var item in apnRecords) { }}
+							  	{{ if (apnRecords[item].apn != "" && apnRecords[item].apn) { }}				
+								<option  {{ if ( apnRecords[item].apn.toLowerCase() == it["apn"]["APN_0"]["apn"].toLowerCase() ) {}} selected {{ } }}value="{{=apnRecords[item].apn}}">{{=apnRecords[item].apn}}</option>
+								{{ } }}
+							{{ } }}
+						</select>
+					</div>
+					<div class="break" id="break_networkType_div">
+						&nbsp;
+					</div>
+					<div class="configRow" id="tf1_apn_div">
+						<label>{{=global_lang["internet_popup"]["apn"] || 'APN' }}</label>
+						<input type="text" id="tf1_apn" name="apn" 
+						value='{{! it["apn"]["APN_0"]["apn"] || "" }}' maxlength="32"/>
+					</div>
+					<div class="break" id="break_apn_div">
+						&nbsp;
+					</div>					
+					<div class="configRow" id="tf1_userName_div">
+						<label>{{=global_lang["internet_popup"]["apn_uname"] || 'User Name' }}</label>
+						<input type="text" id="tf1_userName"  maxLength="32" name="userName" value='{{! it["apn"]["APN_0"]["uname"] || "" }}' />
+					</div>
+					<div class="break" id="break_userName_div">
+						&nbsp;
+					</div>
+					<div class="configRow" id="tf1_Password_div">
+						<label>{{=global_lang["internet_popup"]["apn_pwd"] || 'Password' }}</label>
+						<input type="password" id="tf1_Password" maxLength="32" name="Password" value='{{! it["apn"]["APN_0"]["passwd"] || "" }}' />
+					</div>
+					<div class="break" id="break_Password_div">
+						&nbsp;
+					</div>
+                    <div class="configRow" id="tf1_apnMethod_div">
+						<label>{{=global_lang["internet_popup"]["apn_method"] || 'APN Method' }}</label>
+						<select size="1" id="tf1_apnAuth" >                       
+					   		 <option {{ if (it["apn"]["APN_0"]["auth"] == "3"){ }} selected {{}}} value="3">{{=global_lang["internet_popup"]["pap&chap"] || 'Auto (PAP & CHAP)' }}</option>
+							<option {{ if (it["apn"]["APN_0"]["auth"] == "1"){ }} selected {{}}} value="1">{{=global_lang["internet_popup"]["pap"] || 'PAP' }}</option>
+							<option {{ if (it["apn"]["APN_0"]["auth"] == "2"){ }} selected {{}}} value="2">{{=global_lang["internet_popup"]["chap"] || 'CHAP' }}</option>
+							<option {{ if (it["apn"]["APN_0"]["auth"] == "0"){ }} selected {{}}} value="0">{{=global_lang["internet_popup"]["None"] || 'None' }}</option>
+                           
+                        </select>
+					</div>
+					<div class="break" id="break_apnMethod_div">
+						&nbsp;
+					</div>
+                     
+					<div class="configRow" id="tf1_tablewrapper_div">
+						<div id="tablewrapper">
+							<div id="tableheader">
+								<div class="search">
+									<select id="columns" onchange="sorter.search('query')" style="display:none;"></select>
+									<select id="pagedropdown" style="display:none;"></select>
+									<input type="text" value="search" data-localize="common.search" id="query" onkeyup="sorter.search('query')" />
+									<span class="details">
+										<div>
+											<span data-localize="common.records">Records</span>: <span id="startrecord"></span>-<span id="endrecord"></span> of <span id="totalrecords"></span>
+										</div> </span>
+									<div id="tablelocation">
+										<div>
+											<select onchange="sorter.size(this.value)" class="one">
+												<option value="5">5</option>
+												<option value="10" selected="selected">10</option>
+												<option value="20">20</option>
+												<option value="All">All</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<table cellpadding="0" cellspacing="0" border="0" id="tf1_simContactsTbl" class="tinytable">
+								<thead>
+									<tr>
+										<th><h6>ID</h6></th>
+										<th><h6>Connect Now </h6></th>
+										<th><h6>Delete</h6></th>
+										<th><h6>Type </h6></th>
+										<th><h6>Name </h6></th>
+										<th><h6>APN</h6></th>
+										<th><h6>Dial Number</h6></th>
+										<th><h6>User Name</h6></th>
+										<th><h6>Password</h6></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td><a id alt="" class="enable-disable-on"></a>
+										<input type="hidden" value="0" name="Compatibility" />
+										</td>
+										<td>
+										<input type="checkbox" />
+										</td>
+										<td>System</td>
+										<td>Far EasTone</td>
+										<td>internet</td>
+										<td>*99#</td>
+										<td>--</td>
+										<td>--</td>
+									</tr>
+									<tr>
+										<td>2</td>
+										<td><a id alt="" class="enable-disable-on"></a>
+										<input type="hidden" value="0" name="Compatibility" />
+										</td>
+										<td>
+										<input type="checkbox" />
+										</td>
+										<td>System</td>
+										<td>Far EasTone</td>
+										<td>internet</td>
+										<td>*97#</td>
+										<td>admin</td>
+										<td>admin</td>
+									</tr>
+								</tbody>
+							</table>
+							<div id="tablefooter">
+								<div id="tablenav">
+									<div>
+										<img src="images/first.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1,true)" /><img src="images/previous.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1)" /><img src="images/next.gif" width="16" height="16" alt="First Page" onclick="sorter.move(1)" /><img src="images/last.gif" width="16" height="16" alt="Last Page" onclick="sorter.move(1,true)" />
+									</div>
+									<div class="pageCount">
+										<span data-localize="common.pages">Pages</span> <span id="currentpage"></span> <span data-localize="common.of"> of </span> <span id="totalpages"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+						<div>
+							<a href="#" class="btnSubmit" onclick="internet_addNewApn(event)">+ {{=global_lang["common"]["add_new"] || 'Add New' }}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="submitRowPopup1">
+				<input type="button" value='{{=global_lang["common"]["apply"] || "Apply" }}'  class="btnSubmit" id="" onclick="return internet_ApnConfigValidate('tf1_frm_internetApnSettings')" />
+				<input type="button" value='{{=global_lang["common"]["cancel"] || "Cancel" }}'  class="btnSubmit" id="btnClose" />
+			</div>
+		</div>
+	</form>
+	</script>
+	</div>
+</div>
+<!-- APN Settings Ends here -->
+<!-- Connection Settings Starts here -->
+<div id="tf1_connectModeSettings">
+	<div id="tf1_tmpl_cnmode_info"></div>
+	<script id="cnmodeinfoTemplate" type="text/x-dot-template">
+	<form name="frm_connetionModeSettings" id="tf1_frm_connetionModeSettings" action="cgi-action.html" method="post">
+		<input type="hidden" name="thispage" id="thispage" value="index.html" />
+		<h3>{{=global_lang["internet_popup"]["cnsettings"] || 'Connection Settings' }}</h3>
+		<div class="configForm">
+			<div class="configContent">
+				<h4>{{=global_lang["internet_popup"]["cellularsettings"] || 'Cellular Settings' }}</h4>
+				<div class="roundedBox">
+					<div class="configRow">
+						<label>{{=global_lang["internet_popup"]["precell"] || 'Preferred Cellular' }}</label>
+						<select id="tf1_netPref">
+							<option value="0" {{if(it["apn"]["COMMON"]["netpref_value"] == "0") { }} selected {{}}}>{{=global_lang["internet_popup"]["cn_auto"] || 'Auto' }}</option>
+							<option value="6" {{if(it["apn"]["COMMON"]["netpref_value"] == "6") { }} selected {{}}}>{{=global_lang["internet_popup"]["cn_4g"] || '4G mode' }}</option>
+							<option value="7" {{if(it["apn"]["COMMON"]["netpref_value"] == "7") { }} selected {{}}}>{{=global_lang["internet_popup"]["cn_3g"] || '3G mode' }}</option>
+							<option value="8" {{if(it["apn"]["COMMON"]["netpref_value"] == "8") { }} selected {{}}}>{{=global_lang["internet_popup"]["cn_2g"] || '2G mode' }}</option>
+						</select>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+					{{var statuStr,statuVal;}}
+					<label>{{=global_lang["internet_popup"]["dataroaming"] || 'Allow Data Roaming' }}</label>
+        	     			{{if(it["apn"]["COMMON"]["roaming_conx"] == "1") { }}
+								 {{statuStr="enable-disable-on";}}
+								 {{statuVal="1";}}
+                        	{{ } else { }}
+								 {{statuStr="enable-disable-off";}}
+								 {{statuVal="0";}}
+							{{ } }}
+					
+						<a alt="" class="{{=statuStr}}"></a>
+						<input type="hidden" value="{{=statuVal}}" id="tf1_autoRoaming" />
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+						<label>{{=global_lang["cpsection"]["cnmode"] || 'Connection Mode' }}</label>
+						{{var statuStr1 = "connectTypeActive ",statuStr2 = "connectType ",statuVal=1;}}
+						{{if(it["apn"]["COMMON"]["auto_conx"] == "0") { }}
+								 {{statuStr1= statuStr2;}}								
+								 {{statuStr2= "connectTypeActive ";}}
+								 {{statuVal="0";}}
+                      	{{ } }}
+						<p class="connectionModeradio">
+							<a class="{{=statuStr1}}intGrp4" alt="" id="tf1_intAlwaysConnect" onclick="internet_changeConnectionModeOne(1)" val="1"></a>
+										{{=global_lang["internet_popup"]["always"] || 'Always' }}
+						</p>
+						<p class="connectionModeradio">
+							<a class="{{=statuStr2}}intGrp4" alt="" id="tf1_intManualConnect" onclick="internet_changeConnectionModeOne(0)" val="0"></a>
+							
+							{{=global_lang["internet_popup"]["manual"] || 'Manual' }}
+						</p>
+						<input type="text" style="display:none" id="tf1_autoConnectionOnOff" value="{{=statuVal}}" />
+
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div  class="configRow" id="tf1_manualRadioAlways">
+						<p class="textBlock">
+							{{=global_lang["internet_popup"]["alwayskeep"] || 'Always keep Internet connection.'}}
+						</p>
+					</div>
+					<div  class="configRow"  style="display: none" id="tf1_manualRadioOnDemand">
+						<p class="textBlock">
+							Connect to Internet when clients accesses the Internet. Disconnect in minutes if there is no Internet access.
+						</p>
+						<div class="break">
+							&nbsp;
+						</div>
+						<label>Minutes</label>
+						<input type="text" class="one" />
+					</div>
+					<div style="display: none"  id="tf1_manualRadioManual">
+						<p class="textBlock">
+							{{=global_lang["internet_popup"]["manualcnne"] || 'Manually control your connection behavior.' }}
+						</p>
+						<div class="break">
+							&nbsp;
+						</div>
+						<div class="configRow" style="line-height:25px;">							
+							{{var statuStr,statuVal;}}
+					 		<label>{{=global_lang["internet_popup"]["cnstatus"] || 'Connect / Disconnect manually' }}</label>
+        	     			{{ if(ui_config.Dyn_Status["up_5s"]["ipv4"]["status"] == "Connected") { }}
+								 {{statuStr="enable-disable-on";}}
+								 {{statuVal="1";}}
+                        	{{ } else { }}
+								 {{statuStr="enable-disable-off";}}
+								 {{statuVal="0";}}
+							{{ } }}
+						    
+							<p>
+								<a class="{{=statuStr}}" alt="" id="" style="float:right;"></a>
+								<input type="hidden" id="tf1_modeConfig_connectDisconnect" value="{{=statuVal}}" />
+							</p>
+						</div>
+					</div>
+
+					<div class="break">
+						&nbsp;
+					</div>
+				</div>
+				<h4>Bande LTE e carrier aggregation</h4>
+				<div class="roundedBox" id="cst_lteBand">
+					<div class="configRow">
+						<label>Bande abilitate</label>
+						<p class="cstLbStato" style="width:300px;line-height:20px;padding-top:5px">lettura dal modem...</p>
+					</div>
+					<div class="break">&nbsp;</div>
+					<div class="configRow">
+						<label>Bande LTE</label>
+						<p class="cstLbScelta" style="width:300px"></p>
+					</div>
+					<div class="break">&nbsp;</div>
+					<div class="configRow">
+						<label>Carrier aggregation</label>
+						<p class="cstLbCa" style="width:300px;line-height:20px;padding-top:5px"></p>
+					</div>
+					<div class="break">&nbsp;</div>
+					<div class="configRow">
+						<label>&nbsp;</label>
+						<p style="width:300px;font-size:12px;line-height:18px">La scelta resta salvata nel modem anche dopo il riavvio e vale con qualunque Cellulare preferito. Se nessuna delle bande scelte &egrave; coperta, il router resta senza 4G (con Automatico passa al 3G). La carrier aggregation non ha un interruttore: nel modem non risulta disattivata e la attiva la rete quando combina due bande abilitate; dal firmware non si vede se &egrave; in uso.</p>
+					</div>
+					<div class="break">&nbsp;</div>
+					<div class="configRow">
+						<label>&nbsp;</label>
+						<p>
+							<input type="button" value="Tutte" class="btnSubmit cstLbTutte" disabled>
+							<input type="button" value="Applica bande" class="btnSubmit cstLbApplica" disabled>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="submitRowPopup">
+			<input type="button" value='{{=global_lang["common"]["apply"] || "Apply" }}'  class="btnSubmit" onclick="internet_connectionModeSettingsValidate('tf1_frm_connetionModeSettings')" />
+			<input type="button" value='{{=global_lang["common"]["cancel"] || "Cancel" }}'  class="btnSubmit" id="btnClose" />
+		</div>
+		<div class="break">
+			&nbsp;
+		</div>
+	</form>
+	</script>
+</div>
+ <!-- Connection Settings Ends here -->
+<!-- SIM Card PIN Lock Settings Starts here -->
+<div id="tf1_simCardPINLock">
+
+	<div id="tf1_tmpl_sim_info"></div>
+    
+	<script id="simPinTemplate" type="text/x-dot-template"> 
+	<form name="frm_internetsimCardPINLock" id="tf1_frm_internetsimCardPINLock" >
+		<input type="hidden" name="thispage" id="thispage" value="index.html" />
+		<h3>{{=global_lang["internet_popup"]["sim_settings"] || 'SIM Card PIN Lock Settings' }}</h3>
+		<div class="configForm">
+			<div class="configContent">
+				
+				{{if(it.sim_status == "0" && it.st_result == "0"){ }}
+					<h4>{{=global_lang["internet_popup"]["sim"] || 'SIM' }}</h4>
+					 <p><span style="color:red">{{=it.msg}}</span></p>
+			    {{ } else if((it.sim_status == "1" || it.sim_status == "2") && (it.st_result == "3" || it.st_result == "0" || it.st_result == "2" || it.st_result == "6" )) {  }}
+                
+                <div id="tf1_screen1">
+                   {{  if ( it.sim_status == "2" && it.sim_stus == "2" ) {  }}	
+                    <h4>{{=global_lang["internet_popup"]["unlock_sim"] || 'Unlock SIM' }}</h4>
+					{{ } else { }}
+                	<h4>{{=global_lang["internet_popup"]["sim"] || 'SIM' }}</h4>
+					{{ } }}
+					<div class="roundedBox">
+					<div class="configRow">
+						<label>{{=global_lang["internet_popup"]["retry"] || 'No.of Retry' }}</label>
+						<p>{{=it.retry_st}}  &nbsp;&nbsp;  <span style="color:red">{{=it.msg}}</span></p>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					{{  if (it.sim_status == "2"  && (it.st_result == "0" || it.st_result == "6") && it.sim_stus == "2" ) {  }}	
+					{{ } else { }}
+					<div class="configRow">
+						 
+						<label>{{=global_lang["internet_popup"]["sim_protect"] || 'SIM Card PIN Lock Protection' }}</label>
+						
+						<a alt="" class="enable-disable-off" id="tf1_enabledisablePin"></a>
+						<input type="hidden" value="0" name="Compatibility" />
+				
+					</div>
+
+					<div class="break">
+						&nbsp;
+					</div>
+					{{ } }}
+				    <div class="configRow" id="tf1_Pincode_div"> 
+						<label>{{=global_lang["internet_popup"]["pin_code"] || 'PIN Code' }}</label>
+						 <input type="text" value="" name="Pincode" id="tf1_Pincode" onKeyPress="return numericValueCheck (event)" maxlength="10"/>
+					</div>
+					<div class="break" id="break_Pincode_div">
+						&nbsp;
+					</div>
+				</div>
+                	 <input type="hidden" id="tf1_hid_screen" value="1">
+                </div>
+				
+				{{ } else if((it.sim_status == "1") && (it.st_result == "1" || it.st_result == "9" || it.st_result == "10" || it.st_result == "5" || it.st_result == "4" || it.st_result == "7")) { }}
+				
+	                
+                 <div id="tf1_screen2">
+                	
+                    <h4>{{=global_lang["internet_popup"]["unlock_change_pin"] || 'UnLock SIM or Change PIN' }}</h4>
+					
+                    <div class="roundedBox">
+					<div class="configRow">
+						<label>{{=global_lang["internet_popup"]["retry"] || 'No.of Retry' }}</label>
+						<p>{{=it.retry_st}}  &nbsp;&nbsp;  <span style="color:red">{{=it.msg}}</span></p>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+                    
+                    	<div class="configRow">
+                            <label>{{=global_lang["internet_popup"]["sim_pin"] || 'SIM PIN' }}</label>
+                            
+                            <p><input type="radio" value="1"  name="sim_mode" checked onclick="internet_simpin_mode()" id="tf1_sim_mode"/> {{=global_lang["internet_popup"]["disable_protection"] || 'Disable pin ' }} <input type="radio"  value="2" onclick="internet_simpin_mode()" name="sim_mode"/>{{=global_lang["internet_popup"]["change_pin"] || 'Change  PIN' }} </p>
+                            
+                        </div>
+                              
+                        <div class="break">
+                            &nbsp;
+                        </div>
+                        
+                         <div class="configRow" id="tf1_Pincode_div">
+                            <label>{{=global_lang["internet_popup"]["pin_code"] || 'PIN Code' }}</label>
+                            <input type="text" value="" name="currentPin" id="tf1_Pincode" onKeyPress="return numericValueCheck (event)" />
+                        </div>
+                        <div class="break"  id="break_Pincode_div">
+                            &nbsp;
+                        </div>
+                        <div id="tf1_changePin_block_div">
+                        <div class="configRow">
+                            <label>{{=global_lang["internet_popup"]["cur_pinlock"] || 'Current PIN Lock Number' }}</label>
+                            <input type="text" value="" name="currentPin" id="tf1_currentPin" onKeyPress="return numericValueCheck (event)" />
+                        </div>
+                        <div class="break">
+                            &nbsp;
+                        </div>
+                        <div class="configRow">
+                            <label>{{=global_lang["internet_popup"]["new_pinlock"] || 'New PIN Lock Number' }}</label>
+                            <input type="text" value="" name="newPim" id="tf1_newPin"  onKeyPress="return numericValueCheck (event)" />
+                        </div>
+                        <div class="break">
+                            &nbsp;
+                        </div>
+                        <div class="configRow">
+                            <label>{{=global_lang["internet_popup"]["cnf_new_pinlock"] || 'Confirm New PIN Lock Number' }}</label>
+                            <input type="text" value="" name="cfmnewPim" id="tf1_cnfmPim"  
+                            onKeyPress="return numericValueCheck (event)" />
+                        </div>
+                        <div class="break">
+                            &nbsp;
+                        </div>
+						</div>
+                    </div>
+                			 <input type="hidden" id="tf1_hid_screen" value="2">
+                </div>
+				{{ } else { }}
+                <div id="tf1_screen3">
+                	  <h4>{{=global_lang["internet_popup"]["sim_unlock"] || 'SIM UnBlock' }}</h4>
+                     
+                      <div class="roundedBox">
+                       <div class="configRow">
+						<label>{{=global_lang["internet_popup"]["retry"] || 'No.of Retry' }}</label>
+							{{  if ( it.sim_status == "1") {  }}
+						<p>{{=global_lang["validation_msgs"]["no_si,"] || 'no SIM' }}&nbsp;&nbsp;  <span style="color:red">{{=it.msg}}</span></p>
+					    {{ } else { }}
+						<p>{{=it.retry_st}}  &nbsp;&nbsp;  <span style="color:red">{{=it.msg}}</span></p>
+						{{ } }}
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+                      <div class="configRow">
+                            <label>{{=global_lang["internet_popup"]["puk"] || 'PUK Number' }}</label>
+                            <input type="text" value="" name="newPim" id="tf1_PUKcode"  onKeyPress="return numericValueCheck (event)" />
+                        </div>
+                        <div class="break">
+                            &nbsp;
+                        </div>
+                        
+                         <div class="configRow">
+                            <label>{{=global_lang["internet_popup"]["new_pin"] || 'New PIN number' }}</label>
+                            <input type="text" value="" name="newPim" id="tf1_newPin"  onKeyPress="return numericValueCheck (event)" />
+                        </div>
+                        <div class="break">
+                            &nbsp;
+                        </div>
+                        
+                         <div class="configRow">
+                            <label>{{=global_lang["internet_popup"]["cnf_pin"] || 'Confirm PIN Number' }}</label>
+                            <input type="text" value="" name="newPim" id="tf1_cnfPin"  onKeyPress="return numericValueCheck (event)" />
+                        </div>
+                        <div class="break">
+                            &nbsp;
+                        </div>
+                        
+                        </div>
+                        
+                        <input type="hidden" id="tf1_hid_screen" value="3">
+                      
+                </div>
+                 {{ } }}
+			</div>
+		</div>
+		<div class="submitRowPopup">
+			<input type="button" value='{{=global_lang["common"]["apply"] || "Apply" }}'  class="btnSubmit" id="" onclick="return internet_simcardPINLockValidate('tf1_frm_internetsimCardPINLock')" />
+			<input type="button" value='{{=global_lang["common"]["cancel"] || "Cancel" }}'  class="btnSubmit" id="btnClose" style="display:none"/>
+		</div>
+	</form>
+    
+    </script>
+    
+</div>
+<!-- SIM Card PIN Lock Settings Ends here -->
+<!-- My Operator Starts here -->
+
+<div id="tf1_myOperator">
+	  	<h3 data-localize="internet_popup.my_operator">My Operator</h3>
+	 <script id="plmnlistTemplate" type="text/x-dot-template"> 
+					 {{ var contindex = 0;}}
+					 {{ for (var item in it) { }} 
+						{{ if (item != "exists" && it[item].opname != "") { }}
+						
+						{{ loop_rat = "0x0"+ it[item].rat ; }}
+							
+	       		<tr>
+            	   <td>{{=contindex+1}}</td>            	   
+				   {{ if ( (parseInt(it[item].opstus)& 0x010 ) ) { }} 
+            	   <td><input type="radio" name="operator" disabled value="{{=contindex}}" id="tf1_plmnOperator{{=contindex}}" ></td>					   
+				   <td>
+				   		{{=global_lang["internet_popup"]["Forbidden"] || 'Forbidden' }} 
+					</td>
+				   	{{ } else if((parseInt(it[item].opstus) & 0x02) && (parseInt(it[item].opstus) & 0x20)) { }} 
+				   	<td><input type="radio" name="operator" value="{{=contindex}}" id="tf1_plmnOperator{{=contindex}}"></td>	
+				   	<td>
+				   		{{=global_lang["internet_popup"]["available"] || 'Available' }} 
+				   	</td>
+					{{ } else if((parseInt(it[item].opstus) & 0x1)) { }}
+					<td><input type="radio" name="operator" checked value="{{=contindex}}" id="tf1_plmnOperator{{=contindex}}"></td>	
+					<td>
+						
+						{{=global_lang["internet_popup"]["current"] || 'Current' }} 
+					</td>
+					{{ } else { }}
+					<td><input type="radio" name="operator" disabled value="{{=contindex}}" id="tf1_plmnOperator{{=contindex}}"></td>
+					<td>
+						{{=global_lang["internet_popup"]["Unknown"] || 'Unknown' }} 
+					</td>
+				   {{ } }}
+			       <td>{{=it[item].opname}}</td> 
+				   <td>{{if(it[item].rat == "4") { }} 2G {{ } else if(it[item].rat == "5") { }} 3G  {{ } else { }} LTE {{ } }}</td> 		       </tr>
+				   		{{ contindex = contindex + 1;}}
+              		    {{ } }}	
+         			 {{ } }}         
+		</script>        
+        <script id="plmnmodeTemplate" type="text/x-dot-template">
+            <input type="hidden" name="thispage" id="thispage" value="index.html" />
+                       
+                    <h4>{{=global_lang["internet_popup"]["op_mode"] || 'Operator Mode' }} </h4>
+                    <div class="roundedBox">
+                        <div class="configRow" id="tf1_plmnMode_div">
+                        <label>{{=global_lang["internet_popup"]["plmn_mode"] || 'PLMN Mode' }}</label>
+                            <select id="tf1_plmnMode" onchange="internet_plmnMode(1);">
+                                <option value="0" {{ if (it.selmode == 0){ }} selected {{}}}>{{=global_lang["internet_popup"]["plmn_auto"] || 'Automatic' }}</option>
+                                <option value="1" {{ if (it.selmode == 1){ }} selected {{}}}>{{=global_lang["internet_popup"]["plmn_manual"] || 'Manual' }}</option>
+                            </select>
+                        </div>
+                    
+                    <div class="break" break_plmnMode_div>
+                        &nbsp;
+                    </div>
+            	</div>	
+		</script>
+        <form name="frm_internetPlmnSettings" id="tf1_frm_internetPlmnSettings"> 
+         <div class="configForm">
+                <div class="configContent">
+      	       
+                <div id="tf1_tmpl_plmnmode_get">             
+                
+                </div>
+                
+                <div id="tf1_searchOperators" style="display:none;" class="configRow">
+                
+                	<p data-localize="internet_popup.seraching _operators">Searching Operators...</p>
+                
+                </div>
+                
+            
+            <div class="hide" id="tf1_tablewrapper_div">
+                <h4 data-localize="internet_popup.available_operators">Available Operators <input type="button" value="Refresh Operators"  class="btnSubmit" id="" onclick="internet_refreshOperators()" style="float:right" /></h4> 
+                <div class="roundedBox">
+                    <div id="tablewrapper" >
+                        <div id="tableheader">
+                            <div class="search">
+                                <select id="columns" onchange="sorter.search('query')" style="display:none;"></select>
+                                <select id="pagedropdown" style="display:none;"></select>
+                                <input type="text" data-localize="common.search" placeholder="search" id="query" onkeyup="sorter.search('query')" onKeypress="if (event.keyCode == 13) { return false; }"/>
+                                <span class="details">
+                                    <div>
+                                        <span id="startrecord"></span>-<span id="endrecord"></span> <span data-localize="common.of"> of </span> <span id="totalrecords"></span>
+                                    </div> </span>
+                                <div id="tablelocation">
+                                    <div>
+                                        <select onchange="sorter.size(this.value)" class="one">
+                                            <option value="5">5</option>
+                                            <option value="10" selected="selected">10</option>
+                                            <option value="20">20</option>
+                                            <option value="All" data-localize="application_popup.all"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <table cellpadding="0" cellspacing="0" border="0" id="tf1_internetOperators" class="tinytable">
+                            <thead>
+                                <tr>
+                                    <th><h6>ID</h6></th>
+                                    <th><h6 data-localize="internet_popup.use_it">Use It</h6></th>
+                                    <th><h6 data-localize="internet_popup.status">Status</h6></th>
+                                    <th><h6 data-localize="internet_popup.op_name">Operator Name</h6></th>
+                                    <th><h6 data-localize="internet_popup.access_tech">Access Technology</h6></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tf1_plmnlistTblbody"></tbody>
+                        </table>
+                        <div id="tablefooter">
+                            <div id="tablenav">
+                                <div>
+                                    <img src="images/first.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1,true)" /><img src="images/previous.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1)" /><img src="images/next.gif" width="16" height="16" alt="First Page" onclick="sorter.move(1)" /><img src="images/last.gif" width="16" height="16" alt="Last Page" onclick="sorter.move(1,true)" />
+                                </div>
+                                <div class="pageCount">
+                                    <span data-localize="common.pages">Pages</span> <span id="currentpage"></span> <span data-localize="common.of"> of </span> <span id="totalpages"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+        </div>	
+		
+		<div class="submitRowPopup" id="tf1_plmnButtons">
+			<input type="button" value="Apply"  class="btnSubmit apply" onclick="return internet_plmnModeValidate('tf1_frm_internetPlmnSettings')" data-localize="common.apply"/>
+			<input type="button" value="Cancel"  class="btnSubmit cancel" id="btnClose" data-localize="common.cancel"/>
+		</div>
+	</form>
+	
+	
+</div>
+<!-- My Operator Ends here -->
+<!-- Router Local IP Settings Starts here -->
+<div id="tf1_routerLANSetting">
+    <div id = "tf1_tmpl_lan_information">
+    <script id="lanInfoTemplate" type="text/x-dot-template">	
+    <form name="frm_internetRouteLanSettings" id="tf1_frm_internetRouteLanSettings" action="cgi-action.html" method="post">
+		<input type="hidden" name="thispage" id="thispage" value="index.html" />
+		<h3>{{=global_lang["internet_popup"]["Router_lan_settings"] || 'Router LAN Settings' }}</h3>
+		<div class="popupContentDisplay">
+			<div class="configStatusContent">
+				<h4>{{=global_lang["internet_popup"]["lan_setting"] || 'LAN Setting' }}</h4>
+				<div class="roundedBox">
+					<div class="configRow">
+						<label>{{=global_lang["internet_popup"]["lan_setting"] || 'LAN Setting' }}</label>
+						<p>
+							{{  if(it.dhcp_service) { }}
+								{{=global_lang["common"]["on"] || "ON"}}
+							{{ } else { }}
+								{{=global_lang["common"]["off"] || "OFF"}}
+							{{ } }}
+						</p>
+					</div>
+				</div>
+				<div id="tf1_dhcpService_div">
+					<h4 style=" float:left">{{=global_lang["internet_popup"]["To_dhcp"] || 'To DHCP Service Setting' }}</h4>
+                    <h4 style=" float: right;"><a href="#" class="configureDHCP"  onclick="openPopup(event,'tf1_popupApplicationDialog','button.config.popSettings',-1,'tf1_dialog','tf1_popupApplicationContent','controlPanel','applicationPopup.html', 'tf1_dhcpSettings','applicationSettings_onloadDhcpSetup','')">&nbsp; &nbsp; {{=global_lang["internet_popup"]["conf_dhcp"] || 'Configure DHCP' }}</a></h4>
+                    <div class="break">
+							&nbsp;
+						</div>
+					<div class="roundedBox">
+						<div class="configRow">
+							<label>{{=global_lang["internet_popup"]["cur_dhcp"] || 'Current DHCP Service' }}</label>
+							{{ if(it.dhcp_service == 1) { }}
+							<p>
+								{{=global_lang["common"]["on"] || "ON"}}
+							</p>
+							{{ } else { }}
+							<p>
+								{{=global_lang["common"]["off"] || "OFF"}}
+							</p>	
+							{{ } }}
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+						<div class="configRow">
+							<label>{{=global_lang["internet_popup"]["ipAddr"] || 'IP Address' }}</label>
+							<p>
+								{{=it.ip_addr}}
+							</p>
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+						<div class="configRow">
+							<label>{{=global_lang["internet_popup"]["subnet"] || 'Subnet' }}</label>
+							<p>
+								{{=it.subnet}}
+							</p>
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+						<div class="configRow">
+							<label>{{=global_lang["internet_popup"]["ip_range"] || 'IP Range' }}</label>
+							<p>
+								{{=it.start_ip}} ~ {{=it.end_ip}}
+							</p>
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+					</div>
+				</div>
+				<div class="break" id="break_dhcpService_div">
+					&nbsp;
+				</div>
+			</div>
+		</div>
+		 
+	</form>
+	</script>
+</div>
+</div>
+<!-- Router Local IP Settings Ends here -->

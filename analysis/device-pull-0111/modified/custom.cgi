@@ -4,6 +4,8 @@
 # è fissato su IT da wlan_8192c.sh.
 # Con ?api=autoreboot risponde in JSON alla tab "Riavvio programmato" del popup Amministrazione della web UI
 # stock (js/custom_autoreboot.js); la POST action=autoreboot salva la configurazione.
+# Con ?api=lteband risponde in JSON al riquadro "Bande LTE" della tab Modalità di connessione del popup Internet
+# (js/custom_lteband.js); la POST action=lteband imposta le bande LTE nel modem con AT+BMBANDPREF su /dev/smd7.
 # Eseguita da lighttpd come CGI, come root.
 # Autenticazione HTTP Basic verificata qui: utente e password della web UI. /bmdefsys/www/lighttpd.user contiene
 # "utente:md5(password)" (la pagina di login D-Link invia CryptoJS.MD5 della password), quindi lighttpd con
@@ -26,6 +28,9 @@ CPUFREQ=/sys/devices/system/cpu/cpu0/cpufreq
 TOKF=/tmp/custom_cgi.csrf
 FAILF=/tmp/custom_cgi.fail
 LOCK=/tmp/custom_cgi.lock
+# Canale AT del modem (lo stesso di debug_mode.sh) e lock che serializza i comandi AT di custom.cgi
+AT_DEV=/dev/smd7
+AT_LOCK=/tmp/custom_at.lock
 TAB=$(printf '\t')
 # File utenti alternativo solo per i collaudi da shell: lighttpd imposta sempre GATEWAY_INTERFACE
 if [ -z "$GATEWAY_INTERFACE" ] && [ -n "$CUSTOM_CGI_USERS" ]; then
@@ -82,6 +87,7 @@ h() { printf '%s' "$1" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g'
 field() { printf '&%s&' "$BODY" | sed -n "s/.*&$1=\([^&]*\)&.*/\1/p"; }
 redirect() { printf 'Status: 303 See Other\r\nLocation: custom.cgi?m=%s\r\nCache-Control: no-store\r\n\r\n' "$1"; exit 0; }
 redirect_api() { printf 'Status: 303 See Other\r\nLocation: custom.cgi?api=autoreboot&m=%s\r\nCache-Control: no-store\r\n\r\n' "$1"; exit 0; }
+redirect_lte() { printf 'Status: 303 See Other\r\nLocation: custom.cgi?api=lteband&m=%s\r\nCache-Control: no-store\r\n\r\n' "$1"; exit 0; }
 deny() { printf 'Status: 403 Forbidden\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n'; echo "Richiesta rifiutata: ricarica la pagina e riprova."; exit 0; }
 conf_set() {
 	tmp="$CONF.tmp.$$"
@@ -101,6 +107,50 @@ freq_ok() {
 }
 # Frequenza in kHz scritta in MHz (748800 -> 748,8 MHz)
 mhz() { awk -v f="$1" 'BEGIN { s = sprintf("%.1f", f / 1000); sub(/\.0$/, "", s); sub(/\./, ",", s); print s " MHz" }'; }
+
+# --- Modem: comandi AT ---
+# Invia il comando $1 su $AT_DEV e stampa la risposta senza \r, aspettando OK o ERROR per al massimo 3 s
+at_cmd() {
+	(
+		flock 8
+		out=/tmp/custom_at.$$
+		: > "$out"
+		timeout -t 4 cat "$AT_DEV" > "$out" 2>/dev/null &
+		lettore=$!
+		usleep 200000
+		printf '%s\r' "$1" > "$AT_DEV"
+		n=0
+		while [ $n -lt 30 ] && ! grep -q -E '^(OK|ERROR|\+CME ERROR)' "$out"; do
+			usleep 100000
+			n=$((n + 1))
+		done
+		kill $lettore 2>/dev/null
+		wait $lettore 2>/dev/null
+		tr -d '\r' < "$out"
+		rm -f "$out"
+	) 8>"$AT_LOCK"
+}
+# Maschere di AT+BMBANDPREF in BP_GW (GSM/WCDMA), BP_LTE e BP_TDS (TD-SCDMA), in esadecimale con 0x.
+# $1 = "?" per le bande abilitate, "=?" per quelle supportate dal modem. Falso se la risposta non è valida.
+bandpref() {
+	r=$(at_cmd "AT+BMBANDPREF$1" | sed -n 's/^+BMBANDPREF: //p' | sed 's/^support band: //' | tr -d ' ' | head -n 1)
+	printf '%s' "$r" | grep -Eq '^0x[0-9A-Fa-f]{1,16},0x[0-9A-Fa-f]{1,16},0x[0-9A-Fa-f]{1,16}$' || return 1
+	BP_GW=${r%%,*}
+	r=${r#*,}
+	BP_LTE=${r%%,*}
+	BP_TDS=${r#*,}
+}
+# Bande LTE della maschera $1 (bit n = banda n+1), come numeri separati da virgole
+bande_lte() {
+	m=$(($1))
+	l=""
+	b=1
+	while [ $b -le 64 ]; do
+		[ $(((m >> (b - 1)) & 1)) = 1 ] && l="$l${l:+,}$b"
+		b=$((b + 1))
+	done
+	echo "$l"
+}
 
 # Pagina di attesa e riavvio del device. $1 = titolo, $2 = cosa viene applicato
 reboot_page() {
@@ -288,6 +338,30 @@ if [ "$REQUEST_METHOD" = "POST" ]; then
 		$AR applica >/dev/null 2>&1
 		redirect_api ar_ok
 		;;
+	lteband)
+		# Bande LTE scelte: numeri separati da virgole, che nel corpo urlencoded arrivano come %2C
+		sel=$(field bands | sed 's/%2[Cc]/,/g')
+		printf '%s' "$sel" | grep -Eq '^[1-9][0-9]?(,[1-9][0-9]?){0,63}$' || redirect_lte err_val
+		bandpref '=?' || redirect_lte err_at
+		cap=$((BP_LTE))
+		bandpref '?' || redirect_lte err_at
+		maschera=0
+		for b in $(echo "$sel" | tr ',' ' '); do
+			[ "$b" -le 64 ] || redirect_lte err_val
+			bit=$((1 << (b - 1)))
+			[ $((cap & bit)) != 0 ] || redirect_lte err_val
+			maschera=$((maschera | bit))
+		done
+		[ "$maschera" = "$((BP_LTE))" ] && redirect_lte lte_same
+		# In scrittura il modem legge le maschere in esadecimale SENZA 0x: con 0x le legge come 0 e risponde OK senza
+		# cambiare nulla. GSM/WCDMA resta quello letto; TD-SCDMA 0 la lascia invariata (il modem non ha TD-SCDMA e un
+		# valore fuori dalla sua capacità, come lo 0x3F memorizzato, darebbe ERROR).
+		nuova=$(printf '%X' "$maschera")
+		at_cmd "AT+BMBANDPREF=${BP_GW#0x},$nuova,0" | grep -q '^OK' || redirect_lte err_at
+		bandpref '?' && [ "$((BP_LTE))" = "$maschera" ] || redirect_lte err_at
+		logger -t custom.cgi "bande LTE impostate: $(bande_lte "0x$nuova")"
+		redirect_lte lte_ok
+		;;
 	*)
 		redirect err_val
 		;;
@@ -313,6 +387,17 @@ case "&$QUERY_STRING&" in *'&api=autoreboot&'*)
 	printf 'Content-Type: application/json; charset=utf-8\r\nCache-Control: no-store\r\n\r\n'
 	printf '{"enable":%s,"time":"%s","days":"%s","now":"%s","utc_offset":"%s","clock_ok":%s,"csrf":"%s","m":"%s"}\n' \
 		"$en" "$ora" "$gg" "$adesso" "$fuso" "$orologio" "$TOK" "$msg"
+	exit 0
+	;;
+esac
+# Bande LTE supportate e abilitate nel modem, in JSON per il riquadro del popup Internet
+case "&$QUERY_STRING&" in *'&api=lteband&'*)
+	printf 'Content-Type: application/json; charset=utf-8\r\nCache-Control: no-store\r\n\r\n'
+	if bandpref '=?' && cap=$BP_LTE && bandpref '?'; then
+		printf '{"ok":1,"cap":[%s],"lte":[%s],"csrf":"%s","m":"%s"}\n' "$(bande_lte "$cap")" "$(bande_lte "$BP_LTE")" "$TOK" "$msg"
+	else
+		printf '{"ok":0,"cap":[],"lte":[],"csrf":"%s","m":"%s"}\n' "$TOK" "$msg"
+	fi
 	exit 0
 	;;
 esac

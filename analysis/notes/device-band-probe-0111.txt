@@ -1,0 +1,182 @@
+1 KB/s (1791 bytes in 1.000s)
+
+##### processi con /dev/smd* o /dev/diag aperti
+1000 /bmdefsys/usr/bin/rtltools/wscd -start -c /var/wsc-wlan0.con: /dev/diag 
+1003 /bmdefsys/usr/bin/rtltools/iwcontrol wlan0 : /dev/diag 
+1014 cxmapp : /dev/diag 
+1036 /bmdefsys/usr/bin/qcmap_fcgi : /dev/diag 
+1045 /bmdefsys/usr/bin/debug_fcgi : /dev/diag 
+1068 /usr/bin/qti /dev/rmnet_ctrl /dev/smdcntl8 : /dev/diag 
+1071 /usr/bin/qti /dev/rmnet_ctrl1 /dev/smdcntl9 : /dev/diag 
+1076 /usr/bin/qti /dev/rmnet_ctrl2 /dev/smdcntl10 : /dev/diag 
+1079 /usr/bin/qti /dev/rmnet_ctrl3 /dev/smdcntl11 : /dev/diag 
+1108 /usr/bin/diag_socket_log : /dev/diag 
+11184 sleep 5 : /dev/diag 
+1169 /bmdefsys/usr/bin/bm_netstat : /dev/diag 
+1171 /bmdefsys/usr/bin/bm_netrate : /dev/diag 
+1181 /bmdefsys/usr/bin/deep_sleep_server : /dev/diag 
+1195 /bmdefsys/usr/bin/sms_service : /dev/diag 
+1215 /bmdefsys/usr/bin/bm_fota : /dev/diag 
+1226 /usr/bin/mbimd : /dev/diag 
+1276 /bin/sh /bmdefsys/usr/bin/ntpclient.sh daemon : /dev/diag 
+1330 /bmdefsys/usr/bin/pe_service : /dev/diag 
+1331 /bmdefsys/usr/bin/pe_service : /dev/diag 
+21224 /usr/sbin/miniupnpd -f /etc/miniupnpd/miniupnpd.conf : /dev/diag 
+341 /usr/bin/time_daemon : /dev/diag 
+385 /usr/bin/diagrebootapp : /dev/diag 
+393 /usr/bin/atfwd_daemon : /dev/diag 
+406 /usr/bin/qmuxd : /dev/diag /dev/smdcntl0 /dev/smdcntl1 /dev/smdcntl2 /dev/smdcntl3 /dev/smdcntl4 /dev/smdcntl5 /dev/smdcntl6 /dev/smdcntl7 
+418 /usr/bin/thermal-engine : /dev/diag 
+453 /usr/bin/netmgrd : /dev/diag 
+486 QCMAP_ConnectionManager /bmdefsys/etc/mobileap_cfg.xml d : /dev/diag 
+847 /bmdefsys/usr/bin/rtltools/webs -x : /dev/diag 
+crw-rw----    1 root     diag      246,   0 Jan  1  1970 /dev/diag
+crw-rw----    1 root     root      245,   1 Jan  1  1970 /dev/smd1
+crw-rw----    1 root     root      245,  11 Jan  1  1970 /dev/smd11
+crw-rw----    1 root     root      245,   2 Jan  1  1970 /dev/smd2
+crw-rw----    1 root     root      245,  21 Jan  1  1970 /dev/smd21
+crw-rw----    1 root     root      250,  11 Jan  1  1970 /dev/smd22
+crw-rw----    1 root     root      245,  27 Jan  1  1970 /dev/smd27
+crw-rw----    1 root     root      245,   3 Jan  1  1970 /dev/smd3
+crw-rw----    1 root     root      245,  36 Jan  1  1970 /dev/smd36
+crw-rw----    1 root     root      245,   4 Jan  1  1970 /dev/smd4
+crw-rw----    1 root     root      245,   5 Jan  1  1970 /dev/smd5
+crw-rw----    1 root     root      245,   6 Jan  1  1970 /dev/smd6
+crw-rw----    1 root     root      245,   7 Nov  2 19:36 /dev/smd7
+crw-rw----    1 root     root      245,   8 Jan  1  1970 /dev/smd8
+crw-rw----    1 root     root      250,  25 Jan  1  1970 /dev/smd_cxm_qmi
+crw-rw----    1 root     root      250,  28 Jan  1  1970 /dev/smd_data_0
+crw-rw----    1 root     root      250,  27 Jan  1  1970 /dev/smd_logging_0
+crw-rw----    1 root     root      250,  30 Jan  1  1970 /dev/smd_pkt_loopback
+crw-rw----    1 root     root      250,  24 Jan  1  1970 /dev/smd_sns_adsp
+crw-rw----    1 root     root      250,  21 Jan  1  1970 /dev/smd_sns_dsps
+crw-rw----    1 root     root      250,  26 Jan  1  1970 /dev/smd_test_framework
+crw-rw----    1 root     root      250,  12 Jan  1  1970 /dev/smdcnt_rev0
+crw-rw----    1 root     root      250,  13 Jan  1  1970 /dev/smdcnt_rev1
+crw-rw----    1 root     root      250,  14 Jan  1  1970 /dev/smdcnt_rev2
+crw-rw----    1 root     root      250,  15 Jan  1  1970 /dev/smdcnt_rev3
+crw-rw----    1 root     root      250,  16 Jan  1  1970 /dev/smdcnt_rev4
+crw-rw----    1 root     root      250,  17 Jan  1  1970 /dev/smdcnt_rev5
+crw-rw----    1 root     root      250,  18 Jan  1  1970 /dev/smdcnt_rev6
+crw-rw----    1 root     root      250,  19 Jan  1  1970 /dev/smdcnt_rev7
+crw-rw----    1 root     root      250,  20 Jan  1  1970 /dev/smdcnt_rev8
+
+##### strumenti diag/QMI/AT
+/usr/bin/QCMAP_CLI
+/usr/bin/atfwd_daemon
+/usr/bin/diag_klog
+/usr/bin/diag_mdlog
+/usr/bin/diag_socket_log
+/usr/bin/diag_uart_log
+/usr/bin/diagrebootapp
+/usr/bin/openvt.kbd
+/usr/bin/qmi_ping_clnt_test_0000
+/usr/bin/qmi_ping_clnt_test_0001
+/usr/bin/qmi_ping_clnt_test_1000
+/usr/bin/qmi_ping_clnt_test_1001
+/usr/bin/qmi_ping_clnt_test_2000
+/usr/bin/qmi_ping_svc
+/usr/bin/qmi_ping_test
+/usr/bin/qmi_shutdown_modem
+/usr/bin/qmi_simple_ril_test
+/usr/bin/qmi_test_service_clnt_test_0000
+/usr/bin/qmi_test_service_clnt_test_0001
+/usr/bin/qmi_test_service_clnt_test_1000
+/usr/bin/qmi_test_service_clnt_test_1001
+/usr/bin/qmi_test_service_clnt_test_2000
+/usr/bin/qmi_test_service_test
+/usr/bin/test_diag
+/usr/sbin/grpconv
+/usr/sbin/grpunconv
+/usr/sbin/pwconv
+/usr/sbin/pwunconv
+/bin/env
+/bin/envdir
+/bin/envuidgid
+/bin/modem-shutdown
+/bin/openvt
+/bin/printenv
+/bmdefsys/usr/bin/QCMAP_ConnectionManager
+/bmdefsys/usr/bin/QCMAP_StaInterface
+/bmdefsys/usr/bin/nvoperator
+/bmdefsys/usr/bin/qcmap_fcgi
+libdiag.so.1
+libqmi.so.1
+libqmi_cci.so.1
+libqmi_client_qmux.so.1
+libqmi_common_so.so.1
+libqmi_csi.so.1
+libqmi_encdec.so.1
+libqmi_sap.so.1
+libqmiidl.so.1
+libqmiservices.so.1
+
+##### AT di sola lettura su /dev/smd7
+>>> AT+BMBANDPREF?
+AT+BMBANDPREF?
++BMBANDPREF: 0x2000000400380, 0xA0000800C5, 0x3F
+OK
+>>> AT+BMBANDPREF=?
+AT+BMBANDPREF=?
++BMBANDPREF: support band: 0x2000000400380, 0xA0000800C5, 0x0 
+OK
+>>> AT$QCBANDPREF?
+AT$QCBANDPREF?
+ERROR
+>>> AT$QCBANDPREF=?
+AT$QCBANDPREF=?
+ERROR
+>>> AT+BMBANDLOCK?
+AT+BMBANDLOCK?
++BMBANDLOCK: 0
+OK
+>>> AT+BMBANDLOCK=?
+AT+BMBANDLOCK=?
++BMBANDLOCK:(0-2)
+OK
+>>> AT+BMBAND?
+AT+BMBAND?
+ERROR
+>>> AT+BMBAND=?
+AT+BMBAND=?
+ERROR
+>>> AT+BMSYSINFO?
+AT+BMSYSINFO?
++BMSYSINFO: SIM Inserted, SIM Init Completed, SIM Mode Capability, AT Operating Mode, Phone Operating Mode, Network Select Mode, System Mode, System Service Status, Mode Capability, Mode Pref, Band Capability, Band Pref, LTE Band Capability, LTE Band Pref
+OK
+>>> AT+BMSYSINFO=?
+AT+BMSYSINFO=?
+ERROR
+>>> AT+BMSTBW?
+AT+BMSTBW?
+ERROR
+>>> AT+BMSTBW=?
+AT+BMSTBW=?
+ERROR
+>>> AT+BMCELLINFO?
+AT+BMCELLINFO?
+ERROR
+>>> AT+BMCELLINFO=?
+AT+BMCELLINFO=?
+ERROR
+>>> AT+BMTCELLINFO?
+AT+BMTCELLINFO?
+ERROR
+>>> AT+BMTCELLINFO=?
+AT+BMTCELLINFO=?
+ERROR
+>>> AT+BMMODPREF?
+AT+BMMODPREF?
+ERROR
+>>> AT+BMMODPREF=?
+AT+BMMODPREF=?
+ERROR
+>>> AT+BMLOCKCELL?
+AT+BMLOCKCELL?
+ERROR
+>>> AT+BMLOCKCELL=?
+AT+BMLOCKCELL=?
+ERROR
+>>> AT+BMCMD=?
+AT+BMCMD=?
++BMCMD:ERROR

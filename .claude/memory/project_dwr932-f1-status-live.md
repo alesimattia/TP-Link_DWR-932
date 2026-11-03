@@ -45,7 +45,7 @@ AUTH custom_status.cgi (sola lettura)
 - busybox awk 1.23.1: `var (` viene preso come chiamata di funzione ("Call to undefined function"); valori da getline/sub sono stringhe → confronti numerici con +0.
 
 FILE (sorgenti in analysis/device-pull-0111/modified/; hash 2026-11-03)
-- webpages/controlPanel.html 2dd3c434… (49768 B), webpages/js/custom_status.js 1087e01f… (UTF-8 letterale: la pagina dichiara charset utf-8 e lo script lo eredita), custom_status.cgi 2cc8359b… → /bmdefsys/WEBSERVER/webpages/{controlPanel.html, js/custom_status.js, cgi-bin/custom_status.cgi} (www-data 770, creati con cp -p).
+- webpages/controlPanel.html 7f3fe2fe… (49861 B, dal 2026-11-03 carica anche js/custom_lteband.js → [[dwr932-f1-lteband]]), webpages/js/custom_status.js 1087e01f… (UTF-8 letterale: la pagina dichiara charset utf-8 e lo script lo eredita), custom_status.cgi 2cc8359b… → /bmdefsys/WEBSERVER/webpages/{controlPanel.html, js/custom_status.js, cgi-bin/custom_status.cgi} (www-data 770, creati con cp -p).
 - Deploy: tools/dwr_deploy_ui.sh (ora richiede anche custom_status.cgi.new e custom_status.js.new; controlla marcatori cst_list e i due template stock; --ripristina rimuove i due file e /tmp/custom_status.prev). Output: analysis/notes/device-status-deploy-0111.txt.
 
 TEST

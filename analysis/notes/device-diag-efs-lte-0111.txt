@@ -1,0 +1,36 @@
+HELLO: 4b13000000001000000010000000100000001000000010000000100001000000010000000100000000000000
+== /nv/item_files/modem/mmode/lte_bandpref
+  STAT mode=0160777 size=8
+  GET risposta corta: 4b131a0002000000
+  GET non riuscito: provo OPEN/READ
+  READ 8 byte: c5000800a0000000
+== /nv/item_files/modem/mmode/tds_bandpref
+  STAT errno=2 (2 = file assente)
+== /nv/item_files/modem/lte/rrc/lte_rrc_release_ver
+  STAT errno=2 (2 = file assente)
+== /nv/item_files/modem/lte/lte_3gpp_release_ver
+  STAT errno=2 (2 = file assente)
+== /nv/item_files/modem/lte/rrc/cap/fgi
+  STAT errno=2 (2 = file assente)
+== /nv/item_files/modem/lte/rrc/cap/fgi_rel9
+  STAT errno=2 (2 = file assente)
+== /nv/item_files/modem/lte/rrc/cap/fgi_r10
+  STAT errno=2 (2 = file assente)
+== /nv/item_files/modem/lte/rrc/csp/band_priority_list
+  STAT errno=2 (2 = file assente)
+== /nv/item_files/modem/lte/rrc/csp/mcc_band_restriction_list
+  STAT errno=2 (2 = file assente)
+== /nv/item_files/modem/lte/rrc/csp/pci_lock
+  STAT errno=2 (2 = file assente)
+== /nv/item_files/modem/lte/rrc/lte_tdd_prune
+  STAT errno=2 (2 = file assente)
+== /nv/item_files/modem/lte/ML1/update_band_range
+  STAT errno=2 (2 = file assente)
+== /nv/item_files/modem/lte/ML1/earfcn_bw_cfg
+  STAT errno=2 (2 = file assente)
+== /nv/item_files/modem/lte/ML1/camp_band_earfcn
+  STAT errno=2 (2 = file assente)
+== /nv/item_files/modem/lte/rrc/cap/disable_cap_ies
+  STAT errno=2 (2 = file assente)
+== /nv/item_files/modem/lte/rrc/cap/enable_cap_ies
+  STAT errno=2 (2 = file assente)

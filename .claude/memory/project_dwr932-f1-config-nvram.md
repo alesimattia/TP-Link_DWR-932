@@ -17,9 +17,10 @@ CONFIG ON-DEVICE (/bmdefsys/etc/, scrivibili con root)
 FUNZIONI SBLOCCABILI: inventario completo con livello di blocco ed evidenze → [[dwr932-f1-hidden-features]].
 
 NVRAM / MODEM
-- efs2 (mtd2) = NV/EFS modem: NON dumpabile raw da Linux (blocca NAND, vedi [[dwr932-f1-rootaccess]]); si tratta con EDL/QPST/QXDM o diag su Windows.
+- efs2 (mtd2) = NV/EFS modem: NON dumpabile raw da Linux (blocca NAND, vedi [[dwr932-f1-rootaccess]]); si tratta con EDL/QPST/QXDM o diag su Windows. Lettura file EFS FATTA via DIAG COM10 con tools/dwr_diag_efs_read.ps1 (sola lettura) e log F3 con tools/dwr_diag_f3_capture.ps1 → [[dwr932-f1-lteband]].
 - Accesso AT: /dev/smd7 (canale usato da debug_mode.sh per AT+BMFTM/AT+BMCMD). Verificato: ATI/AT+CGMM/AT+CGMR/AT+BMSWVER/AT+CGSN/AT+CFUN rispondono; AT+COPS?/AT+CGDCONT? → ERROR su smd7 (comandi rete/APN su altro canale: provare smd8/smd11 o /dev/smdcntl*, o QMI). Scrittura NV via AT+BMFTM/BMCMD confermata (causa reboot). IMEI leggibile (AT+CGSN) e scrivibile (AT+BMIMEI, da dl.exe) — NON toccare. IMEI del device NON memorizzato (policy).
 - QMI: /dev/qmi0-2, smdcntl0-11, rmnet_ctrl* (band/APN/registrazione via libqmi/QCMAP). diag: /dev/diag.
+- Bande da AT: AT+BMBANDPREF su smd7 (lettura con 0x; scrittura esadecimale SENZA 0x, tds 0 = invariata) → [[dwr932-f1-lteband]].
 - Modo factory/test: AT+BMFTM=1 (+reboot) → test mode (espone adb/diag, modem non registra); AT+BMFTM=0 ripristina.
 
 MAPPING VERSIONI (AT+BMSWVER): UI "01.11.EU" = AP interno DTLWE_R602B_1.2.0_240628; strati: modem R602_1.1.1_190219 (2019, = qdsp), DTLWE_R602B_04B0_4706_1.0.1_201217, W1.0.0.2765_DTLW0_R602B. Model AT = "LTE WIRELESS MODEM", Revision 1.1.1.

@@ -1,0 +1,20 @@
+HELLO: 4b13000000001000000010000000100000001000000010000000100001000000010000000100000000000000
+== NV 1878 : stato=0 (0 = letto, 5 = mai scritto) dati=2e
+== NV 1877 : stato=0 (0 = letto, 5 = mai scritto) dati=80034000000002
+== NV 6828 : stato=0 (0 = letto, 5 = mai scritto) dati=c5000800a0
+== NV 65633 : stato=6 (0 = letto, 5 = mai scritto) dati=
+>>> AT$QCHWREV
+Part=149  version=2.1
+OK
+>>> AT+BMMODBDINFO?
+ERROR
+>>> AT+BMMODBDINFO=?
+ERROR
+>>> AT+BMEFSVER?
+ERROR
+>>> AT+BMEFSVER=?
+ERROR
+>>> AT+BMCUSTVER?
+ERROR
+>>> AT+BMRAT?
+ERROR

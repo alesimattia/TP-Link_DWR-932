@@ -1,0 +1,30 @@
+622b0d76945f6706d7a02b4edb9dd24621cd8e79b56c8c20ea74441f0c3f9d8f  /bmdefsys/WEBSERVER/webpages/cgi-bin/custom.cgi
+7f3fe2fe9247a1a365642072aa075b1cc7d6dcaf2dee9788763ca6b26a928d77  /bmdefsys/WEBSERVER/webpages/controlPanel.html
+534015ce3ad7dc02c9bfbe395e44900f58100bd04b0b1fa85608e66f53559ac8  /bmdefsys/WEBSERVER/webpages/systemManagementPopup.html
+8a1564e23266d6a0704765a29c2dd55e50668a495f0d35921964900fb6857955  /bmdefsys/WEBSERVER/webpages/js/custom_autoreboot.js
+1002d7435ec84ee1945aba8f29e009080d0b06058698272d4963d89c289375cc  /bmdefsys/usr/bin/custom_autoreboot.sh
+74b92de742c98f75da666fa63373b840dc0107b18812ee03f6a5bd31365e2d6a  /etc/init.d/custom_autoreboot
+9f9a25fce93599ebe9fb3e1c9ade2d9062d0763259ccecf071471d1161d1eeca  /bmdefsys/usr/bin/custom_cpufreq.sh
+9a6a5c6fcc0eb4740f02a91ef694af52f7c6bfb46b1713e4bd04adc787f41c4f  /etc/init.d/custom_cpufreq
+03ae0468c1c3743dd8f81a6416c862606f140c4681363d410cea213ede3600fc  /bmdefsys/usr/bin/pe_service
+2cc8359b5083f09f62151a7671520b32823da0ae6e1b310e7c10bc83bf975064  /bmdefsys/WEBSERVER/webpages/cgi-bin/custom_status.cgi
+1087e01f239a809323ec0a1da9c3a3a6ff3b8316fa7e518591a228d83d360045  /bmdefsys/WEBSERVER/webpages/js/custom_status.js
+d8a10f967b5bf039b7f904aaad74c768ab477fcb3bc7ec40b85ee9102610b5ab  /bmdefsys/WEBSERVER/webpages/internetPopup.html
+066fb30b8dc2666644a900ed0faf3d5a51257ac66feffdd585a948503733938e  /bmdefsys/WEBSERVER/webpages/js/custom_lteband.js
+4b0a2d05059903857f98c85724b8be67dfec5be8dd8eee26f3b9e5a62e33cc6a  /bmdefsys/etc/lighttpd.conf
+-rwxrwx---    1 www-data www-data     37738 Nov  2 21:34 /bmdefsys/WEBSERVER/webpages/cgi-bin/custom.cgi
+-rwxrwx---    1 www-data www-data      6777 Nov  2 21:34 /bmdefsys/WEBSERVER/webpages/cgi-bin/custom_status.cgi
+-rwxrwx---    1 www-data www-data     49861 Nov  2 21:34 /bmdefsys/WEBSERVER/webpages/controlPanel.html
+-rwxrwx---    1 www-data www-data     41144 Nov  2 21:34 /bmdefsys/WEBSERVER/webpages/internetPopup.html
+-rwxrwx---    1 www-data www-data      3617 Nov  2 21:34 /bmdefsys/WEBSERVER/webpages/js/custom_autoreboot.js
+-rwxrwx---    1 www-data www-data      6665 Nov  2 21:34 /bmdefsys/WEBSERVER/webpages/js/custom_lteband.js
+-rwxrwx---    1 www-data www-data     15471 Nov  2 21:34 /bmdefsys/WEBSERVER/webpages/js/custom_status.js
+-rwxrwx---    1 www-data www-data     49973 Nov  2 21:34 /bmdefsys/WEBSERVER/webpages/systemManagementPopup.html
+-rwxr-xr-x    1 root     root          4759 Nov  2 21:34 /bmdefsys/usr/bin/custom_autoreboot.sh
+-rwxr-xr-x    1 root     root          3146 Nov  2 21:34 /bmdefsys/usr/bin/custom_cpufreq.sh
+-rwxr-xr-x    1 root     root         29872 Nov  2 16:50 /bmdefsys/usr/bin/pe_service
+-rwxr-xr-x    1 root     root           486 Nov  2 21:34 /etc/init.d/custom_autoreboot
+-rwxr-xr-x    1 root     root           430 Nov  2 21:34 /etc/init.d/custom_cpufreq
+lrwxrwxrwx    1 root     root            27 Nov  2 21:34 /etc/rc5.d/S99custom_autoreboot -> ../init.d/custom_autoreboot
+lrwxrwxrwx    1 root     root            24 Nov  2 21:34 /etc/rc5.d/S99custom_cpufreq -> ../init.d/custom_cpufreq
+lighttpd.conf originale: nessun riavvio necessario

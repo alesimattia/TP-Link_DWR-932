@@ -1,0 +1,55 @@
+risposta 0x7D: 7d0501001f000000
+dsatcmdp.c:1693 [ssid 5012] Command Name +BMBANDPREF Op = 0xb  | 
+dsatcmdp.c:1697 [ssid 5012] arg[0] = 0x2000000400380 | 
+dsatcmdp.c:1697 [ssid 5012] arg[1] = 0x44 | 
+dsatcmdp.c:1697 [ssid 5012] arg[2] = 0x3F | 
+dsatext.c:4038 [ssid 5000] dsatext_exec_bmbandpref_cmd: 0x%llX 0x%llX 0x%llX  | 0, 0, 0
+cmph.c:9233 [ssid 5] =CM= before ph_ptr->mode_pref %d cmd_info_ptr->mode_pref %d  | 39, 16, 0
+dsatext.c:1131 [ssid 5000] cmd:%d,cmd_err:%d | 1, 0, 0
+dsatext.c:644 [ssid 5000] [BM]: dsatext_async_event_handler; | 0, 0, 0
+dsatext.c:646 [ssid 5000] cmd:%d | 13, 0, 0
+dsatrsp.c:419 [ssid 5012] Command output 
+
+
+OK
+ | 
+sdss.c:17013 [ssid 15] ** Activate HDR user script = ssscr_hdr_user_ss_pref ** | 
+dsatvend.c:11272 [ssid 5012] BM:dsat_bmget_cell_lock_flag %d | 0
+qmi_nas.c:1326 [ssid 90] BM:qmi_nas_process_cmph_evt cell_lock_falg: %d,first_reboot_nv:%d | 0, 0, 0
+ds_dsd_pref_sys.c:1217 [ssid 5000] RADIO : LTE, PRIORITY: 1, AVAILABLE: 1 | 
+ds_dsd_pref_sys.c:1217 [ssid 5000] RADIO : HDR, PRIORITY: 2, AVAILABLE: 1 | 
+ds_dsd_pref_sys.c:1217 [ssid 5000] RADIO : 1X, PRIORITY: 3, AVAILABLE: 1 | 
+ds_dsd_pref_sys.c:1217 [ssid 5000] RADIO : GSM, PRIORITY: 4, AVAILABLE: 1 | 
+ds_dsd_pref_sys.c:1217 [ssid 5000] RADIO : WCDMA, PRIORITY: 5, AVAILABLE: 1 | 
+ds_dsd_pref_sys.c:1217 [ssid 5000] RADIO : TDSCDMA, PRIORITY: 6, AVAILABLE: 1 | 
+ds_dsd_pref_sys.c:1217 [ssid 5000] RADIO : WLAN, PRIORITY: 7, AVAILABLE: 1 | 
+ds_dsd_pref_sys.c:1262 [ssid 5000] RADIO : LTE, PRIORITY: 0, AVAILABLE: 1 | 
+ds_dsd_pref_sys.c:1262 [ssid 5000] RADIO : HDR, PRIORITY: 255, AVAILABLE: 0 | 
+ds_dsd_pref_sys.c:1262 [ssid 5000] RADIO : 1X, PRIORITY: 255, AVAILABLE: 0 | 
+ds_dsd_pref_sys.c:1262 [ssid 5000] RADIO : GSM, PRIORITY: 4, AVAILABLE: 1 | 
+ds_dsd_pref_sys.c:1262 [ssid 5000] RADIO : WCDMA, PRIORITY: 5, AVAILABLE: 1 | 
+ds_dsd_pref_sys.c:1262 [ssid 5000] RADIO : TDSCDMA, PRIORITY: 255, AVAILABLE: 0 | 
+ds_dsd_pref_sys.c:1262 [ssid 5000] RADIO : WLAN, PRIORITY: 255, AVAILABLE: 0 | 
+ds_dsd_pref_sys.c:1311 [ssid 5000] RADIO : LTE, PRIORITY: 0, AVAILABLE: 1 | 
+ds_dsd_pref_sys.c:1311 [ssid 5000] RADIO : GSM, PRIORITY: 4, AVAILABLE: 1 | 
+ds_dsd_pref_sys.c:1311 [ssid 5000] RADIO : WCDMA, PRIORITY: 5, AVAILABLE: 1 | 
+ds_dsd_pref_sys.c:1311 [ssid 5000] RADIO : HDR, PRIORITY: 255, AVAILABLE: 0 | 
+ds_dsd_pref_sys.c:1311 [ssid 5000] RADIO : 1X, PRIORITY: 255, AVAILABLE: 0 | 
+ds_dsd_pref_sys.c:1311 [ssid 5000] RADIO : TDSCDMA, PRIORITY: 255, AVAILABLE: 0 | 
+ds_dsd_pref_sys.c:1311 [ssid 5000] RADIO : WLAN, PRIORITY: 255, AVAILABLE: 0 | 
+ds3gdsdif.c:324 [ssid 5000] ds3gdsdif_pref_sys_chg_hdlr_cb:old_pref_sys: %d, new_pref_sys: %d,mode_pref_change:%d | 9, 9, 1
+sdss.c:16924 [ssid 15] ** Activate user script = ssscr_user_ss_pref_opr ** | 
+ds3gutil.c:1266 [ssid 5000] ds3g_convert_dsd_radio_info pref_index: %d rat_mask: %d so_mask: %d | 1, 32768, 0
+sdss.c:17013 [ssid 15] ** Activate HDR user script = ssscr_hdr_user_ss_pref ** | 
+AT+BMBANDPREF=0x2000000400380,0x44,0x3F
+OK
+dsatcmdp.c:1693 [ssid 5012] Command Name +BMBANDPREF Op = 0x5  | 
+dsatcmdp.c:1697 [ssid 5012] arg[0] =  | 
+dsatext.c:4096 [ssid 5000] band_pref=0x%llx lte_band_pref=0x%llx tds_band_pref=0x%llx | 4195200, 524485, 63
+dsatrsp.c:419 [ssid 5012] Command output 
++BMBANDPREF: | 
++BMBANDPREF: 0x2000000400380, 0xA0000800C5, 0x3F
+frame per comando: 0x79=772 0x7d=1 0x92=11336
+AT+BMBANDPREF=0x2000000400380,0xA0000800C5,0x3F
+OK
++BMBANDPREF: 0x2000000400380, 0xA0000800C5, 0x3F

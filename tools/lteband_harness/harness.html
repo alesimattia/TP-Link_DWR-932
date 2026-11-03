@@ -1,0 +1,193 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Banco bande LTE</title>
+<link rel="stylesheet" href="../../analysis/device-pull-0111/pull0111/bmdefsys/WEBSERVER/webpages/css/style.css"><link rel="stylesheet" href="../../analysis/device-pull-0111/pull0111/bmdefsys/WEBSERVER/webpages/css/popSettings.css">
+<link rel="stylesheet" href="../../analysis/device-pull-0111/pull0111/bmdefsys/WEBSERVER/webpages/css/window.css">
+<style>body{background:#fff;margin:0} .full .configContent{height:auto;overflow:visible}
+.full .networkContent,.full .popupContainer{height:auto}</style>
+<script src="../../analysis/device-pull-0111/pull0111/bmdefsys/WEBSERVER/webpages/js/jquery-1.10.2.min.js"></script><script src="../../analysis/device-pull-0111/pull0111/bmdefsys/WEBSERVER/webpages/js/doT.js"></script>
+<script src="../../analysis/device-pull-0111/pull0111/bmdefsys/WEBSERVER/webpages/js/api/internetApi.js"></script>
+<script>
+var scenario = (location.hash || "#tutte").slice(1);
+var full = /-full$/.test(scenario);
+scenario = scenario.replace(/-full$/, "");
+var CAP = [1, 3, 7, 8, 20, 38, 40];
+var stato = { lte: scenario === "bloccate" ? [3, 7] : CAP.slice() };
+var global_lang = { internet_popup: {}, cpsection: {}, common: {} };
+var ui_config = { apn_info: { apn: { COMMON: { netpref_value: "0", roaming_conx: "0", auto_conx: "1" } } },
+	Dyn_Status: { up_5s: { ipv4: { status: "Disconnected" } } } };
+window.alert = function (m) { console.log("ALERT " + m); };
+window.confirm = function (m) { console.log("CONFIRM " + m); return true; };
+$.ajax = function (o) {
+	var d = $.Deferred();
+	setTimeout(function () {
+		if (scenario === "negato") { d.reject({ status: 401 }); return; }
+		if (o.type === "POST") { stato.lte = o.data.bands.split(",").map(Number); }
+		if (scenario === "errore") { d.resolve({ ok: 0, cap: [], lte: [], csrf: "x", m: "" }); return; }
+		d.resolve({ ok: 1, cap: CAP, lte: stato.lte, csrf: "0123456789abcdef", m: o.type === "POST" ? "lte_ok" : "" });
+	}, 10);
+	return d.promise();
+};
+</script>
+<script src="../../analysis/device-pull-0111/modified/webpages/js/custom_lteband.js"></script>
+</head><body>
+<div class="popupContainer"><div class="networkMenu"></div>
+<div class="networkContent rightContent"><div class="contentArea">
+<div id="tf1_connectModeSettings">
+	<div id="tf1_tmpl_cnmode_info"></div>
+	<script id="cnmodeinfoTemplate" type="text/x-dot-template">
+	<form name="frm_connetionModeSettings" id="tf1_frm_connetionModeSettings" action="cgi-action.html" method="post">
+		<input type="hidden" name="thispage" id="thispage" value="index.html" />
+		<h3>{{=global_lang["internet_popup"]["cnsettings"] || 'Connection Settings' }}</h3>
+		<div class="configForm">
+			<div class="configContent">
+				<h4>{{=global_lang["internet_popup"]["cellularsettings"] || 'Cellular Settings' }}</h4>
+				<div class="roundedBox">
+					<div class="configRow">
+						<label>{{=global_lang["internet_popup"]["precell"] || 'Preferred Cellular' }}</label>
+						<select id="tf1_netPref">
+							<option value="0" {{if(it["apn"]["COMMON"]["netpref_value"] == "0") { }} selected {{}}}>{{=global_lang["internet_popup"]["cn_auto"] || 'Auto' }}</option>
+							<option value="6" {{if(it["apn"]["COMMON"]["netpref_value"] == "6") { }} selected {{}}}>{{=global_lang["internet_popup"]["cn_4g"] || '4G mode' }}</option>
+							<option value="7" {{if(it["apn"]["COMMON"]["netpref_value"] == "7") { }} selected {{}}}>{{=global_lang["internet_popup"]["cn_3g"] || '3G mode' }}</option>
+							<option value="8" {{if(it["apn"]["COMMON"]["netpref_value"] == "8") { }} selected {{}}}>{{=global_lang["internet_popup"]["cn_2g"] || '2G mode' }}</option>
+						</select>
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+					{{var statuStr,statuVal;}}
+					<label>{{=global_lang["internet_popup"]["dataroaming"] || 'Allow Data Roaming' }}</label>
+        	     			{{if(it["apn"]["COMMON"]["roaming_conx"] == "1") { }}
+								 {{statuStr="enable-disable-on";}}
+								 {{statuVal="1";}}
+                        	{{ } else { }}
+								 {{statuStr="enable-disable-off";}}
+								 {{statuVal="0";}}
+							{{ } }}
+					
+						<a alt="" class="{{=statuStr}}"></a>
+						<input type="hidden" value="{{=statuVal}}" id="tf1_autoRoaming" />
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div class="configRow">
+						<label>{{=global_lang["cpsection"]["cnmode"] || 'Connection Mode' }}</label>
+						{{var statuStr1 = "connectTypeActive ",statuStr2 = "connectType ",statuVal=1;}}
+						{{if(it["apn"]["COMMON"]["auto_conx"] == "0") { }}
+								 {{statuStr1= statuStr2;}}								
+								 {{statuStr2= "connectTypeActive ";}}
+								 {{statuVal="0";}}
+                      	{{ } }}
+						<p class="connectionModeradio">
+							<a class="{{=statuStr1}}intGrp4" alt="" id="tf1_intAlwaysConnect" onclick="internet_changeConnectionModeOne(1)" val="1"></a>
+										{{=global_lang["internet_popup"]["always"] || 'Always' }}
+						</p>
+						<p class="connectionModeradio">
+							<a class="{{=statuStr2}}intGrp4" alt="" id="tf1_intManualConnect" onclick="internet_changeConnectionModeOne(0)" val="0"></a>
+							
+							{{=global_lang["internet_popup"]["manual"] || 'Manual' }}
+						</p>
+						<input type="text" style="display:none" id="tf1_autoConnectionOnOff" value="{{=statuVal}}" />
+
+					</div>
+					<div class="break">
+						&nbsp;
+					</div>
+					<div  class="configRow" id="tf1_manualRadioAlways">
+						<p class="textBlock">
+							{{=global_lang["internet_popup"]["alwayskeep"] || 'Always keep Internet connection.'}}
+						</p>
+					</div>
+					<div  class="configRow"  style="display: none" id="tf1_manualRadioOnDemand">
+						<p class="textBlock">
+							Connect to Internet when clients accesses the Internet. Disconnect in minutes if there is no Internet access.
+						</p>
+						<div class="break">
+							&nbsp;
+						</div>
+						<label>Minutes</label>
+						<input type="text" class="one" />
+					</div>
+					<div style="display: none"  id="tf1_manualRadioManual">
+						<p class="textBlock">
+							{{=global_lang["internet_popup"]["manualcnne"] || 'Manually control your connection behavior.' }}
+						</p>
+						<div class="break">
+							&nbsp;
+						</div>
+						<div class="configRow" style="line-height:25px;">							
+							{{var statuStr,statuVal;}}
+					 		<label>{{=global_lang["internet_popup"]["cnstatus"] || 'Connect / Disconnect manually' }}</label>
+        	     			{{ if(ui_config.Dyn_Status["up_5s"]["ipv4"]["status"] == "Connected") { }}
+								 {{statuStr="enable-disable-on";}}
+								 {{statuVal="1";}}
+                        	{{ } else { }}
+								 {{statuStr="enable-disable-off";}}
+								 {{statuVal="0";}}
+							{{ } }}
+						    
+							<p>
+								<a class="{{=statuStr}}" alt="" id="" style="float:right;"></a>
+								<input type="hidden" id="tf1_modeConfig_connectDisconnect" value="{{=statuVal}}" />
+							</p>
+						</div>
+					</div>
+
+					<div class="break">
+						&nbsp;
+					</div>
+				</div>
+				<h4>Bande LTE e carrier aggregation</h4>
+				<div class="roundedBox" id="cst_lteBand">
+					<div class="configRow">
+						<label>Bande abilitate</label>
+						<p class="cstLbStato" style="width:300px;line-height:20px;padding-top:5px">lettura dal modem...</p>
+					</div>
+					<div class="break">&nbsp;</div>
+					<div class="configRow">
+						<label>Bande LTE</label>
+						<p class="cstLbScelta" style="width:300px"></p>
+					</div>
+					<div class="break">&nbsp;</div>
+					<div class="configRow">
+						<label>Carrier aggregation</label>
+						<p class="cstLbCa" style="width:300px;line-height:20px;padding-top:5px"></p>
+					</div>
+					<div class="break">&nbsp;</div>
+					<div class="configRow">
+						<label>&nbsp;</label>
+						<p style="width:300px;font-size:12px;line-height:18px">La scelta resta salvata nel modem anche dopo il riavvio e vale con qualunque Cellulare preferito. Se nessuna delle bande scelte &egrave; coperta, il router resta senza 4G (con Automatico passa al 3G). La carrier aggregation non ha un interruttore: nel modem non risulta disattivata e la attiva la rete quando combina due bande abilitate; dal firmware non si vede se &egrave; in uso.</p>
+					</div>
+					<div class="break">&nbsp;</div>
+					<div class="configRow">
+						<label>&nbsp;</label>
+						<p>
+							<input type="button" value="Tutte" class="btnSubmit cstLbTutte" disabled>
+							<input type="button" value="Applica bande" class="btnSubmit cstLbApplica" disabled>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="submitRowPopup">
+			<input type="button" value='{{=global_lang["common"]["apply"] || "Apply" }}'  class="btnSubmit" onclick="internet_connectionModeSettingsValidate('tf1_frm_connetionModeSettings')" />
+			<input type="button" value='{{=global_lang["common"]["cancel"] || "Cancel" }}'  class="btnSubmit" id="btnClose" />
+		</div>
+		<div class="break">
+			&nbsp;
+		</div>
+	</form>
+	</script>
+</div>
+</div></div></div>
+<script>
+if (full) { document.body.className = "full"; }
+internet_cnmode_get_template();
+if (/applica/.test(location.search)) {
+	setTimeout(function () { $("#cst_lteBand input.cstLb").prop("checked", false);
+		$("#cst_lteBand input.cstLb[value=3], #cst_lteBand input.cstLb[value=20]").prop("checked", true).trigger("change");
+		$("#cst_lteBand .cstLbApplica").trigger("click"); }, 100);
+}
+</script>
+</body></html>

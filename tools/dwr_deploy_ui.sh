@@ -6,14 +6,17 @@
 # della CPU (/bmdefsys/usr/bin/custom_cpufreq.sh, /etc/init.d/custom_cpufreq con il link S99, pe_service modificato
 # da tools/pe_service_patch.py per chiamare custom_cpufreq.sh al posto di scrivere scaling_governor) e il riquadro di
 # stato della home (colonna sinistra di controlPanel.html generata da tools/build_controlpanel.py, js/custom_status.js,
-# cgi-bin/custom_status.cgi).
+# cgi-bin/custom_status.cgi) e il riquadro "Bande LTE" del popup Internet (internetPopup.html generato da
+# tools/build_internetpopup.py, js/custom_lteband.js; le bande le imposta custom.cgi con AT+BMBANDPREF).
 # Prima copiare con adb push in /cache: custom.cgi.new, controlPanel.html.new, systemManagementPopup.html.new,
 # custom_autoreboot.js.new, custom_autoreboot.sh.new, custom_autoreboot.init.new, custom_cpufreq.sh.new,
-# custom_cpufreq.init.new, pe_service.new, custom_status.cgi.new, custom_status.js.new
+# custom_cpufreq.init.new, pe_service.new, custom_status.cgi.new, custom_status.js.new, internetPopup.html.new,
+# custom_lteband.js.new
 # Backup una tantum: /cache/custom.cgi.prev, /cache/controlPanel.html.orig, /cache/systemManagementPopup.html.orig,
-# /cache/pe_service.orig.
-# Ripristino: dwr_deploy_ui.sh --ripristina (toglie anche la riga del riavvio programmato dal crontab di root e
-# riporta governor e limiti della CPU a quelli del firmware originale).
+# /cache/internetPopup.html.orig, /cache/pe_service.orig.
+# Ripristino: dwr_deploy_ui.sh --ripristina (toglie anche la riga del riavvio programmato dal crontab di root,
+# riporta governor e limiti della CPU a quelli del firmware originale e riabilita tutte le bande LTE supportate:
+# il blocco resta salvato nel modem e senza la UI non si potrebbe più togliere).
 # Il pe_service modificato diventa attivo al riavvio successivo: i processi in esecuzione restano quelli vecchi.
 # lighttpd.conf resta l'originale (l'autenticazione la fa custom.cgi): se differisce da /cache/lighttpd.conf.orig
 # viene ripristinato e il device si riavvia, perché lighttpd non si riavvia a caldo in modo affidabile (il backend
@@ -25,6 +28,8 @@ WP=/bmdefsys/WEBSERVER/webpages
 CGI=$WP/cgi-bin/custom.cgi
 CP=$WP/controlPanel.html
 SMP=$WP/systemManagementPopup.html
+IP=$WP/internetPopup.html
+LBJS=$WP/js/custom_lteband.js
 JS=$WP/js/custom_autoreboot.js
 STCGI=$WP/cgi-bin/custom_status.cgi
 STJS=$WP/js/custom_status.js
@@ -51,6 +56,36 @@ conf_originale() {
 	fi
 }
 
+# Risposta del modem al comando AT $1 su /dev/smd7, senza \r
+at_cmd() {
+	timeout -t 4 cat /dev/smd7 > /tmp/deploy_at.$$ 2>/dev/null &
+	usleep 200000
+	printf '%s\r' "$1" > /dev/smd7
+	wait
+	tr -d '\r' < /tmp/deploy_at.$$
+	rm -f /tmp/deploy_at.$$
+}
+# Riabilita tutte le bande LTE supportate dal modem. In scrittura AT+BMBANDPREF vuole l'esadecimale senza 0x;
+# GSM/WCDMA resta quello letto, TD-SCDMA 0 = invariata.
+bande_tutte() {
+	cap=$(at_cmd 'AT+BMBANDPREF=?' | sed -n 's/^+BMBANDPREF: support band: //p' | tr -d ' ')
+	att=$(at_cmd 'AT+BMBANDPREF?' | sed -n 's/^+BMBANDPREF: //p' | tr -d ' ')
+	case "$cap,$att" in
+		0x*,0x*,0x*,0x*,0x*,0x*) ;;
+		*) echo "bande LTE: risposta del modem non valida, nessuna modifica"; return;;
+	esac
+	c=${cap#*,}; c=${c%%,*}
+	a=${att#*,}; a=${a%%,*}
+	g=${att%%,*}
+	if [ "$((c))" = "$((a))" ]; then
+		echo "bande LTE: già tutte abilitate ($c)"
+	elif at_cmd "AT+BMBANDPREF=${g#0x},${c#0x},0" | grep -q '^OK'; then
+		echo "bande LTE: tutte riabilitate ($c)"
+	else
+		echo "bande LTE: il modem ha rifiutato il ripristino"
+	fi
+}
+
 # pe_service è in esecuzione: lo si sostituisce con un rename (con cat > fallirebbe con "Text file busy")
 installa_pe() {
 	cp -p "$PE" "$PE.tmp" && cat "$1" > "$PE.tmp" && mv "$PE.tmp" "$PE"
@@ -60,7 +95,7 @@ if [ "$1" = "--ripristina" ]; then
 	if [ -d /var/spool/cron/crontabs ]; then
 		crontab -l 2>/dev/null | grep -v -F "$AR" | crontab -
 	fi
-	rm -f "$LINK" "$INIT" "$AR" "$JS" "$CFLINK" "$CFINIT" "$CF" "$STCGI" "$STJS" /tmp/custom_status.prev
+	rm -f "$LINK" "$INIT" "$AR" "$JS" "$CFLINK" "$CFINIT" "$CF" "$STCGI" "$STJS" "$LBJS" /tmp/custom_status.prev
 	if [ -e /cache/pe_service.orig ] && ! cmp -s /cache/pe_service.orig "$PE"; then
 		installa_pe /cache/pe_service.orig
 		echo "pe_service originale ripristinato: attivo dal prossimo riavvio del device"
@@ -69,16 +104,19 @@ if [ "$1" = "--ripristina" ]; then
 	cat "$CPUFREQ/cpuinfo_min_freq" > "$CPUFREQ/scaling_min_freq"
 	cat "$CPUFREQ/cpuinfo_max_freq" > "$CPUFREQ/scaling_max_freq"
 	echo ondemand > "$CPUFREQ/scaling_governor"
+	bande_tutte
 	[ -e /cache/custom.cgi.prev ] && cat /cache/custom.cgi.prev > "$CGI"
 	[ -e /cache/controlPanel.html.orig ] && cat /cache/controlPanel.html.orig > "$CP"
 	[ -e /cache/systemManagementPopup.html.orig ] && cat /cache/systemManagementPopup.html.orig > "$SMP"
+	[ -e /cache/internetPopup.html.orig ] && cat /cache/internetPopup.html.orig > "$IP"
 	sync
 	conf_originale
 	exit 0
 fi
 
 for f in custom.cgi controlPanel.html systemManagementPopup.html custom_autoreboot.js custom_autoreboot.sh \
-	custom_autoreboot.init custom_cpufreq.sh custom_cpufreq.init pe_service custom_status.cgi custom_status.js; do
+	custom_autoreboot.init custom_cpufreq.sh custom_cpufreq.init pe_service custom_status.cgi custom_status.js \
+	internetPopup.html custom_lteband.js; do
 	[ -s "/cache/$f.new" ] || { echo "manca /cache/$f.new: nulla installato"; exit 1; }
 done
 for f in custom.cgi custom_autoreboot.sh custom_autoreboot.init custom_cpufreq.sh custom_cpufreq.init custom_status.cgi; do
@@ -93,6 +131,11 @@ grep -q 'js/custom_status.js' /cache/controlPanel.html.new && grep -q 'id="cst_l
 	grep -q 'id="cp_connectionModeTemplate"' /cache/controlPanel.html.new ||
 	{ echo "controlPanel.html senza riquadro di stato o senza template stock: nulla installato"; exit 1; }
 grep -q 'custom_status.cgi' /cache/custom_status.js.new || { echo "custom_status.js non valido: nulla installato"; exit 1; }
+grep -q 'js/custom_lteband.js' /cache/controlPanel.html.new || { echo "controlPanel.html senza custom_lteband.js: nulla installato"; exit 1; }
+grep -q 'id="cst_lteBand"' /cache/internetPopup.html.new && grep -q 'id="cnmodeinfoTemplate"' /cache/internetPopup.html.new ||
+	{ echo "internetPopup.html senza riquadro delle bande o senza template stock: nulla installato"; exit 1; }
+grep -q 'api=lteband' /cache/custom_lteband.js.new || { echo "custom_lteband.js non valido: nulla installato"; exit 1; }
+grep -q 'api=lteband' /cache/custom.cgi.new || { echo "custom.cgi senza API delle bande: nulla installato"; exit 1; }
 [ "$(md5sum /cache/pe_service.new | cut -d' ' -f1)" = "$PE_NEW_MD5" ] || { echo "pe_service.new diverso da quello atteso: nulla installato"; exit 1; }
 md5_pe=$(md5sum "$PE" | cut -d' ' -f1)
 case "$md5_pe" in
@@ -103,10 +146,12 @@ esac
 [ -e /cache/custom.cgi.prev ] || cp -p "$CGI" /cache/custom.cgi.prev
 [ -e /cache/controlPanel.html.orig ] || cp -p "$CP" /cache/controlPanel.html.orig
 [ -e /cache/systemManagementPopup.html.orig ] || cp -p "$SMP" /cache/systemManagementPopup.html.orig
+[ -e /cache/internetPopup.html.orig ] || cp -p "$IP" /cache/internetPopup.html.orig
 [ -e /cache/pe_service.orig ] || [ "$md5_pe" != "$PE_ORIG_MD5" ] || cp -p "$PE" /cache/pe_service.orig
 # File nuovi della web UI: stesso proprietario e permessi degli altri script (www-data, 770)
 [ -e "$JS" ] || cp -p "$WP/js/system.js" "$JS"
 [ -e "$STJS" ] || cp -p "$WP/js/system.js" "$STJS"
+[ -e "$LBJS" ] || cp -p "$WP/js/system.js" "$LBJS"
 # CGI nuovo: stesso proprietario e permessi (eseguibile) di custom.cgi
 [ -e "$STCGI" ] || cp -p "$CGI" "$STCGI"
 cat /cache/custom.cgi.new > "$CGI"
@@ -114,6 +159,8 @@ cat /cache/controlPanel.html.new > "$CP"
 cat /cache/systemManagementPopup.html.new > "$SMP"
 cat /cache/custom_autoreboot.js.new > "$JS"
 cat /cache/custom_status.js.new > "$STJS"
+cat /cache/internetPopup.html.new > "$IP"
+cat /cache/custom_lteband.js.new > "$LBJS"
 cat /cache/custom_status.cgi.new > "$STCGI"
 cat /cache/custom_autoreboot.sh.new > "$AR"
 cat /cache/custom_autoreboot.init.new > "$INIT"
@@ -130,11 +177,11 @@ fi
 rm -f /cache/custom.cgi.new /cache/controlPanel.html.new /cache/systemManagementPopup.html.new \
 	/cache/custom_autoreboot.js.new /cache/custom_autoreboot.sh.new /cache/custom_autoreboot.init.new \
 	/cache/custom_cpufreq.sh.new /cache/custom_cpufreq.init.new /cache/pe_service.new \
-	/cache/custom_status.cgi.new /cache/custom_status.js.new
+	/cache/custom_status.cgi.new /cache/custom_status.js.new /cache/internetPopup.html.new /cache/custom_lteband.js.new
 sync
 "$AR" applica
 "$CF" applica
-sha256sum "$CGI" "$CP" "$SMP" "$JS" "$AR" "$INIT" "$CF" "$CFINIT" "$PE" "$STCGI" "$STJS" "$LC"
-ls -la "$CGI" "$CP" "$SMP" "$JS" "$AR" "$INIT" "$LINK" "$CF" "$CFINIT" "$CFLINK" "$PE" "$STCGI" "$STJS"
+sha256sum "$CGI" "$CP" "$SMP" "$JS" "$AR" "$INIT" "$CF" "$CFINIT" "$PE" "$STCGI" "$STJS" "$IP" "$LBJS" "$LC"
+ls -la "$CGI" "$CP" "$SMP" "$JS" "$AR" "$INIT" "$LINK" "$CF" "$CFINIT" "$CFLINK" "$PE" "$STCGI" "$STJS" "$IP" "$LBJS"
 [ "$pe_nuovo" = 1 ] && echo "pe_service modificato installato: attivo dal prossimo riavvio del device"
 conf_originale

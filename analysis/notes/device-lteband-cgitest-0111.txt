@@ -1,0 +1,39 @@
+768 KB/s (37738 bytes in 0.047s)
+771 KB/s (4617 bytes in 0.005s)
+maschere originali (GSM/WCDMA, LTE, TD-SCDMA): 0x2000000400380,0xA0000800C5,0x3F
+== autenticazione e lettura
+OK   api=lteband senza credenziali -> 401
+OK   api=lteband autenticato -> JSON
+  {"ok":1,"cap":[1,3,7,8,20,38,40],"lte":[1,3,7,8,20,38,40],"csrf":"a255e89a3909718c71106bf18fe93782","m":""}
+OK   bande supportate B1 B3 B7 B8 B20 B38 B40
+OK   bande abilitate = maschera LTE del modem (0xA0000800C5)
+OK   JSON con token anti-CSRF
+== anti-CSRF
+OK   POST senza token -> 403
+OK   POST con Origin estraneo -> 403
+== validazione
+OK   bands='' rifiutato
+OK   bands='0' rifiutato
+OK   bands='2' rifiutato
+OK   bands='3%2C2' rifiutato
+OK   bands='03' rifiutato
+OK   bands='65' rifiutato
+OK   bands='99' rifiutato
+OK   bands='3;7' rifiutato
+OK   bands='3%2C' rifiutato
+OK   bands='%2C3' rifiutato
+OK   bands='3%2C7%2C' rifiutato
+OK   bands='1%2C3%2C7%2C8%2C20%2C38%2C40%2C41' rifiutato
+OK   nessuna modifica dopo gli input rifiutati
+OK   stesse bande -> lte_same
+== blocco su B3 + B7
+OK   bands=3,7 -> lte_ok
+  dopo: 0x2000000400380,0x44,0x3F
+OK   modem: LTE 0x44, GSM/WCDMA e TD-SCDMA invariati
+OK   api=lteband mostra B3, B7
+OK   syslog registra la modifica
+== ripristino di tutte le bande
+OK   tutte le bande -> lte_ok
+OK   maschere identiche all'originale (0x2000000400380,0xA0000800C5,0x3F)
+
+esito: 27 OK, 0 FAIL

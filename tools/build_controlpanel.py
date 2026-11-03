@@ -3,7 +3,8 @@
 
 Modifiche applicate (righe CRLF come l'originale):
 1. css: regole del riquadro di stato (blocco <style> dopo l'ultimo foglio di stile);
-2. script js/custom_autoreboot.js (tab "Riavvio programmato") e js/custom_status.js dopo js/system.js;
+2. script js/custom_autoreboot.js (tab "Riavvio programmato"), js/custom_status.js e js/custom_lteband.js
+   (riquadro "Bande LTE" del popup Internet) dopo js/system.js;
 3. pulsante "FUNZIONALITÀ AVANZATE" sotto "Setup Wizard" verso /cgi-bin/custom.cgi;
 4. colonna sinistra (div.cpMainLeft) riscritta: intestazione con icone di rete e segnale, operatore, dBm e dati
    usati; sotto, lista di voci con il valore a destra (connessione, segnale, cella, rete e dati, temperature, CPU e
@@ -137,7 +138,7 @@ def main():
     m = unico(testo, r'(\t*)<script [^\n]*src="js/system\.js"></script>\r\n', "script system.js")
     ind = m.group(1)
     script = "".join(f'{ind}<script type="text/javascript" language="javascript" src="js/{n}"></script>{NL}'
-                     for n in ("custom_autoreboot.js", "custom_status.js"))
+                     for n in ("custom_autoreboot.js", "custom_status.js", "custom_lteband.js"))
     testo = testo[:m.end()] + script + testo[m.end():]
 
     # 3. pulsante dopo il blocco del Setup Wizard
