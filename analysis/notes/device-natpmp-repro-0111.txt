@@ -1,0 +1,9 @@
+prima: pid 618, CPU 95%
+riavviato: pid 16413
+a riposo: CPU 0%, socket 5351 aperti: 1
+dopo UNA richiesta NAT-PMP di mappatura: CPU 95%, stato R
+PC del thread principale (50 campioni):
+     28 130e4
+     17 130f8
+      5 130e8
+riavviato di nuovo: pid 16707, CPU 0%

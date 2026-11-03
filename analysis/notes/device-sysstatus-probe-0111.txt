@@ -1,0 +1,307 @@
+
+##### uptime / carico
+385.80 28.39
+5.04 3.71 1.74 2/274 6347
+cpu  33711 0 1659 2621 107 0 137 0 0 0
+ctxt 474252
+processes 6349
+procs_running 2
+
+##### zone termiche
+thermal_zone0 type=tsens_tz_sensor0 temp=35 mode=enabled lettura_ms=20
+   trip_point_0_temp=193 configurable_hi
+   trip_point_1_temp=5 configurable_low
+thermal_zone1 type=tsens_tz_sensor1 temp=35 mode=enabled lettura_ms=10
+   trip_point_0_temp=189 configurable_hi
+   trip_point_1_temp=5 configurable_low
+thermal_zone2 type=tsens_tz_sensor2 temp=33 mode=enabled lettura_ms=10
+   trip_point_0_temp=193 configurable_hi
+   trip_point_1_temp=5 configurable_low
+thermal_zone3 type=tsens_tz_sensor3 temp=35 mode=enabled lettura_ms=30
+   trip_point_0_temp=190 configurable_hi
+   trip_point_1_temp=5 configurable_low
+thermal_zone4 type=tsens_tz_sensor4 temp=36 mode=enabled lettura_ms=30
+   trip_point_0_temp=193 configurable_hi
+   trip_point_1_temp=5 configurable_low
+thermal_zone5 type=pa_therm0 temp=851453 mode=disabled lettura_ms=20
+   trip_point_0_temp=-40 configurable_hi
+   trip_point_1_temp=-40 configurable_low
+thermal_zone6 type=pa_therm1 temp=120 mode=disabled lettura_ms=10
+   trip_point_0_temp=-40 configurable_hi
+   trip_point_1_temp=-40 configurable_low
+thermal_zone0  thermal_zone2  thermal_zone4  thermal_zone6
+thermal_zone1  thermal_zone3  thermal_zone5
+
+##### hwmon
+/sys/class/hwmon/hwmon0 name=cat: can't open '/sys/class/hwmon/hwmon0/name': No such file or directory
+device power subsystem uevent 
+/sys/class/hwmon/hwmon1 name=tsens_tz_sensor0
+name power subsystem temp1_input uevent 
+   /sys/class/hwmon/hwmon1/temp1_input=35
+/sys/class/hwmon/hwmon2 name=tsens_tz_sensor1
+name power subsystem temp1_input uevent 
+   /sys/class/hwmon/hwmon2/temp1_input=35
+/sys/class/hwmon/hwmon3 name=tsens_tz_sensor2
+name power subsystem temp1_input uevent 
+   /sys/class/hwmon/hwmon3/temp1_input=33
+/sys/class/hwmon/hwmon4 name=tsens_tz_sensor3
+name power subsystem temp1_input uevent 
+   /sys/class/hwmon/hwmon4/temp1_input=35
+/sys/class/hwmon/hwmon5 name=tsens_tz_sensor4
+name power subsystem temp1_input uevent 
+   /sys/class/hwmon/hwmon5/temp1_input=36
+/sys/class/hwmon/hwmon6 name=pa_therm0
+name power subsystem temp1_input uevent 
+   /sys/class/hwmon/hwmon6/temp1_input=851257
+/sys/class/hwmon/hwmon7 name=pa_therm1
+name power subsystem temp1_input uevent 
+   /sys/class/hwmon/hwmon7/temp1_input=88
+
+##### power_supply
+== /sys/class/power_supply/ac
+   online=1
+   type=Mains
+   uevent=POWER_SUPPLY_NAME=ac
+   lettura_ms=40
+== /sys/class/power_supply/battery
+   capacity=96
+   health=Good
+   present=1
+   status=Charging
+   technology=Li-ion
+   temp=28957
+   type=Battery
+   uevent=POWER_SUPPLY_NAME=battery
+   voltage_now=4177
+   lettura_ms=140
+== /sys/class/power_supply/usb
+   current_max=500000
+   online=1
+   present=1
+   scope=Device
+   type=USB
+   uevent=POWER_SUPPLY_NAME=usb
+   lettura_ms=100
+
+##### ADC del PMIC (qpnp-vadc / iadc / bm_battery_debug)
+/sys/devices/qpnp-adc-tm-cf5cf800
+/sys/devices/msm-tsens
+/sys/devices/qpnp-vadc-cf5cf600
+== /sys/devices/qpnp-vadc-cf5cf600
+MPP_01_rat MPP_02_temperature ambient_therm batt_id_therm case_therm die_temp driver hwmon pa_therm0 pa_therm1 power ref_1250v ref_625mv subsystem uevent xo_therm_amux 
+   MPP_01_rat=Result:1388400 Raw:29489  ms=20
+   MPP_02_temperature=Result:410594 Raw:28956  ms=40
+   ambient_therm=Result:125 Raw:24893  ms=40
+   batt_id_therm=Result:10187 Raw:24868  ms=20
+   case_therm=Result:22 Raw:34430  ms=30
+   die_temp=Result:29643 Raw:30947  ms=30
+   pa_therm0=Result:851159 Raw:33454  ms=30
+   pa_therm1=Result:100 Raw:25671  ms=20
+   ref_1250v=Result:1249902 Raw:37525  ms=30
+   ref_625mv=Result:624511 Raw:31140  ms=30
+   xo_therm_amux=Result:28 Raw:33229  ms=40
+total 0
+drwxr-xr-x    2 root     root             0 Jan  1  1970 .
+drwxr-xr-x   49 root     root             0 Jan  1  1970 ..
+-r--r--r--    1 root     root             0 Jan  1  1970 bm_battery_vadc
+28956,41771
+
+##### cpufreq / cpu
+scaling_governor=performance
+scaling_cur_freq=998400
+cpuinfo_cur_freq=998400
+scaling_min_freq=300000
+scaling_max_freq=998400
+cpuinfo_min_freq=300000
+cpuinfo_max_freq=998400
+300000 2897
+600000 65
+748800 13
+998400 35675
+total_trans=203
+cpu0 cpufreq cpuidle kernel_max offline online possible power present uevent 
+Processor	: ARMv7 Processor rev 1 (v7l)
+BogoMIPS	: 38.40
+Hardware	: Qualcomm MSM 9625 (Flattened Device Tree)
+Revision	: 0000
+
+##### memoria
+MemTotal:         168828 kB
+MemFree:          118840 kB
+Buffers:               0 kB
+Cached:            14948 kB
+SwapCached:            0 kB
+Active:            16976 kB
+SwapTotal:             0 kB
+Slab:              12992 kB
+Committed_AS:    1223296 kB
+
+##### flash / filesystem
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/root                25984     17196      8788  66% /
+tmpfs                       64         4        60   6% /dev
+tmpfs                    84412         0     84412   0% /dev/shm
+tmpfs                    67584       276     67308   0% /var/volatile
+/dev/mtdblock21          94848     26800     68048  28% /usr
+/dev/mtdblock19          51584     11116     40468  22% /bmdefsys
+/dev/mtdblock18           4224       828      3396  20% /etc/backup
+/dev/mtdblock17           4224      4112       112  97% /mnt/cdrom
+/dev/mtdblock12         128384      3216    125168   3% /cache
+mtd10: apps ecc_failures=cat: can't open '/sys/class/mtd/mtd10/ecc_failures': No such file or directory corrected=cat: can't open '/sys/class/mtd/mtd10/corrected_bits': No such file or directory bad=cat: can't open '/sys/class/mtd/mtd10/bad_blocks': No such file or directory
+mtd12: cache ecc_failures=cat: can't open '/sys/class/mtd/mtd12/ecc_failures': No such file or directory corrected=cat: can't open '/sys/class/mtd/mtd12/corrected_bits': No such file or directory bad=cat: can't open '/sys/class/mtd/mtd12/bad_blocks': No such file or directory
+mtd19: bmdefsys ecc_failures=cat: can't open '/sys/class/mtd/mtd19/ecc_failures': No such file or directory corrected=cat: can't open '/sys/class/mtd/mtd19/corrected_bits': No such file or directory bad=cat: can't open '/sys/class/mtd/mtd19/bad_blocks': No such file or directory
+mtd20: system ecc_failures=cat: can't open '/sys/class/mtd/mtd20/ecc_failures': No such file or directory corrected=cat: can't open '/sys/class/mtd/mtd20/corrected_bits': No such file or directory bad=cat: can't open '/sys/class/mtd/mtd20/bad_blocks': No such file or directory
+mtd21: userdata ecc_failures=cat: can't open '/sys/class/mtd/mtd21/ecc_failures': No such file or directory corrected=cat: can't open '/sys/class/mtd/mtd21/corrected_bits': No such file or directory bad=cat: can't open '/sys/class/mtd/mtd21/bad_blocks': No such file or directory
+dev erasesize flags mtdblock20 name numeraseregions oobsize power size subpagesize subsystem type uevent writesize 
+ls: /dev/mmcblk*: No such file or directory
+
+##### rete
+Inter-|   Receive                                                |  Transmit
+ face |bytes    packets errs drop fifo frame compressed multicast|bytes    packets errs drop fifo colls carrier compressed
+rmnet6:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+rmnet1:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+    lo:   67764     851    0    0    0     0          0         0    67764     851    0    0    0     0       0          0
+wlan0-vxd:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+rmnet5:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+wlan0-va0:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+bridge0:  920052    4197    0    0    0     0          0         0  2845052    4802    0    0    0     0       0          0
+rmnet0:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+rmnet4:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+  sit0:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+ wlan0: 3567183   12912    0    0    0     0          0         0  3089506    4721    0    0    0     0       0          0
+rmnet3:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+rmnet7:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+rmnet2:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+conntrack=71 max=10540
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN 
+    inet 127.0.0.1/8 scope host lo
+11: bridge0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP 
+    inet 192.168.0.1/24 brd 192.168.0.255 scope global bridge0
+12: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master bridge0 state UNKNOWN qlen 1000
+    inet 169.254.1.1/24 brd 169.254.1.255 scope global wlan0
+192.168.0.0/24 dev bridge0  proto kernel  scope link  src 192.168.0.1 
+
+##### Wi-Fi Realtek /proc/wlan0
+SS_Result buf_info cam_info cmd gpio_ctrl led mib_11n mib_all mib_auth mib_brext mib_bssdesc mib_dkeytbl mib_erp mib_gkeytbl mib_misc mib_operation mib_rf mib_staconfig mib_wsc probe_info que_info sdio_dbginfo sta_dbginfo sta_info sta_keyinfo sta_queinfo stats up_event up_flag 
+0
+sta_info_ms=20
+    dot11channel: 8
+    ther: 0
+    TXPowerOffset: 2
+    txpwr_reduction: 0
+    dot11channel: 8
+    opmode: 0x10
+    dot11Bssid: dceae72f59b0
+    dot11DesiredSSID:(Len 18) dlink_DWR-932_59B0
+    dot11DefaultSSID:(Len 0) 
+    dot11SSIDtoScan:(Len 18) dlink_DWR-932_59B0
+    dot11DesiredBssid: 000000000000
+    bssid: 000000000000
+    ssid: 
+    ssidlen: 0
+    channel: 0
+    bws_enable: 4
+    bws_cntdown: 0
+    currBW: 40M
+    currBW(op): 20M
+/proc/wlan0/mib_all:    ther: 0
+/proc/wlan0/mib_rf:    ther: 0
+  Statistics...
+    up_time: 6 min 12 sec 
+    tx_packets:    4721
+    tx_bytes:      3089506
+    tx_retrys:     0
+    tx_fails:      0
+    tx_drops:      187
+    tx_dma_err:    0
+    rx_dma_err:    0
+    tx_dma_status: 0
+    rx_dma_status: 0
+    rx_packets:    12920
+    rx_bytes:      3569532
+    rx_retrys:     235
+    rx_crc_errors: 0
+    rx_errors:     0
+    rx_data_drops: 0
+    rx_mc_pn_drops: 0
+    rx_decache:    4
+    rx_fifoO:      0
+    rx_rdu:        0
+    rx_reuse:      0
+    beacon_ok:     3589
+    beacon_er:     0
+    beacon_dma_err:0
+    freeskb_err:   0
+    reused_skb:    0
+    skb_free_num:  0
+    tx_avarage:    0
+    rx_avarage:    9023
+    cur_tx_rate:   MCS15 144.5
+    use hal:    1
+    use outsrc:    1
+    rf_lock:       false
+    IQK total count: 1
+    IQK fail count: 0
+    adaptivity_enable: 0
+== /proc/wlan0-vxd/stats
+  Statistics...
+    up_time: 0 sec 
+    tx_packets:    0
+    tx_bytes:      0
+    tx_retrys:     0
+    tx_fails:      0
+    tx_drops:      0
+    tx_dma_err:    0
+    rx_dma_err:    0
+    tx_dma_status: 0
+    rx_dma_status: 0
+    rx_packets:    0
+    rx_bytes:      0
+    rx_retrys:     0
+    rx_crc_errors: 0
+    rx_errors:     0
+    rx_data_drops: 0
+    rx_mc_pn_drops: 0
+    rx_decache:    0
+    rx_fifoO:      0
+/proc/wlan0-vxd/mib_rf:    dot11channel: 0
+/proc/wlan0-vxd/mib_rf:    force_1t2r: 0 (state:0)
+
+##### LED / display / OLED
+power_led_blue power_led_green power_led_red signal_led_blue signal_led_green signal_led_red sled_led1 sled_led2 sled_led3 sled_led4 sms_led wifi_led 
+power_led_blue b=0 trig=none
+power_led_green b=255 trig=timer
+power_led_red b=0 trig=timer
+signal_led_blue b=0 trig=none
+signal_led_green b=0 trig=none
+signal_led_red b=255 trig=timer
+sled_led1 b=0 trig=none
+sled_led2 b=0 trig=none
+sled_led3 b=0 trig=none
+sled_led4 b=0 trig=none
+sms_led b=0 trig=none
+wifi_led b=1 trig=none
+
+##### modem / SIM (solo stato già esposto, nessun comando AT)
+lte_default_profile=
+manual_wwanDns_enable=0
+manual_priWwanDns_addr=
+manual_secWwanDns_addr=
+bridge0 lo rmnet0 rmnet1 rmnet2 rmnet3 rmnet4 rmnet5 rmnet6 rmnet7 sit0 wlan0 wlan0-va0 wlan0-vxd 
+
+##### costo di lettura complessivo
+10 letture base: 200 ms
+
+##### processi e daemon rilevanti
+  418 root       0:00 /usr/bin/thermal-engine
+ 1035 root       0:10 /usr/sbin/lighttpd -f /bmdefsys/etc/lighttpd.conf
+ 1036 root       0:00 /bmdefsys/usr/bin/qcmap_fcgi
+ 1165 root       0:00 /bmdefsys/usr/bin/pe_service
+ 1169 root       0:00 /bmdefsys/usr/bin/bm_netstat
+ 1171 root       0:00 /bmdefsys/usr/bin/bm_netrate
+ 1181 root       0:00 /bmdefsys/usr/bin/deep_sleep_server
+ 1215 root       0:00 /bmdefsys/usr/bin/bm_fota
+ 1328 root       0:00 /bmdefsys/usr/bin/pe_service
+ 1329 root       0:00 /bmdefsys/usr/bin/pe_service
+ 1330 root       0:00 /bmdefsys/usr/bin/pe_service
+ 1331 root       0:00 /bmdefsys/usr/bin/pe_service

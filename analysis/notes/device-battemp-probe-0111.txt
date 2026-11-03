@@ -1,0 +1,17 @@
+total 27
+drwxr-xr-x    1 root     root          2048 Jun  7  2025 .
+drwxr-xr-x    1 root     root          2048 Nov  2 19:36 ..
+-rw-r--r--    1 root     root            21 Jun 28  2024 at_backup.conf
+-rw-r--r--    1 root     root             0 Jun 28  2024 backup_nv_OK
+---S------    1 root     root             1 Jun  7  2025 bmftm
+-rw-r--r--    1 root     root             1 Jun  7  2025 checkData
+---S------    1 root     root           284 Jun 28  2024 device_config_d.bin
+drwx------    1 root     root          2048 Jan  1  1970 lost+found
+-r--------    1 root     root         16704 Jun 28  2024 rf_config_d.bin
+-rw-r--r--    1 root     root            16 Jan 10  2025 sim_imsi
+---S------    1 root     root             9 Jun 28  2024 sms.conf
+---S------    1 root     root            17 Jun 28  2024 softmac
+---S------    1 root     root            18 Jun 28  2024 ssid
+---S------    1 root     root            10 Jun 28  2024 ssidpwd
+bm_temp_cfg: cat: can't open '/etc/backup/bm_temp_cfg': No such file or directory
+Terminated

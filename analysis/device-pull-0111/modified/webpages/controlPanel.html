@@ -13,6 +13,23 @@
 		<link rel="stylesheet" type="text/css" href="css/setupWizard.css" />
         <link rel="stylesheet" type="text/css" href="css/dateTimePicker.css" />
 		<link rel="stylesheet" type="text/css" href="css/window.css" />
+		<style type="text/css">
+			.cpMainLeft > div > div.cstHead { height: 50px; padding: 4px 8px 4px 6px; }
+			.cstHead a { float: left; }
+			.cstHead #cst_sig { margin: 9px 0 0 0; }
+			.cstHeadTxt { overflow: hidden; padding-left: 4px; text-align: right; }
+			.cstHeadTxt p { color: #40464B; font-size: 11px; line-height: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+			.cstHeadTxt p.cstOp { color: #345C7A; font-size: 13px; font-weight: bold; line-height: 15px; }
+			.cstHeadTxt b { color: #0075b5; font-size: 13px; }
+			.cstHeadTxt p.cstLimit { color: #8C8C8C; font-size: 10px; }
+			.cpMainLeft > div > div.cstList { height: 296px; overflow-x: hidden; overflow-y: auto; padding: 2px 6px 4px 10px; }
+			.cstTab { width: 100%; border-collapse: collapse; font-size: 11px; line-height: 16px; }
+			.cstTab td { color: #40464B; white-space: nowrap; vertical-align: top; }
+			.cstTab td + td { color: #0075b5; font-weight: bold; text-align: right; white-space: normal; word-break: break-word; padding-left: 6px; }
+			.cstTab tr.cstGrp th { color: #345C7A; font-size: 11px; font-weight: bold; text-align: left; padding: 7px 0 1px 0; border-bottom: 1px dotted #797979; }
+			.cstTab tr.cstGrp:first-child th { padding-top: 2px; }
+			.cstTab td.cstNota { color: #B5470B; font-weight: normal; text-align: left; white-space: normal; }
+		</style>
        
 		<script type="text/javascript" language="javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" language="javascript" src="js/json2.js"></script>
@@ -33,6 +50,7 @@
 		<script type="text/javascript" language="javascript" src="js/applications.js"></script>
 		<script type="text/javascript" language="javascript" src="js/system.js"></script>
 		<script type="text/javascript" language="javascript" src="js/custom_autoreboot.js"></script>
+		<script type="text/javascript" language="javascript" src="js/custom_status.js"></script>
 		<script type="text/javascript" language="javascript" src="js/setupWizard.js"></script>
 		<script type="text/javascript" language="javascript" src="js/driveTree.js"></script>
 		<script type="text/javascript" language="javascript" src="js/ipv4AddrValidations.js"></script>
@@ -178,9 +196,80 @@
 				<div class="cpMainLeft">
 					<div>
 						<h1><a href="#" onClick="openPopup(event,'tf1_popupInternetDialog','button.config.popSettings',-1,'tf1_dialog','tf1_popupInternetContent','controlPanel','internetPopup.html', 'tf1_networkStatus','network_info');" data-localize="menu.internet"><!--Internet-->&nbsp;</a></h1>
-						<div>
-							<div id="tf1_tmpl_cpinternetinfo"></div>
-							<script id="cp_internetTemplate" type="text/x-dot-template">
+						<div class="cstHead">
+							<a href="#" id="cst_mode" class="cpInternetModeGray4" onClick="openPopup(event,'tf1_popupInternetDialog','button.config.popSettings',-1,'tf1_dialog','tf1_popupInternetContent','controlPanel','internetPopup.html', 'tf1_connectModeSettings','internet_onloadConnmodeConfig');"></a>
+							<a href="#" id="cst_sig" class="signalGray6" onClick="openPopup(event,'tf1_popupInternetDialog','button.config.popSettings',-1,'tf1_dialog','tf1_popupInternetContent','controlPanel','internetPopup.html', 'tf1_networkStatus','network_info');"></a>
+							<div class="cstHeadTxt">
+								<p id="cst_op" class="cstOp">&mdash;</p>
+								<p id="cst_dbm">&nbsp;</p>
+								<p><b id="cst_used">&mdash;</b> usati</p>
+								<p id="cst_limit" class="cstLimit">&nbsp;</p>
+							</div>
+						</div>
+						<div class="cstList" id="cst_list">
+							<table class="cstTab">
+								<tr class="cstGrp"><th colspan="2">Connessione</th></tr>
+								<tr><td>Stato</td><td id="cst_stato">&mdash;</td></tr>
+								<tr><td>Tecnologia</td><td id="cst_tipo">&mdash;</td></tr>
+								<tr><td>Velocit&agrave; &darr; / &uarr;</td><td id="cst_vel">&mdash;</td></tr>
+								<tr><td>Durata</td><td id="cst_durata">&mdash;</td></tr>
+								<tr><td>Roaming</td><td id="cst_roaming">&mdash;</td></tr>
+								<tr class="cstGrp"><th colspan="2">Segnale</th></tr>
+								<tr><td>Livello</td><td id="cst_livello">&mdash;</td></tr>
+								<tr><td>RSSI</td><td id="cst_rssi">&mdash;</td></tr>
+								<tr><td>RSRP (potenza)</td><td id="cst_rsrp">&mdash;</td></tr>
+								<tr><td>RSRQ (qualit&agrave;)</td><td id="cst_rsrq">&mdash;</td></tr>
+								<tr><td>SINR (rumore)</td><td id="cst_sinr">&mdash;</td></tr>
+								<tr><td>Ec/Io</td><td id="cst_ecio">&mdash;</td></tr>
+								<tr><td>Potenza TX</td><td id="cst_txp">&mdash;</td></tr>
+								<tr class="cstGrp"><th colspan="2">Cella</th></tr>
+								<tr><td>Banda</td><td id="cst_banda">&mdash;</td></tr>
+								<tr><td>Larghezza</td><td id="cst_bw">&mdash;</td></tr>
+								<tr><td>EARFCN</td><td id="cst_earfcn">&mdash;</td></tr>
+								<tr><td>Freq. DL / UL</td><td id="cst_freq">&mdash;</td></tr>
+								<tr><td>Cell ID</td><td id="cst_cid">&mdash;</td></tr>
+								<tr><td>eNodeB</td><td id="cst_enb">&mdash;</td></tr>
+								<tr><td>PCI</td><td id="cst_pci">&mdash;</td></tr>
+								<tr><td>Area</td><td id="cst_tac">&mdash;</td></tr>
+								<tr class="cstGrp"><th colspan="2">Rete e dati</th></tr>
+								<tr><td>Rete (MCC MNC)</td><td id="cst_plmn">&mdash;</td></tr>
+								<tr><td>Servizio</td><td id="cst_dominio">&mdash;</td></tr>
+								<tr><td>VoLTE</td><td id="cst_volte">&mdash;</td></tr>
+								<tr><td>Bande LTE</td><td id="cst_bande">&mdash;</td></tr>
+								<tr><td>IP</td><td id="cst_ip">&mdash;</td></tr>
+								<tr><td>IPv6</td><td id="cst_ip6">&mdash;</td></tr>
+								<tr><td>DNS</td><td id="cst_dns">&mdash;</td></tr>
+								<tr><td>Ricevuti</td><td id="cst_rx">&mdash;</td></tr>
+								<tr><td>Inviati</td><td id="cst_tx">&mdash;</td></tr>
+								<tr class="cstGrp"><th colspan="2">Temperature</th></tr>
+								<tr id="cst_nota" style="display:none"><td colspan="2" class="cstNota">Dati del dispositivo non disponibili: esci e rientra nella web UI da questo dispositivo.</td></tr>
+								<tr><td>Processore</td><td id="cst_tsoc">&mdash;</td></tr>
+								<tr><td>PMIC</td><td id="cst_tpmic">&mdash;</td></tr>
+								<tr><td>Oscillatore</td><td id="cst_txo">&mdash;</td></tr>
+								<tr><td>Batteria</td><td id="cst_tbatt">&mdash;</td></tr>
+								<tr class="cstGrp"><th colspan="2">CPU e memoria</th></tr>
+								<tr><td>Frequenza</td><td id="cst_freq_cpu">&mdash;</td></tr>
+								<tr><td>Governor</td><td id="cst_gov">&mdash;</td></tr>
+								<tr><td>Limiti</td><td id="cst_limiti">&mdash;</td></tr>
+								<tr><td>Utilizzo</td><td id="cst_uso">&mdash;</td></tr>
+								<tr><td>Carico medio</td><td id="cst_carico">&mdash;</td></tr>
+								<tr><td>RAM libera</td><td id="cst_ram">&mdash;</td></tr>
+								<tr><td>Acceso da</td><td id="cst_uptime">&mdash;</td></tr>
+								<tr class="cstGrp"><th colspan="2">Batteria</th></tr>
+								<tr><td>Livello</td><td id="cst_bcap">&mdash;</td></tr>
+								<tr><td>Tensione</td><td id="cst_bmv">&mdash;</td></tr>
+								<tr><td>Stato</td><td id="cst_bstato">&mdash;</td></tr>
+								<tr><td>Salute</td><td id="cst_bsalute">&mdash;</td></tr>
+								<tr><td>Alimentazione</td><td id="cst_bext">&mdash;</td></tr>
+								<tr class="cstGrp"><th colspan="2">Wi-Fi e LAN</th></tr>
+								<tr><td>Client Wi-Fi</td><td id="cst_wcli">&mdash;</td></tr>
+								<tr><td>Canale</td><td id="cst_wch">&mdash;</td></tr>
+								<tr><td>Velocit&agrave; TX</td><td id="cst_wrate">&mdash;</td></tr>
+								<tr><td>Connessioni NAT</td><td id="cst_nat">&mdash;</td></tr>
+							</table>
+						</div>
+						<!-- Template stock letti da controlPanel.js a ogni aggiornamento: senza contenitore non disegnano -->
+						<script id="cp_internetTemplate" type="text/x-dot-template">
 							<div class="cpInternet">
 								
 								<div class="cpOperator">
@@ -296,15 +385,8 @@
 										</strong>  {{} else { }}<!--a onclick="openPopup(event,'tf1_popupSystemManagementDialog','button.config.popSettings',-1,'tf1_dialog','tf1_popupSystemManagementContent','controlPanel','systemManagementPopup.html','tf1_networkStatisticsSettinsg','system_onloadNetworkStatsPacketData');" href="#" ><span class="textTwoSpan">{{=global_lang["cpsection"]["config_data_limit"] || "Configure Internet data limitation"}}</span</a--> {{ } }}	</p>
 								</div>
 							</div>
-							</script>  
-						</div>
-						<p class="cpBreak1">&nbsp;
-							
-						</p>
-						<h1><a href="#" onClick="openPopup(event,'tf1_popupInternetDialog','button.config.popSettings',-1,'tf1_dialog','tf1_popupInternetContent','controlPanel','internetPopup.html', 'tf1_connectModeSettings','internet_onloadConnmodeConfig');" data-localize="cpsection.cnmode"><!--Connection Mode-->&nbsp;</a></h1>
-						<div id="tf1_tmpl_cp_connectionMode"></div>
-                        
-                        <script id="cp_connectionModeTemplate" type="text/x-dot-template">
+							</script>
+						<script id="cp_connectionModeTemplate" type="text/x-dot-template">
 						
 							<div class="cpConnectionDetails">
 							
@@ -374,10 +456,9 @@
 									<input type="hidden" name="" value="{{=statuVal}}" />
 								</p>
 							</div>						
-						</script>             
-                        
-						</div>
+						</script>
 					</div>
+				</div>
 					<div class="cpMainMid">
 					<div class="cpMainMid2">
 						<div id="tf1_tmpl_cpmaininfo"></div>

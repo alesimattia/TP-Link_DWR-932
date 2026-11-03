@@ -1,0 +1,18 @@
+Nov  2 19:36:09 mdm9625-perf daemon.notice miniupnpd[618]: HTTP listening on port 8201
+Nov  2 19:36:09 mdm9625-perf daemon.notice miniupnpd[618]: Listening for NAT-PMP traffic on port 5351
+----- /var/syslog_messages
+Jun  7 06:17:49 mdm9625-perf daemon.notice miniupnpd[612]: HTTP listening on port 8201
+Jun  7 06:17:49 mdm9625-perf daemon.notice miniupnpd[612]: Listening for NAT-PMP traffic on port 5351
+Jun  7 06:18:20 mdm9625-perf user.info QCMAP_ConnectionManager: miniupnpd stop success QCMAP_ConnectionManager.cpp EnableUPNP 10656
+Jun  7 06:18:20 mdm9625-perf daemon.notice miniupnpd[1722]: HTTP listening on port 8201
+Jun  7 06:18:20 mdm9625-perf daemon.notice miniupnpd[1722]: Listening for NAT-PMP traffic on port 5351
+Jun  7 06:18:23 mdm9625-perf user.info QCMAP_ConnectionManager: miniupnpd stop success QCMAP_ConnectionManager.cpp EnableUPNP 10656
+Jun  7 06:18:23 mdm9625-perf daemon.notice miniupnpd[1799]: HTTP listening on port 8201
+Jun  7 06:18:23 mdm9625-perf daemon.notice miniupnpd[1799]: Listening for NAT-PMP traffic on port 5351
+Jun  7 06:18:23 mdm9625-perf daemon.warn miniupnpd[1799]: unsupported NAT-PMP version : 2
+Nov  2 13:31:48 mdm9625-perf daemon.notice miniupnpd[620]: HTTP listening on port 8201
+Nov  2 13:31:48 mdm9625-perf daemon.notice miniupnpd[620]: Listening for NAT-PMP traffic on port 5351
+Nov  2 13:56:18 mdm9625-perf daemon.notice miniupnpd[618]: HTTP listening on port 8201
+Nov  2 13:56:18 mdm9625-perf daemon.notice miniupnpd[618]: Listening for NAT-PMP traffic on port 5351
+----- livello di log di syslogd
+  368 root       0:00 /sbin/syslogd -n -C1024 -m 20

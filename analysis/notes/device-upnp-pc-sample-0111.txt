@@ -1,0 +1,91 @@
+pid 618
+##### thread: tid stato utime stime kstkeip kstkesp
+618 R utime=280350 stime=149 pc=130f8 sp=7fffffff
+   wchan=0 ctxt=34 1064213 
+621 S utime=0 stime=0 pc=48cd6e24 sp=7fffffff
+   wchan=diagchar_read ctxt=1 0 
+622 S utime=0 stime=0 pc=48cd8994 sp=7fffffff
+   wchan=poll_schedule_timeout ctxt=1 0 
+623 S utime=0 stime=0 pc=48cd8994 sp=7fffffff
+   wchan=poll_schedule_timeout ctxt=10 0 
+##### 300 campioni del PC del thread 618
+    135 130f8
+    134 130e4
+     31 130e8
+##### registri lr (link register) non disponibili da /proc; stack pointer in 20 campioni
+     20 7fffffff
+##### mappa di memoria
+00008000-0001c000 r-xp 00000000 1f:15 258        /usr/sbin/miniupnpd
+0001c000-0001d000 rw-p 00013000 1f:15 258        /usr/sbin/miniupnpd
+0001d000-0003e000 rw-p 00000000 00:00 0          [heap]
+48bf8000-48c15000 r-xp 00000000 1f:14 478        /lib/ld-linux.so.3
+48c1c000-48c1d000 r--p 0001c000 1f:14 478        /lib/ld-linux.so.3
+48c1d000-48c1e000 rw-p 0001d000 1f:14 478        /lib/ld-linux.so.3
+48c20000-48d3c000 r-xp 00000000 1f:14 475        /lib/libc.so.6
+48d3c000-48d44000 ---p 0011c000 1f:14 475        /lib/libc.so.6
+48d44000-48d46000 r--p 0011c000 1f:14 475        /lib/libc.so.6
+48d46000-48d47000 rw-p 0011e000 1f:14 475        /lib/libc.so.6
+48d47000-48d4a000 rw-p 00000000 00:00 0 
+48d50000-48d59000 r-xp 00000000 1f:14 498        /lib/libgcc_s.so.1
+48d59000-48d5a000 rw-p 00008000 1f:14 498        /lib/libgcc_s.so.1
+48d60000-48d74000 r-xp 00000000 1f:14 487        /lib/libpthread.so.0
+48d74000-48d7b000 ---p 00014000 1f:14 487        /lib/libpthread.so.0
+48d7b000-48d7c000 r--p 00013000 1f:14 487        /lib/libpthread.so.0
+48d7c000-48d7d000 rw-p 00014000 1f:14 487        /lib/libpthread.so.0
+48d7d000-48d7f000 rw-p 00000000 00:00 0 
+48d88000-48d8e000 r-xp 00000000 1f:14 474        /lib/librt.so.1
+48d8e000-48d95000 ---p 00006000 1f:14 474        /lib/librt.so.1
+48d95000-48d96000 r--p 00005000 1f:14 474        /lib/librt.so.1
+48d96000-48d97000 rw-p 00006000 1f:14 474        /lib/librt.so.1
+48da0000-48da3000 r-xp 00000000 1f:15 361        /usr/lib/libgthread-2.0.so.0
+48da3000-48da4000 rw-p 00002000 1f:15 361        /usr/lib/libgthread-2.0.so.0
+48da8000-48e84000 r-xp 00000000 1f:15 575        /usr/lib/libglib-2.0.so.0
+48e84000-48e85000 rw-p 000dc000 1f:15 575        /usr/lib/libglib-2.0.so.0
+48e88000-48e95000 r-xp 00000000 1f:15 557        /usr/lib/libdiag.so.1
+48e95000-48e97000 rw-p 0000c000 1f:15 557        /usr/lib/libdiag.so.1
+48e97000-48f8b000 rw-p 00000000 00:00 0 
+48f90000-48f9a000 r-xp 00000000 1f:15 333        /usr/lib/libdsutils.so.1
+48f9a000-48f9b000 rw-p 0000a000 1f:15 333        /usr/lib/libdsutils.so.1
+48fa0000-48fa8000 r-xp 00000000 1f:15 570        /usr/lib/libqmi_client_qmux.so.1
+48fa8000-48faa000 rw-p 00008000 1f:15 570        /usr/lib/libqmi_client_qmux.so.1
+48faa000-48fb0000 rw-p 00000000 00:00 0 
+48fb8000-48fc0000 r-xp 00000000 1f:15 491        /usr/lib/libxml.so.0
+48fc0000-48fc1000 rw-p 00008000 1f:15 491        /usr/lib/libxml.so.0
+48fc8000-48fcc000 r-xp 00000000 1f:15 323        /usr/lib/libconfigdb.so.0
+48fcc000-48fcd000 rw-p 00003000 1f:15 323        /usr/lib/libconfigdb.so.0
+48fd0000-48fd7000 r-xp 00000000 1f:15 332        /usr/lib/libqmi_cci.so.1
+48fd7000-48fd8000 rw-p 00006000 1f:15 332        /usr/lib/libqmi_cci.so.1
+48fe0000-48fe3000 r-xp 00000000 1f:15 362        /usr/lib/libqmi_encdec.so.1
+48fe3000-48fe4000 rw-p 00002000 1f:15 362        /usr/lib/libqmi_encdec.so.1
+48ff8000-49060000 r-xp 00000000 1f:14 479        /lib/libm.so.6
+49060000-49067000 ---p 00068000 1f:14 479        /lib/libm.so.6
+49067000-49068000 r--p 00067000 1f:14 479        /lib/libm.so.6
+49068000-49069000 rw-p 00068000 1f:14 479        /lib/libm.so.6
+49238000-49265000 r-xp 00000000 1f:15 366        /usr/lib/libqmi.so.1
+49265000-49267000 rw-p 0002c000 1f:15 366        /usr/lib/libqmi.so.1
+49267000-4927b000 rw-p 00000000 00:00 0 
+49280000-49283000 r-xp 00000000 1f:15 308        /usr/lib/libqmiidl.so.1
+49283000-49284000 rw-p 00002000 1f:15 308        /usr/lib/libqmiidl.so.1
+492a8000-492aa000 r-xp 00000000 1f:15 364        /usr/lib/libqcci_legacy.so.1
+492aa000-492ab000 rw-p 00002000 1f:15 364        /usr/lib/libqcci_legacy.so.1
+b5621000-b5622000 ---p 00000000 00:00 0 
+b5622000-b5e21000 rw-p 00000000 00:00 0          [stack:623]
+b5e21000-b5e22000 ---p 00000000 00:00 0 
+b5e22000-b6621000 rw-p 00000000 00:00 0          [stack:622]
+b6621000-b6622000 ---p 00000000 00:00 0 
+b6622000-b6e21000 rw-p 00000000 00:00 0          [stack:621]
+b6e21000-b6e24000 rw-p 00000000 00:00 0 
+b6e24000-b6e30000 r-xp 00000000 1f:15 344        /usr/lib/libqmiservices.so.1
+b6e30000-b6e34000 rw-p 0000c000 1f:15 344        /usr/lib/libqmiservices.so.1
+b6e34000-b6e36000 rw-p 00000000 00:00 0 
+b6e36000-b6eeb000 r-xp 00000000 1f:15 347        /usr/lib/libstdc++.so.6
+b6eeb000-b6eec000 ---p 000b5000 1f:15 347        /usr/lib/libstdc++.so.6
+b6eec000-b6eef000 r--p 000b5000 1f:15 347        /usr/lib/libstdc++.so.6
+b6eef000-b6ef1000 rw-p 000b8000 1f:15 347        /usr/lib/libstdc++.so.6
+b6ef1000-b6ef8000 rw-p 00000000 00:00 0 
+b6ef8000-b6f4e000 r-xp 00000000 1f:13 367        /bmdefsys/usr/lib/libqcmap_client.so.1
+b6f4e000-b6f59000 rw-p 00055000 1f:13 367        /bmdefsys/usr/lib/libqcmap_client.so.1
+b6f59000-b6f5e000 rw-p 00000000 00:00 0 
+b6f5e000-b6f5f000 r-xp 00000000 00:00 0          [sigpage]
+be9c3000-be9e4000 rw-p 00000000 00:00 0          [stack]
+ffff0000-ffff1000 r-xp 00000000 00:00 0          [vectors]

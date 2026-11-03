@@ -1,0 +1,23 @@
+dimensione sessione finta: 31 byte
+OK   IP del login
+OK   IP diverso
+OK   IP del login in forma IPv4-mapped
+OK   Host con nome (DNS rebinding)
+OK   Host assente
+OK   Host con porta
+OK   metodo POST
+OK   file di sessione di prova ignorato sotto lighttpd
+OK   dopo il logout (0.0.0.0)
+OK   IP non numerico
+OK   file di sessione assente
+--- prima risposta (senza campione precedente)
+{"ok":1,"uptime":2708,"temp":{"soc":41,"soc_all":"40 41 38 40 41","pmic":34.9,"xo":33,"batt":33.3,"batt_uv":384149},"cpu":{"cur":998400,"gov":"performance","min":300000,"max":998400,"hwmin":300000,"hwmax":998400,"usage":null,"load":"5.04 5.14 4.95"},"mem":{"total":168828,"free":133096},"batt":{"cap":100,"mv":4177,"status":"Full","health":"Good","present":1,"ac":1,"usb":1},"wifi":{"clients":0,"chan":8,"bw":"20M","rate":"MCS15 144.5"},"nat":70,"nat_max":10540,"wan":{"rx":null,"tx":null}}
+tempo di una richiesta: 150 ms
+--- risposta dopo 2 s (con utilizzo CPU e velocità WAN)
+{"ok":1,"uptime":2710,"temp":{"soc":41,"soc_all":"40 41 38 40 41","pmic":34.7,"xo":33,"batt":33.3,"batt_uv":384149},"cpu":{"cur":998400,"gov":"performance","min":300000,"max":998400,"hwmin":300000,"hwmax":998400,"usage":100,"load":"5.04 5.14 4.95"},"mem":{"total":168828,"free":132940},"batt":{"cap":100,"mv":4177,"status":"Full","health":"Good","present":1,"ac":1,"usb":1},"wifi":{"clients":0,"chan":8,"bw":"20M","rate":"MCS15 144.5"},"nat":70,"nat_max":10540,"wan":{"rx":0,"tx":0}}
+--- intestazioni
+Content-Type: application/json
+Cache-Control: no-store
+X-Content-Type-Options: nosniff
+
+RISULTATO: 11 OK, 0 FAIL

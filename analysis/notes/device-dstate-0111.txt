@@ -1,0 +1,23 @@
+== pid 1021  [(rtw_xmit/wlan0)] wchan=rtw_xmit_thread avvio=1421
+[<bf006f1c>] rtw_xmit_thread+0xa0/0x138 [rtl8192es]
+[<c0082188>] kthread+0x80/0x8c
+[<c000f22c>] kernel_thread_exit+0x0/0x8
+[<ffffffff>] 0xffffffff
+== pid 1022  [(rtw_cmd/wlan0)] wchan=rtw_cmd_thread avvio=1421
+[<bf00a540>] rtw_cmd_thread+0xac/0x1ec [rtl8192es]
+[<c0082188>] kthread+0x80/0x8c
+[<c000f22c>] kernel_thread_exit+0x0/0x8
+[<ffffffff>] 0xffffffff
+== pid 7  [(kworker/u:0H)] wchan=msm_rpm_smd_work avvio=0
+[<c00560c8>] msm_rpm_smd_work+0x38/0x128
+[<c007d504>] process_one_work+0x264/0x448
+[<c007e6b4>] worker_thread+0x1bc/0x2f0
+[<c0082188>] kthread+0x80/0x8c
+[<c000f22c>] kernel_thread_exit+0x0/0x8
+[<ffffffff>] 0xffffffff
+== pid 92  [(oled)] wchan=oled_refresh avvio=169
+[<c0277510>] oled_refresh+0x78/0x90
+[<c0082188>] kthread+0x80/0x8c
+[<c000f22c>] kernel_thread_exit+0x0/0x8
+[<ffffffff>] 0xffffffff
+4.19 4.48 4.78 1/277 21974

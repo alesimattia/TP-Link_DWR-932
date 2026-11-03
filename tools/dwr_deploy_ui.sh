@@ -4,10 +4,12 @@
 # e la tab "Riavvio programmato" del popup Amministrazione (systemManagementPopup.html, js/custom_autoreboot.js,
 # /bmdefsys/usr/bin/custom_autoreboot.sh, /etc/init.d/custom_autoreboot con il link S99 in rc5.d), il controllo
 # della CPU (/bmdefsys/usr/bin/custom_cpufreq.sh, /etc/init.d/custom_cpufreq con il link S99, pe_service modificato
-# da tools/pe_service_patch.py per chiamare custom_cpufreq.sh al posto di scrivere scaling_governor).
+# da tools/pe_service_patch.py per chiamare custom_cpufreq.sh al posto di scrivere scaling_governor) e il riquadro di
+# stato della home (colonna sinistra di controlPanel.html generata da tools/build_controlpanel.py, js/custom_status.js,
+# cgi-bin/custom_status.cgi).
 # Prima copiare con adb push in /cache: custom.cgi.new, controlPanel.html.new, systemManagementPopup.html.new,
 # custom_autoreboot.js.new, custom_autoreboot.sh.new, custom_autoreboot.init.new, custom_cpufreq.sh.new,
-# custom_cpufreq.init.new, pe_service.new
+# custom_cpufreq.init.new, pe_service.new, custom_status.cgi.new, custom_status.js.new
 # Backup una tantum: /cache/custom.cgi.prev, /cache/controlPanel.html.orig, /cache/systemManagementPopup.html.orig,
 # /cache/pe_service.orig.
 # Ripristino: dwr_deploy_ui.sh --ripristina (toglie anche la riga del riavvio programmato dal crontab di root e
@@ -24,6 +26,8 @@ CGI=$WP/cgi-bin/custom.cgi
 CP=$WP/controlPanel.html
 SMP=$WP/systemManagementPopup.html
 JS=$WP/js/custom_autoreboot.js
+STCGI=$WP/cgi-bin/custom_status.cgi
+STJS=$WP/js/custom_status.js
 AR=/bmdefsys/usr/bin/custom_autoreboot.sh
 INIT=/etc/init.d/custom_autoreboot
 LINK=/etc/rc5.d/S99custom_autoreboot
@@ -56,7 +60,7 @@ if [ "$1" = "--ripristina" ]; then
 	if [ -d /var/spool/cron/crontabs ]; then
 		crontab -l 2>/dev/null | grep -v -F "$AR" | crontab -
 	fi
-	rm -f "$LINK" "$INIT" "$AR" "$JS" "$CFLINK" "$CFINIT" "$CF"
+	rm -f "$LINK" "$INIT" "$AR" "$JS" "$CFLINK" "$CFINIT" "$CF" "$STCGI" "$STJS" /tmp/custom_status.prev
 	if [ -e /cache/pe_service.orig ] && ! cmp -s /cache/pe_service.orig "$PE"; then
 		installa_pe /cache/pe_service.orig
 		echo "pe_service originale ripristinato: attivo dal prossimo riavvio del device"
@@ -74,16 +78,21 @@ if [ "$1" = "--ripristina" ]; then
 fi
 
 for f in custom.cgi controlPanel.html systemManagementPopup.html custom_autoreboot.js custom_autoreboot.sh \
-	custom_autoreboot.init custom_cpufreq.sh custom_cpufreq.init pe_service; do
+	custom_autoreboot.init custom_cpufreq.sh custom_cpufreq.init pe_service custom_status.cgi custom_status.js; do
 	[ -s "/cache/$f.new" ] || { echo "manca /cache/$f.new: nulla installato"; exit 1; }
 done
-for f in custom.cgi custom_autoreboot.sh custom_autoreboot.init custom_cpufreq.sh custom_cpufreq.init; do
+for f in custom.cgi custom_autoreboot.sh custom_autoreboot.init custom_cpufreq.sh custom_cpufreq.init custom_status.cgi; do
 	sh -n "/cache/$f.new" || { echo "$f non valido: nulla installato"; exit 1; }
 done
 grep -q '/cgi-bin/custom.cgi' /cache/controlPanel.html.new || { echo "controlPanel.html senza pulsante: nulla installato"; exit 1; }
 grep -q 'js/custom_autoreboot.js' /cache/controlPanel.html.new || { echo "controlPanel.html senza custom_autoreboot.js: nulla installato"; exit 1; }
 grep -q 'page_id="tf1_autoReboot"' /cache/systemManagementPopup.html.new || { echo "systemManagementPopup.html senza la tab: nulla installato"; exit 1; }
 grep -q 'function custom_autoRebootOnload' /cache/custom_autoreboot.js.new || { echo "custom_autoreboot.js non valido: nulla installato"; exit 1; }
+grep -q 'js/custom_status.js' /cache/controlPanel.html.new && grep -q 'id="cst_list"' /cache/controlPanel.html.new &&
+	grep -q 'id="cp_internetTemplate"' /cache/controlPanel.html.new &&
+	grep -q 'id="cp_connectionModeTemplate"' /cache/controlPanel.html.new ||
+	{ echo "controlPanel.html senza riquadro di stato o senza template stock: nulla installato"; exit 1; }
+grep -q 'custom_status.cgi' /cache/custom_status.js.new || { echo "custom_status.js non valido: nulla installato"; exit 1; }
 [ "$(md5sum /cache/pe_service.new | cut -d' ' -f1)" = "$PE_NEW_MD5" ] || { echo "pe_service.new diverso da quello atteso: nulla installato"; exit 1; }
 md5_pe=$(md5sum "$PE" | cut -d' ' -f1)
 case "$md5_pe" in
@@ -97,10 +106,15 @@ esac
 [ -e /cache/pe_service.orig ] || [ "$md5_pe" != "$PE_ORIG_MD5" ] || cp -p "$PE" /cache/pe_service.orig
 # File nuovi della web UI: stesso proprietario e permessi degli altri script (www-data, 770)
 [ -e "$JS" ] || cp -p "$WP/js/system.js" "$JS"
+[ -e "$STJS" ] || cp -p "$WP/js/system.js" "$STJS"
+# CGI nuovo: stesso proprietario e permessi (eseguibile) di custom.cgi
+[ -e "$STCGI" ] || cp -p "$CGI" "$STCGI"
 cat /cache/custom.cgi.new > "$CGI"
 cat /cache/controlPanel.html.new > "$CP"
 cat /cache/systemManagementPopup.html.new > "$SMP"
 cat /cache/custom_autoreboot.js.new > "$JS"
+cat /cache/custom_status.js.new > "$STJS"
+cat /cache/custom_status.cgi.new > "$STCGI"
 cat /cache/custom_autoreboot.sh.new > "$AR"
 cat /cache/custom_autoreboot.init.new > "$INIT"
 cat /cache/custom_cpufreq.sh.new > "$CF"
@@ -115,11 +129,12 @@ if [ "$md5_pe" != "$PE_NEW_MD5" ]; then
 fi
 rm -f /cache/custom.cgi.new /cache/controlPanel.html.new /cache/systemManagementPopup.html.new \
 	/cache/custom_autoreboot.js.new /cache/custom_autoreboot.sh.new /cache/custom_autoreboot.init.new \
-	/cache/custom_cpufreq.sh.new /cache/custom_cpufreq.init.new /cache/pe_service.new
+	/cache/custom_cpufreq.sh.new /cache/custom_cpufreq.init.new /cache/pe_service.new \
+	/cache/custom_status.cgi.new /cache/custom_status.js.new
 sync
 "$AR" applica
 "$CF" applica
-sha256sum "$CGI" "$CP" "$SMP" "$JS" "$AR" "$INIT" "$CF" "$CFINIT" "$PE" "$LC"
-ls -la "$CGI" "$CP" "$SMP" "$JS" "$AR" "$INIT" "$LINK" "$CF" "$CFINIT" "$CFLINK" "$PE"
+sha256sum "$CGI" "$CP" "$SMP" "$JS" "$AR" "$INIT" "$CF" "$CFINIT" "$PE" "$STCGI" "$STJS" "$LC"
+ls -la "$CGI" "$CP" "$SMP" "$JS" "$AR" "$INIT" "$LINK" "$CF" "$CFINIT" "$CFLINK" "$PE" "$STCGI" "$STJS"
 [ "$pe_nuovo" = 1 ] && echo "pe_service modificato installato: attivo dal prossimo riavvio del device"
 conf_originale

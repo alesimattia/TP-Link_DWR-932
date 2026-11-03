@@ -1,0 +1,137 @@
+pid miniupnpd: 618
+
+##### processo
+/usr/sbin/miniupnpd -f /etc/miniupnpd/miniupnpd.conf 
+lrwxrwxrwx    1 root     root             0 Nov  2 19:36 /proc/618/exe -> /usr/sbin/miniupnpd
+29f4cf4350f1202d923a7d314f888905  /proc/618/exe
+State:	R (running)
+VmRSS:	    1144 kB
+Threads:	4
+voluntary_ctxt_switches:	34
+nonvoluntary_ctxt_switches:	1048578
+uptime: 3102.80
+utime=276226 stime=147 starttime=660
+wchan: 0
+
+##### consumo in 5 s
+grep: /proc/618/io: No such file or directory
+grep: /proc/618/io: No such file or directory
+utime +477 tick, stime +0 tick su 500 tick (95% utente, 0% kernel)
+syscall di lettura +0, di scrittura +0 in 5 s
+cambi di contesto volontari +0, involontari +1856
+
+##### syscall in corso (20 campioni)
+     20 cat: can't open '/proc/618/syscall': No such file or directory
+
+##### stack del kernel
+[<c000e2e0>] ret_slow_syscall+0x0/0x4
+[<ffffffff>] 0xffffffff
+
+##### file descriptor
+total 0
+lrwx------    1 root     root            64 Nov  2 20:27 0 -> /dev/null
+lrwx------    1 root     root            64 Nov  2 20:27 1 -> /dev/null
+l-wx------    1 root     root            64 Nov  2 20:27 10 -> pipe:[4087]
+lrwx------    1 root     root            64 Nov  2 20:27 11 -> socket:[4088]
+lrwx------    1 root     root            64 Nov  2 20:27 12 -> socket:[4089]
+lrwx------    1 root     root            64 Nov  2 20:27 13 -> socket:[4090]
+lr-x------    1 root     root            64 Nov  2 20:27 14 -> pipe:[4091]
+l-wx------    1 root     root            64 Nov  2 20:27 15 -> pipe:[4091]
+lrwx------    1 root     root            64 Nov  2 20:27 16 -> socket:[4979]
+lrwx------    1 root     root            64 Nov  2 20:27 17 -> socket:[4980]
+lrwx------    1 root     root            64 Nov  2 20:27 18 -> /dev/diag
+lrwx------    1 root     root            64 Nov  2 20:27 19 -> socket:[4981]
+lrwx------    1 root     root            64 Nov  2 20:27 2 -> /dev/null
+lrwx------    1 root     root            64 Nov  2 20:27 20 -> socket:[4023]
+lrwx------    1 root     root            64 Nov  2 20:27 21 -> socket:[3846]
+lrwx------    1 root     root            64 Nov  2 20:27 22 -> socket:[4024]
+lrwx------    1 root     root            64 Nov  2 20:27 23 -> socket:[4074]
+lrwx------    1 root     root            64 Nov  2 20:27 24 -> socket:[4982]
+lrwx------    1 root     root            64 Nov  2 20:27 25 -> socket:[4983]
+lrwx------    1 root     root            64 Nov  2 20:27 26 -> socket:[4990]
+lrwx------    1 root     root            64 Nov  2 20:27 3 -> /dev/smem_log
+lrwx------    1 root     root            64 Nov  2 20:27 4 -> /dev/smem_log
+lrwx------    1 root     root            64 Nov  2 20:27 5 -> /dev/smem_log
+lrwx------    1 root     root            64 Nov  2 20:27 6 -> /dev/diag
+lrwx------    1 root     root            64 Nov  2 20:27 7 -> socket:[4085]
+lrwx------    1 root     root            64 Nov  2 20:27 8 -> socket:[4086]
+lr-x------    1 root     root            64 Nov  2 20:27 9 -> pipe:[4087]
+
+##### socket UDP/TCP/unix (inode dei fd)
+4088 4089 4090 4979 4980 4981 4023 3846 4024 4074 4982 4983 4990 4085 4086 
+== udp
+  sl  local_address rem_address   st tx_queue rx_queue tr tm->when retrnsmt   uid  timeout inode ref pointer drops             
+  240: 00000000:076C 00000000:0000 07 00000000:00001C80 00:00000000 00000000     0        0 4981 2 ce9e6b40 0                  
+  176: 0100A8C0:E22C 00000000:0000 07 00000000:00000000 00:00000000 00000000     0        0 4982 2 ce9e6d80 0                  
+  107: 0100A8C0:14E7 00000000:0000 07 00000000:00001080 00:00000000 00000000     0        0 4990 2 ce9e6fc0 0                  
+== tcp
+  sl  local_address rem_address   st tx_queue rx_queue tr tm->when retrnsmt   uid  timeout inode                                                     
+   0: 00000000:2009 00000000:0000 0A 00000000:00000000 00:00000000 00000000     0        0 4979 1 cf0c1900 100 0 0 10 -1                             
+== unix
+Num       RefCount Protocol Flags    Type St Inode Path
+cefac200: 00000002 00000000 00000000 0002 01  4980
+
+##### configurazione
+listening_ip=bridge0
+port=8201
+enable_natpmp=yes
+enable_upnp=yes
+friendly_name=9x25 MobileAP UPnP
+secure_mode=no
+presentation_url=/192.168.225.1:8201
+system_uptime=yes
+notify_interval=60
+clean_ruleset_interval=600
+uuid=be10c896-7560-4553-a6db-d1df9ec7b02d
+serial=12345678
+model_number=1
+allow 0-65535 0.0.0.0/0 0-65535
+-rw-r--r--    1 root     root             4 Nov  2 19:36 /var/run/miniupnpd.pid
+
+/etc/miniupnpd/:
+total 8
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 .
+drwxr-xr-x    1 root     root          2048 Nov  2 19:36 ..
+-rw-r--r--    1 root     root          3486 Jun 28  2024 miniupnpd.conf
+
+##### interfacce
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN 
+    inet 127.0.0.1/8 scope host lo
+11: bridge0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP 
+    inet 192.168.0.1/24 brd 192.168.0.255 scope global bridge0
+12: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master bridge0 state UNKNOWN qlen 1000
+    inet 169.254.1.1/24 brd 169.254.1.255 scope global wlan0
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN 
+2: sit0: <NOARP> mtu 1480 qdisc noop state DOWN 
+3: rmnet0: <> mtu 2000 qdisc noop state DOWN qlen 1000
+4: rmnet1: <> mtu 2000 qdisc noop state DOWN qlen 1000
+5: rmnet2: <> mtu 2000 qdisc noop state DOWN qlen 1000
+6: rmnet3: <> mtu 2000 qdisc noop state DOWN qlen 1000
+7: rmnet4: <> mtu 2000 qdisc noop state DOWN qlen 1000
+8: rmnet5: <> mtu 2000 qdisc noop state DOWN qlen 1000
+9: rmnet6: <> mtu 2000 qdisc noop state DOWN qlen 1000
+10: rmnet7: <> mtu 2000 qdisc noop state DOWN qlen 1000
+11: bridge0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP 
+12: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master bridge0 state UNKNOWN qlen 1000
+13: wlan0-vxd: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN qlen 1000
+14: wlan0-va0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN qlen 1000
+192.168.0.0/24 dev bridge0  proto kernel  scope link  src 192.168.0.1 
+
+##### log di sistema (miniupnpd)
+righe miniupnpd nel log: 2
+-rw-r--r--    1 root     root         10795 Nov  2 19:35 /var/syslog_messages
+13
+
+##### altri processi che consumano CPU
+Mem: 59228K used, 109600K free, 1772K shrd, 0K buff, 23704K cached
+CPU: 90.9% usr  9.0% sys  0.0% nic  0.0% idle  0.0% io  0.0% irq  0.0% sirq
+Load average: 5.11 5.20 5.06 2/279 11388
+  PID  PPID USER     STAT   VSZ %VSZ CPU %CPU COMMAND
+  618     1 root     R    30636 18.1   0 90.7 /usr/sbin/miniupnpd -f /etc/miniupnpd/miniupnpd.conf
+11387 11149 root     R     2228  1.3   0  9.0 top -n 1 -b
+  418     1 root     S <   188m114.0   0  0.0 /usr/bin/thermal-engine
+ 1036  1035 root     S    90520 53.5   0  0.0 /bmdefsys/usr/bin/qcmap_fcgi
+  486     1 root     S    80008 47.3   0  0.0 QCMAP_ConnectionManager /bmdefsys/etc/mobileap_cfg.xml d
+ 1195     1 root     S    77908 46.1   0  0.0 /bmdefsys/usr/bin/sms_service
+  406     1 root     S    77624 45.9   0  0.0 /usr/bin/qmuxd
+ 1169     1 root     S    64076 37.9   0  0.0 /bmdefsys/usr/bin/bm_netstat

@@ -1,0 +1,10 @@
+enable_natpmp=no
+0150e0b06fc3e9642572554f0aa0f5d77d1871091790cc50292d472d4f7b81d3  /etc/miniupnpd/miniupnpd.conf
+86f6f9296b8f73e0a4fd6d2a4f47b92715f0db7265085330705d7fe77a92da29  /cache/miniupnpd.conf.orig
+miniupnpd riavviato: pid 21224
+UDP 5351 (NAT-PMP): 0, UDP 1900 (SSDP): 1, TCP 8201 (UPnP HTTP): 1
+CPU a riposo: 0%
+CPU dopo una richiesta NAT-PMP di mappatura: 0%, stato S
+Nov  2 20:36:34 mdm9625-perf daemon.notice miniupnpd[18734]: HTTP listening on port 8201
+Nov  2 20:36:34 mdm9625-perf daemon.notice miniupnpd[18734]: Listening for NAT-PMP traffic on port 5351
+Nov  2 20:39:45 mdm9625-perf daemon.notice miniupnpd[21224]: HTTP listening on port 8201

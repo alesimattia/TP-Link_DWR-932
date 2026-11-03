@@ -46,7 +46,7 @@ Aggiorna questi file man mano che emergono risultati nuovi: è il posto per i de
 
 ## Funzionalità sbloccabili
 
-Funzioni assenti nella web UI stock 01.11. Già fatte: potenza di trasmissione Wi-Fi, paese IT bloccato, repeater Wi-Fi, beacon e DTIM, riavvio programmato (tab nel popup Amministrazione della UI stock), governor e frequenza minima/massima della CPU. Escluse perché la UI stock le ha già: canale Wi-Fi, larghezza di canale 20/40 MHz, numero massimo di client, gestione remota, filtro URL, DMZ, filtro MAC, roaming, risparmio energetico, UPnP.
+Funzioni assenti nella web UI stock 01.11. Già fatte: potenza di trasmissione Wi-Fi, paese IT bloccato, repeater Wi-Fi, beacon e DTIM, riavvio programmato (tab nel popup Amministrazione della UI stock), governor e frequenza minima/massima della CPU, stato live (LTE, temperature, CPU, batteria, Wi-Fi) nella colonna sinistra della home. Escluse perché la UI stock le ha già: canale Wi-Fi, larghezza di canale 20/40 MHz, numero massimo di client, gestione remota, filtro URL, DMZ, filtro MAC, roaming, risparmio energetico, UPnP.
 
 Il supporto esiste già nel firmware o nel driver Wi-Fi: manca solo una sezione nella pagina custom.cgi, che le riapplica a ogni avvio come per la potenza di trasmissione.
 - creare una memoria CLAUDE dedicata ad ogni funzionalità implementata
