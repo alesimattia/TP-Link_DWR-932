@@ -6,6 +6,8 @@
 # stock (js/custom_autoreboot.js); la POST action=autoreboot salva la configurazione.
 # Con ?api=lteband risponde in JSON al riquadro "Bande LTE" della tab Modalità di connessione del popup Internet
 # (js/custom_lteband.js); la POST action=lteband imposta le bande LTE nel modem con AT+BMBANDPREF su /dev/smd7.
+# Con ?api=dns risponde in JSON al riquadro "DNS personalizzati" della tab Impostazioni LAN del popup Internet
+# (js/custom_dns.js); la POST action=dns scrive i server DNS a monte di dnsmasq in /etc/dnsmasq.conf e lo riavvia.
 # Eseguita da lighttpd come CGI, come root.
 # Autenticazione HTTP Basic verificata qui: utente e password della web UI. /bmdefsys/www/lighttpd.user contiene
 # "utente:md5(password)" (la pagina di login D-Link invia CryptoJS.MD5 della password), quindi lighttpd con
@@ -31,6 +33,11 @@ LOCK=/tmp/custom_cgi.lock
 # Canale AT del modem (lo stesso di debug_mode.sh) e lock che serializza i comandi AT di custom.cgi
 AT_DEV=/dev/smd7
 AT_LOCK=/tmp/custom_at.lock
+# Configurazione di dnsmasq (rootfs yaffs2, persistente). QCMAP avvia dnsmasq senza -C, quindi la legge a ogni avvio,
+# e la modifica solo nella riga address=. I DNS personalizzati stanno tra queste due righe.
+DNSCONF=/etc/dnsmasq.conf
+DNS_INIZIO="# custom_dns inizio"
+DNS_FINE="# custom_dns fine"
 TAB=$(printf '\t')
 # File utenti alternativo solo per i collaudi da shell: lighttpd imposta sempre GATEWAY_INTERFACE
 if [ -z "$GATEWAY_INTERFACE" ] && [ -n "$CUSTOM_CGI_USERS" ]; then
@@ -88,6 +95,7 @@ field() { printf '&%s&' "$BODY" | sed -n "s/.*&$1=\([^&]*\)&.*/\1/p"; }
 redirect() { printf 'Status: 303 See Other\r\nLocation: custom.cgi?m=%s\r\nCache-Control: no-store\r\n\r\n' "$1"; exit 0; }
 redirect_api() { printf 'Status: 303 See Other\r\nLocation: custom.cgi?api=autoreboot&m=%s\r\nCache-Control: no-store\r\n\r\n' "$1"; exit 0; }
 redirect_lte() { printf 'Status: 303 See Other\r\nLocation: custom.cgi?api=lteband&m=%s\r\nCache-Control: no-store\r\n\r\n' "$1"; exit 0; }
+redirect_dns() { printf 'Status: 303 See Other\r\nLocation: custom.cgi?api=dns&m=%s\r\nCache-Control: no-store\r\n\r\n' "$1"; exit 0; }
 deny() { printf 'Status: 403 Forbidden\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n'; echo "Richiesta rifiutata: ricarica la pagina e riprova."; exit 0; }
 conf_set() {
 	tmp="$CONF.tmp.$$"
@@ -150,6 +158,63 @@ bande_lte() {
 		b=$((b + 1))
 	done
 	echo "$l"
+}
+
+# --- DNS personalizzati: server a monte di dnsmasq ---
+# I client ricevono dal DHCP il router come DNS (--dhcp-option-force=6,<IP LAN>). Senza DNS personalizzati dnsmasq
+# inoltra ai server di /etc/resolv.conf (link a /var/run/resolv.conf), che QCMAP riscrive a ogni connessione LTE e
+# dhcpcd in modalità repeater; con i DNS personalizzati il blocco in $DNSCONF contiene no-resolv e le righe server=.
+# IP LAN del router
+lan_ip() { sed -n 's:.*<APIPAddr>\([0-9.]*\)</APIPAddr>.*:\1:p' "$CFG" | head -n 1; }
+# Vero se $1 è un IPv4 scritto in forma canonica (senza zeri iniziali), unicast, fuori da 0/8 e 127/8 e diverso
+# dall'IP LAN del router (dnsmasq inoltrerebbe a se stesso)
+ip4_ok() {
+	printf '%s' "$1" | grep -Eq '^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}$' || return 1
+	o1=${1%%.*}
+	[ "$o1" != 0 ] && [ "$o1" != 127 ] && [ "$o1" -lt 224 ] && [ "$1" != "$(lan_ip)" ]
+}
+# Server DNS personalizzati salvati in $DNSCONF, uno per riga (nessuna riga = automatici)
+dns_personalizzati() { sed -n "/^$DNS_INIZIO\$/,/^$DNS_FINE\$/s/^server=//p" "$DNSCONF" 2>/dev/null; }
+# PID del dnsmasq avviato da QCMAP, l'unico con --dhcp-range (altri dnsmasq, se ci sono, non c'entrano)
+dnsmasq_pid() {
+	for p in $(pidof dnsmasq); do
+		case "$(tr '\0' ' ' < "/proc/$p/cmdline" 2>/dev/null)" in *" --dhcp-range="*) echo "$p"; return 0;; esac
+	done
+	return 1
+}
+# Riga di comando di quel dnsmasq senza il nome del programma, in DM_ARGS, e PID in DM_PID. Falso se non gira o se
+# la riga contiene caratteri inattesi.
+dnsmasq_args() {
+	DM_PID=$(dnsmasq_pid) || return 1
+	DM_ARGS=$(tr '\0' ' ' < "/proc/$DM_PID/cmdline")
+	case "$DM_ARGS" in "dnsmasq "*|"/usr/bin/dnsmasq "*) ;; *) return 1;; esac
+	DM_ARGS=${DM_ARGS#* }
+	case "$DM_ARGS" in *[!A-Za-z0-9_=,./:\ -]*) return 1;; esac
+}
+# Ferma dnsmasq ($DM_PID) e lo riavvia con $DM_ARGS, così rilegge $DNSCONF. I lease DHCP restano in
+# /var/lib/misc/dnsmasq.leases. Parte con ambiente vuoto (niente credenziali del CGI), senza i descrittori del CGI e
+# con argv[0] "dnsmasq" come lo avvia QCMAP. Falso se non riparte entro 3 s.
+riavvia_dnsmasq() {
+	if [ -n "$DM_PID" ]; then
+		kill "$DM_PID" 2>/dev/null
+		n=0
+		while [ -d "/proc/$DM_PID" ] && [ $n -lt 30 ]; do
+			usleep 100000
+			n=$((n + 1))
+		done
+		if [ -d "/proc/$DM_PID" ]; then
+			kill -9 "$DM_PID" 2>/dev/null
+			usleep 300000
+		fi
+	fi
+	env -i PATH=/usr/bin:/usr/sbin:/bin:/sbin setsid dnsmasq $DM_ARGS </dev/null >/dev/null 2>&1 8>&- 9>&-
+	n=0
+	while [ $n -lt 30 ]; do
+		DM_PID=$(dnsmasq_pid) && return 0
+		usleep 100000
+		n=$((n + 1))
+	done
+	return 1
 }
 
 # Pagina di attesa e riavvio del device. $1 = titolo, $2 = cosa viene applicato
@@ -362,6 +427,63 @@ if [ "$REQUEST_METHOD" = "POST" ]; then
 		logger -t custom.cgi "bande LTE impostate: $(bande_lte "0x$nuova")"
 		redirect_lte lte_ok
 		;;
+	dns)
+		# mode=auto: DNS ricevuti dalla rete; mode=custom: dns1 obbligatorio, dns2 facoltativo
+		modo=$(field mode)
+		d1=$(field dns1)
+		d2=$(field dns2)
+		case "$modo" in
+		auto)
+			d1=""
+			d2=""
+			;;
+		custom)
+			ip4_ok "$d1" || redirect_dns err_val
+			if [ -n "$d2" ]; then
+				ip4_ok "$d2" && [ "$d2" != "$d1" ] || redirect_dns err_val
+			fi
+			;;
+		*)
+			redirect_dns err_val
+			;;
+		esac
+		nuovi="$d1${d2:+ $d2}"
+		[ "$(dns_personalizzati | tr '\n' ' ' | sed 's/ $//')" = "$nuovi" ] && redirect_dns dns_same
+		dnsmasq_args || redirect_dns err_dnsmasq
+		backup_once "$DNSCONF" /cache/dnsmasq.conf.orig
+		tmp="$DNSCONF.custom.$$"
+		prima=/tmp/custom_dnsmasq.conf.prev
+		sed "/^$DNS_INIZIO\$/,/^$DNS_FINE\$/d" "$DNSCONF" > "$tmp"
+		if [ -n "$nuovi" ]; then
+			{
+				echo "$DNS_INIZIO"
+				echo "no-resolv"
+				for s in $nuovi; do
+					echo "server=$s"
+				done
+				echo "$DNS_FINE"
+			} >> "$tmp"
+		fi
+		chmod 644 "$tmp"
+		if ! /usr/bin/dnsmasq --test -C "$tmp" >/dev/null 2>&1; then
+			rm -f "$tmp"
+			redirect_dns err_dnsmasq
+		fi
+		cp -p "$DNSCONF" "$prima"
+		mv "$tmp" "$DNSCONF"
+		sync
+		if ! riavvia_dnsmasq; then
+			# dnsmasq non riparte: si torna alla configurazione precedente
+			cat "$prima" > "$DNSCONF"
+			sync
+			riavvia_dnsmasq
+			rm -f "$prima"
+			redirect_dns err_dnsmasq
+		fi
+		rm -f "$prima"
+		logger -t custom.cgi "DNS a monte di dnsmasq: ${nuovi:-automatici}"
+		redirect_dns dns_ok
+		;;
 	*)
 		redirect err_val
 		;;
@@ -398,6 +520,20 @@ case "&$QUERY_STRING&" in *'&api=lteband&'*)
 	else
 		printf '{"ok":0,"cap":[],"lte":[],"csrf":"%s","m":"%s"}\n' "$TOK" "$msg"
 	fi
+	exit 0
+	;;
+esac
+# DNS personalizzati e DNS ricevuti dalla rete (/etc/resolv.conf), in JSON per il riquadro del popup Internet.
+# Si stampano solo indirizzi con caratteri da IPv4/IPv6.
+case "&$QUERY_STRING&" in *'&api=dns&'*)
+	set -- $(dns_personalizzati | grep -E '^[0-9.]{7,15}$' | head -n 2)
+	if [ -n "$1" ]; then modo=custom; else modo=auto; fi
+	rete=$(sed -n 's/^nameserver[[:space:]]\{1,\}\([0-9A-Fa-f:.]\{2,39\}\)[[:space:]]*$/"\1"/p' /etc/resolv.conf 2>/dev/null |
+		head -n 4 | tr '\n' ',' | sed 's/,$//')
+	if dnsmasq_pid >/dev/null; then attivo=1; else attivo=0; fi
+	printf 'Content-Type: application/json; charset=utf-8\r\nCache-Control: no-store\r\n\r\n'
+	printf '{"mode":"%s","dns1":"%s","dns2":"%s","rete":[%s],"dnsmasq":%s,"lan":"%s","csrf":"%s","m":"%s"}\n' \
+		"$modo" "$1" "$2" "$rete" "$attivo" "$(lan_ip)" "$TOK" "$msg"
 	exit 0
 	;;
 esac

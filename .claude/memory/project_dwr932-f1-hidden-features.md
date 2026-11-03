@@ -29,7 +29,7 @@ FUNZIONI (chiave config = valore attuale)
 - Quota dati/blocco: quota_limit=0, block_onlimit=0, week_start, recount_mday; netstat_enable=0, netstat_sim_type, netstat_data_total, netstat_validity_period, netstat_auto_check | API | UI+ parziale (controlPanel.js quota_limit, netstat) | bin bm_netstat, bm_dataLimit.
 - Auto-reboot programmato: AUTOREBOOT_* in bm_config.conf INERTI (qcmap_fcgi li legge/scrive soltanto, nessun consumatore) → implementato con crond + custom_autoreboot.sh + tab nella UI stock, FATTO 2026-11-02 → [[dwr932-f1-autoreboot]].
 - Risposta ping WAN: wwan_ping_enable=0 | API | UI-.
-- DNS WAN manuali: manual_wwanDns_enable=0 (+pri/sec addr) | API bm_manual_wwanDns_get/set | UI?.
+- DNS WAN manuali: manual_wwanDns_enable=0 (+pri/sec addr) | API bm_manual_wwanDns_get/set scrive resolv.conf una volta sola, QCMAP lo riscrive alla riconnessione → NON usata. DNS personalizzati FATTI via /etc/dnsmasq.conf → [[dwr932-f1-dns]].
 - apn_profile_mode=0 | API.
 - Webserver da WAN: EnableWebserverWWANAccess=0 | QCMAP Set/GetWebserverWWANAccess.
 - STA/repeater (AP-STA "Wi-Fi come WAN"): backend NATIVO COMPLETO in qcmap_fcgi 01.11 + QCMAP_ConnectionManager, UI 01.11 non lo espone → dettagli in sezione REPEATER/AP-STA sotto.

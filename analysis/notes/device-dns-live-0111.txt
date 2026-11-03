@@ -1,0 +1,79 @@
+1
+1
+www-data:www-data 770 /bmdefsys/WEBSERVER/webpages/js/custom_dns.js
+== stato iniziale
+  dnsmasq 3848: dnsmasq -i bridge0 -I lo -z --dhcp-range=bridge0,192.168.0.20,192.168.0.60,255.255.255.0,43200 --dhcp-hostsfile=/etc/dhcp_hosts --dhcp-option-force=6,192.168.0.1 
+  /etc/dnsmasq.conf md5 6c6b2189929dce42e839ea9b2ee4a934, resolv.conf 0 byte
+== DNS finti su lo
+OK   DNS finto A risponde 10.9.8.7
+OK   DNS finto B risponde 10.9.8.8
+OK   automatici: il router inoltra al DNS della rete (A)
+OK   syslog: dnsmasq legge A da resolv.conf
+== autenticazione e lettura
+OK   api=dns senza credenziali -> 401
+OK   api=dns autenticato -> JSON
+  {"mode":"auto","dns1":"","dns2":"","rete":["192.168.0.1","10.53.53.53"],"dnsmasq":1,"lan":"192.168.0.1","csrf":"a255e89a3909718c71106bf18fe93782","m":""}
+OK   JSON: automatici, DNS della rete, dnsmasq attivo, IP LAN
+OK   JSON con token anti-CSRF
+== anti-CSRF
+OK   POST senza token -> 403
+OK   POST con Origin estraneo -> 403
+== validazione
+OK   'mode=' rifiutato
+OK   'mode=x&dns1=1.1.1.1' rifiutato
+OK   'mode=custom' rifiutato
+OK   'mode=custom&dns1=' rifiutato
+OK   'mode=custom&dns1=1.1.1' rifiutato
+OK   'mode=custom&dns1=01.1.1.1' rifiutato
+OK   'mode=custom&dns1=256.1.1.1' rifiutato
+OK   'mode=custom&dns1=0.1.1.1' rifiutato
+OK   'mode=custom&dns1=127.0.0.1' rifiutato
+OK   'mode=custom&dns1=224.0.0.1' rifiutato
+OK   'mode=custom&dns1=192.168.0.1' rifiutato
+OK   'mode=custom&dns1=1.1.1.1%0Aserver%3D6.6.6.6' rifiutato
+OK   'mode=custom&dns1=1.1.1.1&dns2=1.1.1.1' rifiutato
+OK   'mode=custom&dns1=1.1.1.1&dns2=x' rifiutato
+OK   'mode=custom&dns1=1.1.1.1&dns2=8.8.8.8%20' rifiutato
+OK   'mode=custom&dns1=::1' rifiutato
+OK   nessuna modifica e nessun riavvio dopo gli input rifiutati
+OK   automatici quando lo sono già -> dns_same
+OK   dns_same senza riavvio di dnsmasq
+== personalizzati: B (10.53.53.54) + 1.1.1.1
+OK   custom -> dns_ok
+  dnsmasq 6268: dnsmasq -i bridge0 -I lo -z --dhcp-range=bridge0,192.168.0.20,192.168.0.60,255.255.255.0,43200 --dhcp-hostsfile=/etc/dhcp_hosts --dhcp-option-force=6,192.168.0.1 
+OK   dnsmasq riavviato (nuovo PID)
+OK   stessa riga di comando di QCMAP
+OK   blocco in dnsmasq.conf
+OK   resto di dnsmasq.conf invariato
+OK   dnsmasq.conf root 644
+OK   lease DHCP conservati
+OK   dnsmasq ascolta su 192.168.0.1:53 UDP
+OK   dnsmasq ascolta su 192.168.0.1:53 TCP
+OK   ambiente di dnsmasq senza variabili del CGI
+OK   dnsmasq senza i lock del CGI
+OK   syslog: dnsmasq usa 10.53.53.54
+OK   syslog registra la modifica
+OK   api=dns mostra i personalizzati
+OK   il router inoltra al DNS personalizzato (B), non a quello della rete
+OK   dopo una riscrittura di resolv.conf (riconnessione) resta B
+OK   stessi server -> dns_same
+== un solo server
+OK   solo dns1 -> dns_ok
+OK   blocco con un solo server
+OK   risolve con B
+== ritorno agli automatici
+OK   auto -> dns_ok
+OK   dnsmasq.conf identico all'originale
+OK   stessa riga di comando di QCMAP
+OK   il router torna al DNS della rete (A)
+OK   syslog: dnsmasq riavviato legge A da resolv.conf
+OK   api=dns mostra automatici
+== pulizia
+OK   dnsmasq.conf originale
+OK   resolv.conf originale
+OK   un solo dnsmasq, con la riga di comando originale
+OK   indirizzi di prova tolti da lo
+
+esito: 59 OK, 0 FAIL
+ls: /etc/dnsmasq.conf.custom.*: No such file or directory
+-rw-r--r--    1 root     root         11495 Nov  2 19:35 /cache/dnsmasq.conf.orig

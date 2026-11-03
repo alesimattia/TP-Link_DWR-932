@@ -1,0 +1,20 @@
+226 KB/s (3217 bytes in 0.013s)
+OK   1.1.1.1 + 9.9.9.9 -> dns_ok
+  blocco: # custom_dns inizio|no-resolv|server=1.1.1.1|server=9.9.9.9|# custom_dns fine|
+esito: 1 OK, 0 FAIL
+
+== dopo il riavvio
+  uptime 12.49 s; dnsmasq 612 avviato a 6 s dal boot
+  riga: dnsmasq -i bridge0 -I lo -z --dhcp-range=bridge0,192.168.0.20,192.168.0.60,255.255.255.0,43200 --dhcp-hostsfile=/etc/dhcp_hosts --dhcp-option-force=6,192.168.0.1 
+  padre: 1
+OK   blocco ancora in dnsmasq.conf dopo il riavvio
+  Nov  2 19:35:59 mdm9625-perf daemon.info dnsmasq[612]: using nameserver 9.9.9.9#53
+  Nov  2 19:35:59 mdm9625-perf daemon.info dnsmasq[612]: using nameserver 1.1.1.1#53
+OK   il dnsmasq del boot usa 1.1.1.1
+OK   il dnsmasq del boot usa 9.9.9.9
+OK   il dnsmasq del boot non legge resolv.conf
+OK   api=dns mostra i personalizzati
+OK   ritorno agli automatici -> dns_ok
+OK   dnsmasq.conf identico all'originale
+  dnsmasq 1167: dnsmasq -i bridge0 -I lo -z --dhcp-range=bridge0,192.168.0.20,192.168.0.60,255.255.255.0,43200 --dhcp-hostsfile=/etc/dhcp_hosts --dhcp-option-force=6,192.168.0.1 
+esito: 7 OK, 0 FAIL

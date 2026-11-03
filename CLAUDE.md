@@ -46,7 +46,7 @@ Aggiorna questi file man mano che emergono risultati nuovi: è il posto per i de
 
 ## Funzionalità sbloccabili
 
-Funzioni assenti nella web UI stock 01.11. Già fatte: potenza di trasmissione Wi-Fi, paese IT bloccato, repeater Wi-Fi, beacon e DTIM, riavvio programmato (tab nel popup Amministrazione della UI stock), governor e frequenza minima/massima della CPU, stato live (LTE, temperature, CPU, batteria, Wi-Fi) nella colonna sinistra della home, blocco delle bande LTE (riquadro nel popup Internet → Modalità di connessione). Escluse perché la UI stock le ha già: canale Wi-Fi, larghezza di canale 20/40 MHz, numero massimo di client, gestione remota, filtro URL, DMZ, filtro MAC, roaming, risparmio energetico, UPnP.
+Funzioni assenti nella web UI stock 01.11. Già fatte: potenza di trasmissione Wi-Fi, paese IT bloccato, repeater Wi-Fi, beacon e DTIM, riavvio programmato (tab nel popup Amministrazione della UI stock), governor e frequenza minima/massima della CPU, stato live (LTE, temperature, CPU, batteria, Wi-Fi) nella colonna sinistra della home, blocco delle bande LTE (riquadro nel popup Internet → Modalità di connessione), DNS personalizzati (riquadro nel popup Internet → Impostazioni LAN del router, sotto il servizio DHCP; dettagli in [project_dwr932-f1-dns.md](.claude/memory/project_dwr932-f1-dns.md)). Escluse perché la UI stock le ha già: canale Wi-Fi, larghezza di canale 20/40 MHz, numero massimo di client, gestione remota, filtro URL, DMZ, filtro MAC, roaming, risparmio energetico, UPnP.
 
 Il supporto esiste già nel firmware o nel driver Wi-Fi: manca solo una sezione nella pagina custom.cgi, che le riapplica a ogni avvio come per la potenza di trasmissione.
 - creare una memoria CLAUDE dedicata ad ogni funzionalità implementata
@@ -55,7 +55,6 @@ Il supporto esiste già nel firmware o nel driver Wi-Fi: manca solo una sezione 
 |---|---|---|
 | Spegnimento dei LED | Risparmio e discrezione | Controllo dei LED da `/sys/class/leds` |
 | Limite dati con blocco | Utile con SIM a consumo: blocca il traffico oltre una soglia mensile | `bm_dataLimit` e `bm_netstat` già attivi; la UI mostra solo una parte |
-| DNS personalizzati | Per esempio 1.1.1.1, 9.9.9.9 o DNS che bloccano la pubblicità | `manual_wwanDns_*` gestite dal firmware |
 | TTL fisso | Nasconde il tethering agli operatori che lo limitano. Verificare che il contratto lo permetta | Regola iptables supportata dal kernel; va riapplicata con un hook perché QCMAP svuota quelle regole |
 | Risposta al ping da internet | Diagnostica, utilità bassa | `wwan_ping_enable` |
 

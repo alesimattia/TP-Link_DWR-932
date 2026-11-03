@@ -902,6 +902,47 @@
 						</div>
 					</div>
 				</div>
+				<div id="cst_dns">
+					<h4>DNS personalizzati</h4>
+					<div class="roundedBox">
+						<div class="configRow">
+							<label>DNS in uso</label>
+							<p class="cstDnsStato" style="width:300px;line-height:20px;padding-top:5px">lettura...</p>
+						</div>
+						<div class="break">&nbsp;</div>
+						<div class="configRow">
+							<label>Server DNS</label>
+							<select class="cstDnsScelta" disabled>
+								<option value="auto">Automatici (dalla rete)</option>
+								<option value="cloudflare">Cloudflare</option>
+								<option value="quad9">Quad9 (blocca siti malevoli)</option>
+								<option value="google">Google</option>
+								<option value="adguard">AdGuard (blocca la pubblicit&agrave;)</option>
+								<option value="custom">Personalizzati</option>
+							</select>
+						</div>
+						<div class="break">&nbsp;</div>
+						<div class="configRow">
+							<label>Server DNS 1</label>
+							<input type="text" class="cstDns1" maxlength="15" disabled>
+						</div>
+						<div class="break">&nbsp;</div>
+						<div class="configRow">
+							<label>Server DNS 2</label>
+							<input type="text" class="cstDns2" maxlength="15" placeholder="facoltativo" disabled>
+						</div>
+						<div class="break">&nbsp;</div>
+						<div class="configRow">
+							<label>&nbsp;</label>
+							<p style="width:300px;font-size:12px;line-height:18px">I dispositivi collegati usano il router come DNS e il router inoltra le richieste ai server scelti, sia con l&#39;LTE sia in modalit&agrave; repeater. La scelta resta dopo il riavvio. Non cambia i DNS usati dal router stesso n&eacute; quelli dei dispositivi con DNS impostati a mano o DNS cifrato nel browser. Riguarda i DNS IPv4: con una connessione IPv6 l&#39;operatore pu&ograve; indicare ai dispositivi anche i propri DNS IPv6.</p>
+						</div>
+						<div class="break">&nbsp;</div>
+						<div class="configRow">
+							<label>&nbsp;</label>
+							<p><input type="button" value="Applica DNS" class="btnSubmit cstDnsApplica" disabled></p>
+						</div>
+					</div>
+				</div>
 				<div class="break" id="break_dhcpService_div">
 					&nbsp;
 				</div>

@@ -1,0 +1,172 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Banco DNS</title>
+<link rel="stylesheet" href="../../analysis/device-pull-0111/pull0111/bmdefsys/WEBSERVER/webpages/css/style.css"><link rel="stylesheet" href="../../analysis/device-pull-0111/pull0111/bmdefsys/WEBSERVER/webpages/css/popSettings.css">
+<link rel="stylesheet" href="../../analysis/device-pull-0111/pull0111/bmdefsys/WEBSERVER/webpages/css/window.css">
+<style>body{background:#fff;margin:0} .full .configStatusContent{height:auto;overflow:visible}
+.full .networkContent,.full .popupContainer,.full .contentArea{height:auto}</style>
+<script src="../../analysis/device-pull-0111/pull0111/bmdefsys/WEBSERVER/webpages/js/jquery-1.10.2.min.js"></script><script src="../../analysis/device-pull-0111/pull0111/bmdefsys/WEBSERVER/webpages/js/doT.js"></script>
+<script>
+var scenario = (location.hash || "#auto").slice(1);
+var full = /-full$/.test(scenario);
+scenario = scenario.replace(/-full$/, "");
+var stato = { mode: "auto", dns1: "", dns2: "", rete: ["10.4.4.4", "10.5.5.5"], dnsmasq: 1, lan: "192.168.0.1" };
+if (scenario === "nessuno") { stato.rete = []; }
+if (scenario === "cloudflare") { stato.mode = "custom"; stato.dns1 = "1.1.1.1"; stato.dns2 = "1.0.0.1"; }
+if (scenario === "pers") { stato.mode = "custom"; stato.dns1 = "192.168.0.53"; }
+if (scenario === "spento") { stato.dnsmasq = 0; }
+var global_lang = { internet_popup: {}, common: {} };
+var global_cploaded = true;
+var ui_config = { lan: { DHCP4S: { enable: 1, start_ip: "192.168.0.20", num: "41" }, LAN: { ip4_addr: "192.168.0.1", ip4_subnet_mask: 24 } } };
+window.alert = function (m) { console.log("ALERT " + m); document.title = "ALERT " + m; };
+window.confirm = function (m) { console.log("CONFIRM " + m); return true; };
+$.ajax = function (o) {
+	var d = $.Deferred();
+	setTimeout(function () {
+		if (scenario === "negato") { d.reject({ status: 401 }); return; }
+		var m = "";
+		if (o.type === "POST") {
+			stato.mode = o.data.mode; stato.dns1 = o.data.dns1; stato.dns2 = o.data.dns2; m = "dns_ok";
+		}
+		d.resolve($.extend({}, stato, { csrf: "0123456789abcdef", m: m }));
+	}, 10);
+	return d.promise();
+};
+</script>
+<script src="../../analysis/device-pull-0111/pull0111/bmdefsys/WEBSERVER/webpages/js/internet.js"></script>
+<script src="../../analysis/device-pull-0111/modified/webpages/js/custom_dns.js"></script>
+</head><body>
+<div class="popupContainer"><div class="networkMenu"></div>
+<div class="networkContent rightContent"><div class="contentArea">
+<div id="tf1_routerLANSetting">
+    <div id = "tf1_tmpl_lan_information">
+    <script id="lanInfoTemplate" type="text/x-dot-template">	
+    <form name="frm_internetRouteLanSettings" id="tf1_frm_internetRouteLanSettings" action="cgi-action.html" method="post">
+		<input type="hidden" name="thispage" id="thispage" value="index.html" />
+		<h3>{{=global_lang["internet_popup"]["Router_lan_settings"] || 'Router LAN Settings' }}</h3>
+		<div class="popupContentDisplay">
+			<div class="configStatusContent">
+				<h4>{{=global_lang["internet_popup"]["lan_setting"] || 'LAN Setting' }}</h4>
+				<div class="roundedBox">
+					<div class="configRow">
+						<label>{{=global_lang["internet_popup"]["lan_setting"] || 'LAN Setting' }}</label>
+						<p>
+							{{  if(it.dhcp_service) { }}
+								{{=global_lang["common"]["on"] || "ON"}}
+							{{ } else { }}
+								{{=global_lang["common"]["off"] || "OFF"}}
+							{{ } }}
+						</p>
+					</div>
+				</div>
+				<div id="tf1_dhcpService_div">
+					<h4 style=" float:left">{{=global_lang["internet_popup"]["To_dhcp"] || 'To DHCP Service Setting' }}</h4>
+                    <h4 style=" float: right;"><a href="#" class="configureDHCP"  onclick="openPopup(event,'tf1_popupApplicationDialog','button.config.popSettings',-1,'tf1_dialog','tf1_popupApplicationContent','controlPanel','applicationPopup.html', 'tf1_dhcpSettings','applicationSettings_onloadDhcpSetup','')">&nbsp; &nbsp; {{=global_lang["internet_popup"]["conf_dhcp"] || 'Configure DHCP' }}</a></h4>
+                    <div class="break">
+							&nbsp;
+						</div>
+					<div class="roundedBox">
+						<div class="configRow">
+							<label>{{=global_lang["internet_popup"]["cur_dhcp"] || 'Current DHCP Service' }}</label>
+							{{ if(it.dhcp_service == 1) { }}
+							<p>
+								{{=global_lang["common"]["on"] || "ON"}}
+							</p>
+							{{ } else { }}
+							<p>
+								{{=global_lang["common"]["off"] || "OFF"}}
+							</p>	
+							{{ } }}
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+						<div class="configRow">
+							<label>{{=global_lang["internet_popup"]["ipAddr"] || 'IP Address' }}</label>
+							<p>
+								{{=it.ip_addr}}
+							</p>
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+						<div class="configRow">
+							<label>{{=global_lang["internet_popup"]["subnet"] || 'Subnet' }}</label>
+							<p>
+								{{=it.subnet}}
+							</p>
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+						<div class="configRow">
+							<label>{{=global_lang["internet_popup"]["ip_range"] || 'IP Range' }}</label>
+							<p>
+								{{=it.start_ip}} ~ {{=it.end_ip}}
+							</p>
+						</div>
+						<div class="break">
+							&nbsp;
+						</div>
+					</div>
+				</div>
+				<div id="cst_dns">
+					<h4>DNS personalizzati</h4>
+					<div class="roundedBox">
+						<div class="configRow">
+							<label>DNS in uso</label>
+							<p class="cstDnsStato" style="width:300px;line-height:20px;padding-top:5px">lettura...</p>
+						</div>
+						<div class="break">&nbsp;</div>
+						<div class="configRow">
+							<label>Server DNS</label>
+							<select class="cstDnsScelta" disabled>
+								<option value="auto">Automatici (dalla rete)</option>
+								<option value="cloudflare">Cloudflare</option>
+								<option value="quad9">Quad9 (blocca siti malevoli)</option>
+								<option value="google">Google</option>
+								<option value="adguard">AdGuard (blocca la pubblicit&agrave;)</option>
+								<option value="custom">Personalizzati</option>
+							</select>
+						</div>
+						<div class="break">&nbsp;</div>
+						<div class="configRow">
+							<label>Server DNS 1</label>
+							<input type="text" class="cstDns1" maxlength="15" disabled>
+						</div>
+						<div class="break">&nbsp;</div>
+						<div class="configRow">
+							<label>Server DNS 2</label>
+							<input type="text" class="cstDns2" maxlength="15" placeholder="facoltativo" disabled>
+						</div>
+						<div class="break">&nbsp;</div>
+						<div class="configRow">
+							<label>&nbsp;</label>
+							<p style="width:300px;font-size:12px;line-height:18px">I dispositivi collegati usano il router come DNS e il router inoltra le richieste ai server scelti, sia con l&#39;LTE sia in modalit&agrave; repeater. La scelta resta dopo il riavvio. Non cambia i DNS usati dal router stesso n&eacute; quelli dei dispositivi con DNS impostati a mano o DNS cifrato nel browser. Riguarda i DNS IPv4: con una connessione IPv6 l&#39;operatore pu&ograve; indicare ai dispositivi anche i propri DNS IPv6.</p>
+						</div>
+						<div class="break">&nbsp;</div>
+						<div class="configRow">
+							<label>&nbsp;</label>
+							<p><input type="button" value="Applica DNS" class="btnSubmit cstDnsApplica" disabled></p>
+						</div>
+					</div>
+				</div>
+				<div class="break" id="break_dhcpService_div">
+					&nbsp;
+				</div>
+			</div>
+		</div>
+		 
+	</form>
+	</script>
+</div>
+</div>
+</div></div></div>
+<script>
+if (full) { document.body.className = "full"; }
+lan_info();
+if (/applica/.test(location.search)) {
+	setTimeout(function () { $("#cst_dns .cstDnsScelta").val("quad9").trigger("change");
+		$("#cst_dns .cstDnsApplica").trigger("click"); }, 100);
+}
+</script>
+</body></html>

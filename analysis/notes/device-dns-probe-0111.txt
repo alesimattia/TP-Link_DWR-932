@@ -1,0 +1,198 @@
+List of devices attached 
+d2fd18441c14	device
+
+202 KB/s (2878 bytes in 0.013s)
+
+== dnsmasq: versione e opzioni
+Dnsmasq version 2.84rc2  Copyright (c) 2000-2021 Simon Kelley
+Compile time options: IPv6 GNU-getopt no-DBus no-UBus no-i18n no-IDN DHCP DHCPv6 no-Lua TFTP no-conntrack ipset auth no-cryptohash no-DNSSEC loop-detect inotify dumpfile
+
+-C, --conf-file=<path>                                 Specify configuration file (defaults to /etc/dnsmasq.conf).
+-n, --no-poll                                          Do NOT poll /etc/resolv.conf file, reload only on SIGHUP.
+-o, --strict-order                                     Use nameservers strictly in the order given in /etc/resolv.conf.
+-R, --no-resolv                                        Do NOT read resolv.conf.
+-r, --resolv-file=<path>                               Specify path to resolv.conf (defaults to /etc/resolv.conf).
+    --servers-file=<path>                              Specify path to file with server= options
+-S, --server=/<domain>/<ipaddr>                        Specify address(es) of upstream servers with optional domains.
+    --rev-server=<addr>/<prefix>,<ipaddr>              Specify address of upstream servers for reverse address queries
+-7, --conf-dir=<path>                                  Read configuration from all the files in this directory.
+    --all-servers                                      Always perform DNS queries to all servers.
+    --auth-server=<NS>,<interface>                     Export local names to global DNS
+
+== dnsmasq: processi, riga di comando, padre
+pid 612: dnsmasq -i bridge0 -I lo -z --dhcp-range=bridge0,192.168.0.20,192.168.0.60,255.255.255.0,43200 --dhcp-hostsfile=/etc/dhcp_hosts --dhcp-option-force=6,192.168.0.1 
+  padre 1: init [5]   
+  uid: 65534	65534	65534	65534
+  avviato (s dal boot): 6 uptime: 13429
+  total 0
+  lrwx------    1 root     root            64 Nov  2 21:07 0 -> /dev/null
+  lrwx------    1 root     root            64 Nov  2 21:07 1 -> /dev/null
+  l-wx------    1 root     root            64 Nov  2 21:07 10 -> pipe:[4069]
+  lrwx------    1 root     root            64 Nov  2 21:07 11 -> socket:[4072]
+  lrwx------    1 root     root            64 Nov  2 21:07 12 -> socket:[4199]
+  lrwx------    1 root     root            64 Nov  2 21:07 13 -> socket:[4200]
+  lrwx------    1 root     root            64 Nov  2 21:07 2 -> /dev/null
+  lrwx------    1 root     root            64 Nov  2 21:07 3 -> /var/lib/misc/dnsmasq.leases
+  lrwx------    1 root     root            64 Nov  2 21:07 4 -> socket:[4060]
+  lrwx------    1 root     root            64 Nov  2 21:07 5 -> socket:[4061]
+  lrwx------    1 root     root            64 Nov  2 21:07 6 -> socket:[4063]
+  lrwx------    1 root     root            64 Nov  2 21:07 7 -> socket:[4064]
+  lr-x------    1 root     root            64 Nov  2 21:07 8 -> anon_inode:inotify
+  lr-x------    1 root     root            64 Nov  2 21:07 9 -> pipe:[4069]
+
+== file di configurazione
+-- /etc/resolv.conf
+lrwxrwxrwx    1 root     root            20 Jan  1  1970 /etc/resolv.conf -> /var/run/resolv.conf
+  link -> /var/run/resolv.conf
+-- /etc/dnsmasq.conf
+-rw-r--r--    1 root     root         11495 Nov  2 19:35 /etc/dnsmasq.conf
+  | # Configuration file for dnsmasq.
+  | #
+  | # Format is one option per line, legal options are the same
+  | # as the long options legal on the command line. See
+  | # "/usr/sbin/dnsmasq --help" or "man 8 dnsmasq" for details.
+  | 
+  | # Change these lines if you want dnsmasq to serve MX records.
+  | # Only one of mx-host and mx-target need be set, the other defaults
+  | # to the name of the host  running dnsmasq.
+  | #mx-host=
+  | #mx-target=
+  | #selfmx
+  | #localmx
+  | 
+  | # The following two options make you a better netizen, since they 
+  | # tell dnsmasq to filter out queries which the public DNS cannot
+  | # answer, and which load the servers (especially the root servers) 
+  | # uneccessarily. If you have a dial-on-demand link they also stop
+  | # these requests from bringing up the link uneccessarily.
+  | 
+  | # Never forward plain names (with a dot or domain part)
+  | domain-needed
+  | # Never forward addresses in the non-routed address spaces.
+  | bogus-priv
+  | 
+  | 
+  | # Uncomment this to filter useless windows-originated DNS requests
+  | # which can trigger dial-on-demand links needlessly.
+  | # Note that (amongst other things) this blocks all SRV requests, 
+  | # so don't use it if you use eg Kerberos.
+  | #filterwin2k
+  | 
+  | # Change this line if you want dns to get its upstream servers from
+  | # somewhere other that /etc/resolv.conf 
+  | #resolv-file=
+  | 
+  | # By  default,  dnsmasq  will  send queries to any of the upstream
+  | # servers it knows about and tries to favour servers to are  known
+  | # to  be  up.  Uncommenting this forces dnsmasq to try each query
+  | # with  each  server  strictly  in  the  order  they   appear   in
+  | # /etc/resolv.conf
+  | #strict-order
+  | 
+  | # If you don't want dnsmasq to read /etc/resolv.conf or any other
+  | # file, getting its servers for this file instead (see below), then
+  | # uncomment this
+  | #no-resolv
+  | 
+  | # If you don't want dnsmasq to poll /etc/resolv.conf or other resolv
+  | # files for changes and re-read them then uncomment this.
+  | #no-poll
+  | 
+  | # Add other name servers here, with domain specs if they are for 
+  | # non-public domains.
+  | #server=/localnet/192.168.0.1
+  | 
+  | # Add local-only domains here, queries in these domains are answered
+  | # from /etc/hosts or DHCP only.
+  | #local=/localnet/
+  | 
+sed: write error
+-- /etc/dhcp_hosts
+-rw-r--r--    1 root     root             0 Nov  2 19:35 /etc/dhcp_hosts
+-- /etc/hosts
+-rw-r--r--    1 root     root            44 Jun 28  2024 /etc/hosts
+  | 127.0.0.1	localhost.localdomain		localhost
+  | 
+-- /var/run/resolv.conf
+-rw-r--r--    1 root     root             0 Jan  1  1970 /var/run/resolv.conf
+-- /etc/dhcpcd.conf
+ls: /etc/dhcpcd.conf: No such file or directory
+total 4
+drwxr-xr-x    1 root     root          2048 Jun 28  2024 .
+drwxr-xr-x    1 root     root          2048 Nov  2 19:36 ..
+
+== filesystem di /etc e /var
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/root                25984     17196      8788  66% /
+/dev/root                25984     17196      8788  66% /
+tmpfs                    67584      1268     66316   2% /var/volatile
+rootfs on / type rootfs (rw)
+/dev/root on / type yaffs2 (rw,relatime)
+tmpfs on /var/volatile type tmpfs (rw,relatime,size=67584k)
+/dev/mtdblock18 on /etc/backup type yaffs2 (rw,relatime)
+
+== chi cita dnsmasq.conf o resolv.conf negli script
+/etc/init.d/dnsmasq
+/etc/init.d/dnsmasq:2:DAEMON=/usr/bin/dnsmasq
+/etc/init.d/dnsmasq:3:NAME=dnsmasq
+/etc/init.d/dnsmasq:5:ARGS="-7 /etc/dnsmasq.d"
+/etc/init.d/dnsmasq:24:	echo -n "dnsmasq "
+/etc/init.d/dnsmasq:28:		PID=`cat /var/run/dnsmasq.pid`
+
+== config: chiavi DNS e modalità
+21:IP6_Priamry_DNS=2001:4860:4860::8888
+22:IP6_Secondary_DNS=
+64:manual_wwanDns_enable=0
+65:manual_priWwanDns_addr=
+66:manual_secWwanDns_addr=
+22:	<WlanMode>AP</WlanMode>
+24:	<EnableIPV6>1</EnableIPV6>
+27:	<APIPAddr>192.168.0.1</APIPAddr>
+29:	<EnableDHCPServer>1</EnableDHCPServer>
+30:	<DHCPCfg>
+34:	</DHCPCfg>
+wifi_power_percent=100
+autoreboot_enable=0
+autoreboot_time=04:00
+autoreboot_days=1,2,3,4,5,6,0
+
+== IPv6: radvd / dhcpv6 / indirizzi
+ls: /etc/radvd.conf: No such file or directory
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 
+    inet6 ::1/128 scope host 
+11: bridge0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 
+    inet6 fe80::e0c8:32ff:fe10:6cce/64 scope link 
+12: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qlen 1000
+    inet6 fe80::deea:e7ff:fe2f:59b0/64 scope link 
+
+== rete: route, interfacce WAN, porta 53
+192.168.0.0/24 dev bridge0  proto kernel  scope link  src 192.168.0.1 
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN 
+    inet 127.0.0.1/8 scope host lo
+2: sit0: <NOARP> mtu 1480 qdisc noop state DOWN 
+3: rmnet0: <> mtu 2000 qdisc noop state DOWN qlen 1000
+4: rmnet1: <> mtu 2000 qdisc noop state DOWN qlen 1000
+5: rmnet2: <> mtu 2000 qdisc noop state DOWN qlen 1000
+6: rmnet3: <> mtu 2000 qdisc noop state DOWN qlen 1000
+7: rmnet4: <> mtu 2000 qdisc noop state DOWN qlen 1000
+8: rmnet5: <> mtu 2000 qdisc noop state DOWN qlen 1000
+9: rmnet6: <> mtu 2000 qdisc noop state DOWN qlen 1000
+10: rmnet7: <> mtu 2000 qdisc noop state DOWN qlen 1000
+11: bridge0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP 
+    inet 192.168.0.1/24 brd 192.168.0.255 scope global bridge0
+12: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master bridge0 state UNKNOWN qlen 1000
+    inet 169.254.1.1/24 brd 169.254.1.255 scope global wlan0
+13: wlan0-vxd: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN qlen 1000
+14: wlan0-va0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN qlen 1000
+-A INPUT -i bridge0 -p tcp -m multiport --dports 53,80,443 -j ACCEPT
+udp        0      0 192.168.0.1:53          0.0.0.0:*                           612/dnsmasq
+udp        0      0 fe80::e0c8:32ff:fe10:6cce:53 :::*                                612/dnsmasq
+tcp        0      0 192.168.0.1:53          0.0.0.0:*               LISTEN      612/dnsmasq
+tcp        0      0 fe80::e0c8:32ff:fe10:6cce:53 :::*                    LISTEN      612/dnsmasq
+
+== risoluzione di prova (solo lettura, timeout breve)
+-- nslookup via 192.168.0.1
+Server:    192.168.0.1
+Address 1: 192.168.0.1
+
+nslookup: can't resolve 'dns.google'
